@@ -24,9 +24,27 @@ const Contact: React.FC = () => {
             <span className="footer-copyright">© 2025 - All Rights Reserved</span>
           </div>
           <div className="footer-links">
-            <Button variant="outline" className="footer-btn">LINKEDIN</Button>
-            <Button variant="outline" className="footer-btn">BEHANCE</Button>
-            <Button variant="outline" className="footer-btn">EMAIL</Button>
+            <Button 
+              variant="outline" 
+              className="footer-btn"
+              onClick={() => window.open('https://www.linkedin.com/in/patricio-jaramillo-castrillo-557427200/', '_blank')}
+            >
+              LINKEDIN
+            </Button>
+            <Button 
+              variant="outline" 
+              className="footer-btn"
+              onClick={() => window.open('https://www.behance.net/tjaradesign', '_blank')}
+            >
+              BEHANCE
+            </Button>
+            <Button 
+              variant="outline" 
+              className="footer-btn"
+              onClick={() => window.open('mailto:triciojarac@gmail.com', '_self')}
+            >
+              EMAIL
+            </Button>
           </div>
           <div className="footer-right">
             <div className="footer-backtop">

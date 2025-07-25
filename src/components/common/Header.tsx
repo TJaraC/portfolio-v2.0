@@ -16,6 +16,18 @@ const Header: React.FC = () => {
   const lastScrollY = useRef(0);
   const logoRotation = useRef(0);
 
+  // Función para hacer scroll suave a una sección
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element && lenis) {
+      lenis.scrollTo(element, {
+        offset: -80, // Compensar altura del header
+        duration: 1.5,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+      });
+    }
+  };
+
   useEffect(() => {
     if (menuOpen) {
       document.body.classList.add('menu-open');
@@ -191,7 +203,14 @@ const Header: React.FC = () => {
       <div className="header-container">
         <div className="header-content">
           {/* Logo */}
-          <div className="logo" ref={logoRef}>
+          <div 
+            className="logo" 
+            ref={logoRef}
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            style={{ cursor: 'pointer' }}
+          >
             <span className="logo-text">
               TJC
             </span>
@@ -218,18 +237,21 @@ const Header: React.FC = () => {
             <button 
               role="menuitem"
               className="nav-button"
+              onClick={() => scrollToSection('work')}
             >
               WORK
             </button>
             <button 
               role="menuitem"
               className="nav-button"
+              onClick={() => scrollToSection('about')}
             >
               ABOUT
             </button>
             <button 
               role="menuitem"
               className="nav-button"
+              onClick={() => scrollToSection('contact')}
             >
               CONTACT
             </button>
@@ -240,12 +262,14 @@ const Header: React.FC = () => {
             <button 
               role="menuitem"
               className="nav-button"
+              onClick={() => window.open('https://www.behance.net/tjaradesign', '_blank')}
             >
               BEHANCE
             </button>
             <button 
               role="menuitem"
               className="nav-button"
+              onClick={() => window.open('https://www.linkedin.com/in/patricio-jaramillo-castrillo-557427200/', '_blank')}
             >
               LINKEDIN
             </button>
@@ -272,6 +296,15 @@ const Header: React.FC = () => {
               ref={(el) => el && (menuItemsRef.current[0] = el)}
               role="menuitem"
               className="nav-button nav-button--left mobile-menu-item"
+              onClick={() => {
+                // Reactivar Lenis antes del scroll
+                if (lenis) {
+                  lenis.start();
+                }
+                setMenuOpen(false);
+                // Hacer scroll después de un pequeño delay
+                setTimeout(() => scrollToSection('about'), 150);
+              }}
             >
               ABOUT
             </button>
@@ -279,6 +312,15 @@ const Header: React.FC = () => {
               ref={(el) => el && (menuItemsRef.current[1] = el)}
               role="menuitem"
               className="nav-button nav-button--left mobile-menu-item"
+              onClick={() => {
+                // Reactivar Lenis antes del scroll
+                if (lenis) {
+                  lenis.start();
+                }
+                setMenuOpen(false);
+                // Hacer scroll después de un pequeño delay
+                setTimeout(() => scrollToSection('work'), 150);
+              }}
             >
               WORK
             </button>
@@ -286,6 +328,15 @@ const Header: React.FC = () => {
               ref={(el) => el && (menuItemsRef.current[2] = el)}
               role="menuitem"
               className="nav-button nav-button--left mobile-menu-item"
+              onClick={() => {
+                // Reactivar Lenis antes del scroll
+                if (lenis) {
+                  lenis.start();
+                }
+                setMenuOpen(false);
+                // Hacer scroll después de un pequeño delay
+                setTimeout(() => scrollToSection('contact'), 150);
+              }}
             >
               CONTACT
             </button>
@@ -295,7 +346,7 @@ const Header: React.FC = () => {
               className="nav-button nav-button--left mobile-menu-item"
               onClick={(e) => {
                 e.stopPropagation();
-                console.log('Behance clicked');
+                window.open('https://www.behance.net/tjaradesign', '_blank');
               }}
             >
               BEHANCE
@@ -306,7 +357,7 @@ const Header: React.FC = () => {
               className="nav-button nav-button--left mobile-menu-item"
               onClick={(e) => {
                 e.stopPropagation();
-                console.log('LinkedIn clicked');
+                window.open('https://www.linkedin.com/in/patricio-jaramillo-castrillo-557427200/', '_blank');
               }}
             >
               LINKEDIN

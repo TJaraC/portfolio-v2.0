@@ -70,7 +70,7 @@ const Home: React.FC = () => {
       </ParallaxSection>
       
       {/* Portfolio Grid */}
-      <section className="portfolio-section" style={{ position: 'relative', zIndex: 5, backgroundColor: 'var(--global-bg-1)' }}>
+      <section id="work" className="portfolio-section" style={{ position: 'relative', zIndex: 5, backgroundColor: 'var(--global-bg-1)' }}>
         <div className="portfolio-grid">
           {/* Card 1 */}
           <AnimatedElement animation="slideUp" delay={0.1} threshold={0.2}>
@@ -197,7 +197,7 @@ const Home: React.FC = () => {
       </section>
       
       {/* About Section */}
-      <section className="about-section">
+      <section id="about" className="about-section">
         <div className="about-content">
           <AnimatedElement animation="slideLeft" threshold={0.2}>
             <div className="about-images">
@@ -232,7 +232,9 @@ const Home: React.FC = () => {
       </section>
       
       {/* Contact Section */}
-      <Contact />
+      <div id="contact">
+        <Contact />
+      </div>
     </div>
   );
 };
