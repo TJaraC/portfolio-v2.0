@@ -1,0 +1,214 @@
+.switch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  vertical-align: baseline;
+  margin: 0 2px;
+}
+
+.switch:focus {
+  outline: none;
+}
+
+.switch__track {
+  position: relative;
+  border-radius: 212.886px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+.switch__thumb {
+  border-radius: 50%;
+  background-color: var(--global-bg-4);
+  border: 5.602px solid var(--global-text-4);
+  transition: transform 0.3s ease;
+  filter: drop-shadow(-1.12px 15.686px 20.168px rgba(0, 0, 0, 0.35));
+  flex-shrink: 0;
+  fill: var(--global-bg-4);
+  box-sizing: border-box;
+}
+
+/* Estados del switch */
+.switch--off .switch__track {
+  background: var(--global-bg-5); /* Naranja */
+}
+
+.switch--off .switch__thumb {
+  transform: translateX(0);
+}
+
+.switch--on .switch__track {
+  background: var(--global-text-1); /* Negro */
+}
+
+.switch--on .switch__thumb {
+  transform: translateX(calc(100vw - 100vw + var(--track-width, 318px) - var(--thumb-width, 145.659px) - var(--switch-padding, 11.204px) * 2));
+}
+
+/* Tamaños base - Desktop (210px) */
+.switch--large .switch__track {
+  width: 84px; /* 40% del tamaño del texto */
+  height: 42px;
+}
+
+.switch--large .switch__thumb {
+  width: 38px;
+  height: 38px;
+}
+
+/* Tamaños medianos - Tablet (168px) */
+.switch--medium .switch__track {
+  width: 67px; /* 40% del tamaño del texto */
+  height: 34px;
+}
+
+.switch--medium .switch__thumb {
+  width: 30px;
+  height: 30px;
+}
+
+/* Tamaños pequeños - Mobile (134px) */
+.switch--small .switch__track {
+  width: 54px; /* 40% del tamaño del texto */
+  height: 27px;
+}
+
+.switch--small .switch__thumb {
+  width: 23px;
+  height: 23px;
+}
+
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+
+/* Desktop grande (210px) */
+@media (min-width: 1791px) {
+  .switch--hero .switch__track {
+    width: 318px; /* 318px ancho x 168px alto */
+    height: 168px;
+    padding: 11.204px;
+    --switch-padding: 11.204px;
+    --track-width: 318px;
+    --thumb-width: 145.659px;
+  }
+  
+  .switch--hero .switch__thumb {
+    width: 145.659px;
+    height: 145.659px;
+  }
+}
+
+/* Desktop mediano (168px) */
+@media (max-width: 1790px) and (min-width: 861px) {
+  .switch--hero .switch__track {
+    width: 254px; /* Proporcionalmente escalado */
+    height: 134px;
+    padding: 9px;
+    --switch-padding: 9px;
+    --track-width: 254px;
+    --thumb-width: 116px;
+  }
+  
+  .switch--hero .switch__thumb {
+    width: 116px;
+    height: 116px;
+  }
+}
+
+/* Tablet (134px) */
+@media (max-width: 860px) {
+  .switch--hero .switch__track {
+    width: 202px; /* Proporcionalmente escalado */
+    height: 107px;
+    padding: 7.5px;
+    --switch-padding: 7.5px;
+    --track-width: 202px;
+    --thumb-width: 92px;
+  }
+  
+  .switch--hero .switch__thumb {
+    width: 92px;
+    height: 92px;
+  }
+}
+
+/* Mobile grande (96px) */
+@media (max-width: 768px) {
+  .switch--hero .switch__track {
+    width: 145px; /* Proporcionalmente escalado */
+    height: 77px;
+    padding: 5.5px;
+    --switch-padding: 5.5px;
+    --track-width: 145px;
+    --thumb-width: 66px;
+  }
+  
+  .switch--hero .switch__thumb {
+    width: 66px;
+    height: 66px;
+  }
+}
+
+/* Mobile mediano (86px) */
+@media (max-width: 580px) {
+  .switch--hero .switch__track {
+    width: 130px; /* Proporcionalmente escalado */
+    height: 69px;
+    padding: 5px;
+    --switch-padding: 5px;
+    --track-width: 130px;
+    --thumb-width: 59px;
+  }
+  
+  .switch--hero .switch__thumb {
+    width: 59px;
+    height: 59px;
+  }
+}
+
+/* Mobile pequeño (72px) */
+@media (max-width: 470px) {
+  .switch--hero .switch__track {
+    width: 109px; /* Proporcionalmente escalado */
+    height: 58px;
+    padding: 4px;
+    --switch-padding: 4px;
+    --track-width: 109px;
+    --thumb-width: 50px;
+  }
+  
+  .switch--hero .switch__thumb {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* Mobile extra pequeño (60px) */
+@media (max-width: 400px) {
+  .switch--hero .switch__track {
+    width: 91px; /* Proporcionalmente escalado */
+    height: 48px;
+    padding: 3.5px;
+    --switch-padding: 3.5px;
+    --track-width: 91px;
+    --thumb-width: 41px;
+  }
+  
+  .switch--hero .switch__thumb {
+    width: 41px;
+    height: 41px;
+  }
+}
+
+/* Hover effects */
+.switch:hover .switch__track {
+  transform: scale(1.05);
+}
+
+.switch:active .switch__track {
+  transform: scale(0.95);
+}

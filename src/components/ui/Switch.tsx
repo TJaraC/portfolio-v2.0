@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Switch.css';
+import '../../styles/Switch.css';
 
 interface SwitchProps {
   className?: string;
