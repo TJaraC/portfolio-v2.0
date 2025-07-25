@@ -1,0 +1,313 @@
+.header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.header-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 16px 0;
+}
+
+.logo {
+  flex: 0 0 auto;
+}
+
+@media (min-width: 640px) {
+  .logo {
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .logo {
+    margin-left: 0;
+  }
+}
+
+.logo-text {
+  font-size: 1rem;
+  font-family: 'Geist', sans-serif;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--global-text-1);
+  text-align: center;
+}
+
+.hamburger-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  justify-self: end;
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    justify-content: space-between;
+  }
+  
+  .logo {
+    flex: 0 0 auto;
+  }
+  
+  .hamburger-menu {
+    flex: 0 0 auto;
+    padding: 8px;
+  }
+  
+  .desktop-nav {
+    display: none;
+  }
+  
+  .desktop-social {
+    display: none;
+  }
+}
+
+
+
+@media (min-width: 769px) {
+  .hamburger-menu {
+    display: none;
+  }
+}
+
+.hamburger-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--global-text-1);
+  fill: none;
+  stroke: currentColor;
+}
+
+/* Ensure hamburger icon is visible when menu is open */
+body.menu-open .hamburger-icon {
+  color: #000;
+  stroke: #000;
+  z-index: 1001;
+}
+
+body.menu-open .hamburger-menu {
+  z-index: 1001;
+  background: none;
+}
+
+/* Keep logo visible when menu is open */
+body.menu-open .logo {
+  z-index: 1001;
+}
+
+body.menu-open .logo-text {
+  color: #000;
+}
+
+/* Ensure header stays visible above overlay */
+body.menu-open .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+}
+
+.desktop-nav {
+  display: none;
+  align-items: center;
+  gap: 4rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (min-width: 769px) {
+  .desktop-nav {
+    display: flex;
+  }
+}
+
+.nav-button {
+  font-size: 1rem;
+  font-family: 'Geist', sans-serif;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--global-text-1);
+  text-align: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.nav-button:hover {
+  color: var(--global-text-3);
+}
+
+.nav-button--left {
+  text-align: left;
+}
+
+.desktop-social {
+  display: none;
+  align-items: center;
+  gap: 24px;
+  padding: 0 6px;
+  margin-top: 4px;
+  flex: 0 0 auto;
+}
+
+@media (min-width: 769px) {
+  .desktop-social {
+    display: flex;
+  }
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 999;
+  transition: all 0.3s ease;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  z-index: 1000;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-menu--hidden {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .mobile-menu {
+    display: none;
+  }
+}
+
+.mobile-menu-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  text-align: center;
+}
+
+/* Mobile menu specific font size */
+@media (max-width: 768px) {
+  .mobile-menu .nav-button {
+    font-size: 18px;
+  }
+  
+  .logo-text {
+    font-size: 18px;
+  }
+}
+
+/* Prevent body scroll when mobile menu is open */
+body.menu-open {
+  overflow: hidden;
+  overflow-x: hidden;
+}
+
+/* Mobile Menu Animations - Optimized for GSAP */
+.mobile-menu-item {
+  /* Initial state will be handled by GSAP */
+  will-change: transform, opacity, color;
+  transform-origin: left center;
+  perspective: 1000px;
+}
+
+
+
+/* Mobile menu overlay - optimized for GSAP */
+.mobile-menu-overlay {
+  /* Initial state will be handled by GSAP */
+  will-change: opacity;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1), 
+    rgba(255, 255, 255, 0.05),
+    rgba(240, 240, 240, 0.08)
+  );
+}
+
+/* Mobile menu background - optimized for GSAP */
+.mobile-menu {
+  /* Initial state will be handled by GSAP */
+  will-change: transform, opacity, backdrop-filter;
+}
+
+/* Hamburger icon animations */
+.hamburger-menu {
+  will-change: transform;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hamburger-icon {
+  will-change: transform;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced hover effects for desktop navigation */
+@media (min-width: 769px) {
+  .nav-button {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .nav-button:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* Smooth scrolling and performance optimizations */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* GPU acceleration for better performance */
+.header,
+.mobile-menu,
+.mobile-menu-overlay,
+.hamburger-menu {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Enhanced mobile menu content styling */
+.mobile-menu-content {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}

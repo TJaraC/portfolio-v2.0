@@ -1,0 +1,972 @@
+.home-container {
+  padding-top: 59px; /* Ajusta según la altura real del header */
+   background: var(--global-bg-3);
+}
+
+/* ===== GLOBAL STYLES ===== */
+body {
+  padding-top: 80px; /* Compensar header fijo */
+}
+
+.home-container {
+  padding-top: 67px; /* Ajustado para padding header de 16px (59px + 8px) */
+   background: var(--global-bg-3);
+}
+
+/* ===== GLOBAL STYLES ===== */
+body {
+  padding-top: 88px; /* Ajustado para padding header de 16px (80px + 8px) */
+}
+
+/* ===== HERO SECTION ===== */
+.hero-section {
+  background-color: var(--global-bg-3);
+  padding: 4rem 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  padding: 30px 24px;
+}
+
+.hero-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: -150px;
+}
+
+.hero-heading-creative {
+  font-family: 'Gilda Display', serif;
+  font-size: 210px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 190px;
+  color: var(--global-text-1);
+  text-align: center;
+  margin: 0;
+  letter-spacing: 0;
+}
+
+.hero-heading-product {
+  font-family: 'Geist', sans-serif;
+  font-size: 210px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 190px;
+  color: var(--global-text-3);
+  text-align: center;
+  margin: 0;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  letter-spacing: 0;
+}
+
+.hero-heading-designer {
+  font-family: 'Geist', sans-serif;
+  font-size: 210px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 190px;
+  color: #030309;
+  text-align: center;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.hero-heading-designer-i {
+  display: inline-block;
+  width: 52px;
+  height: 155px;
+  background-image: url('/images/hands.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50px;
+  color: transparent;
+  text-shadow: none;
+  position: relative;
+  overflow: hidden;
+  margin: 0 3px;
+}
+
+.hero-bottom {
+  width: 100%;
+  display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: flex-end;
+gap: 36px;
+align-self: stretch;
+}
+
+.hero-profile-img {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.hero-description {
+  max-width: 50%;
+  margin-left: 30px;
+  font-size: 14px;
+  font-family: 'Geist', sans-serif;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: left;
+  text-transform: uppercase;
+  color: #030309;
+}
+
+/* ===== FEATURED SECTION ===== */
+.featured-section {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  padding: 100px 24px 100px 24px;
+}
+
+.featured-heading {
+display: flex;
+align-items: center;
+align-self: stretch;
+}
+
+.featured-heading-gilda {
+  font-family: 'Gilda Display', serif;
+  color: #030309;
+  font-size: 190px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 70%; /* Ajustado para simular leading-trim */
+  letter-spacing: 3px; /* Reducido de 5.49px */
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+  display: inline-block;
+}
+
+.featured-heading-geist {
+  font-family: 'Geist', sans-serif;
+  font-size: 190px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 70%; /* Ajustado para simular leading-trim */
+  letter-spacing: 3px; /* Reducido de 5.49px */
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+  display: inline-block;
+}
+
+
+
+/* ===== PORTFOLIO SECTION ===== */
+.portfolio-section {
+  width: 100%;
+  background: var(--global-bg-1);
+  padding: 30px 24px;
+}
+
+.portfolio-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  width: 100%;
+}
+
+.portfolio-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.portfolio-card-number {
+  font-size: 0.875rem;
+  font-family: 'Geist', sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  color: var(--global-bg-4);
+}
+
+.portfolio-card-img-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+}
+
+.portfolio-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.portfolio-card:hover .portfolio-card-img {
+  transform: scale(1.05);
+}
+
+.portfolio-card-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.portfolio-card-title {
+  font-size: 14px;
+  font-family: 'Geist', sans-serif;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: left;
+  color: var(--global-bg-4);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.portfolio-card-tags {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.portfolio-card-tag {
+  font-size: 0.875rem;
+  font-size: 14px;
+  font-family: 'Geist', sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  color: #ececec;
+}
+
+
+
+/* ===== PHILOSOPHY SECTION ===== */
+.philosophy-section {
+  width: 100%;
+  background: var(--global-bg-1);
+  padding: 60px 0;
+  overflow: hidden;
+}
+
+.philosophy-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  align-items: center;
+}
+
+.philosophy-titles {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+}
+
+.philosophy-row {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.philosophy-carousel {
+  display: inline-flex;
+  align-items: center;
+}
+
+.philosophy-title-geist {
+  font-size: 120px;
+  font-family: 'Geist', sans-serif;
+  font-weight: normal;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--global-text-2);
+  white-space: nowrap;
+}
+
+.philosophy-title-gilda {
+  font-size: 120px;
+  font-family: 'Gilda Display', serif;
+  font-style: italic;
+  font-weight: normal;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--global-text-2);
+  white-space: nowrap;
+}
+
+.philosophy-title-margin6 {
+  margin-left: 6px;
+}
+
+.philosophy-title-margin10 {
+  margin-left: 10px;
+}
+
+.philosophy-separator {
+  width: 2em;
+  height: 100%;
+  margin: 0 0.25em;
+  vertical-align: middle;
+  opacity: 0.7;
+  filter: brightness(0) invert(1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== ABOUT SECTION ===== */
+.about-section {
+  width: 100%;
+  background: var(--global-bg-1);
+  padding: 60px 24px;
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+}
+
+.about-images {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;  
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.about-images-row {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.about-img {
+  width: 50%;
+  height: 388px;
+  object-fit: cover;
+}
+
+.about-description-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.about-description {
+  max-width: 50%;
+  margin-right: 30px;
+  font-size: 14px;
+  font-family: 'Geist', sans-serif;
+  font-weight: normal;
+  line-height: 1.5;
+  text-align: left;
+  text-transform: uppercase;
+  color: var(--global-text-2);
+}
+
+.about-who {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.about-who-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+}
+
+.about-who-title-gilda {
+  color: var(--global-text-2);
+  font-family: "Gilda Display";
+  font-size: 124px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 75%;
+  text-transform: uppercase;
+  letter-spacing: 2px; /* Reducir letter-spacing */
+}
+
+.about-who-title-geist {
+  color: var(--global-text-2);
+  font-family: Geist;
+  font-size: 124px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 75%;
+  text-transform: uppercase;
+  letter-spacing: 2px; /* Reducir letter-spacing */
+}
+
+
+
+/* ===== ANIMATIONS ===== */
+
+
+/* ===== RESPONSIVE BREAKPOINT 1790px ===== */
+@media (max-width: 1790px) and (min-width: 861px) {
+  /* Creative Product Designer - Reducir 20% */
+  .hero-heading-creative {
+    font-size: 168px; /* 210px * 0.8 */
+    line-height: 152px; /* 190px * 0.8 */
+    letter-spacing: 0;
+  }
+  
+  .hero-heading-product {
+    font-size: 168px; /* 210px * 0.8 */
+    line-height: 152px; /* 190px * 0.8 */
+    letter-spacing: 0;
+  }
+  
+  .hero-heading-designer {
+    font-size: 168px; /* 210px * 0.8 */
+    line-height: 152px; /* 190px * 0.8 */
+    letter-spacing: 0;
+  }
+  
+  .hero-heading-designer-i {
+    width: 41.6px; /* 52px * 0.8 */
+    height: 124px; /* 155px * 0.8 */
+    border-radius: 40px; /* Proporcionalmente escalado */
+    margin: 0 2.4px;
+  }
+  
+  /* Featured Work - Reducir 20% */
+  .featured-heading-gilda {
+    font-size: 152px; /* 190px * 0.8 */
+  }
+  
+  .featured-heading-geist {
+    font-size: 152px; /* 190px * 0.8 */
+  }
+  
+  /* WHO IS TJC - Reducir 20% */
+  .about-who-title-gilda {
+    font-size: 99.2px; /* 124px * 0.8 */
+  }
+  
+  .about-who-title-geist {
+    font-size: 99.2px; /* 124px * 0.8 */
+  }
+}
+
+/* ===== RESPONSIVE BREAKPOINT 1360px ===== */
+@media (max-width: 1360px) {
+  .featured-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .hero-heading {
+    margin-bottom: 0; /* Sin margen inferior */
+  }
+  
+  .hero-bottom {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+  }
+  
+  .hero-profile-img {
+    order: -1; /* Mover imagen a la izquierda */
+    flex-shrink: 0;
+  }
+  
+  .hero-description {
+    max-width: 60%;
+    margin-left: 0;
+    text-align: left;
+  }
+}
+
+/* ===== RESPONSIVE BREAKPOINT 860px ===== */
+@media (max-width: 860px) {
+  .hero-heading-creative {
+    font-size: 134.4px; /* Reducir 20% desde 168px */
+    line-height: 121.6px; /* Reducir 20% desde 152px */
+    letter-spacing: 0;
+  }
+  
+  .hero-heading-product {
+    font-size: 134.4px;
+    line-height: 121.6px;
+    letter-spacing: 0;
+  }
+  
+  .hero-heading-designer {
+    font-size: 134.4px;
+    line-height: 121.6px;
+    letter-spacing: 0;
+  }
+  
+  .hero-heading-designer-i {
+    width: 33.28px; /* 41.6px * 0.8 */
+    height: 99.2px; /* 124px * 0.8 */
+    border-radius: 32px; /* Proporcionalmente escalado */
+    margin: 0 1.92px;
+  }
+  
+  /* Featured Work - Reducir 20% desde 152px */
+  .featured-heading-gilda {
+    font-size: 121.6px; /* 152px * 0.8 */
+  }
+  
+  .featured-heading-geist {
+    font-size: 121.6px; /* 152px * 0.8 */
+  }
+  
+  /* WHO IS TJC - Reducir 20% desde 99.2px */
+  .about-who-title-gilda {
+    font-size: 79.36px; /* 99.2px * 0.8 */
+  }
+  
+  .about-who-title-geist {
+    font-size: 79.36px; /* 99.2px * 0.8 */
+  }
+}
+
+/* ===== RESPONSIVE BREAKPOINT 768px ===== */
+@media (max-width: 768px) {
+  /* Reducir padding lateral de 24px a 20px y eliminar padding superior */
+  .hero-section {
+    padding: 0 20px 30px 20px;
+  }
+  
+  .featured-section {
+    padding: 50px 20px 50px 20px;
+  }
+  
+  .portfolio-section {
+    padding: 30px 20px;
+  }
+  
+  .about-section {
+    padding: 60px 20px;
+  }
+  
+  /* Creative Product Designer - Reducir a 96px */
+  .hero-heading-creative {
+    font-size: 96px;
+    line-height: 86px;
+    letter-spacing: 0;
+  }
+  
+  .hero-heading-product {
+    font-size: 96px;
+    line-height: 86px;
+    letter-spacing: 0;
+  }
+  
+  .hero-heading-designer {
+    font-size: 96px;
+    line-height: 86px;
+    letter-spacing: 0;
+  }
+  
+  .hero-heading-designer-i {
+    width: 23.71px; /* Proporcional a 96px font-size */
+    height: 70.71px; /* Proporcional a 96px font-size */
+    border-radius: 23px; /* Proporcionalmente escalado */
+    margin: 0 1.38px;
+  }
+  
+  /* Featured Work - Formato horizontal con 72px */
+  .featured-heading {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 20px;
+  }
+  
+  .featured-heading-gilda {
+    font-size: 72px;
+  }
+  
+  .featured-heading-geist {
+    font-size: 72px;
+  }
+  
+  /* Get in Touch - Formato horizontal con 96px */
+  .contact-heading {
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 20px;
+    font-size: 96px;
+  }
+  
+  .contact-heading-gilda {
+    font-size: 96px;
+  }
+  
+  .contact-heading-geist {
+    font-size: 96px;
+  }
+  
+  /* Portfolio Grid - Cambiar a una sola columna */
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  /* Portfolio Card Info - Mantener disposición horizontal con alineación superior */
+  .portfolio-card-info {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .portfolio-card-title {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    flex: 1;
+    margin-right: 8px;
+  }
+  
+  .portfolio-card-tags {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: flex-start;
+    flex-shrink: 0;
+  }
+  
+  /* About Images - Cambiar a disposición vertical */
+  .about-images-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .about-img {
+    width: 100%;
+    height: 300px;
+  }
+  
+  /* Philosophy Carousel - Reducir tamaño de palabras 20% y ajustar espaciado */
+  .philosophy-title-geist {
+    font-size: 96px; /* 120px * 0.8 */
+  }
+  
+  .philosophy-title-gilda {
+    font-size: 96px; /* 120px * 0.8 */
+  }
+  
+  .philosophy-titles {
+    gap: 0; /* Eliminar espacio entre filas */
+  }
+}
+
+/* ===== RESPONSIVE BREAKPOINT 748px ===== */
+@media (max-width: 748px) {
+  /* Get in Touch - Cambiar a formato vertical manteniendo 96px */
+  .contact-heading {
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    gap: 0;
+    font-size: 96px;
+    text-align: left;
+  }
+  
+  .contact-heading-gilda {
+    font-size: 96px;
+  }
+  
+  .contact-heading-geist {
+    font-size: 96px;
+  }
+}
+
+/* ===== RESPONSIVE BREAKPOINT 720px ===== */
+@media (max-width: 720px) {
+  /* Featured Work - Cambiar a formato vertical manteniendo 72px */
+  .featured-heading {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px;
+  }
+  
+  .featured-heading-gilda {
+    font-size: 72px;
+  }
+  
+  .featured-heading-geist {
+    font-size: 72px;
+  }
+  
+  /* WHO IS TJC - Párrafo sin limitación de ancho */
+  .about-description {
+    max-width: 100% !important;
+  }
+  
+  /* Philosophy Carousel - Reducir tamaño a 72px */
+  .philosophy-title-geist {
+    font-size: 72px !important;
+  }
+  
+  .philosophy-title-gilda {
+    font-size: 72px !important;
+  }
+  
+  /* Philosophy Section - Reducir padding superior e inferior a 30px */
+  .philosophy-section {
+    padding: 30px 0 30px 0 !important;
+  }
+  
+  /* About Section - Reducir padding superior e inferior a 30px */
+  .about-section {
+    padding: 30px 20px !important;
+  }
+}
+
+/* ===== RESPONSIVE BREAKPOINT 580px ===== */
+@media (max-width: 580px) {
+  /* Portfolio Card Tags - Mantener alineación horizontal en pantallas pequeñas */
+  .portfolio-card-tags {
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+  
+  /* Creative Product Designer - Alinear a la izquierda y reducir 10% */
+  .hero-section {
+    padding-top: 0; /* Eliminar padding superior de la sección */
+    align-items: flex-start !important; /* Alinear contenido a la izquierda */
+    justify-content: flex-start !important; /* Alinear contenido a la izquierda */
+  }
+  
+  .hero-heading {
+    text-align: left !important;
+    padding-top: 0; /* Eliminar padding superior */
+    align-items: flex-start !important; /* Alinear elementos a la izquierda */
+  }
+  
+  .hero-heading-creative {
+    font-size: 86.4px; /* 96px * 0.9 */
+    line-height: 65px; /* Reducir espacio entre líneas */
+    margin-bottom: -10px; /* Reducir espacio con la siguiente palabra */
+    text-align: left; /* Alinear a la izquierda */
+    letter-spacing: 0;
+  }
+  
+  .hero-heading-product {
+    font-size: 86.4px; /* 96px * 0.9 */
+    line-height: 65px; /* Reducir espacio entre líneas */
+    margin-bottom: -10px; /* Reducir espacio con la siguiente palabra */
+    text-align: left; /* Alinear a la izquierda */
+    letter-spacing: 0;
+  }
+  
+  .hero-heading-designer {
+    font-size: 86.4px; /* 96px * 0.9 */
+    line-height: 65px; /* Reducir espacio entre líneas */
+    text-align: left; /* Alinear a la izquierda */
+    letter-spacing: 0;
+  }
+  
+  .hero-heading-designer-i {
+    width: 21.34px; /* 23.71px * 0.9 */
+    height: 63.64px; /* 70.71px * 0.9 */
+    border-radius: 20px; /* Proporcionalmente escalado */
+    margin: 0 1.24px;
+  }
+  
+  /* Reducir imagen del hero un 20% */
+  .hero-profile-img {
+    width: 102.4px; /* 128px * 0.8 = 102.4px */
+    height: 102.4px; /* 128px * 0.8 = 102.4px */
+  }
+  
+  /* WHO IS TJC - Dividir en dos líneas */
+  .about-who-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+  
+  .about-who-title-gilda::after {
+    content: "";
+    display: block;
+  }
+}
+
+/* ===== RESPONSIVE BREAKPOINT 470px ===== */
+@media (max-width: 470px) {
+  /* Creative Product Designer - Reducir a 72px y mantener alineación izquierda */
+  .hero-section {
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+  }
+  
+  .hero-heading {
+    text-align: left !important;
+    align-items: flex-start !important;
+  }
+  
+  .hero-heading-creative {
+    font-size: 72px !important;
+    line-height: 65px !important;
+    text-align: left !important;
+    letter-spacing: 0 !important;
+  }
+  
+  .hero-heading-product {
+    font-size: 72px !important;
+    line-height: 65px !important;
+    text-align: left !important;
+    letter-spacing: 0 !important;
+  }
+  
+  .hero-heading-designer {
+    font-size: 72px !important;
+    line-height: 65px !important;
+    text-align: left !important;
+    letter-spacing: 0 !important;
+  }
+  
+  .hero-heading-designer-i {
+    width: 17.78px !important; /* Proporcional a 72px font-size */
+    height: 53px !important; /* Proporcional a 72px font-size */
+    border-radius: 17px !important; /* Proporcionalmente escalado */
+    margin: 0 1.03px !important;
+  }
+  
+  /* Featured Work - Reducir a 52px */
+  .featured-heading-gilda {
+    font-size: 52px !important;
+  }
+  
+  .featured-heading-geist {
+    font-size: 52px !important;
+  }
+  
+  /* WHO IS TJC - Reducir a 52px y mostrar en línea horizontal */
+  .about-who-title {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 20px !important;
+  }
+  
+  .about-who-title-gilda {
+    font-size: 52px !important;
+  }
+  
+  .about-who-title-geist {
+    font-size: 52px !important;
+  }
+  
+  .about-who-title-gilda::after {
+    content: none !important;
+    display: none !important;
+  }
+}
+
+/* ===== RESPONSIVE BREAKPOINT 400px ===== */
+@media (max-width: 400px) {
+  /* Creative Product Designer - Reducir a 60px y eliminar margen superior */
+  .hero-section {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  
+  .hero-heading {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  
+  .hero-heading-creative {
+    font-size: 60px !important;
+    line-height: 55px !important;
+    margin-top: 0 !important;
+    letter-spacing: 0 !important;
+  }
+  
+  /* Get in Touch - Reducir a 72px */
+  .contact-heading {
+    font-size: 72px !important;
+  }
+  
+  .contact-heading-gilda {
+    font-size: 72px !important;
+  }
+  
+  .contact-heading-geist {
+    font-size: 72px !important;
+    margin-bottom: -10px !important;
+  }
+  
+  .hero-heading-product {
+    font-size: 60px !important;
+    line-height: 55px !important;
+    margin-top: 0 !important;
+    margin-bottom: -10px !important;
+    letter-spacing: 0 !important;
+  }
+  
+  .hero-heading-designer {
+    font-size: 60px !important;
+    line-height: 55px !important;
+    margin-top: 0 !important;
+    letter-spacing: 0 !important;
+  }
+  
+  .hero-heading-designer-i {
+    width: 14.81px !important; /* Proporcional a 60px font-size */
+    height: 44.17px !important; /* Proporcional a 60px font-size */
+    border-radius: 14px !important; /* Proporcionalmente escalado */
+    margin: 0 0.86px !important;
+  }
+  
+  /* WHO IS TJC - Volver a formato vertical */
+  .about-who-title {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0 !important;
+  }
+  
+  .about-who-title-gilda::after {
+    content: "" !important;
+    display: block !important;
+  }
+}
+
+

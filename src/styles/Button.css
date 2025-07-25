@@ -1,0 +1,100 @@
+.button {
+  font-family: 'Geist', sans-serif;
+  font-weight: 500;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.button:focus {
+  box-shadow: 0 0 0 2px rgba(253, 96, 26, 0.5);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+}
+
+/* Variants */
+.button--primary {
+  background-color: var(--global-bg-5);
+  color: var(--global-text-4);
+}
+
+.button--primary:hover:not(:disabled) {
+  background-color: rgba(253, 96, 26, 0.9);
+}
+
+.button--primary:disabled {
+  background-color: var(--global-bg-4);
+}
+
+.button--secondary {
+  background-color: var(--global-bg-2);
+  color: var(--global-text-1);
+}
+
+.button--secondary:hover:not(:disabled) {
+  background-color: rgba(221, 219, 217, 0.9);
+}
+
+.button--secondary:disabled {
+  background-color: var(--global-bg-4);
+}
+
+.button--outline {
+  background-color: transparent;
+  border: 1px solid var(--global-text-2);
+  color: var(--global-text-2);
+}
+
+.button--outline:hover:not(:disabled) {
+  background-color: rgba(226, 225, 223, 0.1);
+}
+
+.button--outline:disabled {
+  border-color: var(--global-bg-4);
+  color: var(--global-bg-4);
+}
+
+/* Sizes */
+.button--small {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .button--small {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+.button--medium {
+  padding: 0.375rem 1rem;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .button--medium {
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+.button--large {
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+}
+
+@media (min-width: 640px) {
+  .button--large {
+    padding: 0.75rem 2rem;
+    font-size: 1.125rem;
+  }
+}
+
+.button--full-width {
+  width: 100%;
+}
