@@ -3,43 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "rocketCritical": {
-    "dependencies": [
-      "react",
-      "react-dom",
-      "prop-types",
-      "react-router-dom",
-      "@dhiwise/component-tagger",
-      "@tailwindcss/typography",
-      "recharts"
-    ],
-    "devDependencies": [
-      "@vitejs/plugin-react",
-      "vite",
-      "typescript",
-      "@types/react",
-      "@types/react-dom",
-      "@typescript-eslint/eslint-plugin",
-      "@typescript-eslint/parser",
-      "typescript-eslint",
-      "tailwindcss",
-      "autoprefixer",
-      "postcss",
-      "eslint",
-      "prettier"
-    ],
-    "scripts": [
-      "start",
-      "build",
-      "lint",
-      "lint:fix",
-      "format",
-      "preview",
-      "serve",
-      "type-check"
-    ],
-    "warning": "🚨 CRITICAL: DO NOT REMOVE OR MODIFY ABOVE DEPENDENCIES - Required for TypeScript React app functionality"
-  },
+
   "scripts": {
     "start": "vite",
     "build": "tsc --noCheck && vite build",
@@ -49,7 +13,6 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@dhiwise/component-tagger": "^1.0.10",
     "@gsap/react": "^2.1.2",
     "gsap": "^3.13.0",
     "lenis": "^1.3.8",

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Lenis from 'lenis';
 import { setLenisInstance } from './hooks/useLenisScroll';
 import Routes from './Routes';
+import CustomCursor from './components/ui/CustomCursor';
 
 const App: React.FC = () => {
 
@@ -29,7 +30,13 @@ const App: React.FC = () => {
 
 
 
-  return <Routes />;
+  return (
+    <>
+      <CustomCursor />
+      <Routes />
+    </>
+  );
+
 };
 
 export default App;

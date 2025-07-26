@@ -141,16 +141,16 @@
   }
   
   .error-404-number {
-    font-size: clamp(4rem, 15vw, 8rem);
+    font-size: clamp(6rem, 20vw, 12rem);
     gap: 0.02em;
   }
   
   .error-404-title {
-    font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
   }
   
   .error-404-subtitle {
-    font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+    font-size: clamp(1rem, 2.5vw, 1.125rem);
   }
   
   .error-404-links {
@@ -158,7 +158,7 @@
   }
   
   .error-404-link {
-    font-size: 0.875rem;
+    font-size: 1rem;
   }
 }
 
@@ -181,16 +181,16 @@
   }
   
   .error-404-number {
-    font-size: clamp(3rem, 12vw, 6rem);
+    font-size: clamp(5rem, 18vw, 10rem);
     gap: 0.05em;
   }
   
   .error-404-title {
-    font-size: clamp(0.625rem, 1.2vw, 0.75rem);
+    font-size: clamp(1.125rem, 2.5vw, 1.25rem);
   }
   
   .error-404-subtitle {
-    font-size: clamp(0.625rem, 1.2vw, 0.75rem);
+    font-size: clamp(0.875rem, 2vw, 1rem);
   }
   
   .error-404-links {
@@ -198,7 +198,7 @@
   }
   
   .error-404-link {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
   }
 }
 
