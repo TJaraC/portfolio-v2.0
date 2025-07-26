@@ -133,56 +133,71 @@ const Header: React.FC = () => {
 
   // Configurar animaciones del menú móvil
   useEffect(() => {
-    if (!menuRef.current || !overlayRef.current) return;
+    // Limpiar timeline anterior si existe
+    if (tl.current) {
+      tl.current.kill();
+    }
 
-    // Crear timeline para las animaciones
-    tl.current = gsap.timeline({ paused: true });
+    // Solo crear timeline si tenemos las referencias necesarias
+    if (menuRef.current && overlayRef.current) {
+      // Crear timeline para las animaciones
+      tl.current = gsap.timeline({ paused: true });
 
-    // Animación del overlay
-    tl.current.fromTo(overlayRef.current, 
-      { opacity: 0 },
-      { opacity: 1, duration: 0.3, ease: "power2.out" }
-    );
+      // Animación del overlay
+        tl.current.fromTo(overlayRef.current, 
+          { opacity: 0 },
+          { opacity: 1, duration: 0.15, ease: "power2.out" }
+        );
 
-    // Animación del menú
-    tl.current.fromTo(menuRef.current,
-      { 
-        opacity: 0, 
-        scale: 0.9, 
-        y: -30
-      },
-      { 
-        opacity: 1, 
-        scale: 1, 
-        y: 0,
-        duration: 0.4, 
-        ease: "back.out(1.7)" 
-      },
-      "-=0.1"
-    );
-
-    // Animación de los elementos del menú
-    const menuItems = menuItemsRef.current.filter(item => item !== null);
-    menuItems.forEach((item, index) => {
-      if (item && tl.current) {
-        tl.current.fromTo(item,
+        // Animación del menú
+        tl.current.fromTo(menuRef.current,
           { 
             opacity: 0, 
-            y: 30, 
-            x: -20
+            scale: 0.9, 
+            y: -30
           },
           { 
             opacity: 1, 
-            y: 0, 
-            x: 0,
-            duration: 0.3,
-            ease: "back.out(1.7)"
+            scale: 1, 
+            y: 0,
+            duration: 0.2, 
+            ease: "back.out(1.7)" 
           },
-          index === 0 ? 0.1 : `+=${0.05}`
+          "-=0.05"
         );
+
+      // Animación de los elementos del menú
+      const menuItems = menuItemsRef.current.filter(item => item !== null);
+      if (menuItems.length > 0) {
+        menuItems.forEach((item, index) => {
+          if (item && tl.current) {
+            tl.current.fromTo(item,
+               { 
+                  opacity: 0, 
+                  y: 30, 
+                  x: -20
+                },
+                { 
+                  opacity: 1, 
+                  y: 0, 
+                  x: 0,
+                  duration: 0.15,
+                  ease: "back.out(1.7)"
+                },
+                index === 0 ? 0.05 : `+=${0.02}`
+             );
+          }
+        });
       }
-    });
-  }, []);
+    }
+
+    // Cleanup function
+    return () => {
+      if (tl.current) {
+        tl.current.kill();
+      }
+    };
+  }, [menuOpen]); // Recrear cuando menuOpen cambie
 
   // Controlar apertura/cierre del menú
   useEffect(() => {
@@ -208,12 +223,31 @@ const Header: React.FC = () => {
     };
   }, [menuOpen, lenis]);
 
+  // Cleanup general al desmontar el componente
+  useEffect(() => {
+    return () => {
+      // Limpiar todas las animaciones GSAP
+      if (tl.current) {
+        tl.current.kill();
+      }
+      if (hamburgerRef.current) {
+        gsap.killTweensOf(hamburgerRef.current);
+      }
+      if (logoRef.current) {
+        gsap.killTweensOf(logoRef.current);
+      }
+      // Limpiar clases del body
+      document.body.classList.remove('menu-open');
+    };
+  }, []);
+
   useEffect(() => {
     if (tl.current) {
       if (menuOpen) {
         tl.current.play();
         // Animar el icono hamburguesa cuando se abre
         if (hamburgerRef.current) {
+          gsap.killTweensOf(hamburgerRef.current); // Limpiar animaciones previas
           gsap.to(hamburgerRef.current, {
             rotation: 180,
             scale: 1.1,
@@ -225,6 +259,7 @@ const Header: React.FC = () => {
         tl.current.reverse();
         // Animar el icono hamburguesa cuando se cierra
         if (hamburgerRef.current) {
+          gsap.killTweensOf(hamburgerRef.current); // Limpiar animaciones previas
           gsap.to(hamburgerRef.current, {
             rotation: 0,
             scale: 1,

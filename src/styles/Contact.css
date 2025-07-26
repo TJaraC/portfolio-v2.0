@@ -27,26 +27,33 @@
 
 .contact-heading {
   margin: 0;
-  font-size: 260px;
+  /* Fallback for browsers without clamp support */
+  font-size: 8rem;
+  font-size: clamp(2rem, 20vw, 16.25rem); /* Reducción muy agresiva */
   line-height: 90%;
   text-align: center;
-  color: var(--global-text-2);
+  color: #e2e1df;
+  color: var(--global-text-2, #e2e1df);
   display: flex;
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
+  white-space: nowrap; /* Forzar que no haya saltos de línea */
+  overflow: hidden; /* Evitar desbordamiento */
 }
 
 .contact-heading-gilda {
-  font-family: 'Gilda Display', serif;
+  font-family: 'Gilda Display', 'Times New Roman', 'Georgia', 'Playfair Display', 'Crimson Text', serif;
   font-weight: 400;
   letter-spacing: 4px; /* Reducir letter-spacing */
 }
 
 .contact-heading-geist {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   font-weight: 700;
   letter-spacing: 4px; /* Reducir letter-spacing */
+  white-space: nowrap; /* Evitar que las letras salten a nueva línea */
+  display: inline-block; /* Mantener como bloque en línea */
 }
 
 .contact-subtitle {
@@ -72,8 +79,9 @@
 }
 
 .contact-subtitle-text {
-  color: var(--global-text-2);
-  font-family: Geist;
+  color: #e2e1df;
+  color: var(--global-text-2, #e2e1df);
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -133,6 +141,15 @@
   gap: 4px;
 }
 
+/* Reorganizar orden en desktop: copyright encima de back to top */
+.footer-copyright {
+  order: 1;
+}
+
+.footer-backtop {
+  order: 2;
+}
+
 .footer-copyright {
   font-size: 1rem;
   font-family: 'Geist', sans-serif;
@@ -168,16 +185,12 @@
   }
 }
 
-/* ===== RESPONSIVE BREAKPOINT 1837px ===== */
-@media (max-width: 1837px) {
-  /* GET IN TOUCH - Reducir 40% */
-  .contact-heading {
-    font-size: 156px; /* 260px * 0.6 */
-  }
-}
+/* Font-size ya definido en la clase base con clamp() */
 
 /* ===== RESPONSIVE BREAKPOINT 768px ===== */
 @media (max-width: 768px) {
+  /* GET IN TOUCH - Tamaño para tablet */
+  
   /* Reducir padding lateral de 24px a 20px y padding superior a 50px */
   .contact-content {
     padding: 50px 20px 30px 20px;
@@ -190,17 +203,48 @@
     gap: 40px;
   }
   
-  .footer-left {
-    order: 2;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 2px;
-  }
-  
+  /* Botones a la izquierda */
   .footer-links {
     order: 1;
     flex-direction: column;
     gap: 15px;
+  }
+  
+  /* Textos a la izquierda: designed arriba, copyright abajo con espacio */
+  .footer-left {
+    order: 2;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: 100%;
+    min-height: 80px;
+  }
+  
+  /* Contenedor para los textos superiores */
+  .footer-text-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  
+  /* Mover copyright de footer-right a footer-left en mobile */
+  .footer-left::after {
+    content: "© 2025 - All Rights Reserved";
+    font-size: 1rem;
+    font-family: 'Geist', sans-serif;
+    font-weight: 500;
+    color: var(--global-text-2);
+    align-self: flex-end;
+    margin-top: auto;
+  }
+  
+  .footer-design {
+    /* "designed and developed by..." arriba */
+  }
+  
+  .footer-author {
+    /* "by Patricio..." debajo de designed */
   }
   
   .footer-right {
@@ -208,14 +252,6 @@
   }
 }
 
-@media (max-width: 480px) {
-  .contact-heading {
-    font-size: 100px;
-  }
-}
+/* Todos los breakpoints de font-size eliminados - ahora usa clamp() */
 
-@media (max-width: 470px) {
-  .contact-heading {
-    font-size: 52px;
-  }
-}
+/* Media queries de font-size eliminados - clamp() maneja todo el escalado */

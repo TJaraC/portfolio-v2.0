@@ -1,0 +1,225 @@
+/* ===== BROWSER-SPECIFIC STYLES ===== */
+
+/* Styles for browsers without backdrop-filter support */
+.no-backdrop-filter .mobile-menu-overlay {
+  background: rgba(255, 255, 255, 0.95) !important;
+}
+
+.no-backdrop-filter .mobile-menu {
+  background: rgba(255, 255, 255, 0.98) !important;
+}
+
+/* Styles for browsers without clamp() support */
+.no-clamp .contact-heading {
+  font-size: 8rem !important;
+}
+
+@media (max-width: 1140px) {
+  .no-clamp .contact-heading {
+    font-size: 6rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .no-clamp .contact-heading {
+    font-size: 4rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .no-clamp .contact-heading {
+    font-size: 2.5rem !important;
+  }
+}
+
+@media (max-width: 320px) {
+  .no-clamp .contact-heading {
+    font-size: 2rem !important;
+  }
+}
+
+/* Styles for browsers without CSS Grid support */
+.no-grid .grid-fallback {
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
+
+/* Styles for browsers without CSS Custom Properties support */
+.no-custom-properties {
+  /* Fallback color scheme */
+  background-color: #131313;
+  color: #e2e1df;
+}
+
+.no-custom-properties .contact-heading {
+  color: #e2e1df !important;
+}
+
+.no-custom-properties .logo-text {
+  color: #030309 !important;
+}
+
+.no-custom-properties .nav-button {
+  color: #030309 !important;
+}
+
+.no-custom-properties .button--primary {
+  background-color: #fd601a !important;
+  color: #ffffff !important;
+}
+
+.no-custom-properties .button--secondary {
+  background-color: #dddbd9 !important;
+  color: #030309 !important;
+}
+
+.no-custom-properties .button--outline {
+  border-color: #e2e1df !important;
+  color: #e2e1df !important;
+}
+
+/* Safari-specific fixes */
+.safari .mobile-menu-overlay,
+.safari .mobile-menu {
+  /* Safari sometimes has issues with backdrop-filter */
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* iOS-specific fixes */
+.ios {
+  /* Fix for iOS viewport height issues */
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+.ios .mobile-menu,
+.ios .mobile-menu-overlay {
+  /* iOS specific height fix */
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+/* Internet Explorer fixes */
+.ie .contact-heading {
+  /* IE doesn't support clamp, use fixed sizes */
+  font-size: 8rem;
+}
+
+.ie .mobile-menu-overlay,
+.ie .mobile-menu {
+  /* IE doesn't support backdrop-filter */
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* Firefox-specific fixes */
+.firefox .mobile-menu-overlay,
+.firefox .mobile-menu {
+  /* Firefox sometimes needs explicit backdrop-filter */
+  backdrop-filter: blur(20px);
+}
+
+/* Edge Legacy fixes */
+.edge-legacy .contact-heading {
+  /* Edge Legacy has limited clamp support */
+  font-size: 8rem;
+}
+
+/* Chrome-specific optimizations */
+.chrome .mobile-menu,
+.chrome .mobile-menu-overlay {
+  /* Chrome handles backdrop-filter well */
+  will-change: backdrop-filter;
+}
+
+/* Reduced motion styles */
+.reduce-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* High contrast styles */
+.high-contrast {
+  filter: contrast(150%);
+}
+
+.high-contrast .contact-heading {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+  border: 2px solid #000000;
+}
+
+.high-contrast .logo-text,
+.high-contrast .nav-button {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+}
+
+/* Font fallback styles */
+.geist-fallback {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+}
+
+.gilda-fallback {
+  font-family: 'Times New Roman', 'Georgia', 'Playfair Display', 'Crimson Text', serif !important;
+}
+
+/* Print styles */
+@media print {
+  .mobile-menu,
+  .mobile-menu-overlay,
+  .hamburger-menu {
+    display: none !important;
+  }
+  
+  .contact-heading {
+    font-size: 3rem !important;
+    color: #000000 !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* Prefers color scheme support */
+@media (prefers-color-scheme: light) {
+  .auto-theme {
+    background-color: #ffffff;
+    color: #000000;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .auto-theme {
+    background-color: #131313;
+    color: #e2e1df;
+  }
+}
+
+/* Focus styles for better accessibility */
+.focus-visible-fallback:focus {
+  outline: 2px solid #fd601a;
+  outline-offset: 2px;
+}
+
+/* Support for older browsers without :focus-visible */
+@supports not selector(:focus-visible) {
+  .focus-visible-fallback:focus {
+    outline: 2px solid #fd601a;
+    outline-offset: 2px;
+  }
+}
+
+@supports selector(:focus-visible) {
+  .focus-visible-fallback:focus {
+    outline: none;
+  }
+  
+  .focus-visible-fallback:focus-visible {
+    outline: 2px solid #fd601a;
+    outline-offset: 2px;
+  }
+}

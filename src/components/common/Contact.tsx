@@ -17,9 +17,10 @@ const Contact: React.FC = () => {
         {/* Footer */}
         <footer className="footer">
           <div className="footer-left">
-            <span className="footer-design">Design & Developed </span>
-            <span className="footer-author">by Patricio Jaramillo Castrillo</span>
-            <span className="footer-copyright">© 2025 - All Rights Reserved</span>
+            <div className="footer-text-group">
+              <span className="footer-design">Design & Developed </span>
+              <span className="footer-author">by Patricio Jaramillo Castrillo</span>
+            </div>
           </div>
           <div className="footer-links">
             <Button 
@@ -45,6 +46,7 @@ const Contact: React.FC = () => {
             </Button>
           </div>
           <div className="footer-right">
+            <span className="footer-copyright">© 2025 - All Rights Reserved</span>
             <div className="footer-backtop">
               <span className="footer-backtop-text">Back to top </span>
               <img 

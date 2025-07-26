@@ -21,14 +21,16 @@ body {
 /* ===== HERO SECTION ===== */
 .hero-section {
   background-color: var(--global-bg-3);
-  padding: 4rem 0;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: auto;
+  justify-content: center; /* Centrar contenido */
+  /* Altura completa de la pantalla menos el header */
+  height: calc(100vh - 80px); /* 80px = header height aproximado */
+  min-height: calc(100dvh - 80px); /* Para navegadores móviles con barras dinámicas */
   padding: 30px 24px;
+  box-sizing: border-box;
 }
 
 .hero-heading {
@@ -37,28 +39,30 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin-bottom: -150px;
+  margin-bottom: -150px; /* Margen negativo para pegar al hero-bottom */
 }
 
 .hero-heading-creative {
-  font-family: 'Gilda Display', serif;
+  font-family: 'Gilda Display', 'Times New Roman', 'Georgia', 'Playfair Display', 'Crimson Text', serif;
   font-size: 210px;
   font-style: normal;
   font-weight: 400;
   line-height: 190px;
-  color: var(--global-text-1);
+  color: #030309;
+  color: var(--global-text-1, #030309);
   text-align: center;
   margin: 0;
   letter-spacing: 0;
 }
 
 .hero-heading-product {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   font-size: 210px;
   font-style: normal;
   font-weight: 700;
   line-height: 190px;
-  color: var(--global-text-3);
+  color: #fd601a;
+  color: var(--global-text-3, #fd601a);
   text-align: center;
   margin: 0;
   text-transform: uppercase;
@@ -70,7 +74,7 @@ body {
 }
 
 .hero-heading-designer {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   font-size: 210px;
   font-style: normal;
   font-weight: 700;
@@ -118,7 +122,7 @@ align-self: stretch;
   max-width: 50%;
   margin-left: 30px;
   font-size: 14px;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   font-weight: 500;
   line-height: 1.2;
   text-align: left;
@@ -142,7 +146,7 @@ align-self: stretch;
 }
 
 .featured-heading-gilda {
-  font-family: 'Gilda Display', serif;
+  font-family: 'Gilda Display', 'Times New Roman', 'Georgia', 'Playfair Display', 'Crimson Text', serif;
   color: #030309;
   font-size: 190px;
   font-style: normal;
@@ -156,7 +160,7 @@ align-self: stretch;
 }
 
 .featured-heading-geist {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   font-size: 190px;
   font-style: normal;
   font-weight: 700;
@@ -203,11 +207,12 @@ align-self: stretch;
 
 .portfolio-card-number {
   font-size: 0.875rem;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   font-weight: 400;
   line-height: 1.5;
   text-align: left;
-  color: var(--global-bg-4);
+  color: #ececec;
+  color: var(--global-bg-4, #ececec);
 }
 
 .portfolio-card-img-wrapper {
@@ -239,11 +244,12 @@ align-self: stretch;
 
 .portfolio-card-title {
   font-size: 14px;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   font-weight: 500;
   line-height: 1.5;
   text-align: left;
-  color: var(--global-bg-4);
+  color: #ececec;
+  color: var(--global-bg-4, #ececec);
   margin: 0;
   text-transform: uppercase;
 }
@@ -258,7 +264,7 @@ align-self: stretch;
 .portfolio-card-tag {
   font-size: 0.875rem;
   font-size: 14px;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   font-weight: 400;
   line-height: 1.5;
   text-align: left;
@@ -303,22 +309,24 @@ align-self: stretch;
 
 .philosophy-title-geist {
   font-size: 120px;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   font-weight: normal;
   line-height: 1;
   text-transform: uppercase;
-  color: var(--global-text-2);
+  color: #e2e1df;
+  color: var(--global-text-2, #e2e1df);
   white-space: nowrap;
 }
 
 .philosophy-title-gilda {
   font-size: 120px;
-  font-family: 'Gilda Display', serif;
+  font-family: 'Gilda Display', 'Times New Roman', 'Georgia', 'Playfair Display', 'Crimson Text', serif;
   font-style: italic;
   font-weight: normal;
   line-height: 1;
   text-transform: uppercase;
-  color: var(--global-text-2);
+  color: #e2e1df;
+  color: var(--global-text-2, #e2e1df);
   white-space: nowrap;
 }
 
@@ -387,13 +395,16 @@ align-self: stretch;
 .about-description {
   max-width: 50%;
   margin-right: 30px;
-  font-size: 14px;
-  font-family: 'Geist', sans-serif;
-  font-weight: normal;
-  line-height: 1.5;
+  font-size: 18px;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-weight: 400;
+  line-height: 150%;
   text-align: left;
   text-transform: uppercase;
-  color: var(--global-text-2);
+  color: #e2e1df;
+  color: var(--global-text-2, #e2e1df);
+  margin: 0;
+  padding: 0;
 }
 
 .about-who {
@@ -412,8 +423,9 @@ align-self: stretch;
 }
 
 .about-who-title-gilda {
-  color: var(--global-text-2);
-  font-family: "Gilda Display";
+  color: #e2e1df;
+  color: var(--global-text-2, #e2e1df);
+  font-family: 'Gilda Display', 'Times New Roman', 'Georgia', 'Playfair Display', 'Crimson Text', serif;
   font-size: 124px;
   font-style: normal;
   font-weight: 400;
@@ -423,8 +435,9 @@ align-self: stretch;
 }
 
 .about-who-title-geist {
-  color: var(--global-text-2);
-  font-family: Geist;
+  color: #e2e1df;
+  color: var(--global-text-2, #e2e1df);
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   font-size: 124px;
   font-style: normal;
   font-weight: 700;
@@ -505,8 +518,29 @@ body {
 }
 
 
+/* ===== RESPONSIVE BREAKPOINT BASE 1920px ===== */
+@media (min-width: 1791px) {
+  /* GET IN TOUCH - Reducción progresiva desde 1920px base (260px) hacia abajo */
+  .contact-heading {
+    font-size: clamp(90px, calc(260px - (1920px - 100vw) * 0.15), 260px) !important;
+    white-space: nowrap;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+  
+  .contact-heading-gilda {
+    font-size: clamp(90px, calc(260px - (1920px - 100vw) * 0.15), 260px) !important;
+  }
+  
+  .contact-heading-geist {
+    font-size: clamp(90px, calc(260px - (1920px - 100vw) * 0.15), 260px) !important;
+  }
+}
+
 /* ===== RESPONSIVE BREAKPOINT 1790px ===== */
-@media (max-width: 1790px) and (min-width: 861px) {
+@media (max-width: 1790px) and (min-width: 769px) {
   /* Creative Product Designer - Reducir 20% */
   .hero-heading-creative {
     font-size: 168px; /* 210px * 0.8 */
@@ -550,6 +584,24 @@ body {
   .about-who-title-geist {
     font-size: 99.2px; /* 124px * 0.8 */
   }
+  
+  /* GET IN TOUCH - Reducción progresiva desde 1920px base (260px) hacia abajo */
+  .contact-heading {
+    font-size: clamp(90px, calc(260px - (1920px - 100vw) * 0.15), 260px) !important;
+    white-space: nowrap;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+  
+  .contact-heading-gilda {
+    font-size: clamp(90px, calc(260px - (1920px - 100vw) * 0.15), 260px) !important;
+  }
+  
+  .contact-heading-geist {
+    font-size: clamp(90px, calc(260px - (1920px - 100vw) * 0.15), 260px) !important;
+  }
 }
 
 /* ===== RESPONSIVE BREAKPOINT 1360px ===== */
@@ -560,8 +612,14 @@ body {
     gap: 15px;
   }
   
+  .hero-section {
+    justify-content: space-between !important; /* Hero-bottom pegado al fondo */
+    padding: 20px 24px !important; /* Reducir padding superior */
+  }
+  
   .hero-heading {
-    margin-bottom: 0; /* Sin margen inferior */
+    margin-top: 15px !important; /* Espacio superior mínimo */
+    margin-bottom: 0 !important; /* Sin margen inferior */
   }
   
   .hero-bottom {
@@ -581,6 +639,23 @@ body {
     margin-left: 0;
     text-align: left;
   }
+  
+  /* GET IN TOUCH - Heredar reducción progresiva del breakpoint anterior */
+}
+
+/* ===== RESPONSIVE BREAKPOINT 1000px ===== */
+@media (max-width: 1000px) {
+  .hero-section {
+    justify-content: space-between !important; /* Hero-bottom pegado al fondo */
+    padding: 20px 24px !important; /* Reducir padding superior */
+  }
+  
+  .hero-heading {
+    margin-top: 20px !important; /* Espacio superior mínimo */
+    margin-bottom: 0 !important; /* Sin margen inferior */
+  }
+  
+  /* Heredar configuración del breakpoint anterior - reducción progresiva continúa */
 }
 
 /* ===== RESPONSIVE BREAKPOINT 860px ===== */
@@ -627,13 +702,38 @@ body {
   .about-who-title-geist {
     font-size: 79.36px; /* 99.2px * 0.8 */
   }
+  
+  /* Heredar configuración del breakpoint anterior - reducción progresiva continúa */
+}
+
+/* ===== RESPONSIVE BREAKPOINT 769px ===== */
+@media (max-width: 769px) {
+  .hero-section {
+    justify-content: space-between !important; /* Hero-bottom pegado al fondo */
+  }
+  
+  .hero-heading {
+    margin-top: 30px !important; /* Espacio superior reducido */
+    margin-bottom: 0 !important; /* Sin margen inferior */
+  }
+  
+  /* GET IN TOUCH - Heredar reducción progresiva del breakpoint anterior */
 }
 
 /* ===== RESPONSIVE BREAKPOINT 768px ===== */
 @media (max-width: 768px) {
-  /* Reducir padding lateral de 24px a 20px y eliminar padding superior */
+  /* Mantener altura completa de pantalla y reducir padding lateral */
   .hero-section {
-    padding: 0 20px 30px 20px;
+    height: calc(100vh - 80px);
+    min-height: calc(100dvh - 80px);
+    padding: 80px 20px 30px 20px; /* Más padding superior para centrar mejor */
+    box-sizing: border-box;
+    justify-content: space-between; /* Hero-bottom pegado al fondo */
+  }
+  
+  .hero-heading {
+    margin-top: 80px; /* Consistente con breakpoints menores */
+    margin-bottom: 0; /* Sin margen inferior */
   }
   
   .featured-section {
@@ -648,30 +748,31 @@ body {
     padding: 60px 20px;
   }
   
-  /* Creative Product Designer - Reducir a 96px */
+  /* Creative Product Designer - Tamaño dinámico basado en viewport width */
   .hero-heading-creative {
-    font-size: 96px;
-    line-height: 86px;
+    font-size: clamp(60px, calc(100vw - 48px), 120px); /* Se ajusta dinámicamente respetando 24px de padding */
+    line-height: 0.9em;
     letter-spacing: 0;
   }
   
   .hero-heading-product {
-    font-size: 96px;
-    line-height: 86px;
+    font-size: clamp(60px, calc(100vw - 48px), 120px); /* Se ajusta dinámicamente respetando 24px de padding */
+    line-height: 0.9em;
     letter-spacing: 0;
   }
   
   .hero-heading-designer {
-    font-size: 96px;
-    line-height: 86px;
+    font-size: clamp(60px, calc(100vw - 48px), 120px); /* Se ajusta dinámicamente respetando 24px de padding */
+    line-height: 0.9em;
     letter-spacing: 0;
+    white-space: nowrap; /* Evitar que DESIGNER se divida */
   }
   
   .hero-heading-designer-i {
-    width: 23.71px; /* Proporcional a 96px font-size */
-    height: 70.71px; /* Proporcional a 96px font-size */
-    border-radius: 23px; /* Proporcionalmente escalado */
-    margin: 0 1.38px;
+    width: clamp(14.8px, calc((100vw - 48px) * 0.247), 29.6px); /* Proporcional al font-size dinámico */
+    height: clamp(44.2px, calc((100vw - 48px) * 0.736), 88.3px); /* Proporcional al font-size dinámico */
+    border-radius: clamp(14.4px, calc((100vw - 48px) * 0.24), 28.8px); /* Proporcionalmente escalado */
+    margin: 0 clamp(0.84px, calc((100vw - 48px) * 0.014), 1.68px);
   }
   
   /* Featured Work - Formato horizontal con 72px */
@@ -689,21 +790,23 @@ body {
     font-size: 72px;
   }
   
-  /* Get in Touch - Formato horizontal con 96px */
+  /* Get in Touch - Cambiar a dos líneas con máximo tamaño posible */
   .contact-heading {
-    flex-direction: row !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 20px;
-    font-size: 96px;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    gap: 0;
+    font-size: clamp(120px, calc((100vw - 40px) * 0.32), 160px); /* Máximo tamaño posible respetando padding de 20px */
+    text-align: left;
+    white-space: normal !important; /* Permitir dos líneas */
   }
   
   .contact-heading-gilda {
-    font-size: 96px;
+    font-size: clamp(120px, calc((100vw - 40px) * 0.32), 160px);
   }
   
   .contact-heading-geist {
-    font-size: 96px;
+    font-size: clamp(120px, calc((100vw - 40px) * 0.32), 160px);
   }
   
   /* Portfolio Grid - Cambiar a una sola columna */
@@ -762,22 +865,22 @@ body {
 
 /* ===== RESPONSIVE BREAKPOINT 748px ===== */
 @media (max-width: 748px) {
-  /* Get in Touch - Cambiar a formato vertical manteniendo 96px */
+  /* Get in Touch - Reducir progresivamente en dos líneas */
   .contact-heading {
     flex-direction: column !important;
     justify-content: flex-start !important;
     align-items: flex-start !important;
     gap: 0;
-    font-size: 96px;
+    font-size: clamp(100px, calc((100vw - 40px) * 0.28), 140px); /* Reducir desde el breakpoint anterior */
     text-align: left;
   }
   
   .contact-heading-gilda {
-    font-size: 96px;
+    font-size: clamp(100px, calc((100vw - 40px) * 0.28), 140px);
   }
   
   .contact-heading-geist {
-    font-size: 96px;
+    font-size: clamp(100px, calc((100vw - 40px) * 0.28), 140px);
   }
 }
 
@@ -833,48 +936,53 @@ body {
     justify-content: flex-start;
   }
   
-  /* Creative Product Designer - Alinear a la izquierda y reducir 10% */
+  /* Creative Product Designer - Alinear a la izquierda y mantener altura completa */
   .hero-section {
-    padding-top: 0; /* Eliminar padding superior de la sección */
+    height: calc(100vh - 80px);
+    min-height: calc(100dvh - 80px);
+    padding: 80px 20px 30px 20px !important; /* Mantener mismo padding que 768px */
+    box-sizing: border-box;
     align-items: flex-start !important; /* Alinear contenido a la izquierda */
-    justify-content: flex-start !important; /* Alinear contenido a la izquierda */
+    justify-content: space-between !important; /* Hero-bottom pegado al fondo */
   }
   
   .hero-heading {
     text-align: left !important;
     padding-top: 0; /* Eliminar padding superior */
     align-items: flex-start !important; /* Alinear elementos a la izquierda */
-    margin-bottom: 40px; /* Separación moderada respecto al hero-bottom */
+    margin-top: 80px; /* Centrar texto desde 580px hacia abajo */
+    margin-bottom: 0; /* Eliminar margen inferior */
   }
   
   .hero-heading-creative {
-    font-size: 86.4px; /* 96px * 0.9 */
-    line-height: 65px; /* Reducir espacio entre líneas */
-    margin-bottom: -10px; /* Reducir espacio con la siguiente palabra */
+    font-size: 16.5vw; /* Aumentado para llegar hasta el borde derecho */
+    line-height: 0.75em; /* Reducir espacio entre líneas */
+    margin-bottom: -0.12em; /* Reducir espacio con la siguiente palabra */
     text-align: left; /* Alinear a la izquierda */
     letter-spacing: 0;
   }
   
   .hero-heading-product {
-    font-size: 86.4px; /* 96px * 0.9 */
-    line-height: 65px; /* Reducir espacio entre líneas */
-    margin-bottom: -10px; /* Reducir espacio con la siguiente palabra */
+    font-size: 16.5vw; /* Aumentado para llegar hasta el borde derecho */
+    line-height: 0.75em; /* Reducir espacio entre líneas */
+    margin-bottom: -0.12em; /* Reducir espacio con la siguiente palabra */
     text-align: left; /* Alinear a la izquierda */
     letter-spacing: 0;
   }
   
   .hero-heading-designer {
-    font-size: 86.4px; /* 96px * 0.9 */
-    line-height: 65px; /* Reducir espacio entre líneas */
+    font-size: 16.5vw; /* Aumentado para llegar hasta el borde derecho */
+    line-height: 0.75em; /* Reducir espacio entre líneas */
     text-align: left; /* Alinear a la izquierda */
     letter-spacing: 0;
+    white-space: nowrap; /* Evitar que DESIGNER se divida */
   }
   
   .hero-heading-designer-i {
-    width: 21.34px; /* 23.71px * 0.9 */
-    height: 63.64px; /* 70.71px * 0.9 */
-    border-radius: 20px; /* Proporcionalmente escalado */
-    margin: 0 1.24px;
+    width: 4.1vw; /* Proporcional al font-size aumentado */
+    height: 12.2vw; /* Proporcional al font-size aumentado */
+    border-radius: 3.8vw; /* Proporcionalmente escalado */
+    margin: 0 0.23vw;
   }
   
   /* Hero Bottom - Layout en columna para 580px */
@@ -884,20 +992,20 @@ body {
     gap: 24px;
   }
   
-  /* Texto descriptivo - Ocupar todo el ancho y alineado a la izquierda */
-  .hero-description {
-    max-width: 100%; /* Ocupar todo el ancho disponible */
-    margin-left: 0; /* Eliminar margen izquierdo */
-    text-align: left;
-    order: 1; /* Texto primero */
-  }
-  
-  /* Imagen - Debajo del texto y pegada a la derecha */
+  /* Imagen - Arriba y pegada a la derecha */
   .hero-profile-img {
     width: 102.4px; /* 128px * 0.8 = 102.4px */
     height: 102.4px; /* 128px * 0.8 = 102.4px */
     align-self: flex-end; /* Pegar a la derecha */
-    order: 2; /* Imagen después del texto */
+    order: 1; /* Imagen primero */
+  }
+  
+  /* Texto descriptivo - Debajo de la imagen y ocupar todo el ancho */
+  .hero-description {
+    max-width: 100%; /* Ocupar todo el ancho disponible */
+    margin-left: 0; /* Eliminar margen izquierdo */
+    text-align: left;
+    order: 2; /* Texto después de la imagen */
   }
   
   /* WHO IS TJC - Dividir en dos líneas con separación */
@@ -915,43 +1023,43 @@ body {
 
 /* ===== RESPONSIVE BREAKPOINT 470px ===== */
 @media (max-width: 470px) {
-  /* Creative Product Designer - Reducir a 72px y mantener alineación izquierda */
+  /* Creative Product Designer - Reducir a 72px y mantener altura completa */
   .hero-section {
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
+    height: calc(100vh - 80px) !important;
+    min-height: calc(100dvh - 80px) !important;
+    padding: 80px 20px 30px 20px !important; /* Mantener mismo padding que 580px */
+    box-sizing: border-box !important;
+    justify-content: space-between !important; /* Hero-bottom pegado al fondo */
   }
   
   .hero-heading {
-    text-align: left !important;
-    align-items: flex-start !important;
+    margin-bottom: 0 !important; /* Sin margen inferior */
   }
   
   .hero-heading-creative {
-    font-size: 72px !important;
-    line-height: 65px !important;
-    text-align: left !important;
+    font-size: 17vw !important; /* Aumentado para llegar hasta el borde derecho */
+    line-height: 0.9em !important;
     letter-spacing: 0 !important;
   }
   
   .hero-heading-product {
-    font-size: 72px !important;
-    line-height: 65px !important;
-    text-align: left !important;
+    font-size: 17vw !important; /* Aumentado para llegar hasta el borde derecho */
+    line-height: 0.9em !important;
     letter-spacing: 0 !important;
   }
   
   .hero-heading-designer {
-    font-size: 72px !important;
-    line-height: 65px !important;
-    text-align: left !important;
+    font-size: 17vw !important; /* Aumentado para llegar hasta el borde derecho */
+    line-height: 0.9em !important;
     letter-spacing: 0 !important;
+    white-space: nowrap !important; /* Evitar que DESIGNER se divida */
   }
   
   .hero-heading-designer-i {
-    width: 17.78px !important; /* Proporcional a 72px font-size */
-    height: 53px !important; /* Proporcional a 72px font-size */
-    border-radius: 17px !important; /* Proporcionalmente escalado */
-    margin: 0 1.03px !important;
+    width: 4.2vw !important; /* Proporcional al font-size aumentado */
+    height: 12.5vw !important; /* Proporcional al font-size aumentado */
+    border-radius: 4vw !important; /* Proporcionalmente escalado */
+    margin: 0 0.24vw !important;
   }
   
   /* Featured Work - Reducir a 52px */
@@ -986,58 +1094,64 @@ body {
 
 /* ===== RESPONSIVE BREAKPOINT 400px ===== */
 @media (max-width: 400px) {
-  /* Creative Product Designer - Reducir a 60px y eliminar margen superior */
+  /* Creative Product Designer - Reducir a 60px y mantener altura completa */
   .hero-section {
+    height: calc(100vh - 80px) !important;
+    min-height: calc(100dvh - 80px) !important;
+    padding: 50px 20px 30px 20px !important; /* Más padding superior para centrar mejor */
+    box-sizing: border-box !important;
     margin-top: 0 !important;
-    padding-top: 0 !important;
+    justify-content: space-between !important; /* Hero-bottom pegado al fondo */
   }
   
   .hero-heading {
-    margin-top: 0 !important;
+    margin-top: 80px !important; /* Más espacio superior */
     padding-top: 0 !important;
+    margin-bottom: 0 !important; /* Sin margen inferior */
   }
   
   .hero-heading-creative {
-    font-size: 60px !important;
-    line-height: 55px !important;
+    font-size: 16.5vw !important; /* Aumentado para llegar hasta el borde derecho */
+    line-height: 0.92em !important;
     margin-top: 0 !important;
     letter-spacing: 0 !important;
   }
   
-  /* Get in Touch - Reducir a 72px */
+  /* Get in Touch - Tamaño mínimo para pantallas muy pequeñas */
   .contact-heading {
-    font-size: 72px !important;
+    font-size: clamp(60px, calc((100vw - 40px) * 0.22), 100px) !important; /* Tamaño mínimo progresivo */
   }
   
   .contact-heading-gilda {
-    font-size: 72px !important;
+    font-size: clamp(60px, calc((100vw - 40px) * 0.22), 100px) !important;
   }
   
   .contact-heading-geist {
-    font-size: 72px !important;
+    font-size: clamp(60px, calc((100vw - 40px) * 0.22), 100px) !important;
     margin-bottom: -10px !important;
   }
   
   .hero-heading-product {
-    font-size: 60px !important;
-    line-height: 55px !important;
+    font-size: 16.5vw !important; /* Aumentado para llegar hasta el borde derecho */
+    line-height: 0.92em !important;
     margin-top: 0 !important;
-    margin-bottom: -10px !important;
+    margin-bottom: -0.17em !important;
     letter-spacing: 0 !important;
   }
   
   .hero-heading-designer {
-    font-size: 60px !important;
-    line-height: 55px !important;
+    font-size: 16.5vw !important; /* Aumentado para llegar hasta el borde derecho */
+    line-height: 0.92em !important;
     margin-top: 0 !important;
     letter-spacing: 0 !important;
+    white-space: nowrap !important; /* Evitar que DESIGNER se divida */
   }
   
   .hero-heading-designer-i {
-    width: 14.81px !important; /* Proporcional a 60px font-size */
-    height: 44.17px !important; /* Proporcional a 60px font-size */
-    border-radius: 14px !important; /* Proporcionalmente escalado */
-    margin: 0 0.86px !important;
+    width: 4.1vw !important; /* Proporcional al font-size aumentado */
+    height: 12.2vw !important; /* Proporcional al font-size aumentado */
+    border-radius: 3.8vw !important; /* Proporcionalmente escalado */
+    margin: 0 0.23vw !important;
   }
   
   /* WHO IS TJC - Volver a formato vertical con separación */
