@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
 
 interface ScrollAnimationOptions {
@@ -9,15 +9,40 @@ interface ScrollAnimationOptions {
 
 // Variable global para la instancia de Lenis
 let lenisInstance: Lenis | null = null;
+// Array de callbacks para notificar cuando Lenis esté disponible
+let lenisCallbacks: (() => void)[] = [];
 
-// Hook para obtener la instancia de Lenis
+// Hook para obtener la instancia de Lenis de forma reactiva
 export const useLenisScroll = () => {
-  return lenisInstance;
+  const [lenis, setLenis] = useState<Lenis | null>(lenisInstance);
+
+  useEffect(() => {
+    // Si ya existe la instancia, actualizarla inmediatamente
+    if (lenisInstance && !lenis) {
+      setLenis(lenisInstance);
+    }
+
+    // Registrar callback para cuando Lenis esté disponible
+    const callback = () => {
+      setLenis(lenisInstance);
+    };
+    
+    lenisCallbacks.push(callback);
+
+    // Cleanup: remover el callback cuando el componente se desmonte
+    return () => {
+      lenisCallbacks = lenisCallbacks.filter(cb => cb !== callback);
+    };
+  }, [lenis]);
+
+  return lenis;
 };
 
 // Función para establecer la instancia de Lenis
 export const setLenisInstance = (lenis: Lenis) => {
   lenisInstance = lenis;
+  // Notificar a todos los componentes que están esperando
+  lenisCallbacks.forEach(callback => callback());
 };
 
 export const useScrollAnimation = (

@@ -23,13 +23,22 @@ const Header: React.FC = () => {
   // Función para hacer scroll suave a una sección
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
-    if (element && lenis) {
-      const headerHeight = 80; // Altura aproximada del header
-      const targetPosition = element.offsetTop - headerHeight;
-      
+    if (!element) return;
+    
+    const headerHeight = 80; // Altura aproximada del header
+    const targetPosition = element.offsetTop - headerHeight;
+    
+    if (lenis) {
+      // Usar Lenis si está disponible
       lenis.scrollTo(targetPosition, {
         duration: 1.2,
         easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+      });
+    } else {
+      // Fallback a scroll nativo si Lenis no está disponible
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
       });
     }
   };
