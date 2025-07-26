@@ -3,10 +3,12 @@ import Header from '../../components/common/Header';
 import Contact from '../../components/common/Contact';
 import Button from '../../components/ui/Button';
 import AnimatedElement from '../../components/ui/AnimatedElement';
+import AnimatedProfileImage from '../../components/ui/AnimatedProfileImage';
 import ParallaxSection from '../../components/ui/ParallaxSection';
 import GSAPCarousel from '../../components/ui/GSAPCarousel';
 import Switch from '../../components/ui/Switch';
 import { useLenisScroll } from '../../hooks/useLenisScroll';
+import { useResponsiveAnimations } from '../../hooks/useResponsiveAnimations';
 import '../../styles/home.css';
 
 const Home: React.FC = () => {
@@ -19,6 +21,15 @@ const Home: React.FC = () => {
   const handleSwitchToggle = (isOn: boolean) => {
     setIsSwitchOn(isOn);
   };
+
+  // Animaciones responsivas para cambios de breakpoint
+  const currentBreakpoint = useResponsiveAnimations({
+    duration: 0.4,
+    ease: 'power2.out',
+    onBreakpointChange: (breakpoint) => {
+      console.log(`Breakpoint changed to: ${breakpoint}`);
+    }
+  });
 
   return (
     <div className="home-container">
@@ -47,10 +58,13 @@ const Home: React.FC = () => {
         </AnimatedElement>
         <AnimatedElement animation="slideUp" delay={0.3} duration={1}>
           <div className="hero-bottom">
-            <img 
+            <AnimatedProfileImage 
               src="/images/img_img.png" 
               alt="Profile" 
               className="hero-profile-img"
+              delay={0.8}
+              rotations={1.5}
+              duration={2.5}
             />
             <p className="hero-description">
               product design is where logic, research and creativity come together. I enjoy creating elegant solutions with dynamic interactions and intuitive designs that not only look good, but also feel smooth and enjoyable to use.

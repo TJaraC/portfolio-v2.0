@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from '../ui/Button';
+import AnimatedContactHeading from '../ui/AnimatedContactHeading';
 import '../../styles/Contact.css';
 
 const Contact: React.FC = () => {
@@ -7,10 +8,7 @@ const Contact: React.FC = () => {
     <section className="contact-section">
       <div className="contact-content">
         <div className="contact-title-wrapper">
-          <h2 className="contact-heading">
-            <span className="contact-heading-gilda">GET IN</span>
-            <span className="contact-heading-geist">TOUCH</span>
-          </h2>
+          <AnimatedContactHeading className="contact-heading" />
           <div className="contact-subtitle">
             <span className="contact-subtitle-link">let's connect:</span>
             <span className="contact-subtitle-text">Whether you have a question</span>

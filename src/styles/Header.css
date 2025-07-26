@@ -8,6 +8,44 @@
   transition: all 0.3s ease;
 }
 
+/* Header themes */
+.header--light .logo-text {
+  color: var(--global-text-1);
+}
+
+.header--light .nav-button {
+  color: var(--global-text-1);
+}
+
+.header--light .hamburger-icon {
+  color: var(--global-text-1);
+  stroke: var(--global-text-1);
+}
+
+.header--dark .logo-text {
+  color: var(--global-text-4);
+}
+
+.header--dark .nav-button {
+  color: var(--global-text-4);
+}
+
+.header--dark .hamburger-icon {
+  color: var(--global-text-4);
+  stroke: var(--global-text-4);
+}
+
+/* Hover effects remain the same */
+.header--light .logo:hover .logo-text,
+.header--dark .logo:hover .logo-text {
+  color: var(--global-text-3);
+}
+
+.header--light .nav-button:hover,
+.header--dark .nav-button:hover {
+  color: var(--global-text-3);
+}
+
 .header-container {
   width: 100%;
   margin: 0 auto;
@@ -102,13 +140,7 @@
   stroke: currentColor;
 }
 
-/* Ensure hamburger icon is visible when menu is open */
-body.menu-open .hamburger-icon {
-  color: #000;
-  stroke: #000;
-  z-index: 1001;
-}
-
+/* Ensure elements are visible when menu is open */
 body.menu-open .hamburger-menu {
   z-index: 1001;
   background: none;
@@ -119,10 +151,6 @@ body.menu-open .logo {
   z-index: 1001;
 }
 
-body.menu-open .logo-text {
-  color: #000;
-}
-
 /* Ensure header stays visible above overlay */
 body.menu-open .header {
   position: fixed;
@@ -130,6 +158,25 @@ body.menu-open .header {
   left: 0;
   right: 0;
   z-index: 1001;
+}
+
+/* Menu open theme overrides */
+body.menu-open .header--light .hamburger-icon {
+  color: var(--global-text-1);
+  stroke: var(--global-text-1);
+}
+
+body.menu-open .header--light .logo-text {
+  color: var(--global-text-1);
+}
+
+body.menu-open .header--dark .hamburger-icon {
+  color: var(--global-text-4);
+  stroke: var(--global-text-4);
+}
+
+body.menu-open .header--dark .logo-text {
+  color: var(--global-text-4);
 }
 
 .desktop-nav {
@@ -212,6 +259,29 @@ body.menu-open .header {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Mobile menu themes */
+.mobile-menu--light {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+}
+
+.mobile-menu--light .nav-button {
+  color: var(--global-text-1);
+}
+
+.mobile-menu--dark {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.08));
+}
+
+.mobile-menu--dark .nav-button {
+  color: var(--global-text-4);
+}
+
+/* Mobile menu hover effects */
+.mobile-menu--light .nav-button:hover,
+.mobile-menu--dark .nav-button:hover {
+  color: var(--global-text-3);
 }
 
 .mobile-menu--hidden {

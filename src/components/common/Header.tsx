@@ -1,18 +1,22 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { useGSAP } from '@gsap/react';
+import React, { useState, useRef, useEffect } from 'react';
+import gsap from 'gsap';
 import { useLenisScroll } from '../../hooks/useLenisScroll';
+import AnimatedNavButton from '../ui/AnimatedNavButton';
 import '../../styles/Header.css';
 
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const menuItemsRef = useRef<(HTMLButtonElement | HTMLDivElement)[]>([]);
-  const hamburgerRef = useRef<HTMLButtonElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
-  const tl = useRef<gsap.core.Timeline>();
+  const [headerTheme, setHeaderTheme] = useState<'light' | 'dark'>('light');
   const lenis = useLenisScroll();
+  
+  // Referencias para elementos del DOM
+  const logoRef = useRef<HTMLDivElement>(null);
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const menuItemsRef = useRef<(HTMLButtonElement | null)[]>([]);
+  const tl = useRef<gsap.core.Timeline | null>(null);
+  const headerRef = useRef<HTMLElement>(null);
   const lastScrollY = useRef(0);
   const logoRotation = useRef(0);
 
@@ -20,41 +24,85 @@ const Header: React.FC = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element && lenis) {
-      lenis.scrollTo(element, {
-        offset: -80, // Compensar altura del header
-        duration: 1.5,
+      const headerHeight = 80; // Altura aproximada del header
+      const targetPosition = element.offsetTop - headerHeight;
+      
+      lenis.scrollTo(targetPosition, {
+        duration: 1.2,
         easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
       });
     }
   };
 
-  useEffect(() => {
-    if (menuOpen) {
-      document.body.classList.add('menu-open');
-      // Desactivar Lenis cuando el menú está abierto
-      if (lenis) {
-        lenis.stop();
+  // Función para detectar el tema del header basándose en el scroll
+  const detectHeaderTheme = () => {
+    if (!headerRef.current) return;
+    
+    const headerRect = headerRef.current.getBoundingClientRect();
+    const headerHeight = headerRect.height;
+    const headerTop = headerRect.top;
+    const headerBottom = headerRect.bottom;
+    
+    // Obtener todas las secciones
+    const heroSection = document.querySelector('.hero-section') as HTMLElement;
+    const featuredSection = document.querySelector('.featured-section') as HTMLElement;
+    const portfolioSection = document.querySelector('.portfolio-section') as HTMLElement;
+    const philosophySection = document.querySelector('.philosophy-section') as HTMLElement;
+    const aboutSection = document.querySelector('.about-section') as HTMLElement;
+    const contactSection = document.querySelector('.contact-section') as HTMLElement;
+    
+    // Definir qué secciones son claras u oscuras
+    const lightSections = [heroSection, featuredSection, contactSection];
+    const darkSections = [portfolioSection, philosophySection, aboutSection];
+    
+    let lightPixels = 0;
+    let darkPixels = 0;
+    
+    // Calcular cuántos píxeles del header están sobre secciones claras vs oscuras
+    [...lightSections, ...darkSections].forEach(section => {
+      if (!section) return;
+      
+      const sectionRect = section.getBoundingClientRect();
+      const sectionTop = sectionRect.top;
+      const sectionBottom = sectionRect.bottom;
+      
+      // Calcular la intersección entre el header y la sección
+      const intersectionTop = Math.max(headerTop, sectionTop);
+      const intersectionBottom = Math.min(headerBottom, sectionBottom);
+      const intersectionHeight = Math.max(0, intersectionBottom - intersectionTop);
+      
+      if (lightSections.includes(section)) {
+        lightPixels += intersectionHeight;
+      } else {
+        darkPixels += intersectionHeight;
       }
-    } else {
-      document.body.classList.remove('menu-open');
-      // Reactivar Lenis cuando el menú se cierra
-      if (lenis) {
-        lenis.start();
-      }
+    });
+    
+    // Determinar el tema basándose en qué tipo de sección domina
+    const newTheme = lightPixels >= darkPixels ? 'light' : 'dark';
+    
+    if (newTheme !== headerTheme) {
+      setHeaderTheme(newTheme);
     }
+  };
 
-    return () => {
-      document.body.classList.remove('menu-open');
-      if (lenis) {
-        lenis.start();
-      }
+  // useEffect para detectar scroll y cambiar tema del header
+  useEffect(() => {
+    const handleScroll = () => {
+      detectHeaderTheme();
     };
-  }, [menuOpen, lenis]);
-
-  useGSAP(() => {
-    // Crear timeline para las animaciones
-    tl.current = gsap.timeline({ paused: true });
-  }, []);
+    
+    // Detectar tema inicial
+    detectHeaderTheme();
+    
+    // Agregar listener de scroll
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [headerTheme]);
 
   // Animación del logo con scroll
   useEffect(() => {
@@ -83,17 +131,17 @@ const Header: React.FC = () => {
     };
   }, []);
 
-  // Configurar animaciones cuando el menú se abre/cierra
+  // Configurar animaciones del menú móvil
   useEffect(() => {
-    if (!tl.current || !menuRef.current || !overlayRef.current) return;
+    if (!menuRef.current || !overlayRef.current) return;
 
-    // Limpiar timeline anterior
-    tl.current.clear();
+    // Crear timeline para las animaciones
+    tl.current = gsap.timeline({ paused: true });
 
     // Animación del overlay
     tl.current.fromTo(overlayRef.current, 
       { opacity: 0 },
-      { opacity: 1, duration: 0.1, ease: "power2.out" }
+      { opacity: 1, duration: 0.3, ease: "power2.out" }
     );
 
     // Animación del menú
@@ -101,18 +149,16 @@ const Header: React.FC = () => {
       { 
         opacity: 0, 
         scale: 0.9, 
-        y: -30,
-        backdropFilter: "blur(0px)"
+        y: -30
       },
       { 
         opacity: 1, 
         scale: 1, 
         y: 0,
-        backdropFilter: "blur(25px)", 
-        duration: 0.15, 
+        duration: 0.4, 
         ease: "back.out(1.7)" 
       },
-      "-=0.05"
+      "-=0.1"
     );
 
     // Animación de los elementos del menú
@@ -123,52 +169,44 @@ const Header: React.FC = () => {
           { 
             opacity: 0, 
             y: 30, 
-            x: -20,
-            rotationX: -10,
-            scale: 0.9
+            x: -20
           },
           { 
             opacity: 1, 
             y: 0, 
             x: 0,
-            rotationX: 0,
-            scale: 1,
-            duration: 0.2,
+            duration: 0.3,
             ease: "back.out(1.7)"
           },
-          index === 0 ? 0.02 : `+=${0.02}`
+          index === 0 ? 0.1 : `+=${0.05}`
         );
       }
     });
+  }, []);
 
-    // Configurar animaciones de hover solo para botones, no para el contenedor social
-    menuItems.forEach((item, index) => {
-      if (item && item.tagName === 'BUTTON') {
-        const handleMouseEnter = () => {
-          gsap.to(item, {
-            scale: 1.05,
-            x: 10,
-            color: "#ff6b6b",
-            duration: 0.3,
-            ease: "power2.out"
-          });
-        };
-
-        const handleMouseLeave = () => {
-          gsap.to(item, {
-            scale: 1,
-            x: 0,
-            color: "inherit",
-            duration: 0.3,
-            ease: "power2.out"
-          });
-        };
-
-        item.addEventListener('mouseenter', handleMouseEnter);
-        item.addEventListener('mouseleave', handleMouseLeave);
+  // Controlar apertura/cierre del menú
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.classList.add('menu-open');
+      // Desactivar Lenis cuando el menú está abierto
+      if (lenis) {
+        lenis.stop();
       }
-    });
-  }, [menuOpen]);
+    } else {
+      document.body.classList.remove('menu-open');
+      // Reactivar Lenis cuando el menú se cierra
+      if (lenis) {
+        lenis.start();
+      }
+    }
+
+    return () => {
+      document.body.classList.remove('menu-open');
+      if (lenis) {
+        lenis.start();
+      }
+    };
+  }, [menuOpen, lenis]);
 
   useEffect(() => {
     if (tl.current) {
@@ -199,7 +237,10 @@ const Header: React.FC = () => {
   }, [menuOpen]);
 
   return (
-    <header className="header">
+    <header 
+      ref={headerRef}
+      className={`header ${headerTheme === 'dark' ? 'header--dark' : 'header--light'} ${menuOpen ? 'header--menu-open' : ''}`}
+    >
       <div className="header-container">
         <div className="header-content">
           {/* Logo */}
@@ -234,45 +275,45 @@ const Header: React.FC = () => {
 
           {/* Desktop Navigation */}
           <nav className="desktop-nav">
-            <button 
+            <AnimatedNavButton 
               role="menuitem"
               className="nav-button"
               onClick={() => scrollToSection('work')}
             >
               WORK
-            </button>
-            <button 
+            </AnimatedNavButton>
+            <AnimatedNavButton 
               role="menuitem"
               className="nav-button"
               onClick={() => scrollToSection('about')}
             >
               ABOUT
-            </button>
-            <button 
+            </AnimatedNavButton>
+            <AnimatedNavButton 
               role="menuitem"
               className="nav-button"
               onClick={() => scrollToSection('contact')}
             >
               CONTACT
-            </button>
+            </AnimatedNavButton>
           </nav>
 
           {/* Desktop Social Links */}
           <div className="desktop-social">
-            <button 
+            <AnimatedNavButton 
               role="menuitem"
               className="nav-button"
               onClick={() => window.open('https://www.behance.net/tjaradesign', '_blank')}
             >
               BEHANCE
-            </button>
-            <button 
+            </AnimatedNavButton>
+            <AnimatedNavButton 
               role="menuitem"
               className="nav-button"
               onClick={() => window.open('https://www.linkedin.com/in/patricio-jaramillo-castrillo-557427200/', '_blank')}
             >
               LINKEDIN
-            </button>
+            </AnimatedNavButton>
           </div>
         </div>
 
@@ -288,7 +329,7 @@ const Header: React.FC = () => {
         {/* Mobile Menu */}
         <nav 
           ref={menuRef}
-          className={`mobile-menu ${!menuOpen ? 'mobile-menu--hidden' : ''}`} 
+          className={`mobile-menu ${!menuOpen ? 'mobile-menu--hidden' : ''} ${headerTheme === 'dark' ? 'mobile-menu--dark' : 'mobile-menu--light'}`} 
           onClick={() => setMenuOpen(false)}
         >
           <div className="mobile-menu-content" onClick={(e) => e.stopPropagation()}>
