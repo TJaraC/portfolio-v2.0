@@ -1,0 +1,169 @@
+/* ===== PRELOADER ===== */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.preloader-columns {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.preloader-column {
+  flex: 1;
+  height: 100%;
+  background: var(--global-bg-1);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: top;
+  will-change: transform;
+  backface-visibility: hidden;
+  overflow: visible;
+  z-index: 1;
+}
+
+.preloader-column:last-child {
+  z-index: -1;
+}
+
+.preloader-column-center {
+  background: var(--global-bg-1);
+}
+
+.preloader-word {
+  position: absolute;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-size: clamp(28px, 4.5vw, 56px);
+  font-weight: 700;
+  color: #e2e1df;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  opacity: 0;
+  transform: translateY(30px) scale(0.9) rotateX(-90deg);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  white-space: nowrap;
+  max-width: none;
+  z-index: 10;
+}
+
+.preloader-word-left {
+  right: 30px;
+  text-align: right;
+  transform-origin: right center;
+}
+
+.preloader-word-right {
+  left: 30px;
+  text-align: left;
+  transform-origin: left center;
+}
+
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+@media (max-width: 768px) {
+  .preloader-column:first-child,
+  .preloader-column:last-child {
+    display: none;
+  }
+  
+  .preloader-word {
+    font-size: clamp(18px, 5vw, 32px);
+    letter-spacing: 1px;
+  }
+  
+  .preloader-word-left {
+    right: 40px;
+  }
+  
+  .preloader-word-right {
+    left: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .preloader-column:first-child,
+  .preloader-column:last-child {
+    display: none;
+  }
+  
+  .preloader-word {
+    font-size: clamp(16px, 6vw, 24px);
+    letter-spacing: 0.5px;
+  }
+  
+  .preloader-word-left {
+    right: 35px;
+  }
+  
+  .preloader-word-right {
+    left: 55px;
+  }
+}
+
+@media (max-width: 320px) {
+  .preloader-column:first-child,
+  .preloader-column:last-child {
+    display: none;
+  }
+  
+  .preloader-word {
+    font-size: clamp(14px, 5vw, 20px);
+    letter-spacing: 0.3px;
+  }
+  
+  .preloader-word-left {
+    right: 30px;
+  }
+  
+  .preloader-word-right {
+    left: 50px;
+  }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(0);
+  }
+}

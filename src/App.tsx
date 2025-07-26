@@ -4,6 +4,7 @@ import { setLenisInstance } from './hooks/useLenisScroll';
 import Routes from './Routes';
 
 const App: React.FC = () => {
+
   useEffect(() => {
     const lenis = new Lenis({
       lerp: 0.1,
@@ -25,6 +26,8 @@ const App: React.FC = () => {
       lenis.destroy();
     };
   }, []);
+
+
 
   return <Routes />;
 };

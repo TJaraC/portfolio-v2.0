@@ -2,6 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Gilda+Display:wght@300;400;500;600;700&display=swap');
 @import './browser-compatibility.css';
 @import './browser-specific.css';
+@import './Preloader.css';
+@import './Error404.css';
 
 :root {
   /* Global Colors */

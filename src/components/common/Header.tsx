@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import { useLenisScroll } from '../../hooks/useLenisScroll';
 import AnimatedNavButton from '../ui/AnimatedNavButton';
@@ -7,6 +8,7 @@ import '../../styles/Header.css';
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [headerTheme, setHeaderTheme] = useState<'light' | 'dark'>('light');
+  const location = useLocation();
   const lenis = useLenisScroll();
   
   // Referencias para elementos del DOM
@@ -292,7 +294,13 @@ const Header: React.FC = () => {
             className="logo" 
             ref={logoRef}
             onClick={() => {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              if (location.pathname === '/') {
+                // Si estamos en la home, hacer scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              } else {
+                // Si estamos en otra página, navegar a la home
+                window.location.href = '/';
+              }
             }}
             style={{ cursor: 'pointer' }}
           >
