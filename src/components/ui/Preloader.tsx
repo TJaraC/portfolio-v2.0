@@ -155,19 +155,19 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
         <div 
           ref={(el) => el && (columnsRef.current[1] = el)} 
           className="preloader-column preloader-column-center"
-        >
-          <span ref={leftWordRef} className="preloader-word preloader-word-left" />
-        </div>
+        />
         <div 
           ref={(el) => el && (columnsRef.current[2] = el)} 
           className="preloader-column preloader-column-center"
-        >
-          <span ref={rightWordRef} className="preloader-word preloader-word-right" />
-        </div>
+        />
         <div 
           ref={(el) => el && (columnsRef.current[3] = el)} 
           className="preloader-column"
         />
+      </div>
+      <div className="preloader-text-container">
+        <span ref={leftWordRef} className="preloader-word preloader-word-left" />
+        <span ref={rightWordRef} className="preloader-word preloader-word-right" />
       </div>
     </div>
   );
