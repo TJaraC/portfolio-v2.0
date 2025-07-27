@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 
 // Import page components
 import HomePage from './pages/Home';
@@ -41,10 +41,10 @@ const AppContent = () => {
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/projects" element={<Navigate to="/#work" replace />} />
         <Route path="/projects/:projectId" element={<ProjectsPage />} />
         <Route path="/404" element={<Error404 />} />
-        <Route path="*" element={<Error404 />} />
+        <Route path="*" element={<Navigate to="/404" replace />} />
       </Routes>
       {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
     </>
