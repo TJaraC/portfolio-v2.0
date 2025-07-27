@@ -104,6 +104,19 @@ body.preloader-active {
     -webkit-tap-highlight-color: transparent;
   }
   
+  .preloader-columns {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+  }
+  
   .preloader-column:first-child,
   .preloader-column:last-child {
     display: none;
@@ -113,25 +126,30 @@ body.preloader-active {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: auto;
+    height: auto;
+    background: transparent;
   }
   
   .preloader-word {
     font-size: clamp(18px, 5vw, 32px);
     letter-spacing: 1px;
-    position: relative;
-    top: 0;
-    left: 0;
-    right: 0;
+    position: static;
+    text-align: center;
   }
   
   .preloader-word-left {
-    padding-right: 20px;
+    padding: 0;
     text-align: center;
+    width: auto;
+    justify-content: center;
   }
   
   .preloader-word-right {
-    padding-left: 20px;
+    padding: 0;
     text-align: center;
+    width: auto;
+    justify-content: center;
   }
 }
 
@@ -142,6 +160,19 @@ body.preloader-active {
     -webkit-tap-highlight-color: transparent;
   }
   
+  .preloader-columns {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+  }
+  
   .preloader-column:first-child,
   .preloader-column:last-child {
     display: none;
@@ -151,25 +182,30 @@ body.preloader-active {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: auto;
+    height: auto;
+    background: transparent;
   }
   
   .preloader-word {
     font-size: clamp(16px, 6vw, 24px);
     letter-spacing: 0.5px;
-    position: relative;
-    top: 0;
-    left: 0;
-    right: 0;
+    position: static;
+    text-align: center;
   }
   
   .preloader-word-left {
-    padding-right: 15px;
+    padding: 0;
     text-align: center;
+    width: auto;
+    justify-content: center;
   }
   
   .preloader-word-right {
-    padding-left: 15px;
+    padding: 0;
     text-align: center;
+    width: auto;
+    justify-content: center;
   }
 }
 
@@ -180,6 +216,19 @@ body.preloader-active {
     -webkit-tap-highlight-color: transparent;
   }
   
+  .preloader-columns {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+  
   .preloader-column:first-child,
   .preloader-column:last-child {
     display: none;
@@ -189,25 +238,30 @@ body.preloader-active {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: auto;
+    height: auto;
+    background: transparent;
   }
   
   .preloader-word {
     font-size: clamp(14px, 5vw, 20px);
     letter-spacing: 0.3px;
-    position: relative;
-    top: 0;
-    left: 0;
-    right: 0;
+    position: static;
+    text-align: center;
   }
   
   .preloader-word-left {
-    padding-right: 10px;
+    padding: 0;
     text-align: center;
+    width: auto;
+    justify-content: center;
   }
   
   .preloader-word-right {
-    padding-left: 10px;
+    padding: 0;
     text-align: center;
+    width: auto;
+    justify-content: center;
   }
 }
 
