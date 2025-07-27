@@ -23,6 +23,9 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   const [currentWords, setCurrentWords] = useState({ left: '', right: '' });
 
   useEffect(() => {
+    // Add preloader-active class to body to prevent scrolling
+    document.body.classList.add('preloader-active');
+    
     const tl = gsap.timeline();
     
     // Inicializar columnas
@@ -116,6 +119,8 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
           },
           onComplete: () => {
             gsap.set(preloaderRef.current, { display: 'none' });
+            // Remove preloader-active class from body
+            document.body.classList.remove('preloader-active');
             onComplete();
           }
         });
@@ -135,6 +140,8 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
     return () => {
       clearInterval(wordInterval);
       tl.kill();
+      // Remove preloader-active class from body on cleanup
+      document.body.classList.remove('preloader-active');
     };
   }, [onComplete]);
 

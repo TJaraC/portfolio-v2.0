@@ -5,6 +5,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile browsers */
   z-index: 9999;
   background: transparent;
   display: flex;
@@ -17,6 +18,15 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+}
+
+/* Prevent body scroll when preloader is active */
+body.preloader-active {
+  overflow: hidden !important;
+  position: fixed !important;
+  width: 100% !important;
+  height: 100% !important;
+  touch-action: none !important;
 }
 
 .preloader-columns {
