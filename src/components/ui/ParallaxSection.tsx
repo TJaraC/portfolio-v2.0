@@ -35,8 +35,8 @@ const ParallaxSection: React.FC<ParallaxSectionProps> = ({
       scrollTrigger: {
           trigger: element,
           start: 'top bottom',
-          end: 'bottom top', // Rango completo para ocultarse totalmente
-          scrub: 0.5, // Suavizado ligero
+          end: 'bottom top',
+          scrub: true, // Suavizado más natural
           invalidateOnRefresh: true,
         },
     });

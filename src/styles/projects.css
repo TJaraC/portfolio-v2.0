@@ -1,0 +1,839 @@
+/* Projects Page Styles */
+.projects-page {
+  min-height: 100vh;
+  background-color: var(--global-bg-3);
+  color: var(--global-text-1);
+}
+
+/* Project Case Styles */
+.project-case {
+  width: 100%;
+  padding-top: 90px; /* 80px header + 10px spacing */
+}
+
+/* Project Header Section */
+.project-header {
+  width: 100%;
+  padding: 0;
+}
+
+.project-header-wrapper {
+  width: 100%;
+  padding: 0 24px;
+}
+
+.project-header-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.project-title {
+  width: 100%;
+}
+
+.project-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  gap: 30px;
+}
+
+.project-title-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.project-title-right {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  align-items: flex-end;
+}
+
+.project-title-main {
+  font-family: 'Gilda Display', serif;
+  font-size: clamp(4rem, 8vw, 8rem);
+  font-weight: 400;
+  line-height: 0.9;
+  margin: 0;
+  color: var(--global-text-1);
+  text-transform: uppercase;
+  width: 100%;
+  text-align: left;
+}
+
+.project-title-sub {
+  font-family: 'Geist', sans-serif;
+  font-size: clamp(4rem, 8vw, 8rem);
+  font-weight: 700;
+  line-height: 0.9;
+  margin: 0;
+  color: var(--global-text-1);
+  text-transform: uppercase;
+  width: 100%;
+  text-align: right;
+}
+
+.project-date {
+  font-family: 'Geist', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--global-text-1);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.project-description {
+  font-family: 'Geist', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--global-text-1);
+  margin: 0;
+  width: 50%;
+  text-align: left;
+}
+
+/* Project Case Study Section */
+.project-case-study {
+  width: 100%;
+  padding: 0 24px 80px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-case-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-case-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+}
+
+/* Project Image */
+.project-image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 0;
+  overflow: hidden;
+  background-color: var(--global-bg-2);
+  padding-top: 60px;
+}
+
+.project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Divider */
+.divider {
+  width: 100%;
+  height: 1px;
+  opacity: 0.3;
+}
+
+/* Overview Section */
+.project-overview {
+  display: flex;
+  gap: 48px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.project-overview-left {
+  flex: 0 0 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-overview-right {
+  flex: 1;
+  display: flex;
+  gap: 30px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.project-overview-title {
+  font-family: 'Geist', sans-serif;
+  font-size: 70px;
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0;
+  color: var(--global-text-1);
+  text-transform: uppercase;
+}
+
+.project-overview-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.project-overview-subtitle {
+  font-family: 'Geist', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--global-text-1);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.project-overview-text {
+  font-family: 'Geist', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--global-text-1);
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  flex: 1;
+}
+
+/* Fonts & Colors Section */
+.project-fonts-colors {
+  display: flex;
+  gap: 48px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.project-fonts-colors-left {
+  flex: 0 0 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.project-fonts-colors-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.project-fonts-colors-heading {
+  font-family: 'Geist', sans-serif;
+  font-size: 70px;
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0;
+  color: var(--global-text-1);
+  text-transform: uppercase;
+}
+
+.project-fonts-colors-description {
+  font-family: 'Geist', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--global-text-1);
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 50%;
+}
+
+/* Color Palette */
+.color-palette {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.color-palette-title {
+  font-family: 'Geist', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--global-text-1);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.color-palette-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+
+
+.color-palette-swatch {
+  flex: 1 1 calc(50% - 15px);
+  min-height: 250px;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 16px;
+  position: relative;
+  box-sizing: border-box;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+
+/* Font Display */
+.font-display {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.font-display-title {
+  font-family: 'Geist', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--global-text-1);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.font-display-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.font-display-item {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  flex: 1 1 calc(50% - 15px);
+  box-sizing: border-box;
+}
+
+.font-display-sample {
+  font-size: 90px;
+  font-weight: 400;
+  color: var(--global-text-1);
+  line-height: 1;
+}
+
+.font-display-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.font-display-name {
+  font-family: 'Geist', sans-serif;
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--global-text-1);
+  text-align: left;
+}
+
+.font-display-divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--global-border);
+}
+
+.font-display-description {
+  font-family: 'Geist', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--global-text-1);
+  margin: 0;
+  text-align: left;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .project-header-wrapper {
+    padding: 0 20px;
+  }
+  
+  .project-case-study {
+    padding: 0 20px 80px 20px;
+  }
+  
+  .project-image {
+    width: 100%;
+  }
+  
+  .project-title-row {
+    display: grid;
+    grid-template-areas: 
+      "main"
+      "sub"
+      "date"
+      "description";
+    gap: 16px;
+  }
+  
+  .project-title-left {
+    display: contents;
+  }
+  
+  .project-title-main {
+    grid-area: main;
+  }
+  
+  .project-title-right {
+    display: contents;
+    max-width: 100%;
+    align-items: flex-start;
+  }
+  
+  .project-title-sub {
+    grid-area: sub;
+    text-align: left;
+  }
+  
+  .project-date {
+    grid-area: date;
+  }
+  
+  .project-description {
+    grid-area: description;
+    width: 100%;
+  }
+  
+  .project-title-description {
+    width: 100%;
+  }
+  
+  .project-case-container {
+    gap: 30px;
+  }
+  
+  .project-overview {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .project-overview-left,
+  .project-overview-right {
+    flex: none;
+  }
+
+  .project-overview-right {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .project-overview-title {
+     font-size: 48px;
+   }
+
+   .project-fonts-colors {
+     flex-direction: column;
+     gap: 32px;
+   }
+
+   .project-fonts-colors-left,
+   .project-fonts-colors-right {
+     flex: none;
+   }
+
+   .project-fonts-colors-heading {
+     font-size: 48px;
+   }
+   
+   .project-fonts-colors-description {
+     max-width: 100%;
+   }
+
+   .color-palette-grid,
+   .font-display-grid {
+     grid-template-columns: repeat(2, 1fr);
+     grid-template-rows: repeat(2, 1fr);
+   }
+  
+  .color-palette-swatch {
+    aspect-ratio: 1;
+    min-height: 120px;
+    width: auto;
+  }
+  
+  .font-display-sample {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-case {
+    padding-top: 80px;
+  }
+  
+  .project-title-left,
+  .project-title-right {
+    gap: 12px;
+  }
+  
+  .project-image {
+    aspect-ratio: 4/3;
+  }
+  
+  .color-palette-grid {
+     grid-template-columns: repeat(2, 1fr);
+   }
+  
+  .color-palette-swatch {
+    aspect-ratio: 1;
+    min-height: 100px;
+    width: auto;
+  }
+  
+  .font-display-sample {
+    font-size: 28px;
+  }
+}
+
+/* Design Process Section */
+.project-design-process {
+  display: flex;
+  gap: 48px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.project-design-process-left {
+  flex: 0 0 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.project-design-process-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.project-design-process-heading {
+  font-family: 'Geist', sans-serif;
+  font-size: 70px;
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0;
+  color: var(--global-text-1);
+  text-transform: uppercase;
+}
+
+.project-design-process-description {
+  font-family: 'Geist', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--global-text-1);
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 50%;
+}
+
+.project-design-process-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.project-design-process-subtitle {
+  font-family: 'Geist', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--global-text-1);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.project-design-process-text {
+  font-family: 'Geist', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--global-text-1);
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: 50%;
+  text-align: left;
+}
+
+.project-design-process-image {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.project-design-process-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+/* Responsive Design for Design Process */
+@media (max-width: 768px) {
+  .project-design-process {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .project-design-process-left,
+  .project-design-process-right {
+    flex: none;
+  }
+
+  .project-design-process-heading {
+    font-size: 48px;
+  }
+  
+  .project-design-process-text {
+    width: 100%;
+  }
+  
+  .project-design-process-description {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+   .project-design-process-heading {
+     font-size: 36px;
+   }
+ }
+
+/* Gallery Section */
+.project-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.project-gallery-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.project-gallery-heading {
+  font-family: 'Geist', sans-serif;
+  font-size: 70px;
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0;
+  color: var(--global-text-1);
+  text-transform: uppercase;
+}
+
+.project-gallery-description {
+  font-family: 'Geist', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--global-text-1);
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 25%;
+}
+
+.project-gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 30px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.project-gallery-item {
+  width: 100%;
+  height: 600px;
+  overflow: hidden;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+.project-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Responsive Design for Gallery */
+@media (max-width: 768px) {
+  .project-gallery-heading {
+    font-size: 48px;
+  }
+  
+  .project-gallery-description {
+    max-width: 100%;
+  }
+
+  .project-gallery-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .project-gallery-item {
+    height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-gallery-heading {
+    font-size: 36px;
+  }
+
+  .project-gallery-item {
+    height: 300px;
+  }
+}
+
+/* ===== NEXT PROJECT BUTTON SECTION ===== */
+.next-project-section {
+       width: 100%;
+       padding: 40px 24px 160px;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       position: relative;
+       z-index: 15;
+     }
+
+.next-project-button {
+    margin: 0;
+    font-size: clamp(1.5rem, 12vw, 8rem);
+    text-align: center;
+    color: var(--global-text-1);
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 0;
+    white-space: nowrap;
+  }
+
+.next-project-heading-gilda {
+  font-family: 'Gilda Display', 'Times New Roman', 'Georgia', 'Playfair Display', 'Crimson Text', serif;
+  font-weight: 400;
+  letter-spacing: 4px;
+  line-height: 1.1;
+}
+
+.next-project-heading-geist {
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-weight: 700;
+  letter-spacing: 4px;
+  white-space: nowrap;
+  display: inline-block;
+  line-height: 1;
+}
+
+.next-project-arrow {
+    font-size: clamp(1.5rem, 12vw, 8rem);
+    color: var(--global-text-1);
+    font-weight: 100;
+    line-height: 1;
+    margin-left: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+    vertical-align: baseline;
+  }
+
+/* ===== RESPONSIVE BREAKPOINT 1140px ===== */
+@media (max-width: 1140px) {
+  .next-project-button {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
+    text-align: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  
+  .next-project-arrow {
+    margin-left: 10px;
+    margin-top: 0;
+  }
+}
+
+/* ===== RESPONSIVE BREAKPOINT 768px ===== */
+@media (max-width: 768px) {
+  .next-project-section {
+    padding: 30px 16px 120px;
+  }
+  
+  .next-project-button {
+    gap: 0;
+    flex-wrap: wrap;
+  }
+
+  .next-project-heading-gilda,
+  .next-project-heading-geist {
+    font-size: clamp(3rem, 12vw, 8rem);
+  }
+  
+  .next-project-arrow {
+    margin-left: 8px;
+  }
+}
+
+/* ===== RESPONSIVE BREAKPOINT 480px ===== */
+@media (max-width: 480px) {
+  .next-project-section {
+    padding: 20px 12px 100px;
+  }
+
+  .next-project-heading-gilda,
+  .next-project-heading-geist {
+    font-size: clamp(2.5rem, 10vw, 6rem);
+    letter-spacing: 1px;
+  }
+}

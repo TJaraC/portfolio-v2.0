@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 
 // Import page components
 import HomePage from './pages/Home';
+import ProjectsPage from './pages/Projects/ProjectsPage';
 import Error404 from './pages/Error404';
 import Preloader from './components/ui/Preloader';
 
@@ -40,6 +41,8 @@ const AppContent = () => {
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/projects/:projectId" element={<ProjectsPage />} />
         <Route path="/404" element={<Error404 />} />
         <Route path="*" element={<Error404 />} />
       </Routes>

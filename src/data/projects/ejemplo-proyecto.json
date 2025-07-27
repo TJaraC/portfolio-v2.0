@@ -1,0 +1,63 @@
+{
+  "id": "ejemplo-proyecto",
+  "project": "CAFÉ",
+  "name": "LUNA",
+  "date": "15 Marzo 2024",
+  "cardTitle": "Café Luna Branding",
+  "cardTags": ["BRANDING", "ARTESANAL", "PREMIUM"],
+  "heroDescription": "Desarrollo de identidad visual completa para una cafetería artesanal especializada en café de origen único. El proyecto abarcó desde el diseño del logotipo hasta la aplicación en packaging, señalética y presencia digital.",
+  "heroImage": "/images/img_img.png",
+  "overview": {
+    "description": "Café Luna es una cafetería artesanal que se especializa en café de origen único y métodos de preparación tradicionales. El objetivo era crear una identidad visual que reflejara la calidad premium del producto y la experiencia artesanal que ofrece el establecimiento."
+  },
+  "projectGoal": {
+    "description": "Crear una identidad visual distintiva que comunique calidad, tradición y artesanía. La marca debía ser versátil para aplicarse en diferentes medios, desde packaging hasta señalética, manteniendo siempre la coherencia visual y los valores de la marca."
+  },
+  "fontAndColours": {
+    "description": "La paleta de colores se inspiró en los tonos naturales del café, desde los granos verdes hasta los tostados oscuros. La tipografía combina elegancia y legibilidad para reflejar la sofisticación del producto.",
+    "colors": [
+      "#2C1810",
+      "#8B4513",
+      "#D2B48C",
+      "#F5E6D3"
+    ],
+    "fonts": [
+      {
+        "name": "Playfair Display",
+        "description": "Tipografía principal para títulos",
+        "sample": "Aa"
+      },
+      {
+        "name": "Source Sans Pro",
+        "description": "Tipografía para texto corrido",
+        "sample": "Aa"
+      },
+      {
+        "name": "Montserrat",
+        "description": "Tipografía para elementos destacados",
+        "sample": "Aa"
+      },
+      {
+        "name": "Lora",
+        "description": "Tipografía secundaria",
+        "sample": "Aa"
+      }
+    ]
+  },
+  "designProcess": {
+    "description": "El proceso de diseño comenzó con una investigación exhaustiva del mercado del café artesanal y el análisis de la competencia. Se realizaron entrevistas con los propietarios para entender su visión y valores, seguido de la conceptualización y desarrollo de la identidad visual.",
+    "research": {
+      "description": "La investigación incluyó análisis de tendencias en el sector cafetero, estudio de marcas referentes a nivel internacional, y comprensión profunda del público objetivo. Se identificaron oportunidades de diferenciación y elementos clave para la construcción de la marca.",
+      "image": "/images/img_img_750x920.png"
+    }
+  },
+  "gallery": {
+    "description": "Aplicaciones finales de la identidad visual en diferentes medios y formatos, mostrando la versatilidad y coherencia de la marca en todos los puntos de contacto con el cliente.",
+    "images": [
+      "/images/img_img.png",
+      "/images/img_img_750x920.png",
+      "/images/img_img.png",
+      "/images/img_img_750x920.png"
+    ]
+  }
+}

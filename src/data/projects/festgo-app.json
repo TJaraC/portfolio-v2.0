@@ -1,0 +1,63 @@
+{
+  "id": "festgo-app",
+  "project": "FESTGO",
+  "name": "APP",
+  "date": "12 November 2024",
+  "cardTitle": "FestGo App",
+  "cardTags": ["UX/UI", "APP DESIGN", "MUSIC"],
+  "heroDescription": "FestGo is a fictional app created as part of a Master's project. It allows users to buy tickets for music festivals and events, while also connecting with others attending the same event. The app promotes community-building, helping people make friends and enjoy the experience together.",
+  "heroImage": "/images/FestGo01.webp",
+  "overview": {
+    "description": "FestGo App was designed to enhance the experience of attending music festivals and events. Beyond ticket purchasing, it focuses on social interaction—allowing users to form groups, join communities, and connect with like-minded attendees to foster real-life connections."
+  },
+  "projectGoal": {
+    "description": "The goal was to create a seamless and engaging user experience that combines ticket purchasing with social networking. The app needed to reflect the vibrant, youthful, and communal spirit of music festivals through its visual language and interaction design."
+  },
+  "fontAndColours": {
+    "description": "The color palette was inspired by the inclusive and energetic nature of music festivals—fresh, expressive, and friendly tones that promote a sense of community. The typography was unified under the Poppins typeface family in different weights, combining clarity, modernity, and accessibility.",
+    "colors": [
+      "#B0D18B",
+      "#BFCBAD",
+      "#A0CFCC",
+      "#000000"
+    ],
+    "fonts": [
+      {
+        "name": "Poppins Regular",
+        "description": "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 @!#%&*()_+-=;:,.?",
+        "sample": "Aa"
+      },
+      {
+        "name": "Poppins Light",
+        "description": "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 @!#%&*()_+-=;:,.?",
+        "sample": "Aa"
+      },
+      {
+        "name": "Poppins Medium",
+        "description": "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 @!#%&*()_+-=;:,.?",
+        "sample": "Aa"
+      },
+      {
+        "name": "Poppins Bold",
+        "description": "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 @!#%&*()_+-=;:,.?",
+        "sample": "Aa"
+      }
+    ]
+  },
+  "designProcess": {
+    "description": "The design process began with research into the festival and event landscape, identifying key user behaviors and pain points. From there, personas were developed and user journeys mapped out, leading into wireframes, UI design, prototyping, and usability testing.",
+    "research": {
+      "description": "Initial research involved analyzing existing ticketing platforms, social apps, and community-based tools. Surveys and interviews provided insights into how users plan and attend events, with a strong emphasis on social connection as a motivator for attendance.",
+      "image": "/images/img_img_750x920.png"
+    }
+  },
+  "gallery": {
+    "description": "Final UI mockups showcasing different screens of the app, including onboarding, event discovery, ticketing, group creation, and community interaction—illustrating a cohesive and user-friendly experience across the entire platform.",
+    "images": [
+      "/images/FestGo01.webp",
+      "/images/FestGo02.webp",
+      "/images/FestGo03.webp",
+      "/images/FestGo04.webp"
+    ]
+  }
+}

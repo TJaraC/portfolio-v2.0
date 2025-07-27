@@ -2,6 +2,8 @@
 .contact-section {
   width: 100%;
   background: var(--global-bg-1);
+  position: relative;
+  z-index: 10;
 }
 
 .contact-content {
@@ -30,7 +32,7 @@
   /* Fallback for browsers without clamp support */
   font-size: 8rem;
   font-size: clamp(2rem, 20vw, 16.25rem); /* Reducción muy agresiva */
-  line-height: 90%;
+  line-height: 1.1; /* Aumentar line-height para evitar corte de letras */
   text-align: center;
   color: #e2e1df;
   color: var(--global-text-2, #e2e1df);
@@ -39,7 +41,7 @@
   align-items: center;
   align-self: stretch;
   white-space: nowrap; /* Forzar que no haya saltos de línea */
-  overflow: hidden; /* Evitar desbordamiento */
+  overflow: visible; /* Permitir que las letras se vean completamente */
 }
 
 .contact-heading-gilda {
@@ -179,10 +181,17 @@
 /* ===== RESPONSIVE BREAKPOINT 1140px ===== */
 @media (max-width: 1140px) {
   .contact-heading {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    text-align: left;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: nowrap;
+    gap: 0.5rem;
+  }
+  
+  .contact-heading-gilda,
+  .contact-heading-geist {
+    white-space: nowrap;
   }
 }
 

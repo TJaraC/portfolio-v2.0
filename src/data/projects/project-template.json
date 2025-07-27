@@ -1,0 +1,63 @@
+{
+  "id": "project-template",
+  "project": "Project",
+  "name": "Name",
+  "date": "27 July 2025",
+  "cardTitle": "Project Template",
+  "cardTags": ["MODERN", "CLEAN", "ELEGANT"],
+  "heroDescription": "This is the hero description that appears below the project name. It provides a brief overview of what the project is about and its main objectives.",
+  "heroImage": "/images/img_img.png",
+  "overview": {
+    "description": "This is the overview description that explains the project in more detail. It covers the main aspects, challenges, and solutions implemented in this project."
+  },
+  "projectGoal": {
+    "description": "This section describes the main goal and objectives of the project. It explains what we aimed to achieve and the problems we solved."
+  },
+  "fontAndColours": {
+    "description": "This section explains the font and color choices made for the project, including the reasoning behind the design decisions.",
+    "colors": [
+      "#FF6B6B",
+      "#4ECDC4",
+      "#45B7D1",
+      "#96CEB4"
+    ],
+    "fonts": [
+      {
+        "name": "Gilda Display",
+        "description": "Primary heading font",
+        "sample": "Aa"
+      },
+      {
+        "name": "Geist",
+        "description": "Body text font",
+        "sample": "Aa"
+      },
+      {
+        "name": "Inter",
+        "description": "UI elements font",
+        "sample": "Aa"
+      },
+      {
+        "name": "Roboto",
+        "description": "Secondary font",
+        "sample": "Aa"
+      }
+    ]
+  },
+  "designProcess": {
+    "description": "This section describes the design process followed for this project, including methodologies, tools, and approaches used.",
+    "research": {
+      "description": "This describes the research phase of the project, including user research, market analysis, and competitive studies.",
+      "image": "/images/img_img.png"
+    }
+  },
+  "gallery": {
+    "description": "This section showcases the final results and key visuals from the project.",
+    "images": [
+      "/images/img_img.png",
+      "/images/img_img_750x920.png",
+      "/images/img_img.png",
+      "/images/img_img_750x920.png"
+    ]
+  }
+}

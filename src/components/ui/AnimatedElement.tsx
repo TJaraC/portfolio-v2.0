@@ -33,8 +33,10 @@ const AnimatedElement: React.FC<AnimatedElementProps> = ({
 
   const getAnimationStyles = () => {
     const baseStyles: React.CSSProperties = {
-      transition: `all ${duration}s cubic-bezier(0.4, 0, 0.2, 1)`,
+      transition: `transform ${duration}s cubic-bezier(0.4, 0, 0.2, 1), opacity ${duration}s cubic-bezier(0.4, 0, 0.2, 1)`,
       willChange: 'transform, opacity',
+      backfaceVisibility: 'hidden',
+      perspective: '1000px',
     };
 
     if (!isVisible) {
@@ -48,25 +50,25 @@ const AnimatedElement: React.FC<AnimatedElementProps> = ({
           return {
             ...baseStyles,
             opacity: 0,
-            transform: 'translateY(50px)',
+            transform: 'translate3d(0, 50px, 0)',
           };
         case 'slideLeft':
           return {
             ...baseStyles,
             opacity: 0,
-            transform: 'translateX(50px)',
+            transform: 'translate3d(50px, 0, 0)',
           };
         case 'slideRight':
           return {
             ...baseStyles,
             opacity: 0,
-            transform: 'translateX(-50px)',
+            transform: 'translate3d(-50px, 0, 0)',
           };
         case 'scale':
           return {
             ...baseStyles,
             opacity: 0,
-            transform: 'scale(0.9)',
+            transform: 'translate3d(0, 0, 0) scale3d(0.95, 0.95, 1)',
           };
         default:
           return {
@@ -79,7 +81,7 @@ const AnimatedElement: React.FC<AnimatedElementProps> = ({
     return {
       ...baseStyles,
       opacity: 1,
-      transform: 'translateY(0) translateX(0) scale(1)',
+      transform: 'translate3d(0, 0, 0) scale3d(1, 1, 1)',
     };
   };
 

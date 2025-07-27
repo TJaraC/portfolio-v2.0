@@ -24,6 +24,12 @@ const Header: React.FC = () => {
 
   // Función para hacer scroll suave a una sección
   const scrollToSection = (sectionId: string) => {
+    // Si no estamos en la home, redirigir a la home con el hash de la sección
+    if (location.pathname !== '/') {
+      window.location.href = `/#${sectionId}`;
+      return;
+    }
+    
     const element = document.getElementById(sectionId);
     if (!element) return;
     

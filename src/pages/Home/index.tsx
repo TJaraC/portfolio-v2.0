@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../../components/common/Header';
 import Contact from '../../components/common/Contact';
 import Button from '../../components/ui/Button';
@@ -6,21 +6,53 @@ import AnimatedElement from '../../components/ui/AnimatedElement';
 import AnimatedProfileImage from '../../components/ui/AnimatedProfileImage';
 import ParallaxSection from '../../components/ui/ParallaxSection';
 import GSAPCarousel from '../../components/ui/GSAPCarousel';
+import ProjectCard from '../../components/ui/ProjectCard';
 import Switch from '../../components/ui/Switch';
 import { useLenisScroll } from '../../hooks/useLenisScroll';
 import { useResponsiveAnimations } from '../../hooks/useResponsiveAnimations';
+import { useProjectsList } from '../../hooks/useProjectsList';
 import '../../styles/home.css';
 
 const Home: React.FC = () => {
   // Initialize Lenis scroll
-  useLenisScroll();
+  const lenis = useLenisScroll();
+  
+  // Get projects data
+  const { projects, loading, error } = useProjectsList();
   
   // Estado para manejar el switch
   const [isSwitchOn, setIsSwitchOn] = useState(false);
+
+  // Asegurar que Lenis esté activo cuando se carga la página Home
+  useEffect(() => {
+    // Solo reactivar Lenis si existe, no crear una nueva instancia
+    if (lenis) {
+      lenis.start();
+    }
+  }, [lenis]);
   
   const handleSwitchToggle = (isOn: boolean) => {
     setIsSwitchOn(isOn);
   };
+  
+  // Manejar scroll automático al hash de la URL
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash && lenis) {
+      // Esperar un poco para que la página se cargue completamente
+      setTimeout(() => {
+        const element = document.getElementById(hash);
+        if (element) {
+          const headerHeight = 80;
+          const targetPosition = element.offsetTop - headerHeight;
+          lenis.scrollTo(targetPosition, {
+            duration: 1.2,
+            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+          });
+        }
+      }, 500);
+    }
+  }, [lenis]);
 
   // Animaciones responsivas para cambios de breakpoint
   const currentBreakpoint = useResponsiveAnimations({
@@ -84,94 +116,28 @@ const Home: React.FC = () => {
       </ParallaxSection>
       
       {/* Portfolio Grid */}
-      <section id="work" className="portfolio-section" style={{ position: 'relative', zIndex: 5, backgroundColor: 'var(--global-bg-1)' }}>
-        <div className="portfolio-grid">
-          {/* Card 1 */}
-          <AnimatedElement animation="slideUp" delay={0.1} threshold={0.2}>
-            <article className="portfolio-card">
-              <div className="portfolio-card-number">01</div>
-              <div className="portfolio-card-img-wrapper">
-                <img 
-                  src="/images/img_img_750x920.png" 
-                  alt="E-commerce Platform" 
-                  className="portfolio-card-img"
-                />
-              </div>
-              <div className="portfolio-card-info">
-                <h3 className="portfolio-card-title">E-commerce Platform</h3>
-                <div className="portfolio-card-tags">
-                  <span className="portfolio-card-tag">RESPONSIVE</span>
-                  <span className="portfolio-card-tag">MODERN</span>
-                  <span className="portfolio-card-tag">INTUITIVE</span>
-                </div>
-              </div>
-            </article>
-          </AnimatedElement>
-          {/* Card 2 */}
-          <AnimatedElement animation="slideUp" delay={0.2} threshold={0.2}>
-            <article className="portfolio-card">
-              <div className="portfolio-card-number">02</div>
-              <div className="portfolio-card-img-wrapper">
-                <img 
-                  src="/images/img_img_750x920.png" 
-                  alt="Mobile Banking App" 
-                  className="portfolio-card-img"
-                />
-              </div>
-              <div className="portfolio-card-info">
-                <h3 className="portfolio-card-title">Mobile Banking App</h3>
-                <div className="portfolio-card-tags">
-                  <span className="portfolio-card-tag">SECURE</span>
-                  <span className="portfolio-card-tag">ACCESSIBLE</span>
-                  <span className="portfolio-card-tag">SLEEK</span>
-                </div>
-              </div>
-            </article>
-          </AnimatedElement>
-          {/* Card 3 */}
-          <AnimatedElement animation="slideUp" delay={0.3} threshold={0.2}>
-            <article className="portfolio-card">
-              <div className="portfolio-card-number">03</div>
-              <div className="portfolio-card-img-wrapper">
-                <img 
-                  src="/images/img_img_750x920.png" 
-                  alt="Healthcare Dashboard" 
-                  className="portfolio-card-img"
-                />
-              </div>
-              <div className="portfolio-card-info">
-                <h3 className="portfolio-card-title">Healthcare Dashboard</h3>
-                <div className="portfolio-card-tags">
-                  <span className="portfolio-card-tag">ANALYTICAL</span>
-                  <span className="portfolio-card-tag">CLEAN</span>
-                  <span className="portfolio-card-tag">PROFESSIONAL</span>
-                </div>
-              </div>
-            </article>
-          </AnimatedElement>
-          {/* Card 4 */}
-          <AnimatedElement animation="slideUp" delay={0.4} threshold={0.2}>
-            <article className="portfolio-card">
-              <div className="portfolio-card-number">04</div>
-              <div className="portfolio-card-img-wrapper">
-                <img 
-                  src="/images/img_img_750x920.png" 
-                  alt="Social Media Platform" 
-                  className="portfolio-card-img"
-                />
-              </div>
-              <div className="portfolio-card-info">
-                <h3 className="portfolio-card-title">Social Media Platform</h3>
-                <div className="portfolio-card-tags">
-                  <span className="portfolio-card-tag">ENGAGING</span>
-                  <span className="portfolio-card-tag">VIBRANT</span>
-                  <span className="portfolio-card-tag">INTERACTIVE</span>
-                </div>
-              </div>
-            </article>
-          </AnimatedElement>
-        </div>
-      </section>
+       <section id="work" className="portfolio-section" style={{ position: 'relative', zIndex: 5, backgroundColor: 'var(--global-bg-1)' }}>
+         <div className="portfolio-grid">
+           {loading ? (
+             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px', color: 'var(--global-text-1)' }}>
+               Loading projects...
+             </div>
+           ) : error ? (
+             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px', color: '#ff6b6b' }}>
+               {error}
+             </div>
+           ) : (
+             projects.map((project, index) => (
+               <AnimatedElement key={project.id} animation="slideUp" delay={0.1 * (index + 1)} threshold={0.2}>
+                 <ProjectCard 
+                   project={project} 
+                   number={String(index + 1).padStart(2, '0')}
+                 />
+               </AnimatedElement>
+             ))
+           )}
+         </div>
+       </section>
       
       {/* Philosophy Section */}
       <section className="philosophy-section">
@@ -217,14 +183,14 @@ const Home: React.FC = () => {
             <div className="about-images">
               <div className="about-images-row">
                 <img 
-                  src="/images/img_img_750x920.png" 
+                  src="/images/profile01.webp" 
                   alt="About" 
-                  className="about-img"
+                  className="about-img about-img-flexible"
                 />
                 <img 
-                  src="/images/img_img_750x920.png" 
+                  src="/images/profile02.webp" 
                   alt="Profile" 
-                  className="about-img"
+                  className="about-img about-img-fixed"
                 />
               </div>
             </div>

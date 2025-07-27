@@ -1,0 +1,63 @@
+{
+  "id": "howell-gallery",
+  "project": "HOWELL",
+  "name": "GALLERY",
+  "date": "2024",
+  "cardTitle": "Howell Gallery",
+  "cardTags": ["UX/UI", "WEB DESIGN", "DIGITAL ART"],
+  "heroDescription": "Howell is an innovative digital platform designed to immerse users in the captivating world of contemporary art. With a curated collection of artworks and artist profiles, it offers a seamless experience for exploring and connecting with modern creators.",
+  "heroImage": "/images/Howell01.webp",
+  "overview": {
+    "description": "Introducing Howell, an innovative digital platform designed to immerse you in the captivating world of contemporary art. Accessible from any device, this virtual gallery invites you to explore a vast catalog of works by renowned and emerging artists."
+  },
+  "projectGoal": {
+    "description": "The Howell website aims to provide art enthusiasts with a seamless and immersive digital experience. By offering a curated collection of artworks, artist profiles, and exhibition information, Howell seeks to connect art lovers with the pieces and artists that resonate with them."
+  },
+  "fontAndColours": {
+    "description": "The visual identity of Howell combines a minimalist palette with strong contrast and elegance. The typography relies on the Stotzl font family in multiple weights, offering a balance between modernity and sophistication.",
+    "colors": [
+      "#F59E0B",
+      "#111827",
+      "#000000",
+      "#FFFFFF"
+    ],
+    "fonts": [
+      {
+        "name": "Stotzl Light",
+        "description": "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 @!#%&*()_+-=;:,.?",
+        "sample": "Aa"
+      },
+      {
+        "name": "Stotzl Regular",
+        "description": "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 @!#%&*()_+-=;:,.?",
+        "sample": "Aa"
+      },
+      {
+        "name": "Stotzl Medium",
+        "description": "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 @!#%&*()_+-=;:,.?",
+        "sample": "Aa"
+      },
+      {
+        "name": "Stotzl Bold",
+        "description": "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 @!#%&*()_+-=;:,.?",
+        "sample": "Aa"
+      }
+    ]
+  },
+  "designProcess": {
+    "description": "The design process began with defining the needs of art enthusiasts and identifying how digital tools could enhance their engagement with contemporary art. Through wireframing, visual exploration, and UI refinement, the final design was built to evoke elegance and accessibility.",
+    "research": {
+      "description": "The research phase included a competitive analysis of digital galleries and platforms, identifying design patterns that support immersive user experiences. Insights were gathered from both artists and users to shape a more intuitive and engaging browsing journey.",
+      "image": "/images/img_img_750x920.png"
+    }
+  },
+  "gallery": {
+    "description": "Visual highlights of the Howell Gallery platform, showcasing the homepage, artwork detail pages, artist profiles, and responsive layouts across desktop and mobile views.",
+    "images": [
+      "/images/Howell02.webp",
+      "/images/Howell03.webp",
+      "/images/Howell04.webp",
+      "/images/Howell05.webp"
+    ]
+  }
+}
