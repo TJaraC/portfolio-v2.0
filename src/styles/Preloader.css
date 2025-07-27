@@ -64,14 +64,20 @@
 }
 
 .preloader-word-left {
-  right: 30px;
+  right: 0;
+  width: 100%;
   text-align: right;
+  justify-content: flex-end;
+  padding-right: 40px;
   transform-origin: right center;
 }
 
 .preloader-word-right {
-  left: 30px;
+  left: 0;
+  width: 100%;
   text-align: left;
+  justify-content: flex-start;
+  padding-left: 40px;
   transform-origin: left center;
 }
 
@@ -88,11 +94,11 @@
   }
   
   .preloader-word-left {
-    right: 40px;
+    padding-right: 30px;
   }
   
   .preloader-word-right {
-    left: 60px;
+    padding-left: 30px;
   }
 }
 
@@ -108,11 +114,11 @@
   }
   
   .preloader-word-left {
-    right: 35px;
+    padding-right: 25px;
   }
   
   .preloader-word-right {
-    left: 55px;
+    padding-left: 25px;
   }
 }
 
@@ -128,11 +134,11 @@
   }
   
   .preloader-word-left {
-    right: 30px;
+    padding-right: 20px;
   }
   
   .preloader-word-right {
-    left: 50px;
+    padding-left: 20px;
   }
 }
 
