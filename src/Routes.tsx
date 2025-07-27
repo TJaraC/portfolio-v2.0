@@ -42,6 +42,7 @@ const AppContent = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/projects" element={<Navigate to="/#work" replace />} />
+        <Route path="/projects/" element={<Navigate to="/#work" replace />} />
         <Route path="/projects/:projectId" element={<ProjectsPage />} />
         <Route path="/404" element={<Error404 />} />
         <Route path="*" element={<Navigate to="/404" replace />} />

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import Header from '../../components/common/Header';
 import Contact from '../../components/common/Contact';
 import ProjectCase from '../../components/ui/ProjectCase';
@@ -36,22 +36,7 @@ const ProjectsPage: React.FC = () => {
   }
 
   if (error || !projectData) {
-    return (
-      <div className="projects-page">
-        <Header />
-        <div className="error-container" style={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          alignItems: 'center', 
-          minHeight: '50vh',
-          fontSize: '1.2rem',
-          color: '#ff6b6b'
-        }}>
-          {error || 'Project not found'}
-        </div>
-        <Contact />
-      </div>
-    );
+    return <Navigate to="/404" replace />;
   }
 
   return (
