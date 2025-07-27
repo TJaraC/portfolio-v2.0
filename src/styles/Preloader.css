@@ -12,6 +12,11 @@
   justify-content: center;
   overflow: hidden;
   pointer-events: none;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .preloader-columns {
@@ -83,62 +88,116 @@
 
 /* ===== RESPONSIVE BREAKPOINTS ===== */
 @media (max-width: 768px) {
+  .preloader {
+    cursor: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
   .preloader-column:first-child,
   .preloader-column:last-child {
     display: none;
+  }
+  
+  .preloader-column-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .preloader-word {
     font-size: clamp(18px, 5vw, 32px);
     letter-spacing: 1px;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
   }
   
   .preloader-word-left {
-    padding-right: 30px;
+    padding-right: 20px;
+    text-align: center;
   }
   
   .preloader-word-right {
-    padding-left: 30px;
+    padding-left: 20px;
+    text-align: center;
   }
 }
 
 @media (max-width: 480px) {
+  .preloader {
+    cursor: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
   .preloader-column:first-child,
   .preloader-column:last-child {
     display: none;
+  }
+  
+  .preloader-column-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .preloader-word {
     font-size: clamp(16px, 6vw, 24px);
     letter-spacing: 0.5px;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
   }
   
   .preloader-word-left {
-    padding-right: 25px;
+    padding-right: 15px;
+    text-align: center;
   }
   
   .preloader-word-right {
-    padding-left: 25px;
+    padding-left: 15px;
+    text-align: center;
   }
 }
 
 @media (max-width: 320px) {
+  .preloader {
+    cursor: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
   .preloader-column:first-child,
   .preloader-column:last-child {
     display: none;
   }
   
+  .preloader-column-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
   .preloader-word {
     font-size: clamp(14px, 5vw, 20px);
     letter-spacing: 0.3px;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
   }
   
   .preloader-word-left {
-    padding-right: 20px;
+    padding-right: 10px;
+    text-align: center;
   }
   
   .preloader-word-right {
-    padding-left: 20px;
+    padding-left: 10px;
+    text-align: center;
   }
 }
 
