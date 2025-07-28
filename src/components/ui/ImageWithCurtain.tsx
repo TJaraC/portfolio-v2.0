@@ -75,7 +75,9 @@ const ImageWithCurtain: React.FC<ImageWithCurtainProps> = ({
     <div 
       ref={(el) => {
         containerRef.current = el;
-        elementRef.current = el;
+        if (elementRef && elementRef.current !== el) {
+          elementRef.current = el;
+        }
       }}
       className={`image-curtain-container ${className}`}
       style={{

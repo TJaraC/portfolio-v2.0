@@ -1,0 +1,17 @@
+/* Local Fonts - Geist (Variable Font from Google Fonts) */
+@font-face {
+  font-display: swap;
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 100 900;
+  src: url('/fonts/geist-variable.woff2') format('woff2');
+}
+
+/* Local Fonts - Gilda Display */
+@font-face {
+  font-display: swap;
+  font-family: 'Gilda Display';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/gilda-display-400.woff2') format('woff2');
+}
