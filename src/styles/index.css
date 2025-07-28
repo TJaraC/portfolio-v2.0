@@ -4,6 +4,7 @@
 @import './browser-specific.css';
 @import './Preloader.css';
 @import './Error404.css';
+@import './ImageWithCurtain.css';
 
 :root {
   /* Global Colors */

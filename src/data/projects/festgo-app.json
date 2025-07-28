@@ -23,24 +23,16 @@
     ],
     "fonts": [
       {
-        "name": "Poppins Regular",
-        "description": "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 @!#%&*()_+-=;:,.?",
-        "sample": "Aa"
+        "name": "Poppins Regular"
       },
       {
-        "name": "Poppins Light",
-        "description": "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 @!#%&*()_+-=;:,.?",
-        "sample": "Aa"
+        "name": "Poppins Light"
       },
       {
-        "name": "Poppins Medium",
-        "description": "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 @!#%&*()_+-=;:,.?",
-        "sample": "Aa"
+        "name": "Poppins Medium"
       },
       {
-        "name": "Poppins Bold",
-        "description": "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 @!#%&*()_+-=;:,.?",
-        "sample": "Aa"
+        "name": "Poppins Bold"
       }
     ]
   },

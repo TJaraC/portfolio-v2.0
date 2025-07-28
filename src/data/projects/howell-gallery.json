@@ -23,24 +23,16 @@
     ],
     "fonts": [
       {
-        "name": "Stotzl Light",
-        "description": "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 @!#%&*()_+-=;:,.?",
-        "sample": "Aa"
+        "name": "Stotzl Light"
       },
       {
-        "name": "Stotzl Regular",
-        "description": "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 @!#%&*()_+-=;:,.?",
-        "sample": "Aa"
+        "name": "Stotzl Regular"
       },
       {
-        "name": "Stotzl Medium",
-        "description": "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 @!#%&*()_+-=;:,.?",
-        "sample": "Aa"
+        "name": "Stotzl Medium"
       },
       {
-        "name": "Stotzl Bold",
-        "description": "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 @!#%&*()_+-=;:,.?",
-        "sample": "Aa"
+        "name": "Stotzl Bold"
       }
     ]
   },

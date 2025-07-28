@@ -23,24 +23,16 @@
     ],
     "fonts": [
       {
-        "name": "Playfair Display",
-        "description": "Tipografía principal para títulos",
-        "sample": "Aa"
+        "name": "Playfair Display"
       },
       {
-        "name": "Source Sans Pro",
-        "description": "Tipografía para texto corrido",
-        "sample": "Aa"
+        "name": "Source Sans Pro"
       },
       {
-        "name": "Montserrat",
-        "description": "Tipografía para elementos destacados",
-        "sample": "Aa"
+        "name": "Montserrat"
       },
       {
-        "name": "Lora",
-        "description": "Tipografía secundaria",
-        "sample": "Aa"
+        "name": "Lora"
       }
     ]
   },

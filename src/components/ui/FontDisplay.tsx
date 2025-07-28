@@ -6,21 +6,22 @@ interface FontDisplayProps {
 }
 
 const FontDisplay: React.FC<FontDisplayProps> = ({ fonts }) => {
+  const getWeightClass = (index: number) => {
+    const weights = ['font-weight-light', 'font-weight-regular', 'font-weight-medium', 'font-weight-bold'];
+    return weights[index % weights.length];
+  };
+
   return (
     <div className="font-display">
       <h3 className="font-display-title">Fonts</h3>
-      <div className="font-display-grid">
+      <div className="font-display-column">
         {fonts.map((font, index) => (
-          <div key={index} className="font-display-item">
-            <div className="font-display-sample" style={{ fontFamily: 'Geist' }}>
-              {font.sample}
+          <React.Fragment key={index}>
+            <div className="font-display-item-vertical">
+              <span className={`font-display-name-vertical ${getWeightClass(index)}`}>{font.name}</span>
             </div>
-            <div className="font-display-details">
-              <span className="font-display-name">{font.name}</span>
-              <div className="font-display-divider"></div>
-              <p className="font-display-description">{font.description}</p>
-            </div>
-          </div>
+            {index < fonts.length - 1 && <div className="font-display-divider-vertical"></div>}
+          </React.Fragment>
         ))}
       </div>
     </div>

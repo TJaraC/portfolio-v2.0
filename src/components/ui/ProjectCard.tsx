@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLenisScroll } from '../../hooks/useLenisScroll';
 import { ProjectCard as ProjectType } from '../../hooks/useProjectsList';
+import ImageWithCurtain from './ImageWithCurtain';
 
 interface ProjectCardProps {
   project: ProjectType;
@@ -44,10 +45,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, number }) => {
     >
       <div className="portfolio-card-number">{number}</div>
       <div className="portfolio-card-img-wrapper">
-        <img 
-          src={project.heroImage} 
-          alt={project.cardTitle} 
+        <ImageWithCurtain
+          src={project.heroImage}
+          alt={project.cardTitle}
           className="portfolio-card-img"
+          delay={0.2}
+          duration={1.0}
+          threshold={0.15}
         />
       </div>
       <div className="portfolio-card-info">

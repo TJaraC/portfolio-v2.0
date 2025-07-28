@@ -23,24 +23,16 @@
     ],
     "fonts": [
       {
-        "name": "Gilda Display",
-        "description": "Primary heading font",
-        "sample": "Aa"
+        "name": "Gilda Display"
       },
       {
-        "name": "Geist",
-        "description": "Body text font",
-        "sample": "Aa"
+        "name": "Geist"
       },
       {
-        "name": "Inter",
-        "description": "UI elements font",
-        "sample": "Aa"
+        "name": "Inter"
       },
       {
-        "name": "Roboto",
-        "description": "Secondary font",
-        "sample": "Aa"
+        "name": "Roboto"
       }
     ]
   },

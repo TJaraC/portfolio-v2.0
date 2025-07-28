@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 
 interface ProjectFont {
   name: string;
-  description: string;
-  sample: string;
+  description?: string;
+  sample?: string;
 }
 
 interface ProjectData {

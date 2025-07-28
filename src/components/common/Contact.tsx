@@ -1,9 +1,29 @@
 import React from 'react';
 import Button from '../ui/Button';
 import AnimatedContactHeading from '../ui/AnimatedContactHeading';
+import { useLenisScroll } from '../../hooks/useLenisScroll';
 import '../../styles/Contact.css';
 
 const Contact: React.FC = () => {
+  const lenis = useLenisScroll();
+
+  // Función para hacer scroll al top de la página
+  const scrollToTop = () => {
+    if (lenis) {
+      // Usar Lenis si está disponible
+      lenis.scrollTo(0, {
+        duration: 1.2,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+      });
+    } else {
+      // Fallback a scroll nativo si Lenis no está disponible
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <section className="contact-section">
       <div className="contact-content">
@@ -47,7 +67,7 @@ const Contact: React.FC = () => {
           </div>
           <div className="footer-right">
             <span className="footer-copyright">© 2025 - All Rights Reserved</span>
-            <div className="footer-backtop">
+            <div className="footer-backtop" onClick={scrollToTop} style={{ cursor: 'pointer' }}>
               <span className="footer-backtop-text">Back to top </span>
               <img 
                 src="/images/img_svg.svg" 

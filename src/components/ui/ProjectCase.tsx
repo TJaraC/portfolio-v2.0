@@ -5,6 +5,7 @@ import FontDisplay from './FontDisplay';
 import ParallaxSection from './ParallaxSection';
 import AnimatedElement from './AnimatedElement';
 import NextProjectButton from './NextProjectButton';
+import ImageWithCurtain from './ImageWithCurtain';
 import { ProjectData } from '../../hooks/useProjectData';
 
 interface ProjectCaseProps {
@@ -41,11 +42,15 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
         <div className="project-case-wrapper">
           <div className="project-case-container">
             {/* Project Image */}
-            <AnimatedElement animation="slideUp" delay={0.3} threshold={0.2}>
-              <div className="project-image">
-                <img src={data.heroImage} alt={`${data.project} ${data.name}`} />
-              </div>
-            </AnimatedElement>
+            <div className="project-image">
+              <ImageWithCurtain
+                src={data.heroImage}
+                alt={`${data.project} ${data.name}`}
+                delay={0.3}
+                duration={1.2}
+                threshold={0.2}
+              />
+            </div>
 
             {/* Divider */}
             <Divider animation="slideLeft" delay={0.1} />
@@ -125,11 +130,15 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                  </div>
                  <div className="project-gallery-grid">
                    {data.gallery.images.map((image, index) => (
-                     <AnimatedElement key={index} animation="fadeIn" delay={0.1 * (index + 1)} threshold={0.2}>
-                       <div className="project-gallery-item">
-                         <img src={image} alt={`Gallery image ${index + 1}`} />
-                       </div>
-                     </AnimatedElement>
+                     <div key={index} className="project-gallery-item">
+                       <ImageWithCurtain
+                         src={image}
+                         alt={`Gallery image ${index + 1}`}
+                         delay={0.1 * (index + 1)}
+                         duration={1.0}
+                         threshold={0.2}
+                       />
+                     </div>
                    ))}
                  </div>
                </div>

@@ -4,6 +4,7 @@ import Contact from '../../components/common/Contact';
 import Button from '../../components/ui/Button';
 import AnimatedElement from '../../components/ui/AnimatedElement';
 import AnimatedProfileImage from '../../components/ui/AnimatedProfileImage';
+import ImageWithCurtain from '../../components/ui/ImageWithCurtain';
 import ParallaxSection from '../../components/ui/ParallaxSection';
 import GSAPCarousel from '../../components/ui/GSAPCarousel';
 import ProjectCard from '../../components/ui/ProjectCard';
@@ -90,14 +91,14 @@ const Home: React.FC = () => {
         </AnimatedElement>
         <AnimatedElement animation="slideUp" delay={0.3} duration={1}>
           <div className="hero-bottom">
-            <AnimatedProfileImage 
-              src="/images/img_img.png" 
-              alt="Profile" 
-              className="hero-profile-img"
-              delay={0.8}
-              rotations={1.5}
-              duration={2.5}
-            />
+            <AnimatedProfileImage
+                  src="/images/img_img.png"
+                  alt="Profile"
+                  className="hero-profile-img"
+                  delay={0.8}
+                  rotations={1.5}
+                  duration={2.5}
+                />
             <p className="hero-description">
               product design is where logic, research and creativity come together. I enjoy creating elegant solutions with dynamic interactions and intuitive designs that not only look good, but also feel smooth and enjoyable to use.
             </p>
@@ -128,12 +129,11 @@ const Home: React.FC = () => {
              </div>
            ) : (
              projects.map((project, index) => (
-               <AnimatedElement key={project.id} animation="slideUp" delay={0.1 * (index + 1)} threshold={0.2}>
-                 <ProjectCard 
-                   project={project} 
-                   number={String(index + 1).padStart(2, '0')}
-                 />
-               </AnimatedElement>
+               <ProjectCard 
+                 key={project.id}
+                 project={project} 
+                 number={String(index + 1).padStart(2, '0')}
+               />
              ))
            )}
          </div>
@@ -179,22 +179,28 @@ const Home: React.FC = () => {
       {/* About Section */}
       <section id="about" className="about-section">
         <div className="about-content">
-          <AnimatedElement animation="slideLeft" threshold={0.2}>
-            <div className="about-images">
-              <div className="about-images-row">
-                <img 
-                  src="/images/profile01.webp" 
-                  alt="About" 
-                  className="about-img about-img-flexible"
-                />
-                <img 
-                  src="/images/profile02.webp" 
-                  alt="Profile" 
-                  className="about-img about-img-fixed"
-                />
-              </div>
-            </div>
-          </AnimatedElement>
+          <div className="about-images">
+             <div className="about-images-row">
+               <div className="about-img about-img-flexible">
+                 <ImageWithCurtain
+                   src="/images/profile01.webp"
+                   alt="About"
+                   delay={0.2}
+                   duration={1.0}
+                   threshold={0.15}
+                 />
+               </div>
+               <div className="about-img about-img-fixed">
+                 <ImageWithCurtain
+                   src="/images/profile02.webp"
+                   alt="Profile"
+                   delay={0.4}
+                   duration={1.0}
+                   threshold={0.15}
+                 />
+               </div>
+             </div>
+           </div>
           <AnimatedElement animation="slideRight" delay={0.2} threshold={0.2}>
             <div className="about-who">
               <h3 className="about-who-title">
