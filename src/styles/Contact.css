@@ -32,7 +32,7 @@
   /* Fallback for browsers without clamp support */
   font-size: 8rem;
   font-size: clamp(2rem, 20vw, 16.25rem); /* Reducción muy agresiva */
-  line-height: 1.1; /* Aumentar line-height para evitar corte de letras */
+  line-height: 0.85; /* Alineado para perfecta alineación horizontal */
   text-align: center;
   color: #e2e1df;
   color: var(--global-text-2, #e2e1df);

@@ -341,7 +341,7 @@
   font-size: 50px;
   color: var(--global-text-1);
   text-align: left;
-  width: 60%;
+  width: 100%;
 }
 
 .font-display-name-vertical.font-weight-light {
@@ -811,7 +811,7 @@
   font-family: 'Gilda Display', 'Times New Roman', 'Georgia', 'Playfair Display', 'Crimson Text', serif;
   font-weight: 400;
   letter-spacing: 4px;
-  line-height: 1.1;
+  line-height: 0.85;
 }
 
 .next-project-heading-geist {
@@ -820,7 +820,7 @@
   letter-spacing: 4px;
   white-space: nowrap;
   display: inline-block;
-  line-height: 1;
+  line-height: 0.85;
 }
 
 .next-project-arrow {
