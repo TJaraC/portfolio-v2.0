@@ -66,7 +66,19 @@ src/data/projects/
 }
 ```
 
-3. **Agregar la ruta**: El proyecto será accesible automáticamente en `/projects/mi-nuevo-proyecto`
+3. **Registrar el proyecto en el sistema**: Una vez creado el archivo JSON, debes añadir su ID al array de proyectos en `src/hooks/useProjectsList.ts`:
+
+   - Abre el archivo `src/hooks/useProjectsList.ts`
+   - Busca la línea 22 donde está definido el array `projectIds`:
+     ```javascript
+     const projectIds = ['festgo-app', 'howell-gallery'];
+     ```
+   - Añade el ID de tu nuevo proyecto al array:
+     ```javascript
+     const projectIds = ['festgo-app', 'howell-gallery', 'mi-nuevo-proyecto'];
+     ```
+
+4. **Verificar el resultado**: El proyecto será accesible automáticamente en `/projects/mi-nuevo-proyecto` y aparecerá en la lista de proyectos del home
 
 ## Campos Configurables
 

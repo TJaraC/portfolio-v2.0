@@ -1,0 +1,55 @@
+{
+  "id": "portfolio-25",
+  "project": "Portfolio",
+  "name": "25",
+  "date": "July 2025",
+  "cardTitle": "Personal Portfolio",
+  "cardTags": ["UX/UI", "WEB DESIGN", "REACT"],
+  "heroDescription": "This portfolio website was designed and developed to present my work as a UX/UI Designer and Product Designer. The site reflects both my creative identity and technical abilities, offering a clean, modern interface to showcase projects, design processes, and visual thinking.",
+  "heroImage": "/images/portfolio01.webp",
+  "overview": {
+    "description": "The portfolio was created as a space to reflect my personality and design approach. Built with React, it allows for easy content management and an optimized experience across devices. The structure, typography, and animations were carefully planned to highlight both visuals and content."
+  },
+  "projectGoal": {
+    "description": "The objective was to design and develop a performant, flexible, and visually appealing portfolio that communicates who I am as a designer. It had to support smooth navigation, showcase case studies in detail, and allow content updates through a modern backend setup."
+  },
+  "fontAndColours": {
+    "description": "The visual identity of the portfolio is defined by a vibrant and approachable palette inspired by creativity and digital clarity. The Gesit and Gilda typefaces were used in various weights to ensure visual consistency and modern elegance.",
+    "colors": [
+      "#FD601A",
+      "#131313",
+      "#DDDCDA",
+      "#99A1AF"
+    ],
+    "fonts": [
+      {
+        "name": "Gilda Display"
+      },
+      {
+        "name": "Geist Regular"
+      },
+      {
+        "name": "Geist Medium"
+      },
+      {
+        "name": "Geist Bold"
+      }
+    ]
+  },
+  "designProcess": {
+    "description": "The design process followed a user-centered methodology based on design thinking. It began with benchmarking and content strategy, followed by information architecture, wireframes, UI kit, and prototyping. The final result is a fully custom and scalable web portfolio.",
+    "research": {
+      "description": "Initial research involved analyzing other designers portfolios, identifying best practices and usability patterns. From there, I defined the sitemap and main user journeys to ensure a clear and intuitive structure.",
+      "image": "/images/portfolio-research.webp"
+    }
+  },
+  "gallery": {
+    "description": "High-fidelity mockups and screen captures showcasing the final website—homepage, project page and mobile views",
+    "images": [
+      "/images/portfolio02.webp",
+      "/images/portfolio03.webp",
+      "/images/portfolio04.webp",
+      "/images/portfolio05.webp"
+    ]
+  }
+}
