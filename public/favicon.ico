@@ -1,6 +1,0 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Estrella blanca de fondo -->
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M17.1 0H14.9V13.24L5.49 3.84L3.84 5.49L13.24 14.9H0V17.1H13.24L3.84 26.5L5.49 28.16L14.9 18.75V32H17.1V18.75L26.5 28.16L28.16 26.5L18.75 17.1H32V14.9H18.75L28.16 5.49L26.5 3.84L17.1 13.24V0Z" fill="#E2E1DF"/>
-  <!-- Estrella naranja superpuesta -->
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M17.1 0H14.9V13.24L5.49 3.84L3.84 5.49L13.24 14.9H0V17.1H13.24L3.84 26.5L5.49 28.16L14.9 18.75V32H17.1V18.75L26.5 28.16L28.16 26.5L18.75 17.1H32V14.9H18.75L28.16 5.49L26.5 3.84L17.1 13.24V0Z" fill="#fd601a" opacity="0.8"/>
-</svg>

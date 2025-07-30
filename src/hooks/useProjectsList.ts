@@ -20,7 +20,7 @@ export const useProjectsList = (): { projects: ProjectCard[]; loading: boolean; 
         setError(null);
         
         // Lista de proyectos disponibles (se puede expandir dinámicamente)
-        const projectIds = ['festgo-app', 'portfolio-25', 'howell-gallery'];
+        const projectIds = ['ultracamp', 'festgo-app', 'portfolio-25', 'howell-gallery'];
         const projectsData: ProjectCard[] = [];
         
         for (const projectId of projectIds) {
