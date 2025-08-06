@@ -4,17 +4,53 @@ import Header from '../../components/common/Header';
 import Contact from '../../components/common/Contact';
 import ProjectCase from '../../components/ui/ProjectCase';
 import { useProjectData } from '../../hooks/useProjectData';
+import { useLenisScroll } from '../../hooks/useLenisScroll';
 import '../../styles/projects.css';
 
 const ProjectsPage: React.FC = () => {
   const { projectId } = useParams();
   const { data: projectData, loading, error } = useProjectData(projectId || 'project-template');
+  const lenis = useLenisScroll();
 
   // Asegurar que Lenis esté activo cuando se carga la página del proyecto
   useEffect(() => {
     // Scroll al top cuando cambie el proyecto
     window.scrollTo(0, 0);
-  }, [projectId]);
+    
+    // Reactivar Lenis si existe
+    if (lenis) {
+      lenis.start();
+      // Forzar actualización del scroll
+      lenis.resize();
+    }
+  }, [projectId, lenis]);
+
+  // Detectar navegación de vuelta desde otras páginas y reactivar Lenis
+  useEffect(() => {
+    const handlePopState = () => {
+      // Cuando se usa el botón atrás del navegador, reactivar Lenis
+      setTimeout(() => {
+        if (lenis) {
+          lenis.start();
+          // Forzar actualización del scroll
+          lenis.resize();
+        }
+      }, 100);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [lenis]);
+
+  // Asegurar que Lenis esté activo al montar el componente
+  useEffect(() => {
+    if (lenis) {
+      lenis.start();
+    }
+  }, [lenis]);
 
   if (loading) {
     return (

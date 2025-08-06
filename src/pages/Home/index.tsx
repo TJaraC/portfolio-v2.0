@@ -12,6 +12,7 @@ import Switch from '../../components/ui/Switch';
 import { useLenisScroll } from '../../hooks/useLenisScroll';
 import { useResponsiveAnimations } from '../../hooks/useResponsiveAnimations';
 import { useProjectsList } from '../../hooks/useProjectsList';
+import { useImageRotation } from '../../hooks/useImageRotation';
 import '../../styles/home.css';
 
 const Home: React.FC = () => {
@@ -20,6 +21,9 @@ const Home: React.FC = () => {
   
   // Get projects data
   const { projects, loading, error } = useProjectsList();
+  
+  // Get rotating image for designer I
+  const { currentImage } = useImageRotation();
   
   // Estado para manejar el switch
   const [isSwitchOn, setIsSwitchOn] = useState(false);
@@ -31,6 +35,11 @@ const Home: React.FC = () => {
       lenis.start();
     }
   }, [lenis]);
+
+  // Aplicar la imagen rotativa como CSS custom property
+  useEffect(() => {
+    document.documentElement.style.setProperty('--designer-i-image', `url('${currentImage}')`);
+  }, [currentImage]);
 
   // Detectar navegación de vuelta desde otras páginas y reactivar Lenis
   useEffect(() => {
