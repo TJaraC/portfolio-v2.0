@@ -20,12 +20,12 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* Evitar conflicto con Lenis */
   overflow-x: hidden;
 }
 
 body {
-  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Geist', 'Geist-Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;

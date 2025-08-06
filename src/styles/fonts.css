@@ -1,10 +1,12 @@
-/* Local Fonts - Geist (Variable Font from Google Fonts) */
+/* Local Fonts - Geist (Variable Font) */
 @font-face {
   font-display: swap;
   font-family: 'Geist';
   font-style: normal;
   font-weight: 100 900;
   src: url('/fonts/geist-variable.woff2') format('woff2');
+  /* Fallback for older browsers */
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 /* Local Fonts - Gilda Display */
@@ -14,4 +16,48 @@
   font-style: normal;
   font-weight: 400;
   src: url('/fonts/gilda-display-400.woff2') format('woff2');
+  /* Fallback for older browsers */
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Fallback font definitions */
+@font-face {
+  font-display: swap;
+  font-family: 'Geist-Fallback';
+  font-style: normal;
+  font-weight: 100 900;
+  src: local('Inter'), local('SF Pro Display'), local('Segoe UI'), local('Roboto'), local('Arial');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Gilda-Fallback';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Times New Roman'), local('Georgia'), local('serif');
+}
+
+/* Estilos para cuando las fuentes fallan */
+.font-fallback-active .hero-heading-creative,
+.font-fallback-active .featured-heading-gilda,
+.font-fallback-active .about-who-title-gilda,
+.font-fallback-active .philosophy-title-gilda,
+.font-fallback-active .contact-heading-gilda,
+.font-fallback-active .project-title-main,
+.font-fallback-active .next-project-heading-gilda,
+.font-fallback-active .error-404-title-gilda {
+  font-family: 'Gilda-Fallback', 'Times New Roman', 'Georgia', serif !important;
+}
+
+.font-fallback-active .hero-heading-product,
+.font-fallback-active .hero-heading-designer,
+.font-fallback-active .featured-heading-geist,
+.font-fallback-active .about-who-title-geist,
+.font-fallback-active .philosophy-title-geist,
+.font-fallback-active .contact-heading-geist,
+.font-fallback-active .project-title-sub,
+.font-fallback-active .next-project-heading-geist,
+.font-fallback-active .error-404-title-geist,
+.font-fallback-active body {
+  font-family: 'Geist-Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif !important;
 }

@@ -2,11 +2,11 @@
 
 /* Font fallbacks for better cross-browser support */
 .font-geist-fallback {
-  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Geist', 'Geist-Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
 .font-gilda-fallback {
-  font-family: 'Gilda Display', 'Times New Roman', 'Georgia', 'Playfair Display', 'Crimson Text', serif;
+  font-family: 'Gilda Display', 'Gilda-Fallback', 'Times New Roman', 'Georgia', 'Playfair Display', 'Crimson Text', serif;
 }
 
 /* Backdrop filter fallbacks */
@@ -107,15 +107,14 @@
   }
 }
 
-/* Smooth scrolling fallback */
+/* Scroll behavior - mantener auto para evitar conflictos con Lenis */
 html {
-  scroll-behavior: auto;
+  scroll-behavior: auto !important;
 }
 
-@supports (scroll-behavior: smooth) {
-  html {
-    scroll-behavior: smooth;
-  }
+/* Desactivar scroll-behavior smooth cuando Lenis está activo */
+.lenis html {
+  scroll-behavior: auto !important;
 }
 
 /* Object-fit fallbacks */
