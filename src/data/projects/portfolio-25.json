@@ -1,7 +1,7 @@
 {
   "id": "portfolio-25",
   "project": "Portfolio",
-  "name": "25",
+  "name": "'25",
   "date": "July 2025",
   "cardTitle": "Personal Portfolio",
   "cardTags": ["UX/UI", "WEB DESIGN", "REACT"],
@@ -38,9 +38,29 @@
   },
   "designProcess": {
     "description": "The design process followed a user-centered methodology based on design thinking. It began with benchmarking and content strategy, followed by information architecture, wireframes, UI kit, and prototyping. The final result is a fully custom and scalable web portfolio.",
-    "research": {
-      "description": "Initial research involved analyzing other designers portfolios, identifying best practices and usability patterns. From there, I defined the sitemap and main user journeys to ensure a clear and intuitive structure.",
-      "image": "/images/portfolio-research.webp"
+    "roadmap": {
+      "description": "",
+      "image": ""
+    },
+    "definition": {
+      "description": "",
+      "image": ""
+    },
+    "inspiration": {
+      "description": "",
+      "image": ""
+    },
+    "ideation": {
+      "description": "",
+      "image": ""
+    },
+    "visualUi": {
+      "description": "",
+      "image": ""
+    },
+    "implementation": {
+      "description": "",
+      "image": ""
     }
   },
   "gallery": {

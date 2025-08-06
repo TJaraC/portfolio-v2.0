@@ -95,8 +95,18 @@ src/data/projects/
 - **fontAndColours.colors**: Array de 4 colores en formato hexadecimal
 - **fontAndColours.fonts**: Array de fuentes con nombre, descripción y muestra
 - **designProcess.description**: Descripción del proceso de diseño
-- **designProcess.research.description**: Descripción de la investigación
-- **designProcess.research.image**: Imagen de la sección de investigación
+- **designProcess.roadmap.description**: Descripción de la planificación del proyecto
+- **designProcess.roadmap.image**: Imagen de la sección roadmap
+- **designProcess.definition.description**: Descripción de la definición del problema
+- **designProcess.definition.image**: Imagen de la sección definition
+- **designProcess.inspiration.description**: Descripción de la fase de inspiración
+- **designProcess.inspiration.image**: Imagen de la sección inspiration
+- **designProcess.ideation.description**: Descripción de la fase de ideación
+- **designProcess.ideation.image**: Imagen de la sección ideation
+- **designProcess.visualUi.description**: Descripción del diseño visual UI
+- **designProcess.visualUi.image**: Imagen de la sección visual UI
+- **designProcess.implementation.description**: Descripción de la implementación
+- **designProcess.implementation.image**: Imagen de la sección implementation
 - **gallery.description**: Descripción de la galería
 - **gallery.images**: Array de 4 imágenes para la galería
 

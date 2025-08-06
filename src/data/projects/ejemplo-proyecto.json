@@ -38,8 +38,28 @@
   },
   "designProcess": {
     "description": "El proceso de diseño comenzó con una investigación exhaustiva del mercado del café artesanal y el análisis de la competencia. Se realizaron entrevistas con los propietarios para entender su visión y valores, seguido de la conceptualización y desarrollo de la identidad visual.",
-    "research": {
-      "description": "La investigación incluyó análisis de tendencias en el sector cafetero, estudio de marcas referentes a nivel internacional, y comprensión profunda del público objetivo. Se identificaron oportunidades de diferenciación y elementos clave para la construcción de la marca.",
+    "roadmap": {
+      "description": "Planificación del proyecto estableciendo fases clave: investigación, definición de marca, desarrollo conceptual, diseño visual e implementación final.",
+      "image": "/images/img_img_750x920.png"
+    },
+    "definition": {
+      "description": "Definición del reto: crear una identidad visual distintiva que refleje la calidad artesanal y los valores únicos de la marca de café.",
+      "image": "/images/img_img_750x920.png"
+    },
+    "inspiration": {
+      "description": "Análisis de tendencias en el sector cafetero, estudio de marcas referentes internacionales y exploración de elementos visuales que conecten con el público objetivo.",
+      "image": "/images/img_img_750x920.png"
+    },
+    "ideation": {
+      "description": "Generación de conceptos creativos a través de sketches y exploración de diferentes direcciones visuales para la identidad de marca.",
+      "image": "/images/img_img_750x920.png"
+    },
+    "visualUi": {
+      "description": "Desarrollo de la identidad visual final incluyendo logotipo, paleta de colores, tipografía y elementos gráficos distintivos de la marca.",
+      "image": "/images/img_img_750x920.png"
+    },
+    "implementation": {
+      "description": "Aplicación de la identidad visual en diferentes medios y formatos, asegurando coherencia y versatilidad en todos los puntos de contacto.",
       "image": "/images/img_img_750x920.png"
     }
   },

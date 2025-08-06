@@ -31,6 +31,26 @@ const Home: React.FC = () => {
       lenis.start();
     }
   }, [lenis]);
+
+  // Detectar navegación de vuelta desde otras páginas y reactivar Lenis
+  useEffect(() => {
+    const handlePopState = () => {
+      // Cuando se usa el botón atrás del navegador, reactivar Lenis
+      setTimeout(() => {
+        if (lenis) {
+          lenis.start();
+          // Forzar actualización del scroll
+          lenis.resize();
+        }
+      }, 100);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [lenis]);
   
   const handleSwitchToggle = (isOn: boolean) => {
     setIsSwitchOn(isOn);

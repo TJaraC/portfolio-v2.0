@@ -38,9 +38,29 @@
   },
   "designProcess": {
     "description": "The design process began with defining the needs of art enthusiasts and identifying how digital tools could enhance their engagement with contemporary art. Through wireframing, visual exploration, and UI refinement, the final design was built to evoke elegance and accessibility.",
-    "research": {
-      "description": "The research phase included a competitive analysis of digital galleries and platforms, identifying design patterns that support immersive user experiences. Insights were gathered from both artists and users to shape a more intuitive and engaging browsing journey.",
-      "image": "/images/img_img_750x920.png"
+    "roadmap": {
+      "description": "",
+      "image": ""
+    },
+    "definition": {
+      "description": "",
+      "image": ""
+    },
+    "inspiration": {
+      "description": "",
+      "image": ""
+    },
+    "ideation": {
+      "description": "",
+      "image": ""
+    },
+    "visualUi": {
+      "description": "",
+      "image": ""
+    },
+    "implementation": {
+      "description": "",
+      "image": ""
     }
   },
   "gallery": {

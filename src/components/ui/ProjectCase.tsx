@@ -99,24 +99,137 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
             <Divider />
 
             {/* Design Process Section */}
-            <AnimatedElement animation="slideRight" threshold={0.2}>
-              <div className="project-design-process">
-                <div className="project-design-process-left">
-                  <h2 className="project-design-process-heading">Design Process</h2>
-                  <p className="project-design-process-description">{data.designProcess.description}</p>
-                </div>
-                <div className="project-design-process-right">
-                  <AnimatedElement animation="slideUp" delay={0.2} threshold={0.2}>
-                    <div className="project-design-process-item">
-                      <h3 className="project-design-process-subtitle">RESEARCH</h3>
-                      <p className="project-design-process-description">
-                        {data.designProcess.research.description}
-                      </p>
+            {data.designProcess && (
+                <div className="project-design-process">
+                  <div className="project-design-process-left">
+                    <AnimatedElement animation="slideUp" threshold={0.2}>
+                      <h2 className="project-design-process-heading">Design Process</h2>
+                      <p className="project-design-process-description">{data.designProcess.description}</p>
+                    </AnimatedElement>
+                  </div>
+                  <div className="project-design-process-right">
+                  {data.designProcess.roadmap.description && data.designProcess.roadmap.image && (
+                    <div>
+                      <div className="project-design-process-item">
+                        <AnimatedElement animation="slideUp" threshold={0.2} delay={0.1}>
+                          <h3 className="project-design-process-subtitle">ROADMAP</h3>
+                          <p className="project-design-process-description">
+                            {data.designProcess.roadmap.description}
+                          </p>
+                        </AnimatedElement>
+                        <div className="project-design-process-image">
+                          <ImageWithCurtain
+                            src={data.designProcess.roadmap.image}
+                            alt="Roadmap"
+                            delay={0.2}
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </AnimatedElement>
+                  )}
+                  
+                  {data.designProcess.definition.description && data.designProcess.definition.image && (
+                    <div>
+                      <div className="project-design-process-item">
+                        <AnimatedElement animation="slideUp" threshold={0.2} delay={0.2}>
+                          <h3 className="project-design-process-subtitle">DEFINITION</h3>
+                          <p className="project-design-process-description">
+                            {data.designProcess.definition.description}
+                          </p>
+                        </AnimatedElement>
+                        <div className="project-design-process-image">
+                          <ImageWithCurtain
+                            src={data.designProcess.definition.image}
+                            alt="Definition"
+                            delay={0.3}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {data.designProcess.inspiration.description && data.designProcess.inspiration.image && (
+                    <div>
+                      <div className="project-design-process-item">
+                        <AnimatedElement animation="slideUp" threshold={0.2} delay={0.3}>
+                          <h3 className="project-design-process-subtitle">INSPIRATION</h3>
+                          <p className="project-design-process-description">
+                            {data.designProcess.inspiration.description}
+                          </p>
+                        </AnimatedElement>
+                        <div className="project-design-process-image">
+                          <ImageWithCurtain
+                            src={data.designProcess.inspiration.image}
+                            alt="Inspiration"
+                            delay={0.4}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {data.designProcess.ideation.description && data.designProcess.ideation.image && (
+                    <div>
+                      <div className="project-design-process-item">
+                        <AnimatedElement animation="slideUp" threshold={0.2} delay={0.4}>
+                          <h3 className="project-design-process-subtitle">IDEATION</h3>
+                          <p className="project-design-process-description">
+                            {data.designProcess.ideation.description}
+                          </p>
+                        </AnimatedElement>
+                        <div className="project-design-process-image">
+                          <ImageWithCurtain
+                            src={data.designProcess.ideation.image}
+                            alt="Ideation"
+                            delay={0.5}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {data.designProcess.visualUi.description && data.designProcess.visualUi.image && (
+                    <div>
+                      <div className="project-design-process-item">
+                        <AnimatedElement animation="slideUp" threshold={0.2} delay={0.5}>
+                          <h3 className="project-design-process-subtitle">VISUAL UI</h3>
+                          <p className="project-design-process-description">
+                            {data.designProcess.visualUi.description}
+                          </p>
+                        </AnimatedElement>
+                        <div className="project-design-process-image">
+                          <ImageWithCurtain
+                            src={data.designProcess.visualUi.image}
+                            alt="Visual UI"
+                            delay={0.6}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {data.designProcess.implementation.description && data.designProcess.implementation.image && (
+                    <div>
+                      <div className="project-design-process-item">
+                        <AnimatedElement animation="slideUp" threshold={0.2} delay={0.6}>
+                          <h3 className="project-design-process-subtitle">IMPLEMENTATION</h3>
+                          <p className="project-design-process-description">
+                            {data.designProcess.implementation.description}
+                          </p>
+                        </AnimatedElement>
+                        <div className="project-design-process-image">
+                          <ImageWithCurtain
+                            src={data.designProcess.implementation.image}
+                            alt="Implementation"
+                            delay={0.7}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
-            </AnimatedElement>
+            )}
 
              {/* Divider */}
              <Divider animation="slideLeft" delay={0.1} />

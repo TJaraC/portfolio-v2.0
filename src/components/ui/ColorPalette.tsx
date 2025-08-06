@@ -14,7 +14,9 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({ colors }) => {
             key={index} 
             className="color-palette-swatch" 
             style={{ backgroundColor: color }}
-          ></div>
+          >
+            <div className="color-palette-code">{color}</div>
+          </div>
         ))}
       </div>
     </div>

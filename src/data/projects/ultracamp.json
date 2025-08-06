@@ -38,9 +38,29 @@
   },
   "designProcess": {
     "description": "The design process followed the Design Thinking approach. It began with a thorough benchmarking of competitor landing pages in the online education and tech bootcamp space. From there, I structured the UX to prioritise clarity, trust and conversion. This was followed by wireframing, creation of a visual UI kit, and the final high-fidelity design and interaction prototypes.",
-    "research": {
-      "description": "Research focused on benchmarking key players in the online education market, analysing layout, content strategy, and trust elements. This helped define the visual hierarchy and structure of the Ultracamp landing page, ensuring it communicates the core value proposition effectively.",
-      "image": "/images/img_img.png"
+    "roadmap": {
+      "description": "Initial project planning and timeline definition, establishing key milestones and deliverables for the Ultracamp landing page design process.",
+      "image": ""
+    },
+    "definition": {
+      "description": "",
+      "image": ""
+    },
+    "inspiration": {
+      "description": "",
+      "image": ""
+    },
+    "ideation": {
+      "description": "",
+      "image": ""
+    },
+    "visualUi": {
+      "description": "",
+      "image": ""
+    },
+    "implementation": {
+      "description": "",
+      "image": ""
     }
   },
   "gallery": {

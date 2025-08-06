@@ -21,7 +21,6 @@ const ImageWithCurtain: React.FC<ImageWithCurtainProps> = ({
   threshold = 0.1,
   once = true,
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const curtainRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
@@ -54,11 +53,10 @@ const ImageWithCurtain: React.FC<ImageWithCurtainProps> = ({
     const img = new Image();
     img.src = src;
     
-    // Precargar la imagen antes de mostrarla
+    // Precargar la imagen y mostrarla inmediatamente
     img.onload = () => {
       if (imageRef.current) {
         imageRef.current.src = src;
-        imageRef.current.style.opacity = '1';
       }
     };
     
@@ -66,19 +64,18 @@ const ImageWithCurtain: React.FC<ImageWithCurtainProps> = ({
     img.onerror = () => {
       if (imageRef.current) {
         imageRef.current.src = src;
-        imageRef.current.style.opacity = '1';
       }
     };
+    
+    // Mostrar la imagen inmediatamente mientras se carga
+    if (imageRef.current) {
+      imageRef.current.src = src;
+    }
   }, [src]);
 
   return (
     <div 
-      ref={(el) => {
-        containerRef.current = el;
-        if (elementRef && elementRef.current !== el) {
-          elementRef.current = el;
-        }
-      }}
+      ref={elementRef}
       className={`image-curtain-container ${className}`}
       style={{
         position: 'relative',
@@ -96,8 +93,7 @@ const ImageWithCurtain: React.FC<ImageWithCurtainProps> = ({
           height: '100%',
           objectFit: 'cover',
           display: 'block',
-          opacity: '0',
-          transition: 'opacity 0.3s ease'
+          opacity: '1'
         }}
       />
       

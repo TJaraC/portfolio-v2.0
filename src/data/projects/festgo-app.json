@@ -38,9 +38,29 @@
   },
   "designProcess": {
     "description": "The design process began with research into the festival and event landscape, identifying key user behaviors and pain points. From there, personas were developed and user journeys mapped out, leading into wireframes, UI design, prototyping, and usability testing.",
-    "research": {
-      "description": "Initial research involved analyzing existing ticketing platforms, social apps, and community-based tools. Surveys and interviews provided insights into how users plan and attend events, with a strong emphasis on social connection as a motivator for attendance.",
-      "image": "/images/img_img_750x920.png"
+    "roadmap": {
+      "description": "",
+      "image": ""
+    },
+    "definition": {
+      "description": "",
+      "image": ""
+    },
+    "inspiration": {
+      "description": "",
+      "image": ""
+    },
+    "ideation": {
+      "description": "",
+      "image": ""
+    },
+    "visualUi": {
+      "description": "",
+      "image": ""
+    },
+    "implementation": {
+      "description": "",
+      "image": ""
     }
   },
   "gallery": {

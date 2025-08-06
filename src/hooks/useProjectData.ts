@@ -28,7 +28,27 @@ interface ProjectData {
   };
   designProcess: {
     description: string;
-    research: {
+    roadmap: {
+      description: string;
+      image: string;
+    };
+    definition: {
+      description: string;
+      image: string;
+    };
+    inspiration: {
+      description: string;
+      image: string;
+    };
+    ideation: {
+      description: string;
+      image: string;
+    };
+    visualUi: {
+      description: string;
+      image: string;
+    };
+    implementation: {
       description: string;
       image: string;
     };

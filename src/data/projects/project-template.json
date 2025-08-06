@@ -38,8 +38,28 @@
   },
   "designProcess": {
     "description": "This section describes the design process followed for this project, including methodologies, tools, and approaches used.",
-    "research": {
-      "description": "This describes the research phase of the project, including user research, market analysis, and competitive studies.",
+    "roadmap": {
+      "description": "This describes the project roadmap and planning phase, including timeline and key milestones.",
+      "image": "/images/img_img.png"
+    },
+    "definition": {
+      "description": "This describes the problem definition phase, including identifying core challenges and objectives.",
+      "image": "/images/img_img.png"
+    },
+    "inspiration": {
+      "description": "This describes the inspiration gathering phase, including research of trends, competitors, and visual references.",
+      "image": "/images/img_img.png"
+    },
+    "ideation": {
+      "description": "This describes the ideation phase, including brainstorming, sketching, and concept development.",
+      "image": "/images/img_img.png"
+    },
+    "visualUi": {
+      "description": "This describes the visual UI design phase, including creation of the visual identity and interface elements.",
+      "image": "/images/img_img.png"
+    },
+    "implementation": {
+      "description": "This describes the implementation phase, including final design execution and development handoff.",
       "image": "/images/img_img.png"
     }
   },
