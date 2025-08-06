@@ -112,7 +112,7 @@ const Home: React.FC = () => {
         <AnimatedElement animation="slideUp" delay={0.3} duration={1}>
           <div className="hero-bottom">
             <AnimatedProfileImage
-                  src="/images/img_img.png"
+                  src="/images/general/img_img.png"
                   alt="Profile"
                   className="hero-profile-img"
                   delay={0.8}
@@ -203,7 +203,7 @@ const Home: React.FC = () => {
              <div className="about-images-row">
                <div className="about-img about-img-flexible">
                  <ImageWithCurtain
-                   src="/images/profile01.webp"
+                   src="/images/general/profile01.webp"
                    alt="About"
                    delay={0.2}
                    duration={1.0}
@@ -212,7 +212,7 @@ const Home: React.FC = () => {
                </div>
                <div className="about-img about-img-fixed">
                  <ImageWithCurtain
-                   src="/images/profile02.webp"
+                   src="/images/general/profile02.webp"
                    alt="Profile"
                    delay={0.4}
                    duration={1.0}

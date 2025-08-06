@@ -6,7 +6,7 @@
   "cardTitle": "Personal Portfolio",
   "cardTags": ["UX/UI", "WEB DESIGN", "REACT"],
   "heroDescription": "This portfolio website was designed and developed to present my work as a UX/UI Designer and Product Designer. The site reflects both my creative identity and technical abilities, offering a clean, modern interface to showcase projects, design processes, and visual thinking.",
-  "heroImage": "/images/portfolio01.webp",
+  "heroImage": "/images/projects/portfolio/portfolio01.webp",
   "overview": {
     "description": "The portfolio was created as a space to reflect my personality and design approach. Built with React, it allows for easy content management and an optimized experience across devices. The structure, typography, and animations were carefully planned to highlight both visuals and content."
   },
@@ -66,10 +66,10 @@
   "gallery": {
     "description": "High-fidelity mockups and screen captures showcasing the final website—homepage, project page and mobile views",
     "images": [
-      "/images/portfolio02.webp",
-      "/images/portfolio03.webp",
-      "/images/portfolio04.webp",
-      "/images/portfolio05.webp"
+      "/images/projects/portfolio/portfolio02.webp",
+      "/images/projects/portfolio/portfolio03.webp",
+      "/images/projects/portfolio/portfolio04.webp",
+      "/images/projects/portfolio/portfolio05.webp"
     ]
   }
 }

@@ -6,7 +6,7 @@
   "cardTitle": "FestGo App",
   "cardTags": ["UX/UI", "APP DESIGN", "MUSIC"],
   "heroDescription": "FestGo is a fictional app created as part of a Master's project. It allows users to buy tickets for music festivals and events, while also connecting with others attending the same event. The app promotes community-building, helping people make friends and enjoy the experience together.",
-  "heroImage": "/images/FestGo01.webp",
+  "heroImage": "/images/projects/festgo/FestGo01.webp",
   "overview": {
     "description": "FestGo App was designed to enhance the experience of attending music festivals and events. Beyond ticket purchasing, it focuses on social interaction—allowing users to form groups, join communities, and connect with like-minded attendees to foster real-life connections."
   },
@@ -66,10 +66,10 @@
   "gallery": {
     "description": "Final UI mockups showcasing different screens of the app, including onboarding, event discovery, ticketing, group creation, and community interaction—illustrating a cohesive and user-friendly experience across the entire platform.",
     "images": [
-      "/images/FestGo01.webp",
-      "/images/FestGo02.webp",
-      "/images/FestGo03.webp",
-      "/images/FestGo04.webp"
+      "/images/projects/festgo/FestGo01.webp",
+      "/images/projects/festgo/FestGo02.webp",
+      "/images/projects/festgo/FestGo03.webp",
+      "/images/projects/festgo/FestGo04.webp"
     ]
   }
 }

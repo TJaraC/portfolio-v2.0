@@ -6,7 +6,7 @@
   "cardTitle": "Café Luna Branding",
   "cardTags": ["BRANDING", "ARTESANAL", "PREMIUM"],
   "heroDescription": "Desarrollo de identidad visual completa para una cafetería artesanal especializada en café de origen único. El proyecto abarcó desde el diseño del logotipo hasta la aplicación en packaging, señalética y presencia digital.",
-  "heroImage": "/images/img_img.png",
+  "heroImage": "/images/general/img_img.png",
   "overview": {
     "description": "Café Luna es una cafetería artesanal que se especializa en café de origen único y métodos de preparación tradicionales. El objetivo era crear una identidad visual que reflejara la calidad premium del producto y la experiencia artesanal que ofrece el establecimiento."
   },
@@ -40,7 +40,7 @@
     "description": "El proceso de diseño comenzó con una investigación exhaustiva del mercado del café artesanal y el análisis de la competencia. Se realizaron entrevistas con los propietarios para entender su visión y valores, seguido de la conceptualización y desarrollo de la identidad visual.",
     "roadmap": {
       "description": "Planificación del proyecto estableciendo fases clave: investigación, definición de marca, desarrollo conceptual, diseño visual e implementación final.",
-      "image": "/images/img_img_750x920.png"
+      "image": "/images/general/img_img_750x920.png"
     },
     "definition": {
       "description": "Definición del reto: crear una identidad visual distintiva que refleje la calidad artesanal y los valores únicos de la marca de café.",
@@ -66,10 +66,10 @@
   "gallery": {
     "description": "Aplicaciones finales de la identidad visual en diferentes medios y formatos, mostrando la versatilidad y coherencia de la marca en todos los puntos de contacto con el cliente.",
     "images": [
-      "/images/img_img.png",
-      "/images/img_img_750x920.png",
-      "/images/img_img.png",
-      "/images/img_img_750x920.png"
+      "/images/general/img_img.png",
+      "/images/general/img_img_750x920.png",
+      "/images/general/img_img.png",
+      "/images/general/img_img_750x920.png"
     ]
   }
 }

@@ -6,7 +6,7 @@
   "cardTitle": "Project Template",
   "cardTags": ["MODERN", "CLEAN", "ELEGANT"],
   "heroDescription": "This is the hero description that appears below the project name. It provides a brief overview of what the project is about and its main objectives.",
-  "heroImage": "/images/img_img.png",
+  "heroImage": "/images/general/img_img.png",
   "overview": {
     "description": "This is the overview description that explains the project in more detail. It covers the main aspects, challenges, and solutions implemented in this project."
   },
@@ -40,7 +40,7 @@
     "description": "This section describes the design process followed for this project, including methodologies, tools, and approaches used.",
     "roadmap": {
       "description": "This describes the project roadmap and planning phase, including timeline and key milestones.",
-      "image": "/images/img_img.png"
+      "image": "/images/general/img_img.png"
     },
     "definition": {
       "description": "This describes the problem definition phase, including identifying core challenges and objectives.",
@@ -66,10 +66,10 @@
   "gallery": {
     "description": "This section showcases the final results and key visuals from the project.",
     "images": [
-      "/images/img_img.png",
-      "/images/img_img_750x920.png",
-      "/images/img_img.png",
-      "/images/img_img_750x920.png"
+      "/images/general/img_img.png",
+      "/images/general/img_img_750x920.png",
+      "/images/general/img_img.png",
+      "/images/general/img_img_750x920.png"
     ]
   }
 }

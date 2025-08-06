@@ -90,7 +90,7 @@ body {
   display: inline-block;
   width: 52px;
   height: 155px;
-  background-image: url('/images/hands.png');
+  background-image: url('/images/general/hands.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

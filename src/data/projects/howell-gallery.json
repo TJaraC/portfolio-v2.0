@@ -6,7 +6,7 @@
   "cardTitle": "Howell Gallery",
   "cardTags": ["UX/UI", "WEB DESIGN", "DIGITAL ART"],
   "heroDescription": "Howell is an innovative digital platform designed to immerse users in the captivating world of contemporary art. With a curated collection of artworks and artist profiles, it offers a seamless experience for exploring and connecting with modern creators.",
-  "heroImage": "/images/Howell01.webp",
+  "heroImage": "/images/projects/howell/Howell01.webp",
   "overview": {
     "description": "Introducing Howell, an innovative digital platform designed to immerse you in the captivating world of contemporary art. Accessible from any device, this virtual gallery invites you to explore a vast catalog of works by renowned and emerging artists."
   },
@@ -66,10 +66,10 @@
   "gallery": {
     "description": "Visual highlights of the Howell Gallery platform, showcasing the homepage, artwork detail pages, artist profiles, and responsive layouts across desktop and mobile views.",
     "images": [
-      "/images/Howell02.webp",
-      "/images/Howell03.webp",
-      "/images/Howell04.webp",
-      "/images/Howell05.webp"
+      "/images/projects/howell/Howell02.webp",
+      "/images/projects/howell/Howell03.webp",
+      "/images/projects/howell/Howell04.webp",
+      "/images/projects/howell/Howell05.webp"
     ]
   }
 }

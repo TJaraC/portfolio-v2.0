@@ -6,7 +6,7 @@
   "cardTitle": "Ultracamp",
   "cardTags": ["WEB DESIGN", "LANDING", "RESPONSIVE"],
   "heroDescription": "Ultracamp is an adaptive online coding bootcamp platform offering flexible, AI-tutored programming education available 24/7. I designed the landing page to communicate its practical, modern and accessible learning model.",
-  "heroImage": "/images/Ultracamp01.webp",
+  "heroImage": "/images/projects/ultracamp/Ultracamp01.webp",
   "overview": {
     "description": "The Ultracamp landing page presents the key benefits of learning to code through their full‑stack bootcamp. It highlights features like AI-enabled instant feedback, real‑world coding challenges, flexible pacing, and mentorship—encouraging visitors to enroll with clarity and confidence."
   },
@@ -66,10 +66,10 @@
   "gallery": {
     "description": "Final mockups of the landing page showcasing key sections such as the hero banner, program introduction, platform benefits, calls to action, and visual identity elements—focused on clarity, user engagement, and conversion.",
     "images": [
-      "/images/Ultracamp02.webp",
-      "/images/Ultracamp03.webp",
-      "/images/Ultracamp04.webp",
-      "/images/Ultracamp05.webp"
+      "/images/projects/ultracamp/Ultracamp02.webp",
+      "/images/projects/ultracamp/Ultracamp03.webp",
+      "/images/projects/ultracamp/Ultracamp04.webp",
+      "/images/projects/ultracamp/Ultracamp05.webp"
     ]
   }
 }
