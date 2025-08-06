@@ -588,6 +588,13 @@
   }
 }
 
+@media (max-width: 430px) {
+  .project-title-main,
+  .project-title-sub {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+  }
+}
+
 /* Design Process Section */
 .project-design-process {
   display: flex;
