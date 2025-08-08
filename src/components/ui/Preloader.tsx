@@ -45,13 +45,11 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       const fontOptions = [
         {
           family: "'Geist', 'Geist-Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif",
-          weight: '700',
-          size: 'clamp(24px, 4vw, 48px)'
+          weight: '700'
         },
         {
           family: "'Gilda Display', 'Gilda-Fallback', 'Times New Roman', 'Georgia', 'Playfair Display', 'Crimson Text', serif",
-          weight: '400',
-          size: 'clamp(32px, 5vw, 64px)'
+          weight: '400'
         }
       ];
       const selectedFont = fontOptions[Math.floor(Math.random() * fontOptions.length)];
@@ -59,7 +57,7 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
         color: colors[Math.floor(Math.random() * colors.length)],
         fontFamily: selectedFont.family,
         fontWeight: selectedFont.weight,
-        fontSize: selectedFont.size
+        fontSize: 'clamp(28px, 4.5vw, 56px)'
       };
     };
 
