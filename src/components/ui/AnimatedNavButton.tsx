@@ -29,8 +29,9 @@ const AnimatedNavButton: React.FC<AnimatedNavButtonProps> = ({
       letterContainer.style.overflow = 'hidden';
       letterContainer.style.position = 'relative';
       letterContainer.style.height = '1em';
-      letterContainer.style.verticalAlign = 'top';
+      letterContainer.style.verticalAlign = 'baseline';
       letterContainer.style.lineHeight = '1em';
+      letterContainer.style.textAlign = 'center';
       
       // Letra original (color actual)
       const originalLetter = document.createElement('span');
@@ -40,6 +41,8 @@ const AnimatedNavButton: React.FC<AnimatedNavButtonProps> = ({
       originalLetter.style.transform = 'translateY(0%)';
       originalLetter.style.textAlign = 'center';
       originalLetter.style.width = '100%';
+      originalLetter.style.lineHeight = '1em';
+      originalLetter.style.verticalAlign = 'baseline';
       
       // Letra naranja (inicialmente oculta arriba)
       const orangeLetter = document.createElement('span');
@@ -53,6 +56,8 @@ const AnimatedNavButton: React.FC<AnimatedNavButtonProps> = ({
       orangeLetter.style.transform = 'translateY(-100%)';
       orangeLetter.style.textAlign = 'center';
       orangeLetter.style.width = '100%';
+      orangeLetter.style.lineHeight = '1em';
+      orangeLetter.style.verticalAlign = 'baseline';
       
       letterContainer.appendChild(originalLetter);
       letterContainer.appendChild(orangeLetter);

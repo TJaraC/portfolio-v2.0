@@ -40,7 +40,7 @@ const NextProjectButton: React.FC<NextProjectButtonProps> = ({ currentProjectId,
         letterContainer.style.overflow = 'hidden';
         letterContainer.style.position = 'relative';
         letterContainer.style.height = '1em';
-        letterContainer.style.verticalAlign = 'baseline';
+        letterContainer.style.verticalAlign = 'middle';
         letterContainer.className = className;
         
         // Letra original
