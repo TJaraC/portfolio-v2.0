@@ -102,11 +102,13 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
             {data.designProcess && (
                 <div className="project-design-process">
                   <div className="project-design-process-left">
-                    <AnimatedElement animation="slideUp" threshold={0.2}>
-                      <h2 className="project-design-process-heading">Design Process</h2>
-                      <p className="project-design-process-description">{data.designProcess.description}</p>
-                    </AnimatedElement>
-                  </div>
+                  <AnimatedElement animation="slideUp" threshold={0.2}>
+                    <h2 className="project-design-process-heading">Design Process</h2>
+                  </AnimatedElement>
+                  <AnimatedElement animation="slideUp" threshold={0.2} delay={0.1}>
+                    <p className="project-design-process-description">{data.designProcess.description}</p>
+                  </AnimatedElement>
+                </div>
                   <div className="project-design-process-right">
                   {data.designProcess.roadmap.description && data.designProcess.roadmap.image && (
                     <div>
