@@ -173,7 +173,7 @@
   font-family: 'Geist', 'Geist-Fallback', sans-serif;
   font-size: 70px;
   font-weight: 600;
-  line-height: 1.1;
+  line-height: 1;
   margin: 0;
   color: var(--global-text-1);
   text-transform: uppercase;
@@ -829,7 +829,7 @@
     color: var(--global-text-1);
     display: flex;
     justify-content: center;
-    align-items: baseline;
+    align-items: center;
     gap: 0;
     white-space: nowrap;
   }
@@ -838,7 +838,9 @@
   font-family: 'Gilda Display', 'Gilda-Fallback', 'Times New Roman', 'Georgia', 'Playfair Display', 'Crimson Text', serif;
   font-weight: 400;
   letter-spacing: 4px;
-  line-height: 0.85;
+  line-height: 1.1;
+  vertical-align: middle;
+  display: inline-block;
 }
 
 .next-project-heading-geist {
@@ -847,7 +849,8 @@
   letter-spacing: 4px;
   white-space: nowrap;
   display: inline-block;
-  line-height: 0.85;
+  line-height: 1;
+  vertical-align: middle;
 }
 
 .next-project-arrow {
@@ -857,7 +860,10 @@
     line-height: 1;
     margin-left: 10px;
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
-    vertical-align: baseline;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
   }
 
 /* ===== RESPONSIVE BREAKPOINT 1140px ===== */
