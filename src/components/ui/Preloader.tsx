@@ -42,10 +42,24 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
 
     const getRandomStyle = () => {
       const colors = ['var(--global-text-2)', 'var(--global-text-3)'];
-      const fonts = ['Geist', 'Gilda Display'];
+      const fontOptions = [
+        {
+          family: "'Geist', 'Geist-Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif",
+          weight: '700',
+          size: 'clamp(24px, 4vw, 48px)'
+        },
+        {
+          family: "'Gilda Display', 'Gilda-Fallback', 'Times New Roman', 'Georgia', 'Playfair Display', 'Crimson Text', serif",
+          weight: '400',
+          size: 'clamp(32px, 5vw, 64px)'
+        }
+      ];
+      const selectedFont = fontOptions[Math.floor(Math.random() * fontOptions.length)];
       return {
         color: colors[Math.floor(Math.random() * colors.length)],
-        fontFamily: fonts[Math.floor(Math.random() * fonts.length)]
+        fontFamily: selectedFont.family,
+        fontWeight: selectedFont.weight,
+        fontSize: selectedFont.size
       };
     };
 
@@ -70,11 +84,15 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
         leftWordRef.current.textContent = leftWord;
         leftWordRef.current.style.color = leftStyle.color;
         leftWordRef.current.style.fontFamily = leftStyle.fontFamily;
+        leftWordRef.current.style.fontWeight = leftStyle.fontWeight;
+        leftWordRef.current.style.fontSize = leftStyle.fontSize;
       }
       if (rightWordRef.current) {
         rightWordRef.current.textContent = rightWord;
         rightWordRef.current.style.color = rightStyle.color;
         rightWordRef.current.style.fontFamily = rightStyle.fontFamily;
+        rightWordRef.current.style.fontWeight = rightStyle.fontWeight;
+        rightWordRef.current.style.fontSize = rightStyle.fontSize;
       }
 
       // Animate words in with smoother carousel effect
