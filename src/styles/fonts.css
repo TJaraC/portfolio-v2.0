@@ -1,11 +1,61 @@
-/* Local Fonts - Geist (Variable Font) */
+/* Local Fonts - Geist (Individual Weights) */
 @font-face {
   font-display: swap;
   font-family: 'Geist';
   font-style: normal;
-  font-weight: 100 900;
-  src: url('/fonts/geist-variable.woff2') format('woff2');
-  /* Fallback for older browsers */
+  font-weight: 100;
+  src: url('/fonts/Geist-Thin.woff2') format('woff2'),
+       url('/fonts/Geist-Thin.woff') format('woff');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 300;
+  src: url('/fonts/Geist-Light.woff2') format('woff2'),
+       url('/fonts/Geist-Light.woff') format('woff');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/Geist-Regular.woff2') format('woff2'),
+       url('/fonts/Geist-Regular.woff') format('woff');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/fonts/Geist-Medium.woff2') format('woff2'),
+       url('/fonts/Geist-Medium.woff') format('woff');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 600;
+  src: url('/fonts/Geist-SemiBold.woff2') format('woff2'),
+       url('/fonts/Geist-SemiBold.woff') format('woff');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/Geist-Bold.woff2') format('woff2'),
+       url('/fonts/Geist-Bold.woff') format('woff');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -15,7 +65,8 @@
   font-family: 'Gilda Display';
   font-style: normal;
   font-weight: 400;
-  src: url('/fonts/gilda-display-400.woff2') format('woff2');
+  src: url('/fonts/gilda-display-400.woff2') format('woff2'),
+       url('/fonts/gilda-display-400.woff') format('woff');
   /* Fallback for older browsers */
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
@@ -25,8 +76,48 @@
   font-display: swap;
   font-family: 'Geist-Fallback';
   font-style: normal;
-  font-weight: 100 900;
+  font-weight: 100;
+  src: local('Inter Thin'), local('SF Pro Display Thin'), local('Segoe UI Light'), local('Roboto Thin'), local('Arial');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Geist-Fallback';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Inter Light'), local('SF Pro Display Light'), local('Segoe UI Light'), local('Roboto Light'), local('Arial');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Geist-Fallback';
+  font-style: normal;
+  font-weight: 400;
   src: local('Inter'), local('SF Pro Display'), local('Segoe UI'), local('Roboto'), local('Arial');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Geist-Fallback';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Inter Medium'), local('SF Pro Display Medium'), local('Segoe UI Semibold'), local('Roboto Medium'), local('Arial');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Geist-Fallback';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Inter Semibold'), local('SF Pro Display Semibold'), local('Segoe UI Semibold'), local('Roboto Medium'), local('Arial');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Geist-Fallback';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Inter Bold'), local('SF Pro Display Bold'), local('Segoe UI Bold'), local('Roboto Bold'), local('Arial Bold');
 }
 
 @font-face {
