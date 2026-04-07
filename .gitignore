@@ -25,17 +25,3 @@ jest-test-results.json
 .vscode/
 .idea/
 .vercel
-
-# Secrets / environment
-.env
-.env.local
-.env.*.local
-
-# Production build output
-dist/
-
-# Planning artifacts
-.planning/
-
-# Claude AI tools
-.claude/
