@@ -46,14 +46,14 @@ const Contact: React.FC = () => {
             <Button 
               variant="outline" 
               className="footer-btn"
-              onClick={() => window.open('https://www.linkedin.com/in/patricio-jaramillo-castrillo-557427200/', '_blank')}
+              onClick={() => window.open('https://www.linkedin.com/in/patricio-jaramillo-castrillo-557427200/', '_blank', 'noopener,noreferrer')}
             >
               LINKEDIN
             </Button>
             <Button 
               variant="outline" 
               className="footer-btn"
-              onClick={() => window.open('https://www.behance.net/tjaradesign', '_blank')}
+              onClick={() => window.open('https://www.behance.net/tjaradesign', '_blank', 'noopener,noreferrer')}
             >
               BEHANCE
             </Button>
