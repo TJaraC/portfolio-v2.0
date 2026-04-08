@@ -29,14 +29,14 @@ El sitio debe ser seguro, libre de memory leaks y con un bundle optimizado — m
 - ✓ recharts y prop-types eliminados del package.json — Phase 2: build-dependencies (BUILD-02, BUILD-03)
 - ✓ GSAP en manualChunks en Vite (chunk separado) — Phase 2: build-dependencies (BUILD-04)
 - ✓ Geist font files añadidos (sin advertencias de build) — Phase 2: build-dependencies (BUILD-05)
+- ✓ RAF loop cancelable con cancelAnimationFrame — Phase 3: runtime-bugs (BUG-01)
+- ✓ Handler popstate deduplicado (solo en App.tsx) — Phase 3: runtime-bugs (BUG-02)
+- ✓ Memory leak de useResponsiveAnimations corregido (listener correcto) — Phase 3: runtime-bugs (BUG-03)
+- ✓ useLenisScroll dep array corregido ([] en lugar de [lenis]) — Phase 3: runtime-bugs (BUG-04)
+- ✓ Memory leaks de timelines GSAP en hover (AnimatedContactHeading, NextProjectButton) — Phase 3: runtime-bugs (BUG-05)
+- ✓ Preloader timeout cancelable (exitTimeoutId + clearTimeout) — Phase 3: runtime-bugs (BUG-06)
 
 ### Active
-
-- [ ] RAF loop cancelable con cancelAnimationFrame
-- [ ] Handler popstate deduplicado (solo en App.tsx)
-- [ ] Memory leak de useResponsiveAnimations corregido (listener correcto)
-- [ ] Memory leaks de timelines GSAP en hover (AnimatedContactHeading, NextProjectButton)
-- [ ] useLenisScroll dep array corregido ([] en lugar de [lenis])
 - [ ] handlePreloaderComplete estabilizado con useCallback
 - [ ] animationCallback estabilizado con useCallback en AnimatedElement
 - [ ] Lazy loading de rutas con React.lazy + Suspense
@@ -100,7 +100,7 @@ Auditoría técnica completada el 2026-04-07. Stack: React 18.3.1 + TypeScript 5
 | Fuentes Geist en public/fonts (woff2) | Build warnings eliminados sin modificar CSS | ✓ Aplicado Phase 2 |
 
 ---
-*Last updated: 2026-04-08 — Phase 2 (build-dependencies) complete*
+*Last updated: 2026-04-08 — Phase 3 (runtime-bugs) complete*
 
 ## Evolution
 
