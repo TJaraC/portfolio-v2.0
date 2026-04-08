@@ -149,12 +149,13 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
     }, 1000);
 
     // Finalizar después de 4 segundos
-    setTimeout(() => {
+    const exitTimeoutId = setTimeout(() => {
       exitAnimation();
     }, 4000);
 
     return () => {
       clearInterval(wordInterval);
+      clearTimeout(exitTimeoutId);
       tl.kill();
       // Remove preloader-active class from body on cleanup
       document.body.classList.remove('preloader-active');
