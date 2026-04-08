@@ -14,18 +14,15 @@ export const useImageRotation = () => {
     // Obtener el índice guardado en localStorage o usar 0 como default
     const savedIndex = localStorage.getItem('designerImageIndex');
     let nextIndex = 0;
-
+    
     if (savedIndex !== null) {
-      const parsed = parseInt(savedIndex, 10);
-      if (!isNaN(parsed)) {
-        // Incrementar el índice para la siguiente imagen
-        nextIndex = (parsed + 1) % images.length;
-      }
+      // Incrementar el índice para la siguiente imagen
+      nextIndex = (parseInt(savedIndex) + 1) % images.length;
     }
-
+    
     // Guardar el nuevo índice
     localStorage.setItem('designerImageIndex', nextIndex.toString());
-
+    
     // Actualizar el estado
     setCurrentImageIndex(nextIndex);
     setCurrentImage(images[nextIndex]);

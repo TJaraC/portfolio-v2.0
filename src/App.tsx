@@ -35,7 +35,6 @@ const App: React.FC = () => {
         smoothWheel: true,
         wheelMultiplier: 1,
         touchMultiplier: 2,
-        normalizeWheel: true,
         easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
       });
 
