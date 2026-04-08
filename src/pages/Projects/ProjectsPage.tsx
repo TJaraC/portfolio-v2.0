@@ -25,39 +25,6 @@ const ProjectsPage: React.FC = () => {
     }
   }, [projectId, lenis]);
 
-  // Detectar navegación de vuelta desde otras páginas y reactivar Lenis
-  useEffect(() => {
-    const handlePopState = () => {
-      // Cuando se usa el botón atrás del navegador, reactivar Lenis completamente
-      setTimeout(() => {
-        if (lenis) {
-          // Detener Lenis primero
-          lenis.stop();
-          
-          // Forzar reinicialización de event listeners
-          setTimeout(() => {
-            lenis.start();
-            lenis.resize();
-            
-            // Forzar reactivación de smooth wheel
-            const wheelEvent = new WheelEvent('wheel', {
-              deltaY: 0,
-              bubbles: true,
-              cancelable: true
-            });
-            document.dispatchEvent(wheelEvent);
-          }, 50);
-        }
-      }, 100);
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, [lenis]);
-
   // Asegurar que Lenis esté activo al montar el componente
   useEffect(() => {
     if (lenis) {
