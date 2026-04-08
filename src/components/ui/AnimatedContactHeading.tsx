@@ -66,6 +66,7 @@ const AnimatedContactHeading: React.FC<AnimatedContactHeadingProps> = ({
 
     // Event listeners para hover en todo el heading
     const handleMouseEnter = () => {
+      hoverTl.current?.kill();
       // Crear timeline para el efecto slot machine
       hoverTl.current = gsap.timeline();
       
@@ -84,6 +85,7 @@ const AnimatedContactHeading: React.FC<AnimatedContactHeadingProps> = ({
     };
 
     const handleMouseLeave = () => {
+      hoverTl.current?.kill();
       // Crear timeline para volver al estado original
       hoverTl.current = gsap.timeline();
       
