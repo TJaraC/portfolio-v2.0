@@ -11,19 +11,21 @@ const App: React.FC = () => {
   useEffect(() => {
     // Verificar que estamos en el navegador
     if (typeof window === 'undefined') return;
-    
+
     // Manejar errores de fuentes
     const handleFontErrors = () => {
       // Agregar fallbacks si las fuentes fallan
       fontLoading.addFontFallbacks();
-      
+
       // Esperar a que las fuentes se carguen
       fontLoading.waitForFonts(['Geist', 'Gilda Display']).catch(() => {
         console.warn('Font loading failed, using fallbacks');
         document.documentElement.classList.add('font-fallback-active');
       });
     };
-    
+
+    let rafId: number;
+
     // Esperar a que el DOM esté completamente cargado
     const initializeLenis = () => {
       // Asegurar que no hay scroll-behavior conflictivo
@@ -35,21 +37,21 @@ const App: React.FC = () => {
         smoothWheel: true,
         wheelMultiplier: 1,
         touchMultiplier: 2,
+        normalizeWheel: true,
         easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
       });
 
       // Establecer la instancia global
       setLenisInstance(lenis);
-      
+
       // Agregar clase al body para identificar que Lenis está activo
       document.body.classList.add('lenis');
 
       function raf(time: number) {
         lenis.raf(time);
-        requestAnimationFrame(raf);
+        rafId = requestAnimationFrame(raf);
       }
-
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
 
       // Forzar inicialización después de un breve delay
       setTimeout(() => {
@@ -64,7 +66,7 @@ const App: React.FC = () => {
 
     // Inicializar manejo de fuentes
     handleFontErrors();
-    
+
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
         lenis = initializeLenis();
@@ -74,6 +76,7 @@ const App: React.FC = () => {
     }
 
     return () => {
+      cancelAnimationFrame(rafId);
       if (lenis) {
         lenis.destroy();
       }

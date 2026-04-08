@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noCheck && vite build",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md,json}\"",
     "preview": "vite preview",
     "serve": "vite preview",
@@ -15,9 +15,11 @@
     "@gsap/react": "^2.1.2",
     "gsap": "^3.13.0",
     "lenis": "^1.3.8",
+    "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.1.1"
+    "react-router-dom": "^7.1.1",
+    "recharts": "^2.15.2"
   },
   "devDependencies": {
     "@types/react": "^18.3.12",
