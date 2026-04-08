@@ -100,6 +100,7 @@ const NextProjectButton: React.FC<NextProjectButtonProps> = ({ currentProjectId,
 
     // Event listeners para hover
     const handleMouseEnter = () => {
+      hoverTl.current?.kill();
       // Crear timeline para el efecto slot machine solo en PROJECT y flecha
       hoverTl.current = gsap.timeline();
       
@@ -120,6 +121,7 @@ const NextProjectButton: React.FC<NextProjectButtonProps> = ({ currentProjectId,
     };
 
     const handleMouseLeave = () => {
+      hoverTl.current?.kill();
       // Crear timeline para volver al estado original solo en PROJECT y flecha
       hoverTl.current = gsap.timeline();
       
