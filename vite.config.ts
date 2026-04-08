@@ -8,7 +8,8 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          lenis: ['lenis']
+          lenis: ['lenis'],
+          gsap: ['gsap', '@gsap/react']
         }
       }
     },
