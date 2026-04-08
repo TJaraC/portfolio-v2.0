@@ -361,14 +361,14 @@ const Header: React.FC = () => {
             <AnimatedNavButton 
               role="menuitem"
               className="nav-button"
-              onClick={() => window.open('https://www.behance.net/tjaradesign', '_blank', 'noopener,noreferrer')}
+              onClick={() => window.open('https://www.behance.net/tjaradesign', '_blank')}
             >
               BEHANCE
             </AnimatedNavButton>
-            <AnimatedNavButton
+            <AnimatedNavButton 
               role="menuitem"
               className="nav-button"
-              onClick={() => window.open('https://www.linkedin.com/in/patricio-jaramillo-castrillo-557427200/', '_blank', 'noopener,noreferrer')}
+              onClick={() => window.open('https://www.linkedin.com/in/patricio-jaramillo-castrillo-557427200/', '_blank')}
             >
               LINKEDIN
             </AnimatedNavButton>
@@ -445,18 +445,18 @@ const Header: React.FC = () => {
               className="nav-button nav-button--left mobile-menu-item"
               onClick={(e) => {
                 e.stopPropagation();
-                window.open('https://www.behance.net/tjaradesign', '_blank', 'noopener,noreferrer');
+                window.open('https://www.behance.net/tjaradesign', '_blank');
               }}
             >
               BEHANCE
             </button>
-            <button
+            <button 
               ref={(el) => el && (menuItemsRef.current[4] = el)}
               role="menuitem"
               className="nav-button nav-button--left mobile-menu-item"
               onClick={(e) => {
                 e.stopPropagation();
-                window.open('https://www.linkedin.com/in/patricio-jaramillo-castrillo-557427200/', '_blank', 'noopener,noreferrer');
+                window.open('https://www.linkedin.com/in/patricio-jaramillo-castrillo-557427200/', '_blank');
               }}
             >
               LINKEDIN

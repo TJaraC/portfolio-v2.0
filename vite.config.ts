@@ -8,15 +8,14 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          lenis: ['lenis'],
-          gsap: ['gsap', '@gsap/react']
+          lenis: ['lenis']
         }
       }
     },
     minify: 'terser',
     terserOptions: {
       compress: {
-        drop_console: true,
+        drop_console: false,
         drop_debugger: true
       }
     }

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, RefObject } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { gsap } from '../../utils/gsap';
 import { useScrollAnimation } from '../../hooks/useLenisScroll';
 
@@ -74,8 +74,8 @@ const ImageWithCurtain: React.FC<ImageWithCurtainProps> = ({
   }, [src]);
 
   return (
-    <div
-      ref={elementRef as RefObject<HTMLDivElement>}
+    <div 
+      ref={elementRef}
       className={`image-curtain-container ${className}`}
       style={{
         position: 'relative',

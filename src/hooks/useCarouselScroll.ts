@@ -12,7 +12,7 @@ export const useCarouselScroll = ({
   acceleratedDuration = 10,
   scrollTimeout = 150
 }: UseCarouselScrollOptions = {}) => {
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const lenis = useLenisScroll();
 
   useEffect(() => {
