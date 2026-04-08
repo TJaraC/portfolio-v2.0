@@ -71,9 +71,9 @@ Plans:
 **UI hint:** no
 
 Plans:
-- [ ] 03-01-PLAN.md — Fix RAF cancelable loop and deduplicate popstate listener (App.tsx + Home/index.tsx)
-- [ ] 03-02-PLAN.md — Fix resize listener mismatch and useLenisScroll dep array (hooks)
-- [ ] 03-03-PLAN.md — Kill GSAP timelines on hover and make Preloader timeout cancelable
+- [x] 03-01-PLAN.md — Fix RAF cancelable loop and deduplicate popstate listener (App.tsx + Home/index.tsx)
+- [x] 03-02-PLAN.md — Fix resize listener mismatch and useLenisScroll dep array (hooks)
+- [x] 03-03-PLAN.md — Kill GSAP timelines on hover and make Preloader timeout cancelable
 
 **Success criteria:**
 1. El cleanup del RAF en `App.tsx` llama `cancelAnimationFrame(rafId)` donde `rafId` es el valor retornado por el último `requestAnimationFrame` — verificable por inspección de código.
