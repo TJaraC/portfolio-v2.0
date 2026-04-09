@@ -15,7 +15,7 @@ const Header: React.FC = () => {
   const lenis = useLenisScroll();
   
   // Referencias para elementos del DOM
-  const logoRef = useRef<HTMLDivElement>(null);
+  const logoRef = useRef<HTMLButtonElement>(null);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -301,9 +301,10 @@ const Header: React.FC = () => {
       <div className="header-container">
         <div className="header-content">
           {/* Logo */}
-          <div 
-            className="logo" 
+          <button
+            className="logo"
             ref={logoRef}
+            aria-label="Go to home"
             onClick={() => {
               if (location.pathname === '/') {
                 // Si estamos en la home, hacer scroll to top
@@ -313,12 +314,11 @@ const Header: React.FC = () => {
                 navigate('/');
               }
             }}
-            style={{ cursor: 'pointer' }}
           >
             <span className="logo-text">
               TJC
             </span>
-          </div>
+          </button>
 
           {/* Hamburger Menu Icon (Mobile only) */}
           <button 

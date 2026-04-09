@@ -67,8 +67,15 @@ const Contact: React.FC = () => {
             </Button>
           </div>
           <div className="footer-right">
-            <span className="footer-copyright">© 2025 - All Rights Reserved</span>
-            <div className="footer-backtop" onClick={scrollToTop} style={{ cursor: 'pointer' }}>
+            <span className="footer-copyright">© 2026 - All Rights Reserved</span>
+            <div
+              className="footer-backtop"
+              role="button"
+              tabIndex={0}
+              onClick={scrollToTop}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') scrollToTop(); }}
+              style={{ cursor: 'pointer' }}
+            >
               <span className="footer-backtop-text">Back to top </span>
               <img 
                 src="/images/img_svg.svg" 
