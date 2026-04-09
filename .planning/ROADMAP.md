@@ -86,7 +86,13 @@ Plans:
 ### Phase 4: React & Performance
 **Goal:** Estabilizar referencias de callback para prevenir destrucción innecesaria de observers, habilitar code splitting a nivel de ruta, arreglar la integración Lenis/ScrollTrigger, y eliminar el thrash de DOM y creación de tweens por scroll event.
 **Requirements:** PERF-01, PERF-02, PERF-03, PERF-04, PERF-05, PERF-06, PERF-07
+**Plans:** 2 plans
 **UI hint:** no
+
+Plans:
+- [ ] 04-01-PLAN.md — Stabilize callbacks with useCallback and add React.lazy code splitting
+- [ ] 04-02-PLAN.md — Lenis/ScrollTrigger integration and Header scroll handler optimization
+
 **Success criteria:**
 1. `Routes.tsx` envuelve `handlePreloaderComplete` en `useCallback`; `AnimatedElement` envuelve `animationCallback` en `useCallback` — verificable por inspección de código.
 2. `Routes.tsx` usa `React.lazy(() => import(...))` para las páginas y las envuelve en `<Suspense>` — DevTools Network muestra chunks JS separados en la primera navegación.
