@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 
 // Import page components
-import HomePage from './pages/Home';
-import ProjectsPage from './pages/Projects/ProjectsPage';
+const HomePage = React.lazy(() => import('./pages/Home'));
+const ProjectsPage = React.lazy(() => import('./pages/Projects/ProjectsPage'));
 import Error404 from './pages/Error404';
 import Preloader from './components/ui/Preloader';
 
@@ -18,11 +18,19 @@ const AppContent = () => {
     return !hasVisited && isHomePage;
   });
 
-  const handlePreloaderComplete = () => {
+  // Precargar chunk de ProjectsPage en background tras la carga inicial
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      import('./pages/Projects/ProjectsPage');
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handlePreloaderComplete = useCallback(() => {
     setIsLoading(false);
     // Marcar que ya se visitó la home en esta sesión
     sessionStorage.setItem('hasVisitedHome', 'true');
-  };
+  }, []);
 
   // Verificar si debemos mostrar el preloader cuando cambie la ruta
   useEffect(() => {
@@ -39,14 +47,16 @@ const AppContent = () => {
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/projects" element={<Navigate to="/#work" replace />} />
-        <Route path="/projects/" element={<Navigate to="/#work" replace />} />
-        <Route path="/projects/:projectId" element={<ProjectsPage />} />
-        <Route path="/404" element={<Error404 />} />
-        <Route path="*" element={<Navigate to="/404" replace />} />
-      </Routes>
+      <Suspense fallback={null}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/projects" element={<Navigate to="/#work" replace />} />
+          <Route path="/projects/" element={<Navigate to="/#work" replace />} />
+          <Route path="/projects/:projectId" element={<ProjectsPage />} />
+          <Route path="/404" element={<Error404 />} />
+          <Route path="*" element={<Navigate to="/404" replace />} />
+        </Routes>
+      </Suspense>
       {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
     </>
   );

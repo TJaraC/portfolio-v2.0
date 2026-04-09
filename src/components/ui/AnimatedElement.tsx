@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useScrollAnimation } from '../../hooks/useLenisScroll';
 
 interface AnimatedElementProps {
@@ -22,14 +22,13 @@ const AnimatedElement: React.FC<AnimatedElementProps> = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
-  const elementRef = useScrollAnimation(
-    () => {
-      setTimeout(() => {
-        setIsVisible(true);
-      }, delay * 1000);
-    },
-    { threshold, once }
-  );
+  const animationCallback = useCallback(() => {
+    setTimeout(() => {
+      setIsVisible(true);
+    }, delay * 1000);
+  }, [delay]);
+
+  const elementRef = useScrollAnimation(animationCallback, { threshold, once });
 
   const getAnimationStyles = () => {
     const baseStyles: React.CSSProperties = {

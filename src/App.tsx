@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Lenis from 'lenis';
 import { setLenisInstance, useLenisScroll } from './hooks/useLenisScroll';
+import { ScrollTrigger } from './utils/gsap';
 import { fontLoading } from './utils/browserCompatibility';
 import Routes from './Routes';
 import CustomCursor from './components/ui/CustomCursor';
@@ -44,6 +45,9 @@ const App: React.FC = () => {
       // Establecer la instancia global
       setLenisInstance(lenis);
 
+      // Sincronizar ScrollTrigger con el RAF loop de Lenis
+      lenis.on('scroll', ScrollTrigger.update);
+
       // Agregar clase al body para identificar que Lenis está activo
       document.body.classList.add('lenis');
 
@@ -78,6 +82,7 @@ const App: React.FC = () => {
     return () => {
       cancelAnimationFrame(rafId);
       if (lenis) {
+        lenis.off('scroll', ScrollTrigger.update);
         lenis.destroy();
       }
     };

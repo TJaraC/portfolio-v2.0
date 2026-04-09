@@ -21,6 +21,7 @@ const Header: React.FC = () => {
   const headerRef = useRef<HTMLElement>(null);
   const lastScrollY = useRef(0);
   const logoRotation = useRef(0);
+  const lastThrottleTime = useRef(0);
 
   // Función para hacer scroll suave a una sección
   const scrollToSection = (sectionId: string) => {
@@ -106,16 +107,17 @@ const Header: React.FC = () => {
   // useEffect para detectar scroll y cambiar tema del header
   useEffect(() => {
     const handleScroll = () => {
+      const now = Date.now();
+      if (now - lastThrottleTime.current < 16) return;
+      lastThrottleTime.current = now;
       detectHeaderTheme();
     };
-    
-    // Detectar tema inicial
+
+    // Detectar tema inicial (sin throttle — solo una vez al montar)
     detectHeaderTheme();
-    
-    // Agregar listener de scroll
+
     window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    // Cleanup
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -134,7 +136,8 @@ const Header: React.FC = () => {
         gsap.to(logoRef.current, {
           rotation: logoRotation.current,
           duration: 0.3,
-          ease: "power2.out"
+          ease: "power2.out",
+          overwrite: true,
         });
       }
       

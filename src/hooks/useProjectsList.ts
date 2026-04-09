@@ -21,24 +21,27 @@ export const useProjectsList = (): { projects: ProjectCard[]; loading: boolean; 
         
         // Lista de proyectos disponibles (se puede expandir dinámicamente)
         const projectIds = ['ultracamp', 'festgo-app', 'portfolio-25', 'howell-gallery'];
-        const projectsData: ProjectCard[] = [];
-        
-        for (const projectId of projectIds) {
-          try {
-            const projectData = await import(`../data/projects/${projectId}.json`);
-            const data: ProjectData = projectData.default;
-            
-            projectsData.push({
+
+        const results = await Promise.allSettled(
+          projectIds.map(projectId => import(`../data/projects/${projectId}.json`))
+        );
+
+        const projectsData: ProjectCard[] = results
+          .map((result, index) => {
+            if (result.status === 'rejected') {
+              console.warn(`Could not load project ${projectIds[index]}:`, result.reason);
+              return null;
+            }
+            const data: ProjectData = result.value.default;
+            return {
               id: data.id,
               cardTitle: data.cardTitle,
               cardTags: data.cardTags,
-              heroImage: data.heroImage
-            });
-          } catch (err) {
-            console.warn(`Could not load project ${projectId}:`, err);
-          }
-        }
-        
+              heroImage: data.heroImage,
+            };
+          })
+          .filter((p): p is ProjectCard => p !== null);
+
         setProjects(projectsData);
       } catch (err) {
         console.error('Error loading projects list:', err);
