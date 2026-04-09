@@ -28,31 +28,43 @@ const Header: React.FC = () => {
 
   // Función para hacer scroll suave a una sección
   const scrollToSection = (sectionId: string) => {
-    // Si no estamos en la home, redirigir a la home con el hash de la sección
     if (location.pathname !== '/') {
-      window.location.href = `/#${sectionId}`;
+      // Navegar a la home pasando la sección como estado (sin hash en la URL)
+      navigate('/', { state: { scrollTo: sectionId } });
       return;
     }
-    
+
     const element = document.getElementById(sectionId);
     if (!element) return;
-    
+
     const targetPosition = element.offsetTop - HEADER_HEIGHT;
 
     if (lenis) {
-      // Usar Lenis si está disponible
-      lenis.scrollTo(targetPosition, {
-        duration: 1.2,
-        easing: lenisEasing
-      });
+      lenis.scrollTo(targetPosition, { duration: 1.2, easing: lenisEasing });
     } else {
-      // Fallback a scroll nativo si Lenis no está disponible
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
     }
   };
+
+  // Scroll a sección pendiente cuando llegamos a la home desde otra página
+  useEffect(() => {
+    if (location.pathname === '/' && location.state?.scrollTo) {
+      const targetSection = location.state.scrollTo as string;
+      // Limpiar el estado para que no se repita en navegaciones futuras
+      window.history.replaceState(null, '', '/');
+      const timer = setTimeout(() => {
+        const element = document.getElementById(targetSection);
+        if (!element) return;
+        const targetPosition = element.offsetTop - HEADER_HEIGHT;
+        if (lenis) {
+          lenis.scrollTo(targetPosition, { duration: 1.2, easing: lenisEasing });
+        } else {
+          window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+        }
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [location.pathname, location.state, lenis]);
 
   // Función para detectar el tema del header basándose en el scroll
   const detectHeaderTheme = () => {
