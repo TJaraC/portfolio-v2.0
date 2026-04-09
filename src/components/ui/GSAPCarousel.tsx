@@ -108,11 +108,11 @@ const GSAPCarousel: React.FC<GSAPCarouselProps> = ({
         }}
       >
         {/* Contenido original */}
-        <div>
+        <div style={{ display: 'inline-flex', alignItems: 'center' }}>
           {React.Children.map(children, (child, index) => cloneWithIndividualHover(child, index))}
         </div>
         {/* Contenido duplicado para loop infinito */}
-        <div>
+        <div style={{ display: 'inline-flex', alignItems: 'center' }}>
           {React.Children.map(children, (child, index) => cloneWithIndividualHover(child, index + 1000))}
         </div>
       </div>
