@@ -7,49 +7,53 @@ const CustomCursor: React.FC = () => {
     const cursor = cursorRef.current;
     if (!cursor) return;
 
+    let mouseX = 0;
+    let mouseY = 0;
+    let rafId: number;
+
+    // Acumula posición en mousemove, aplica al DOM en rAF — desacopla eventos del paint
     const moveCursor = (e: MouseEvent) => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
+      mouseX = e.clientX;
+      mouseY = e.clientY;
     };
 
-    const handleMouseEnter = () => {
-      if (cursor) {
+    const updatePosition = () => {
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top = mouseY + 'px';
+      rafId = requestAnimationFrame(updatePosition);
+    };
+
+    // Event delegation: 2 listeners en document en vez de N por elemento interactivo
+    const INTERACTIVE = 'a, button, [role="button"], input, textarea, select, .clickable';
+
+    const handleMouseOver = (e: MouseEvent) => {
+      if ((e.target as Element).closest(INTERACTIVE)) {
         cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
       }
     };
 
-    const handleMouseLeave = () => {
-      if (cursor) {
+    const handleMouseOut = (e: MouseEvent) => {
+      if ((e.target as Element).closest(INTERACTIVE)) {
         cursor.style.transform = 'translate(-50%, -50%) scale(1)';
       }
     };
 
-    // Add event listeners
     document.addEventListener('mousemove', moveCursor);
-    
-    // Add hover effects for interactive elements
-    const interactiveElements = document.querySelectorAll(
-      'a, button, [role="button"], input, textarea, select, .clickable'
-    );
-    
-    interactiveElements.forEach(el => {
-      el.addEventListener('mouseenter', handleMouseEnter);
-      el.addEventListener('mouseleave', handleMouseLeave);
-    });
+    document.addEventListener('mouseover', handleMouseOver);
+    document.addEventListener('mouseout', handleMouseOut);
+    rafId = requestAnimationFrame(updatePosition);
 
-    // Cleanup
     return () => {
       document.removeEventListener('mousemove', moveCursor);
-      interactiveElements.forEach(el => {
-        el.removeEventListener('mouseenter', handleMouseEnter);
-        el.removeEventListener('mouseleave', handleMouseLeave);
-      });
+      document.removeEventListener('mouseover', handleMouseOver);
+      document.removeEventListener('mouseout', handleMouseOut);
+      cancelAnimationFrame(rafId);
     };
   }, []);
 
   return (
-    <div 
-      ref={cursorRef} 
+    <div
+      ref={cursorRef}
       className="custom-cursor"
       aria-hidden="true"
       style={{

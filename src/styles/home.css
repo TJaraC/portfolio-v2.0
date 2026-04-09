@@ -228,6 +228,9 @@ align-self: stretch;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .portfolio-card:hover .portfolio-card-img {

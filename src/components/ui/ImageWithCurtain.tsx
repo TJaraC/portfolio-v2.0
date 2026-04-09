@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { gsap } from '../../utils/gsap';
 import { useScrollAnimation } from '../../hooks/useLenisScroll';
 
@@ -48,33 +48,8 @@ const ImageWithCurtain: React.FC<ImageWithCurtainProps> = ({
     { threshold, once }
   );
 
-  // Precargar la imagen
-  useEffect(() => {
-    const img = new Image();
-    img.src = src;
-    
-    // Precargar la imagen y mostrarla inmediatamente
-    img.onload = () => {
-      if (imageRef.current) {
-        imageRef.current.src = src;
-      }
-    };
-    
-    // En caso de error, mostrar la imagen de todos modos
-    img.onerror = () => {
-      if (imageRef.current) {
-        imageRef.current.src = src;
-      }
-    };
-    
-    // Mostrar la imagen inmediatamente mientras se carga
-    if (imageRef.current) {
-      imageRef.current.src = src;
-    }
-  }, [src]);
-
   return (
-    <div 
+    <div
       ref={elementRef}
       className={`image-curtain-container ${className}`}
       style={{
@@ -84,10 +59,11 @@ const ImageWithCurtain: React.FC<ImageWithCurtainProps> = ({
         height: '100%'
       }}
     >
-      {/* Imagen precargada */}
       <img
         ref={imageRef}
+        src={src}
         alt={alt}
+        decoding="async"
         style={{
           width: '100%',
           height: '100%',
