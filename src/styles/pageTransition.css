@@ -1,0 +1,32 @@
+.page-transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 9000;
+  display: flex;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.page-transition-column {
+  flex: 1;
+  height: 100%;
+  background: var(--global-bg-1);
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateY(100%);
+}
+
+body.transition-active {
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+
+@media (max-width: 768px) {
+  .page-transition-column-center {
+    display: none;
+  }
+}

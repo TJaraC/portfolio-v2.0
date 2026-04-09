@@ -37,13 +37,16 @@ const Home: React.FC = () => {
   const afterSwitchRef = useRef<HTMLSpanElement>(null);
   const floatTween = useRef<gsap.core.Tween | null>(null);
   const strikeRef = useRef<SVGSVGElement>(null);
+  const creativeWrapperRef = useRef<HTMLDivElement>(null);
 
   // Texto inicial Estado A, rotación, float y línea garabato vía GSAP
   useLayoutEffect(() => {
     if (creativeRef.current) {
       creativeRef.current.textContent = '¿Creative?';
       gsap.set(creativeRef.current, { rotation: -5 });
-      floatTween.current = gsap.to(creativeRef.current, {
+    }
+    if (creativeWrapperRef.current) {
+      floatTween.current = gsap.to(creativeWrapperRef.current, {
         y: -8,
         duration: 2,
         ease: 'sine.inOut',
@@ -91,7 +94,7 @@ const Home: React.FC = () => {
       });
       floatTween.current?.kill();
       floatTween.current = null;
-      gsap.to(creativeRef.current, { y: 0, duration: 0.3, ease: 'power2.out' });
+      gsap.to(creativeWrapperRef.current, { y: 0, duration: 0.3, ease: 'power2.out' });
       gsap.to(creativeRef.current, {
         rotation: 0,
         duration: 0.5,
@@ -133,7 +136,7 @@ const Home: React.FC = () => {
             duration: 0.6,
             ease: 'power2.out',
           });
-          floatTween.current = gsap.to(creativeRef.current, {
+          floatTween.current = gsap.to(creativeWrapperRef.current, {
             y: -8,
             duration: 2,
             ease: 'sine.inOut',
@@ -186,7 +189,7 @@ const Home: React.FC = () => {
       <section className="hero-section">
         <AnimatedElement animation="fadeIn" duration={1.2}>
           <h1 className={`hero-heading${!isSwitchOn ? ' hero-heading--stateA' : ''}`}>
-            <div className="hero-creative-wrapper">
+            <div ref={creativeWrapperRef} className="hero-creative-wrapper">
               <span ref={creativeRef} className="hero-heading-creative" />
               <svg
                 ref={strikeRef}
@@ -206,7 +209,6 @@ const Home: React.FC = () => {
                 />
               </svg>
             </div>
-            <br />
             <span
               className="hero-heading-product"
               style={{
@@ -217,7 +219,6 @@ const Home: React.FC = () => {
               <Switch className="switch--hero" onToggle={handleSwitchToggle} />
               <span ref={afterSwitchRef} />
             </span>
-            <br />
             <span className="hero-heading-designer">
               Des<span className="hero-heading-designer-i">i</span>gner
             </span>

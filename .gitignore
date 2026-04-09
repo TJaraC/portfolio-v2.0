@@ -26,3 +26,15 @@ jest-test-results.json
 .vscode/
 .idea/
 .vercel
+
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+
+# Claude Code
+.claude/
+CLAUDE.md
+
+# Planning artifacts
+.planning/

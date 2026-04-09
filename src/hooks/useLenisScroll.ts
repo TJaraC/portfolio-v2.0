@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
 
 interface ScrollAnimationOptions {
@@ -26,12 +26,12 @@ export const useLenisScroll = () => {
     const callback = () => {
       setLenis(lenisInstance);
     };
-    
+
     lenisCallbacks.push(callback);
 
     // Cleanup: remover el callback cuando el componente se desmonte
     return () => {
-      lenisCallbacks = lenisCallbacks.filter(cb => cb !== callback);
+      lenisCallbacks = lenisCallbacks.filter((cb) => cb !== callback);
     };
   }, [lenis]);
 
@@ -42,7 +42,7 @@ export const useLenisScroll = () => {
 export const setLenisInstance = (lenis: Lenis) => {
   lenisInstance = lenis;
   // Notificar a todos los componentes que están esperando
-  lenisCallbacks.forEach(callback => callback());
+  lenisCallbacks.forEach((callback) => callback());
 };
 
 export const useScrollAnimation = (
@@ -51,6 +51,11 @@ export const useScrollAnimation = (
 ) => {
   const elementRef = useRef<HTMLElement>(null);
   const { threshold = 0.1, rootMargin = '0px', once = true } = options;
+  const callbackRef = useRef(animationCallback);
+
+  useLayoutEffect(() => {
+    callbackRef.current = animationCallback;
+  });
 
   useEffect(() => {
     const element = elementRef.current;
@@ -60,7 +65,7 @@ export const useScrollAnimation = (
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            animationCallback();
+            callbackRef.current();
             if (once) {
               observer.unobserve(element);
             }
@@ -78,7 +83,7 @@ export const useScrollAnimation = (
     return () => {
       observer.unobserve(element);
     };
-  }, [animationCallback, threshold, rootMargin, once]);
+  }, [threshold, rootMargin, once]);
 
   return elementRef;
 };

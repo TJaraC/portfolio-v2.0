@@ -1,5 +1,16 @@
-import React, { useState, useEffect, useCallback, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import React, { useState, useEffect, useCallback, useRef, Suspense } from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+  Navigate,
+} from 'react-router-dom';
+import { gsap } from './utils/gsap';
+import { useLenisScroll } from './hooks/useLenisScroll';
+import { TransitionContext } from './context/TransitionContext';
+import './styles/pageTransition.css';
 
 // Import page components
 const HomePage = React.lazy(() => import('./pages/Home'));
@@ -9,10 +20,10 @@ import Preloader from './components/ui/Preloader';
 
 const AppContent = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const lenis = useLenisScroll();
+
   const [isLoading, setIsLoading] = useState(() => {
-    // Solo mostrar preloader si:
-    // 1. Es la primera visita de la sesión (no hay flag en sessionStorage)
-    // 2. Y estamos en la página home (ruta '/')
     const hasVisited = sessionStorage.getItem('hasVisitedHome');
     const isHomePage = location.pathname === '/';
     return !hasVisited && isHomePage;
@@ -28,16 +39,12 @@ const AppContent = () => {
 
   const handlePreloaderComplete = useCallback(() => {
     setIsLoading(false);
-    // Marcar que ya se visitó la home en esta sesión
     sessionStorage.setItem('hasVisitedHome', 'true');
   }, []);
 
-  // Verificar si debemos mostrar el preloader cuando cambie la ruta
   useEffect(() => {
     const hasVisited = sessionStorage.getItem('hasVisitedHome');
     const isHomePage = location.pathname === '/';
-    
-    // Solo mostrar preloader si no se ha visitado y estamos en home
     if (!hasVisited && isHomePage) {
       setIsLoading(true);
     } else {
@@ -45,8 +52,62 @@ const AppContent = () => {
     }
   }, [location.pathname]);
 
+  // --- Page transition overlay ---
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const columnsRef = useRef<HTMLDivElement[]>([]);
+  const isTransitioning = useRef(false);
+
+  const transitionTo = useCallback(
+    (path: string) => {
+      if (isTransitioning.current) return;
+      isTransitioning.current = true;
+
+      if (lenis) lenis.stop();
+      document.body.classList.add('transition-active');
+
+      const overlay = overlayRef.current;
+      const columns = columnsRef.current;
+
+      // Reset columns to start position (below screen)
+      gsap.set(columns, { y: '100%' });
+      if (overlay) overlay.style.pointerEvents = 'all';
+
+      // Navigate when col0 finishes entering — page mounts hidden behind columns
+      gsap.delayedCall(0.4, () => {
+        window.scrollTo(0, 0);
+        navigate(path);
+      });
+
+      // Timeline: exit starts 0.15s before enter completes → wave overlap effect
+      const tl = gsap.timeline();
+      tl.to(columns, {
+        y: '0%',
+        duration: 0.4,
+        ease: 'power2.inOut',
+        stagger: { amount: 0.25, from: 'start' },
+      }).to(
+        columns,
+        {
+          y: '-100%',
+          duration: 0.5,
+          ease: 'power2.inOut',
+          stagger: { amount: 0.3, from: 'start' },
+          onComplete: () => {
+            if (overlay) overlay.style.pointerEvents = 'none';
+            gsap.set(columns, { y: '100%' });
+            document.body.classList.remove('transition-active');
+            if (lenis) lenis.start();
+            isTransitioning.current = false;
+          },
+        },
+        '-=0.15'
+      );
+    },
+    [navigate, lenis]
+  );
+
   return (
-    <>
+    <TransitionContext.Provider value={{ transitionTo }}>
       <Suspense fallback={null}>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -57,8 +118,23 @@ const AppContent = () => {
           <Route path="*" element={<Navigate to="/404" replace />} />
         </Routes>
       </Suspense>
+
+      {/* Page transition overlay */}
+      <div ref={overlayRef} className="page-transition-overlay">
+        <div ref={(el) => el && (columnsRef.current[0] = el)} className="page-transition-column" />
+        <div
+          ref={(el) => el && (columnsRef.current[1] = el)}
+          className="page-transition-column page-transition-column-center"
+        />
+        <div
+          ref={(el) => el && (columnsRef.current[2] = el)}
+          className="page-transition-column page-transition-column-center"
+        />
+        <div ref={(el) => el && (columnsRef.current[3] = el)} className="page-transition-column" />
+      </div>
+
       {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
-    </>
+    </TransitionContext.Provider>
   );
 };
 
