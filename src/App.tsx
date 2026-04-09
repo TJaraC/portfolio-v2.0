@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Lenis from 'lenis';
 import { setLenisInstance, useLenisScroll } from './hooks/useLenisScroll';
 import { ScrollTrigger } from './utils/gsap';
+import { lenisEasing } from './utils/easing';
 import { fontLoading } from './utils/browserCompatibility';
 import Routes from './Routes';
 import CustomCursor from './components/ui/CustomCursor';
@@ -39,7 +40,7 @@ const App: React.FC = () => {
         wheelMultiplier: 1,
         touchMultiplier: 2,
         normalizeWheel: true,
-        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        easing: lenisEasing
       });
 
       // Establecer la instancia global

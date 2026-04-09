@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '../ui/Button';
 import AnimatedContactHeading from '../ui/AnimatedContactHeading';
 import { useLenisScroll } from '../../hooks/useLenisScroll';
+import { lenisEasing } from '../../utils/easing';
 import '../../styles/Contact.css';
 
 const Contact: React.FC = () => {
@@ -13,7 +14,7 @@ const Contact: React.FC = () => {
       // Usar Lenis si está disponible
       lenis.scrollTo(0, {
         duration: 1.2,
-        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        easing: lenisEasing
       });
     } else {
       // Fallback a scroll nativo si Lenis no está disponible

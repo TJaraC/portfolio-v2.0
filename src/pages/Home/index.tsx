@@ -10,6 +10,8 @@ import GSAPCarousel from '../../components/ui/GSAPCarousel';
 import ProjectCard from '../../components/ui/ProjectCard';
 import Switch from '../../components/ui/Switch';
 import { useLenisScroll } from '../../hooks/useLenisScroll';
+import { lenisEasing } from '../../utils/easing';
+import { HEADER_HEIGHT } from '../../utils/constants';
 import { useResponsiveAnimations } from '../../hooks/useResponsiveAnimations';
 import { useProjectsList } from '../../hooks/useProjectsList';
 import { useImageRotation } from '../../hooks/useImageRotation';
@@ -53,11 +55,10 @@ const Home: React.FC = () => {
       setTimeout(() => {
         const element = document.getElementById(hash);
         if (element) {
-          const headerHeight = 80;
-          const targetPosition = element.offsetTop - headerHeight;
+          const targetPosition = element.offsetTop - HEADER_HEIGHT;
           lenis.scrollTo(targetPosition, {
             duration: 1.2,
-            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            easing: lenisEasing
           });
         }
       }, 500);
@@ -65,12 +66,9 @@ const Home: React.FC = () => {
   }, [lenis]);
 
   // Animaciones responsivas para cambios de breakpoint
-  const currentBreakpoint = useResponsiveAnimations({
+  useResponsiveAnimations({
     duration: 0.4,
     ease: 'power2.out',
-    onBreakpointChange: (breakpoint) => {
-      console.log(`Breakpoint changed to: ${breakpoint}`);
-    }
   });
 
   return (

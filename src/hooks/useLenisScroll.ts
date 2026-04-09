@@ -82,34 +82,3 @@ export const useScrollAnimation = (
 
   return elementRef;
 };
-
-export const useParallaxEffect = (speed: number = 0.5) => {
-  const elementRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const lenis = lenisInstance;
-    if (!lenis || !elementRef.current) return;
-    
-    const handleScroll = () => {
-      const element = elementRef.current;
-      if (!element) return;
-      
-      const rect = element.getBoundingClientRect();
-      const scrollY = lenis.scroll;
-      const windowHeight = window.innerHeight;
-      
-      // Calculate parallax offset
-      const offset = (scrollY - rect.top + windowHeight) * speed;
-      
-      element.style.transform = `translateY(${offset}px)`;
-    };
-
-    lenis.on('scroll', handleScroll);
-
-    return () => {
-      lenis.off('scroll', handleScroll);
-    };
-  }, [speed]);
-
-  return elementRef;
-};

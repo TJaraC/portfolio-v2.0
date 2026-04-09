@@ -7,7 +7,6 @@ const images = [
 ];
 
 export const useImageRotation = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [currentImage, setCurrentImage] = useState(images[0]);
 
   useEffect(() => {
@@ -23,14 +22,11 @@ export const useImageRotation = () => {
     // Guardar el nuevo índice
     localStorage.setItem('designerImageIndex', nextIndex.toString());
     
-    // Actualizar el estado
-    setCurrentImageIndex(nextIndex);
     setCurrentImage(images[nextIndex]);
   }, []); // Solo ejecutar una vez al montar el componente
 
   return {
     currentImage,
-    currentImageIndex,
     totalImages: images.length
   };
 };

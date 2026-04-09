@@ -57,8 +57,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, number }) => {
       <div className="portfolio-card-info">
         <h3 className="portfolio-card-title">{project.cardTitle}</h3>
         <div className="portfolio-card-tags">
-          {project.cardTags.map((tag, index) => (
-            <span key={index} className="portfolio-card-tag">{tag}</span>
+          {project.cardTags.map((tag) => (
+            <span key={tag} className="portfolio-card-tag">{tag}</span>
           ))}
         </div>
       </div>

@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { useLenisScroll } from '../../hooks/useLenisScroll';
+import { lenisEasing } from '../../utils/easing';
+import { HEADER_HEIGHT } from '../../utils/constants';
 import AnimatedNavButton from '../ui/AnimatedNavButton';
 import '../../styles/Header.css';
 
@@ -9,6 +11,7 @@ const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [headerTheme, setHeaderTheme] = useState<'light' | 'dark'>('light');
   const location = useLocation();
+  const navigate = useNavigate();
   const lenis = useLenisScroll();
   
   // Referencias para elementos del DOM
@@ -34,14 +37,13 @@ const Header: React.FC = () => {
     const element = document.getElementById(sectionId);
     if (!element) return;
     
-    const headerHeight = 80; // Altura aproximada del header
-    const targetPosition = element.offsetTop - headerHeight;
-    
+    const targetPosition = element.offsetTop - HEADER_HEIGHT;
+
     if (lenis) {
       // Usar Lenis si está disponible
       lenis.scrollTo(targetPosition, {
         duration: 1.2,
-        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        easing: lenisEasing
       });
     } else {
       // Fallback a scroll nativo si Lenis no está disponible
@@ -308,7 +310,7 @@ const Header: React.FC = () => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               } else {
                 // Si estamos en otra página, navegar a la home
-                window.location.href = '/';
+                navigate('/');
               }
             }}
             style={{ cursor: 'pointer' }}
