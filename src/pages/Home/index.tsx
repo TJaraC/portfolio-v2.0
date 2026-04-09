@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import Header from '../../components/common/Header';
 import Contact from '../../components/common/Contact';
 import Button from '../../components/ui/Button';
@@ -9,6 +9,7 @@ import ParallaxSection from '../../components/ui/ParallaxSection';
 import GSAPCarousel from '../../components/ui/GSAPCarousel';
 import ProjectCard from '../../components/ui/ProjectCard';
 import Switch from '../../components/ui/Switch';
+import { gsap } from '../../utils/gsap';
 import { useLenisScroll } from '../../hooks/useLenisScroll';
 import { lenisEasing } from '../../utils/easing';
 import { HEADER_HEIGHT } from '../../utils/constants';
@@ -30,6 +31,21 @@ const Home: React.FC = () => {
   // Estado para manejar el switch
   const [isSwitchOn, setIsSwitchOn] = useState(false);
 
+  // Refs para texto animado del hero (GSAP controla el textContent, no React)
+  const creativeRef = useRef<HTMLSpanElement>(null);
+  const beforeSwitchRef = useRef<HTMLSpanElement>(null);
+  const afterSwitchRef = useRef<HTMLSpanElement>(null);
+
+  // Texto inicial Estado A y rotación vía GSAP
+  useLayoutEffect(() => {
+    if (creativeRef.current) {
+      creativeRef.current.textContent = '¿Creative?';
+      gsap.set(creativeRef.current, { rotation: -5 });
+    }
+    if (beforeSwitchRef.current) beforeSwitchRef.current.textContent = 'ENGIN';
+    if (afterSwitchRef.current) afterSwitchRef.current.textContent = 'R';
+  }, []);
+
   // Asegurar que Lenis esté activo cuando se carga la página Home
   useEffect(() => {
     // Solo reactivar Lenis si existe, no crear una nueva instancia
@@ -45,6 +61,48 @@ const Home: React.FC = () => {
 
   const handleSwitchToggle = (isOn: boolean) => {
     setIsSwitchOn(isOn);
+
+    const duration = 0.8;
+
+    if (isOn) {
+      // Estado A → B: ENGINEER → PRODUCT, ¿Creative? → Creative
+      gsap.to(creativeRef.current, {
+        rotation: 0,
+        duration: 0.5,
+        ease: 'power2.out',
+      });
+      gsap.to(creativeRef.current, {
+        duration,
+        scrambleText: { text: 'Creative', chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', revealDelay: 0.2 },
+      });
+      gsap.to(beforeSwitchRef.current, {
+        duration,
+        scrambleText: { text: 'PR', chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', revealDelay: 0.2 },
+      });
+      gsap.to(afterSwitchRef.current, {
+        duration,
+        scrambleText: { text: 'UCT', chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', revealDelay: 0.2 },
+      });
+    } else {
+      // Estado B → A: PRODUCT → ENGINEER, Creative → ¿Creative?
+      gsap.to(creativeRef.current, {
+        rotation: -5,
+        duration: 0.5,
+        ease: 'power2.in',
+      });
+      gsap.to(creativeRef.current, {
+        duration,
+        scrambleText: { text: '¿Creative?', chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz?¿', revealDelay: 0.2 },
+      });
+      gsap.to(beforeSwitchRef.current, {
+        duration,
+        scrambleText: { text: 'ENGIN', chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', revealDelay: 0.2 },
+      });
+      gsap.to(afterSwitchRef.current, {
+        duration,
+        scrambleText: { text: 'R', chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', revealDelay: 0.2 },
+      });
+    }
   };
   
   // Manejar scroll automático al hash de la URL
@@ -79,17 +137,17 @@ const Home: React.FC = () => {
       {/* Hero Section */}
       <section className="hero-section">
         <AnimatedElement animation="fadeIn" duration={1.2}>
-          <h1 className="hero-heading">
-            <span className="hero-heading-creative">Creative</span><br />
-            <span 
+          <h1 className={`hero-heading${!isSwitchOn ? ' hero-heading--stateA' : ''}`}>
+            <span ref={creativeRef} className="hero-heading-creative" /><br />
+            <span
               className="hero-heading-product"
               style={{
                 color: isSwitchOn ? 'var(--global-text-1)' : 'var(--global-text-3)'
               }}
             >
-              PR
+              <span ref={beforeSwitchRef} />
               <Switch className="switch--hero" onToggle={handleSwitchToggle} />
-              UCT
+              <span ref={afterSwitchRef} />
             </span><br />
             <span className="hero-heading-designer">
               Des<span className="hero-heading-designer-i">i</span>gner
