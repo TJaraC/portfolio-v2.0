@@ -58,9 +58,9 @@
 
 ### Accessibility
 
-- [ ] **A11Y-01**: Logo en `Header.tsx` convertido a `<button>` o `<a>` con `tabIndex`, `role` y `aria-label`
-- [ ] **A11Y-02**: "Back to top" en `Contact.tsx` accesible por teclado (`tabIndex`, `role="button"`, `onKeyDown`)
-- [ ] **A11Y-03**: Copyright en `Contact.tsx` actualizado de "© 2025" a "© 2026"
+- [x] **A11Y-01**: Logo en `Header.tsx` convertido a `<button>` o `<a>` con `tabIndex`, `role` y `aria-label`
+- [x] **A11Y-02**: "Back to top" en `Contact.tsx` accesible por teclado (`tabIndex`, `role="button"`, `onKeyDown`)
+- [x] **A11Y-03**: Copyright en `Contact.tsx` actualizado de "© 2025" a "© 2026"
 
 ### Branch & Infra
 
@@ -135,9 +135,9 @@
 | CODE-11 | Phase 5 | Pending |
 | CODE-12 | Phase 5 | Pending |
 | CODE-13 | Phase 5 | Pending |
-| A11Y-01 | Phase 6 | Pending |
-| A11Y-02 | Phase 6 | Pending |
-| A11Y-03 | Phase 6 | Pending |
+| A11Y-01 | Phase 6 | Complete |
+| A11Y-02 | Phase 6 | Complete |
+| A11Y-03 | Phase 6 | Complete |
 
 **Coverage:**
 - v1 requirements: 38 total

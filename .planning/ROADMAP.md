@@ -184,6 +184,16 @@ Phase 5 (Code)      → dead-code removal safest after all fixes are in (no acci
 Phase 6 (A11y)      → purely additive; safe last; no cross-phase deps
 ```
 
+### Phase 7: Image & Cursor Performance
+
+**Goal:** [To be planned]
+**Requirements**: TBD
+**Depends on:** Phase 6
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 7 to break down)
+
 ---
 *Roadmap defined: 2026-04-07*
 *Branch: fix/audit-2026-04*

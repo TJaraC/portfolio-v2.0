@@ -113,6 +113,12 @@ See: .planning/PROJECT.md (updated 2026-04-08)
 
 ---
 
+## Roadmap Evolution
+
+- Phase 7 added: Image & Cursor Performance — fix ImageWithCurtain redundant src, decoding=async, CustomCursor rAF, will-change on portfolio cards
+
+---
+
 ## Notes
 
 - Work branch: fix/audit-2026-04
