@@ -352,6 +352,7 @@ align-self: stretch;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  align-self: center;
 }
 
 /* ===== ABOUT SECTION ===== */
@@ -1126,12 +1127,28 @@ body {
   }
 }
 
-/* ===== HERO STATE A: ¿Creative? tachado, rotado, detrás de ENGINEER ===== */
-.hero-heading--stateA .hero-heading-creative {
-  text-decoration: line-through;
+/* ===== HERO STATE A: ¿Creative? con línea garabato naranja via GSAP ===== */
+.hero-creative-wrapper {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-heading--stateA .hero-creative-wrapper {
   z-index: 0;
   margin-bottom: -0.15em;
+}
+
+.hero-strikethrough {
+  position: absolute;
+  left: -1%;
+  top: 48%;
+  transform: translateY(-50%) rotate(-1deg);
+  width: 102%;
+  height: 20px;
+  overflow: visible;
+  pointer-events: none;
 }
 
 .hero-heading--stateA .hero-heading-product {

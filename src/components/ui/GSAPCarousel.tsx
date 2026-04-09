@@ -13,7 +13,7 @@ const GSAPCarousel: React.FC<GSAPCarouselProps> = ({
   children,
   direction = 'left',
   baseSpeed = 35,
-  className = ''
+  className = '',
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<gsap.core.Tween | null>(null);
@@ -23,7 +23,7 @@ const GSAPCarousel: React.FC<GSAPCarouselProps> = ({
     if (!carouselRef.current) return;
 
     const carousel = carouselRef.current;
-    
+
     // Configurar animación según dirección
     if (direction === 'left') {
       // Izquierda: de 0% a -50%
@@ -33,7 +33,7 @@ const GSAPCarousel: React.FC<GSAPCarouselProps> = ({
         duration: baseSpeed,
         ease: 'none',
         repeat: -1,
-        immediateRender: false
+        immediateRender: false,
       });
     } else {
       // Derecha: de -50% a 0%
@@ -43,10 +43,10 @@ const GSAPCarousel: React.FC<GSAPCarouselProps> = ({
         duration: baseSpeed,
         ease: 'none',
         repeat: -1,
-        immediateRender: false
+        immediateRender: false,
       });
     }
-    
+
     return () => {
       if (animationRef.current) {
         animationRef.current.kill();
@@ -77,8 +77,8 @@ const GSAPCarousel: React.FC<GSAPCarouselProps> = ({
             ...element.props.style,
             color: hoveredElement === elementId ? 'var(--global-text-3)' : undefined,
             transition: 'color 0.3s ease',
-            cursor: 'default'
-          }
+            cursor: 'default',
+          },
         });
       } else if (element.type === 'img') {
         // Mantener las imágenes sin cambios para preservar su alineación
@@ -86,9 +86,9 @@ const GSAPCarousel: React.FC<GSAPCarouselProps> = ({
       } else if (element.props && element.props.children) {
         return React.cloneElement(element, {
           ...element.props,
-          children: React.Children.map(element.props.children, (child, childIndex) => 
+          children: React.Children.map(element.props.children, (child, childIndex) =>
             cloneWithIndividualHover(child, index * 100 + childIndex)
-          )
+          ),
         });
       }
     }
@@ -97,23 +97,25 @@ const GSAPCarousel: React.FC<GSAPCarouselProps> = ({
 
   return (
     <div className={`philosophy-row ${className}`}>
-      <div 
+      <div
         ref={carouselRef}
         className="philosophy-carousel-gsap"
         style={{
           display: 'inline-flex',
-          alignItems: 'center',
+          alignItems: 'baseline',
           whiteSpace: 'nowrap',
-          willChange: 'transform'
+          willChange: 'transform',
         }}
       >
         {/* Contenido original */}
-        <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+        <div style={{ display: 'inline-flex', alignItems: 'baseline' }}>
           {React.Children.map(children, (child, index) => cloneWithIndividualHover(child, index))}
         </div>
         {/* Contenido duplicado para loop infinito */}
-        <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-          {React.Children.map(children, (child, index) => cloneWithIndividualHover(child, index + 1000))}
+        <div style={{ display: 'inline-flex', alignItems: 'baseline' }}>
+          {React.Children.map(children, (child, index) =>
+            cloneWithIndividualHover(child, index + 1000)
+          )}
         </div>
       </div>
     </div>
