@@ -5,6 +5,7 @@ import { useLenisScroll } from '../../hooks/useLenisScroll';
 import { lenisEasing } from '../../utils/easing';
 import { HEADER_HEIGHT } from '../../utils/constants';
 import AnimatedNavButton from '../ui/AnimatedNavButton';
+import { useTransition } from '../../context/TransitionContext';
 import '../../styles/Header.css';
 
 const Header: React.FC = () => {
@@ -13,7 +14,8 @@ const Header: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const lenis = useLenisScroll();
-  
+  const { transitionTo } = useTransition();
+
   // Referencias para elementos del DOM
   const logoRef = useRef<HTMLButtonElement>(null);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
@@ -30,7 +32,9 @@ const Header: React.FC = () => {
   const scrollToSection = (sectionId: string) => {
     if (location.pathname !== '/') {
       // Navegar a la home pasando la sección como estado (sin hash en la URL)
-      navigate('/', { state: { scrollTo: sectionId } });
+      // Usamos la transición de página y pasamos la sección vía sessionStorage
+      sessionStorage.setItem('pendingScrollTo', sectionId);
+      transitionTo('/');
       return;
     }
 
@@ -48,33 +52,46 @@ const Header: React.FC = () => {
 
   // Scroll a sección pendiente cuando llegamos a la home desde otra página
   useEffect(() => {
-    if (location.pathname === '/' && location.state?.scrollTo) {
-      const targetSection = location.state.scrollTo as string;
-      // Limpiar el estado para que no se repita en navegaciones futuras
+    if (location.pathname !== '/') return;
+
+    // Soportar tanto location.state (navegación directa) como sessionStorage
+    // (navegación a través de la transición de página, que no preserva el state)
+    const stateScrollTo = (location.state as { scrollTo?: string } | null)?.scrollTo;
+    const storedScrollTo = sessionStorage.getItem('pendingScrollTo');
+    const targetSection = stateScrollTo || storedScrollTo;
+
+    if (!targetSection) return;
+
+    // Limpiar tanto el estado como el sessionStorage para que no se repita
+    if (stateScrollTo) {
       window.history.replaceState(null, '', '/');
-      const timer = setTimeout(() => {
-        const element = document.getElementById(targetSection);
-        if (!element) return;
-        const targetPosition = element.offsetTop - HEADER_HEIGHT;
-        if (lenis) {
-          lenis.scrollTo(targetPosition, { duration: 1.2, easing: lenisEasing });
-        } else {
-          window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-        }
-      }, 300);
-      return () => clearTimeout(timer);
     }
+    if (storedScrollTo) {
+      sessionStorage.removeItem('pendingScrollTo');
+    }
+
+    const timer = setTimeout(() => {
+      const element = document.getElementById(targetSection);
+      if (!element) return;
+      const targetPosition = element.offsetTop - HEADER_HEIGHT;
+      if (lenis) {
+        lenis.scrollTo(targetPosition, { duration: 1.2, easing: lenisEasing });
+      } else {
+        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+      }
+    }, 300);
+    return () => clearTimeout(timer);
   }, [location.pathname, location.state, lenis]);
 
   // Función para detectar el tema del header basándose en el scroll
   const detectHeaderTheme = () => {
     if (!headerRef.current) return;
-    
+
     const headerRect = headerRef.current.getBoundingClientRect();
     const headerHeight = headerRect.height;
     const headerTop = headerRect.top;
     const headerBottom = headerRect.bottom;
-    
+
     // Obtener todas las secciones
     const heroSection = document.querySelector('.hero-section') as HTMLElement;
     const featuredSection = document.querySelector('.featured-section') as HTMLElement;
@@ -82,37 +99,37 @@ const Header: React.FC = () => {
     const philosophySection = document.querySelector('.philosophy-section') as HTMLElement;
     const aboutSection = document.querySelector('.about-section') as HTMLElement;
     const contactSection = document.querySelector('.contact-section') as HTMLElement;
-    
+
     // Definir qué secciones son claras u oscuras
     const lightSections = [heroSection, featuredSection, contactSection];
     const darkSections = [portfolioSection, philosophySection, aboutSection];
-    
+
     let lightPixels = 0;
     let darkPixels = 0;
-    
+
     // Calcular cuántos píxeles del header están sobre secciones claras vs oscuras
-    [...lightSections, ...darkSections].forEach(section => {
+    [...lightSections, ...darkSections].forEach((section) => {
       if (!section) return;
-      
+
       const sectionRect = section.getBoundingClientRect();
       const sectionTop = sectionRect.top;
       const sectionBottom = sectionRect.bottom;
-      
+
       // Calcular la intersección entre el header y la sección
       const intersectionTop = Math.max(headerTop, sectionTop);
       const intersectionBottom = Math.min(headerBottom, sectionBottom);
       const intersectionHeight = Math.max(0, intersectionBottom - intersectionTop);
-      
+
       if (lightSections.includes(section)) {
         lightPixels += intersectionHeight;
       } else {
         darkPixels += intersectionHeight;
       }
     });
-    
+
     // Determinar el tema basándose en qué tipo de sección domina
     const newTheme = lightPixels >= darkPixels ? 'light' : 'dark';
-    
+
     if (newTheme !== headerTheme) {
       setHeaderTheme(newTheme);
     }
@@ -142,24 +159,24 @@ const Header: React.FC = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const scrollDelta = currentScrollY - lastScrollY.current;
-      
+
       // Calcular la rotación basada en la dirección del scroll
       logoRotation.current += scrollDelta * 0.5; // Factor de velocidad de rotación
-      
+
       if (logoRef.current) {
         gsap.to(logoRef.current, {
           rotation: logoRotation.current,
           duration: 0.3,
-          ease: "power2.out",
+          ease: 'power2.out',
           overwrite: true,
         });
       }
-      
+
       lastScrollY.current = currentScrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -178,48 +195,51 @@ const Header: React.FC = () => {
       tl.current = gsap.timeline({ paused: true });
 
       // Animación del overlay
-        tl.current.fromTo(overlayRef.current, 
-          { opacity: 0 },
-          { opacity: 1, duration: 0.15, ease: "power2.out" }
-        );
+      tl.current.fromTo(
+        overlayRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.15, ease: 'power2.out' }
+      );
 
-        // Animación del menú
-        tl.current.fromTo(menuRef.current,
-          { 
-            opacity: 0, 
-            scale: 0.9, 
-            y: -30
-          },
-          { 
-            opacity: 1, 
-            scale: 1, 
-            y: 0,
-            duration: 0.2, 
-            ease: "back.out(1.7)" 
-          },
-          "-=0.05"
-        );
+      // Animación del menú
+      tl.current.fromTo(
+        menuRef.current,
+        {
+          opacity: 0,
+          scale: 0.9,
+          y: -30,
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.2,
+          ease: 'back.out(1.7)',
+        },
+        '-=0.05'
+      );
 
       // Animación de los elementos del menú
-      const menuItems = menuItemsRef.current.filter(item => item !== null);
+      const menuItems = menuItemsRef.current.filter((item) => item !== null);
       if (menuItems.length > 0) {
         menuItems.forEach((item, index) => {
           if (item && tl.current) {
-            tl.current.fromTo(item,
-               { 
-                  opacity: 0, 
-                  y: 30, 
-                  x: -20
-                },
-                { 
-                  opacity: 1, 
-                  y: 0, 
-                  x: 0,
-                  duration: 0.15,
-                  ease: "back.out(1.7)"
-                },
-                index === 0 ? 0.05 : `+=${0.02}`
-             );
+            tl.current.fromTo(
+              item,
+              {
+                opacity: 0,
+                y: 30,
+                x: -20,
+              },
+              {
+                opacity: 1,
+                y: 0,
+                x: 0,
+                duration: 0.15,
+                ease: 'back.out(1.7)',
+              },
+              index === 0 ? 0.05 : `+=${0.02}`
+            );
           }
         });
       }
@@ -286,7 +306,7 @@ const Header: React.FC = () => {
             rotation: 180,
             scale: 1.1,
             duration: 0.2,
-            ease: "elastic.out(1, 0.8)"
+            ease: 'elastic.out(1, 0.8)',
           });
         }
       } else {
@@ -298,7 +318,7 @@ const Header: React.FC = () => {
             rotation: 0,
             scale: 1,
             duration: 0.2,
-            ease: "elastic.out(1, 0.8)"
+            ease: 'elastic.out(1, 0.8)',
           });
         }
       }
@@ -306,7 +326,7 @@ const Header: React.FC = () => {
   }, [menuOpen]);
 
   return (
-    <header 
+    <header
       ref={headerRef}
       className={`header ${headerTheme === 'dark' ? 'header--dark' : 'header--light'} ${menuOpen ? 'header--menu-open' : ''}`}
     >
@@ -322,49 +342,57 @@ const Header: React.FC = () => {
                 // Si estamos en la home, hacer scroll to top
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               } else {
-                // Si estamos en otra página, navegar a la home
-                navigate('/');
+                // Si estamos en otra página, navegar a la home con transición
+                transitionTo('/');
               }
             }}
           >
-            <span className="logo-text">
-              TJC
-            </span>
+            <span className="logo-text">TJC</span>
           </button>
 
           {/* Hamburger Menu Icon (Mobile only) */}
-          <button 
+          <button
             ref={hamburgerRef}
-            className="hamburger-menu" 
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            className="hamburger-menu"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             onClick={() => setMenuOpen(!menuOpen)}
           >
             <svg className="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               {menuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               )}
             </svg>
           </button>
 
           {/* Desktop Navigation */}
           <nav className="desktop-nav">
-            <AnimatedNavButton 
+            <AnimatedNavButton
               role="menuitem"
               className="nav-button"
               onClick={() => scrollToSection('work')}
             >
               WORK
             </AnimatedNavButton>
-            <AnimatedNavButton 
+            <AnimatedNavButton
               role="menuitem"
               className="nav-button"
               onClick={() => scrollToSection('about')}
             >
               ABOUT
             </AnimatedNavButton>
-            <AnimatedNavButton 
+            <AnimatedNavButton
               role="menuitem"
               className="nav-button"
               onClick={() => scrollToSection('contact')}
@@ -375,17 +403,22 @@ const Header: React.FC = () => {
 
           {/* Desktop Social Links */}
           <div className="desktop-social">
-            <AnimatedNavButton 
+            <AnimatedNavButton
               role="menuitem"
               className="nav-button"
               onClick={() => window.open('https://www.behance.net/tjaradesign', '_blank')}
             >
               BEHANCE
             </AnimatedNavButton>
-            <AnimatedNavButton 
+            <AnimatedNavButton
               role="menuitem"
               className="nav-button"
-              onClick={() => window.open('https://www.linkedin.com/in/patricio-jaramillo-castrillo-557427200/', '_blank')}
+              onClick={() =>
+                window.open(
+                  'https://www.linkedin.com/in/patricio-jaramillo-castrillo-557427200/',
+                  '_blank'
+                )
+              }
             >
               LINKEDIN
             </AnimatedNavButton>
@@ -394,21 +427,21 @@ const Header: React.FC = () => {
 
         {/* Mobile Menu Overlay */}
         {menuOpen && (
-          <div 
+          <div
             ref={overlayRef}
-            className="mobile-menu-overlay" 
-            onClick={() => setMenuOpen(false)} 
+            className="mobile-menu-overlay"
+            onClick={() => setMenuOpen(false)}
           />
         )}
-        
+
         {/* Mobile Menu */}
-        <nav 
+        <nav
           ref={menuRef}
-          className={`mobile-menu ${!menuOpen ? 'mobile-menu--hidden' : ''} ${headerTheme === 'dark' ? 'mobile-menu--dark' : 'mobile-menu--light'}`} 
+          className={`mobile-menu ${!menuOpen ? 'mobile-menu--hidden' : ''} ${headerTheme === 'dark' ? 'mobile-menu--dark' : 'mobile-menu--light'}`}
           onClick={() => setMenuOpen(false)}
         >
           <div className="mobile-menu-content" onClick={(e) => e.stopPropagation()}>
-            <button 
+            <button
               ref={(el) => el && (menuItemsRef.current[0] = el)}
               role="menuitem"
               className="nav-button nav-button--left mobile-menu-item"
@@ -424,7 +457,7 @@ const Header: React.FC = () => {
             >
               ABOUT
             </button>
-            <button 
+            <button
               ref={(el) => el && (menuItemsRef.current[1] = el)}
               role="menuitem"
               className="nav-button nav-button--left mobile-menu-item"
@@ -440,7 +473,7 @@ const Header: React.FC = () => {
             >
               WORK
             </button>
-            <button 
+            <button
               ref={(el) => el && (menuItemsRef.current[2] = el)}
               role="menuitem"
               className="nav-button nav-button--left mobile-menu-item"
@@ -456,7 +489,7 @@ const Header: React.FC = () => {
             >
               CONTACT
             </button>
-            <button 
+            <button
               ref={(el) => el && (menuItemsRef.current[3] = el)}
               role="menuitem"
               className="nav-button nav-button--left mobile-menu-item"
@@ -467,13 +500,16 @@ const Header: React.FC = () => {
             >
               BEHANCE
             </button>
-            <button 
+            <button
               ref={(el) => el && (menuItemsRef.current[4] = el)}
               role="menuitem"
               className="nav-button nav-button--left mobile-menu-item"
               onClick={(e) => {
                 e.stopPropagation();
-                window.open('https://www.linkedin.com/in/patricio-jaramillo-castrillo-557427200/', '_blank');
+                window.open(
+                  'https://www.linkedin.com/in/patricio-jaramillo-castrillo-557427200/',
+                  '_blank'
+                );
               }}
             >
               LINKEDIN
