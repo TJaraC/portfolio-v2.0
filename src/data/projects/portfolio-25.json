@@ -80,10 +80,10 @@
         "note": "The benchmark evaluates communication patterns and review friction, helping define a portfolio direction rather than rank individual designers."
       },
       "persona": {
-        "name": "Sam Lee",
+        "name": "Marta Ríos",
         "archetype": "The time-poor design lead",
-        "context": "Sam reviews many portfolios between meetings. The first pass is fast and comparative; deeper reading happens only when role, craft level and project relevance are immediately legible.",
-        "quote": "Show me the judgement behind the polish. I want to know what changed because you were involved.",
+        "context": "Marta reviews many portfolios between meetings. The first pass is fast and comparative; deeper reading happens only when role, craft level and project relevance are immediately legible.",
+        "quote": "Show me the judgement behind the polish. I want to understand why each design decision matters.",
         "goals": [
           "Understand the designer's positioning quickly",
           "Identify relevant product and interface work",
@@ -184,23 +184,23 @@
           "description": "Transforms and image curtains avoid layout shifts, and reduced-motion preferences keep the experience usable."
         }
       ],
-      "iterations": [
+      "applications": [
         {
           "component": "Home introduction",
-          "before": "A descriptive paragraph explained the full profile before visitors saw any work.",
-          "after": "A concise positioning statement, visual signature and immediate project transition share the opening screen.",
+          "objective": "Communicate role, personality and craft before visitors choose a project.",
+          "solution": "A concise positioning statement, visual signature and immediate project transition share the opening screen.",
           "outcome": "Personality and purpose arrive together."
         },
         {
           "component": "Project pages",
-          "before": "Overview, colour and a gallery created attractive but shallow summaries.",
-          "after": "Ten reusable chapters connect problem, research, decisions, validation, final design and learning.",
-          "outcome": "The portfolio now shows judgement as clearly as output."
+          "objective": "Show thinking and outcomes with enough depth while keeping every project structurally consistent.",
+          "solution": "Ten reusable chapters connect context, research, decisions, validation, final design and learning.",
+          "outcome": "The portfolio shows judgement as clearly as output."
         },
         {
           "component": "Mobile hierarchy",
-          "before": "Desktop-scale headings and two-column content created abrupt wraps and long blank transitions.",
-          "after": "Responsive type, stacked evidence and in-flow media preserve the same narrative at narrow widths.",
+          "objective": "Preserve editorial pacing and project evidence on narrow viewports.",
+          "solution": "Responsive type, stacked evidence and in-flow media preserve the same narrative at narrow widths.",
           "outcome": "The mobile version feels composed rather than reduced."
         }
       ]
@@ -248,21 +248,24 @@
       ]
     },
     "impact": {
-      "description": "The portfolio now functions as both a personal brand and a scalable publishing system. Its impact can be measured in the design infrastructure delivered: four coherent cases, one maintainable template and a responsive language shared across the experience.",
+      "description": "The portfolio functions as both a personal brand and a scalable publishing system. Its impact is expressed through the design infrastructure delivered: four coherent cases, one maintainable template and a responsive language shared across the experience.",
       "metrics": [
         {
           "value": "4",
-          "label": "Curated case studies",
+          "unit": "case studies",
+          "label": "Curated body of work",
           "description": "Each project carries its own context and visual identity inside a consistent review structure."
         },
         {
           "value": "2",
-          "label": "Typographic voices",
+          "unit": "type families",
+          "label": "Expressive hierarchy",
           "description": "Editorial expression and interface clarity work as a deliberate, reusable identity system."
         },
         {
           "value": "1",
-          "label": "Shared data model",
+          "unit": "content model",
+          "label": "Shared publishing system",
           "description": "Content can evolve without duplicating page components or fragmenting responsive behaviour."
         }
       ]

@@ -9,7 +9,7 @@
   "heroImage": "/images/projects/ultracamp/Ultracamp01.webp",
   "heroInsetImage": "/images/projects/ultracamp/Ultracamp02.webp",
   "overview": {
-    "description": "Ultracamp helps people learn web development from the ground up through guided practice and always-available AI feedback. The work grew from a single landing page into a five-template ecosystem that moves users from discovery to a confident subscription decision."
+    "description": "Ultracamp helps people learn web development from the ground up through guided practice and always-available AI feedback. Its five-template ecosystem moves users from discovery to a confident subscription decision."
   },
   "projectGoal": {
     "description": "Create a scalable, mobile-first journey that makes a technical curriculum feel approachable, demonstrates the learning experience before purchase and keeps the €19 offer visible without interrupting exploration."
@@ -80,9 +80,9 @@
         "note": "The benchmark compares recurring interface patterns and positioning choices; it is a design-direction tool, not a commercial performance ranking."
       },
       "persona": {
-        "name": "Alex Morgan",
+        "name": "Javier Morales",
         "archetype": "The stalled self-learner",
-        "context": "Alex is changing careers and learns in short sessions between work and commuting. Free tutorials have built curiosity, but fragmented resources make progress difficult to judge.",
+        "context": "Javier is changing careers and learns in short sessions between work and commuting. Free tutorials have built curiosity, but fragmented resources make progress difficult to judge.",
         "quote": "I do not need another list of videos. I need to know what to practise next and whether I am getting it right.",
         "goals": [
           "Follow a visible path from fundamentals to employable projects",
@@ -181,23 +181,23 @@
           "description": "Tables become summaries, grids become carousels or stacks and side panels become in-flow decisions on mobile."
         }
       ],
-      "iterations": [
+      "applications": [
         {
           "component": "Course curriculum",
-          "before": "A complete module list appeared as one long desktop column with little sense of progression.",
-          "after": "Milestones lead into collapsible modules with duration, status and a visible next step.",
+          "objective": "Make a dense full-stack syllabus feel progressive and scannable at every breakpoint.",
+          "solution": "Milestones lead into collapsible modules with duration, status and a visible next step.",
           "outcome": "A complex syllabus becomes scannable at every breakpoint."
         },
         {
           "component": "Pricing",
-          "before": "Plans were separated from the product proof and required a late-page comparison.",
-          "after": "Monthly and annual choices share one compact card, reinforced beside relevant course content.",
+          "objective": "Keep the €19 offer understandable and close to relevant product proof without interrupting learning content.",
+          "solution": "Monthly and annual choices share one compact card, reinforced beside relevant course content.",
           "outcome": "Price remains clear without dominating the learning story."
         },
         {
           "component": "Tutorial article",
-          "before": "The article ended without a meaningful route into structured learning.",
-          "after": "Reading progress, topic context and a related course prompt create a natural continuation.",
+          "objective": "Give organic readers a useful standalone article and a clear route into structured learning.",
+          "solution": "Reading progress, topic context and a related course prompt create a natural continuation.",
           "outcome": "Organic discovery connects to the paid ecosystem."
         }
       ]
@@ -245,21 +245,24 @@
       ]
     },
     "impact": {
-      "description": "The design delivers a coherent acquisition and learning story rather than a collection of isolated marketing pages. Its impact is expressed through the scalable product system created and the friction removed from the decision journey.",
+      "description": "The design delivers a coherent acquisition and learning story across five connected page types. Its impact is expressed through the scalable product system and the clarity built into the subscription journey.",
       "metrics": [
         {
           "value": "5",
-          "label": "Scalable templates",
+          "unit": "page templates",
+          "label": "Scalable ecosystem",
           "description": "Landing, learning path, course detail, tutorial hub and article share one visual and conversion system."
         },
         {
           "value": "2",
-          "label": "Acquisition paths",
+          "unit": "entry paths",
+          "label": "Connected acquisition",
           "description": "Direct and organic visitors can enter differently while converging on one clear learning decision."
         },
         {
           "value": "1",
-          "label": "Responsive language",
+          "unit": "design language",
+          "label": "Responsive consistency",
           "description": "Components preserve meaning from wide curriculum grids to compact mobile reading flows."
         }
       ]

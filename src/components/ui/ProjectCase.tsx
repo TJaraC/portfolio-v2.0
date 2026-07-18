@@ -62,18 +62,18 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
             <AnimatedElement animation="fadeIn" duration={1.2}>
               <div className="project-title">
                 <div className="project-title-row">
-                  <div className="project-title-left">
-                    <h1 id="project-title" className="project-title-main">
+                  <h1
+                    id="project-title"
+                    className={`project-title-heading${data.name ? ' has-subtitle' : ''}`}
+                  >
+                    <span className="project-title-main">
                       {data.project}
-                    </h1>
-                    <p className="project-date">{data.date}</p>
-                  </div>
-                  <div className="project-title-right">
-                    <p className="project-title-sub" aria-hidden={!data.name}>
-                      {data.name}
-                    </p>
-                    <p className="project-description">{data.heroDescription}</p>
-                  </div>
+                      {data.name ? ' ' : ''}
+                    </span>
+                    {data.name && <span className="project-title-sub">{data.name}</span>}
+                  </h1>
+                  <p className="project-date">{data.date}</p>
+                  <p className="project-description">{data.heroDescription}</p>
                 </div>
               </div>
             </AnimatedElement>
@@ -261,7 +261,7 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                   </div>
                 </CaseChapter>
 
-                <CaseChapter number="06" title="Design & iterations" className="case-design">
+                <CaseChapter number="06" title="Design system & rationale" className="case-design">
                   <p className="case-lead">{caseStudy.design.description}</p>
                   <div className="case-design-system">
                     <div className="case-design-system-copy">
@@ -282,23 +282,26 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                       </article>
                     ))}
                   </div>
-                  <div className="case-iterations" aria-label="Design iteration decisions">
-                    {caseStudy.design.iterations.map((iteration, index) => (
+                  <div
+                    className="case-applications"
+                    aria-label="Design objectives and built solutions"
+                  >
+                    {caseStudy.design.applications.map((application, index) => (
                       <article
-                        className="case-iteration-row"
-                        key={`${iteration.component}-${index}`}
+                        className="case-application-row"
+                        key={`${application.component}-${index}`}
                       >
-                        <div className="case-iteration-heading">
-                          <span className="case-kicker">{iteration.component}</span>
-                          <strong>{iteration.outcome}</strong>
+                        <div className="case-application-heading">
+                          <span className="case-kicker">{application.component}</span>
+                          <strong>{application.outcome}</strong>
                         </div>
-                        <div className="case-iteration-state is-before">
-                          <span>Before</span>
-                          <p>{iteration.before}</p>
+                        <div className="case-application-detail is-objective">
+                          <span>Design objective</span>
+                          <p>{application.objective}</p>
                         </div>
-                        <div className="case-iteration-state is-after">
-                          <span>After</span>
-                          <p>{iteration.after}</p>
+                        <div className="case-application-detail is-solution">
+                          <span>Built solution</span>
+                          <p>{application.solution}</p>
                         </div>
                       </article>
                     ))}
@@ -366,7 +369,13 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                   <div className="case-metric-grid">
                     {caseStudy.impact.metrics.map((metric, index) => (
                       <article className="case-metric-card" key={`${metric.label}-${index}`}>
-                        <strong>{metric.value}</strong>
+                        <div
+                          className="case-metric-value"
+                          aria-label={`${metric.value} ${metric.unit}`}
+                        >
+                          <strong>{metric.value}</strong>
+                          <span>{metric.unit}</span>
+                        </div>
                         <h3>{metric.label}</h3>
                         <p>{metric.description}</p>
                       </article>

@@ -3,10 +3,30 @@ import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 
 const projects = [
-  { id: 'ultracamp', name: 'Ultracamp' },
-  { id: 'festgo-app', name: 'FestGo' },
-  { id: 'portfolio-25', name: "Portfolio '25" },
-  { id: 'howell-gallery', name: 'Howell Gallery' },
+  {
+    id: 'ultracamp',
+    title: 'Ultracamp',
+    persona: 'Javier Morales',
+    metricUnits: ['page templates', 'entry paths', 'design language'],
+  },
+  {
+    id: 'festgo-app',
+    title: 'FestGo App',
+    persona: 'Lucía Navarro',
+    metricUnits: ['product journey', 'trust layers', 'destinations'],
+  },
+  {
+    id: 'portfolio-25',
+    title: "Portfolio '25",
+    persona: 'Marta Ríos',
+    metricUnits: ['case studies', 'type families', 'content model'],
+  },
+  {
+    id: 'howell-gallery',
+    title: 'Howell Gallery',
+    persona: 'Carmen Vidal',
+    metricUnits: ['content types', 'reading levels', 'responsive system'],
+  },
 ];
 
 const viewports = [
@@ -18,7 +38,7 @@ const evidenceDirectory = process.env.PORTFOLIO_EVIDENCE_DIR;
 
 for (const project of projects) {
   for (const viewport of viewports) {
-    test(`${project.name} · ${viewport.name}`, async ({ page }) => {
+    test(`${project.title} - ${viewport.name}`, async ({ page }) => {
       const runtimeErrors: string[] = [];
 
       page.on('console', (message) => {
@@ -29,6 +49,60 @@ for (const project of projects) {
       await page.setViewportSize(viewport);
       await page.goto(`/projects/${project.id}`, { waitUntil: 'networkidle' });
       await expect(page.locator('.project-case')).toBeVisible();
+
+      const projectHeading = page.locator('.project-title-heading');
+      const headingText = (await projectHeading.innerText()).replace(/\s+/g, ' ').trim();
+      expect(headingText.toLocaleLowerCase()).toBe(project.title.toLocaleLowerCase());
+      await expect(page.locator('.case-persona-intro h3')).toHaveText(project.persona);
+      await expect(page.getByText('Before', { exact: true })).toHaveCount(0);
+      await expect(page.getByText('After', { exact: true })).toHaveCount(0);
+
+      const applicationLabels = await page
+        .locator('.case-application-detail > span')
+        .allTextContents();
+      expect(applicationLabels).toEqual([
+        'Design objective',
+        'Built solution',
+        'Design objective',
+        'Built solution',
+        'Design objective',
+        'Built solution',
+      ]);
+
+      const metricUnits = await page.locator('.case-metric-value > span').allTextContents();
+      expect(metricUnits.map((unit) => unit.toLocaleLowerCase())).toEqual(project.metricUnits);
+
+      const headingLayout = await projectHeading.evaluate((heading) => {
+        const parts = Array.from(heading.querySelectorAll<HTMLElement>('span'));
+        const headingRect = heading.getBoundingClientRect();
+        const partRects = parts.map((part) => part.getBoundingClientRect());
+        const tops = parts.map((part) => part.getBoundingClientRect().top);
+
+        return {
+          fitsWidth: heading.scrollWidth <= heading.clientWidth + 1,
+          partsFit: partRects.every(
+            (rect) => rect.left >= headingRect.left - 1 && rect.right <= headingRect.right + 1
+          ),
+          sameLine: tops.every((top) => Math.abs(top - tops[0]) <= 1),
+        };
+      });
+      expect(headingLayout).toEqual({ fitsWidth: true, partsFit: true, sameLine: true });
+
+      if (viewport.name === 'desktop' && (await projectHeading.locator('span').count()) === 2) {
+        const headingBox = await projectHeading.boundingBox();
+        const subtitleBox = await projectHeading.locator('.project-title-sub').boundingBox();
+        expect(headingBox).not.toBeNull();
+        expect(subtitleBox).not.toBeNull();
+        expect(subtitleBox!.x).toBeGreaterThanOrEqual(headingBox!.x + headingBox!.width / 2 - 1);
+      }
+
+      if (viewport.name === 'mobile') {
+        const titleBox = await projectHeading.boundingBox();
+        const dateBox = await page.locator('.project-date').boundingBox();
+        expect(titleBox).not.toBeNull();
+        expect(dateBox).not.toBeNull();
+        expect(dateBox!.y + dateBox!.height).toBeLessThanOrEqual(titleBox!.y + 1);
+      }
 
       const chapters = page.locator('.case-chapter');
       await expect(chapters).toHaveCount(9);
@@ -69,28 +143,71 @@ for (const project of projects) {
           animations: 'disabled',
         });
 
-        if (viewport.name === 'mobile') {
-          await page.locator('.header').evaluate((header) => {
-            header.setAttribute('data-evidence-visibility', header.style.visibility);
-            header.style.visibility = 'hidden';
-          });
-          await page.locator('.case-final').screenshot({
-            path: path.join(evidenceDirectory, `${project.id}-mobile-final-design.png`),
+        await page.locator('.header').evaluate((header) => {
+          header.setAttribute('data-evidence-visibility', header.style.visibility);
+          header.style.visibility = 'hidden';
+        });
+        await page.locator('.project-header').screenshot({
+          path: path.join(evidenceDirectory, `${project.id}-${viewport.name}-header.png`),
+          animations: 'disabled',
+        });
+        await page.locator('.case-impact').screenshot({
+          path: path.join(evidenceDirectory, `${project.id}-${viewport.name}-impact.png`),
+          animations: 'disabled',
+        });
+        if (viewport.name === 'desktop') {
+          await page.locator('.case-design').screenshot({
+            path: path.join(evidenceDirectory, `${project.id}-desktop-rationale.png`),
             animations: 'disabled',
-          });
-          await page.locator('.case-learnings').screenshot({
-            path: path.join(evidenceDirectory, `${project.id}-mobile-learnings.png`),
-            animations: 'disabled',
-          });
-          await page.locator('.header').evaluate((header) => {
-            header.style.visibility = header.getAttribute('data-evidence-visibility') ?? '';
-            header.removeAttribute('data-evidence-visibility');
           });
         }
+        await page.locator('.header').evaluate((header) => {
+          header.style.visibility = header.getAttribute('data-evidence-visibility') ?? '';
+          header.removeAttribute('data-evidence-visibility');
+        });
       }
     });
   }
 }
+
+test('complete project headings fit compact and intermediate widths', async ({ page }) => {
+  for (const width of [320, 600]) {
+    await page.setViewportSize({ width, height: 720 });
+
+    for (const project of projects) {
+      await page.goto(`/projects/${project.id}`, { waitUntil: 'networkidle' });
+
+      const heading = page.locator('.project-title-heading');
+      const headingText = (await heading.innerText()).replace(/\s+/g, ' ').trim();
+      expect(headingText.toLocaleLowerCase()).toBe(project.title.toLocaleLowerCase());
+
+      const layout = await heading.evaluate((element) => {
+        const headingRect = element.getBoundingClientRect();
+        const partRects = Array.from(element.querySelectorAll<HTMLElement>('span')).map((part) =>
+          part.getBoundingClientRect()
+        );
+
+        return {
+          partsFit: partRects.every(
+            (rect) => rect.left >= headingRect.left - 1 && rect.right <= headingRect.right + 1
+          ),
+          sameLine: partRects.every((rect) => Math.abs(rect.top - partRects[0].top) <= 1),
+        };
+      });
+      expect(layout).toEqual({ partsFit: true, sameLine: true });
+
+      const titleBox = await heading.boundingBox();
+      const dateBox = await page.locator('.project-date').boundingBox();
+      expect(dateBox!.y + dateBox!.height).toBeLessThanOrEqual(titleBox!.y + 1);
+
+      const overflow = await page.evaluate(() => ({
+        viewport: document.documentElement.clientWidth,
+        content: document.documentElement.scrollWidth,
+      }));
+      expect(overflow.content).toBeLessThanOrEqual(overflow.viewport + 1);
+    }
+  }
+});
 
 test('project template and legacy fallback remain renderable', async ({ page }) => {
   const runtimeErrors: string[] = [];
@@ -103,6 +220,11 @@ test('project template and legacy fallback remain renderable', async ({ page }) 
 
   await page.goto('/projects/project-template', { waitUntil: 'networkidle' });
   await expect(page.locator('.case-chapter')).toHaveCount(9);
+  await expect(page.locator('.case-application-detail')).toHaveCount(6);
+  await expect(page.locator('.case-metric-value > span')).toHaveCount(3);
+  await expect(page.locator('.case-persona-intro h3')).toHaveText('Spanish persona name');
+  await expect(page.getByText('Before', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('After', { exact: true })).toHaveCount(0);
 
   await page.goto('/projects/ejemplo-proyecto', { waitUntil: 'networkidle' });
   await expect(page.locator('.case-chapter')).toHaveCount(3);

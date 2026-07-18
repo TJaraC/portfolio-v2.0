@@ -75,9 +75,9 @@
         "note": "The comparison identifies interface and content patterns across cultural platforms; it supports a product direction without evaluating curatorial quality."
       },
       "persona": {
-        "name": "Elena Foster",
+        "name": "Carmen Vidal",
         "archetype": "The curious cultural explorer",
-        "context": "Elena enjoys exhibitions but does not have a formal art background. She discovers shows through social posts, reads on her phone and wants enough context to decide whether an unfamiliar artist is worth exploring in person.",
+        "context": "Carmen enjoys exhibitions but does not have a formal art background. She discovers shows through social posts, reads on her phone and wants enough context to decide whether an unfamiliar artist is worth exploring in person.",
         "quote": "I want the story behind the work, but I do not want to feel that I need an art-history degree before I can start.",
         "goals": [
           "See what is on now and what is coming next",
@@ -179,23 +179,23 @@
           "description": "Full-width works alternate with detail crops and contextual installation views."
         }
       ],
-      "iterations": [
+      "applications": [
         {
           "component": "Exhibition index",
-          "before": "A uniform image grid gave active, upcoming and archived shows the same visual weight.",
-          "after": "Status labels, a featured lead and concise filters establish time and relevance before taxonomy.",
+          "objective": "Help visitors distinguish active, upcoming and archived exhibitions while preserving visual discovery.",
+          "solution": "Status labels, a featured lead and concise filters establish time and relevance before taxonomy.",
           "outcome": "Visitors can orient quickly without losing visual discovery."
         },
         {
           "component": "Artist profile",
-          "before": "Biography and exhibition history formed one uninterrupted text page.",
-          "after": "An identity summary, narrative sections and linked works create multiple reading depths.",
+          "objective": "Support quick orientation and deeper reading without separating an artist's work from their story.",
+          "solution": "An identity summary, narrative sections and linked works create multiple reading depths.",
           "outcome": "Casual and committed readers share one page comfortably."
         },
         {
           "component": "Mobile artwork view",
-          "before": "Desktop captions and controls reduced the image to a narrow strip.",
-          "after": "The work leads, with caption, metadata and related actions placed in a clear sequence below.",
+          "objective": "Give artwork maximum presence while keeping context and actions accessible on small screens.",
+          "solution": "The work leads, with caption, metadata and related actions placed in a clear sequence below.",
           "outcome": "Small-screen viewing preserves visual presence and context."
         }
       ]
@@ -243,21 +243,24 @@
       ]
     },
     "impact": {
-      "description": "Howell turns a fragmented set of gallery content into one connected visitor journey. The design outcome is a flexible cultural publishing model that supports browsing, interpretation and participation without compromising the presence of the art.",
+      "description": "Howell connects gallery content through one deliberate visitor journey. The design outcome is a flexible cultural publishing model that supports browsing, interpretation and participation without compromising the presence of the art.",
       "metrics": [
         {
           "value": "4",
-          "label": "Connected content types",
-          "description": "Exhibitions, artists, artworks and activities link through shared context instead of separate silos."
+          "unit": "content types",
+          "label": "Connected catalogue",
+          "description": "Exhibitions, artists, artworks and activities link through shared context inside one catalogue."
         },
         {
           "value": "2",
-          "label": "Reading depths",
+          "unit": "reading levels",
+          "label": "Layered interpretation",
           "description": "Concise orientation and extended interpretation coexist for casual and specialist visitors."
         },
         {
           "value": "1",
-          "label": "Responsive catalogue",
+          "unit": "responsive system",
+          "label": "Consistent discovery",
           "description": "A common system preserves discovery and image presence across desktop and mobile."
         }
       ]

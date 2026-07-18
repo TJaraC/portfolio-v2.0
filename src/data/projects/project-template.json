@@ -57,7 +57,7 @@
         "note": "Clarify what the benchmark does and does not claim."
       },
       "persona": {
-        "name": "Persona name",
+        "name": "Spanish persona name",
         "archetype": "Primary behavioural archetype",
         "context": "Describe the situation, behaviour and motivation that make this persona relevant.",
         "quote": "Use a concise quote that captures the core need.",
@@ -126,24 +126,24 @@
         },
         { "label": "System area", "title": "Design rule four", "description": "Explain the rule." }
       ],
-      "iterations": [
+      "applications": [
         {
           "component": "Component one",
-          "before": "Describe the initial limitation.",
-          "after": "Describe the implemented response.",
-          "outcome": "Describe the resulting product improvement."
+          "objective": "Describe the behavior or experience this component needs to support.",
+          "solution": "Describe the solution built for that objective.",
+          "outcome": "Describe the value created by the decision."
         },
         {
           "component": "Component two",
-          "before": "Describe the initial limitation.",
-          "after": "Describe the implemented response.",
-          "outcome": "Describe the resulting product improvement."
+          "objective": "Describe the behavior or experience this component needs to support.",
+          "solution": "Describe the solution built for that objective.",
+          "outcome": "Describe the value created by the decision."
         },
         {
           "component": "Component three",
-          "before": "Describe the initial limitation.",
-          "after": "Describe the implemented response.",
-          "outcome": "Describe the resulting product improvement."
+          "objective": "Describe the behavior or experience this component needs to support.",
+          "solution": "Describe the solution built for that objective.",
+          "outcome": "Describe the value created by the decision."
         }
       ]
     },
@@ -180,9 +180,24 @@
     "impact": {
       "description": "Describe the delivered value and frame metrics as measured results, prototype evidence or verifiable design outputs.",
       "metrics": [
-        { "value": "01", "label": "Outcome one", "description": "Provide context for the value." },
-        { "value": "02", "label": "Outcome two", "description": "Provide context for the value." },
-        { "value": "03", "label": "Outcome three", "description": "Provide context for the value." }
+        {
+          "value": "01",
+          "unit": "clear unit",
+          "label": "Outcome one",
+          "description": "Provide context for the value."
+        },
+        {
+          "value": "02",
+          "unit": "clear unit",
+          "label": "Outcome two",
+          "description": "Provide context for the value."
+        },
+        {
+          "value": "03",
+          "unit": "clear unit",
+          "label": "Outcome three",
+          "description": "Provide context for the value."
+        }
       ]
     },
     "learnings": {

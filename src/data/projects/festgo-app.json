@@ -9,7 +9,7 @@
   "heroImage": "/images/projects/festgo/FestGo01.webp",
   "heroInsetImage": "/images/projects/festgo/FestGo02.webp",
   "overview": {
-    "description": "FestGo reframes a ticketing app as a complete before-and-during festival companion. Users can discover events around their music taste, purchase and organise tickets, then opt into temporary communities anchored to the event they are attending."
+    "description": "FestGo is a complete festival companion spanning music-led discovery, ticket purchase, preparation and arrival. Users can organise access, then opt into temporary communities anchored to the event they are attending."
   },
   "projectGoal": {
     "description": "Design a trustworthy mobile experience that makes event discovery and checkout effortless while offering a safe, purposeful way to coordinate with other attendees—without turning the product into an open-ended social network."
@@ -80,9 +80,9 @@
         "note": "The scan focuses on product patterns and trust signals across adjacent categories; it informs the concept rather than claiming comparative business performance."
       },
       "persona": {
-        "name": "Maya Collins",
+        "name": "Lucía Navarro",
         "archetype": "The independent festival-goer",
-        "context": "Maya follows artists closely and is comfortable buying tickets alone when friends cannot commit. The uncertainty begins later: travel, set choices and whether she will know anyone when she arrives.",
+        "context": "Lucía follows artists closely and is comfortable buying tickets alone when friends cannot commit. The uncertainty begins later: travel, set choices and whether she will know anyone when she arrives.",
         "quote": "I will go for the music either way. It would just be easier if meeting people felt connected to the event, not like joining a dating app.",
         "goals": [
           "Find events that match her taste and location",
@@ -114,7 +114,7 @@
       ]
     },
     "ideation": {
-      "description": "Early concepts separated the journey into five moments: preference, discovery, decision, preparation and attendance. This prevented community features from competing with checkout and gave each interaction a clear reason to exist.",
+      "description": "The journey is organised into five moments: preference, discovery, decision, preparation and attendance. This keeps community features away from checkout and gives each interaction a clear reason to exist.",
       "flow": [
         { "title": "Tune", "description": "Choose genres, artists and a useful travel radius." },
         {
@@ -181,23 +181,23 @@
           "description": "Join, leave, report and visibility actions avoid playful ambiguity when trust is involved."
         }
       ],
-      "iterations": [
+      "applications": [
         {
           "component": "Preference onboarding",
-          "before": "A long profile form asked for personal and social information before the app showed value.",
-          "after": "A visual genre picker creates useful recommendations in a few taps; deeper profile choices remain optional.",
+          "objective": "Use music taste to create immediate relevance without requiring unnecessary profile data.",
+          "solution": "A visual genre picker creates useful recommendations in a few taps; deeper profile choices remain optional.",
           "outcome": "The first interaction feels like curation rather than registration."
         },
         {
           "component": "Event detail",
-          "before": "Ticket, line-up and social activity competed in one continuous screen.",
-          "after": "A stable event summary leads into distinct ticket, schedule and attendee actions.",
+          "objective": "Balance ticket, line-up, schedule and social tools inside one clear event context.",
+          "solution": "A stable event summary leads into distinct ticket, schedule and attendee actions.",
           "outcome": "Users can decide what to do next without decoding the page."
         },
         {
           "component": "Community entry",
-          "before": "An open group prompt appeared before purchase and felt promotional.",
-          "after": "The attendee circle becomes a considered post-purchase step with visibility choices.",
+          "objective": "Make attendee connection optional, trustworthy and relevant to confirmed event intent.",
+          "solution": "The attendee circle becomes available once a ticket is stored and includes clear visibility choices.",
           "outcome": "Connection feels earned, optional and relevant."
         }
       ]
@@ -249,17 +249,20 @@
       "metrics": [
         {
           "value": "1",
-          "label": "Unified journey",
+          "unit": "product journey",
+          "label": "Unified experience",
           "description": "Discovery, purchase, ticket access and attendee coordination share one mobile product model."
         },
         {
           "value": "3",
-          "label": "Trust layers",
+          "unit": "trust layers",
+          "label": "Community safeguards",
           "description": "Event context, verified attendance and personal visibility controls shape community access."
         },
         {
           "value": "5",
-          "label": "Core destinations",
+          "unit": "destinations",
+          "label": "Compact navigation",
           "description": "Home, search, tickets, community and profile keep the app's information architecture compact."
         }
       ]

@@ -17,8 +17,9 @@ Las páginas de proyecto se generan desde archivos JSON y comparten un único co
 2. Cambia `id` para que coincida exactamente con el nombre del archivo.
 3. Guarda las imágenes en `public/images/projects/<slug>/` y usa rutas públicas que empiecen por `/images/`.
 4. Completa todo el contenido en inglés.
-5. Registra el `id` en `projectIds`, dentro de `src/hooks/useProjectsList.ts`.
-6. Comprueba `/projects/<slug>` en escritorio y móvil.
+5. Usa un nombre y apellido españoles, naturales y acordes al contexto, para la user persona.
+6. Registra el `id` en `projectIds`, dentro de `src/hooks/useProjectsList.ts`.
+7. Comprueba `/projects/<slug>` en escritorio y móvil.
 
 ## Estructura narrativa
 
@@ -29,10 +30,10 @@ La página siempre conserva este orden:
 3. The challenge: problema, pregunta de diseño y tres prioridades.
 4. Research & insights: insights, benchmark y persona.
 5. Ideation: user flow y decisiones de arquitectura.
-6. Design & iterations: sistema visual, reglas e iteraciones before/after.
+6. Design system & rationale: sistema visual, reglas, objetivos y soluciones construidas desde cero.
 7. User testing: método, observaciones y respuestas de diseño.
 8. Final design: highlights y galería de mockups.
-9. Impact: outcomes o métricas con contexto verificable.
+9. Impact: outcomes o métricas con unidad explícita y contexto verificable.
 10. Learnings: conclusión y aprendizajes transferibles.
 
 ## Campos principales

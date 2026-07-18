@@ -37,19 +37,17 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: start;
+  column-gap: 30px;
+  row-gap: 10px;
+}
+
+.project-title-heading {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 30px;
-}
-
-.project-title-left,
-.project-title-right {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  min-width: 0;
-}
-
-.project-title-right {
-  align-items: flex-end;
+  width: 100%;
+  margin: 0;
 }
 
 .project-title-main,
@@ -70,6 +68,10 @@
   text-align: left;
 }
 
+.project-title-heading:not(.has-subtitle) .project-title-main {
+  grid-column: 1;
+}
+
 .project-case[data-project='ultracamp'] .project-title-main {
   letter-spacing: -0.045em;
 }
@@ -81,10 +83,6 @@
   text-align: right;
 }
 
-.project-title-sub:empty {
-  visibility: hidden;
-}
-
 .project-date,
 .project-description {
   margin: 0;
@@ -93,6 +91,7 @@
 }
 
 .project-date {
+  grid-column: 1;
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.08em;
@@ -100,6 +99,8 @@
 }
 
 .project-description {
+  grid-column: 2;
+  justify-self: end;
   width: min(100%, 34rem);
   font-size: clamp(0.95rem, 1.1vw, 1.1rem);
   font-weight: 400;
@@ -204,7 +205,7 @@
 .case-question > span,
 .case-insight-card > span,
 .case-decision-card > span,
-.case-iteration-state > span,
+.case-application-detail > span,
 .case-finding-row > div > span {
   font-size: 0.68rem;
   font-weight: 700;
@@ -408,7 +409,7 @@
 .case-persona-card,
 .case-design-system,
 .case-method-note,
-.case-iterations,
+.case-applications,
 .case-findings {
   border: 1px solid var(--global-text-1);
 }
@@ -617,7 +618,7 @@
   min-height: 13rem;
 }
 
-/* Design system and iterations */
+/* Design system and rationale */
 .case-design-system {
   display: grid;
   grid-template-columns: minmax(12rem, 0.68fr) minmax(0, 1.32fr);
@@ -726,48 +727,48 @@
   background: var(--global-border);
 }
 
-.case-iterations,
+.case-applications,
 .case-findings {
   display: flex;
   flex-direction: column;
 }
 
-.case-iteration-row {
+.case-application-row {
   display: grid;
   grid-template-columns: 0.8fr 1fr 1fr;
 }
 
-.case-iteration-row + .case-iteration-row,
+.case-application-row + .case-application-row,
 .case-finding-row + .case-finding-row {
   border-top: 1px solid var(--global-text-1);
 }
 
-.case-iteration-heading,
-.case-iteration-state {
+.case-application-heading,
+.case-application-detail {
   display: flex;
   flex-direction: column;
   min-height: 11rem;
   padding: 20px;
 }
 
-.case-iteration-heading,
-.case-iteration-state.is-before {
+.case-application-heading,
+.case-application-detail.is-objective {
   border-right: 1px solid var(--global-text-1);
 }
 
-.case-iteration-heading strong {
+.case-application-heading strong {
   margin-top: auto;
   font-size: 1.1rem;
   line-height: 1.25;
 }
 
-.case-iteration-state p {
+.case-application-detail p {
   margin: auto 0 0;
   font-size: 0.9rem;
   line-height: 1.5;
 }
 
-.case-iteration-state.is-after {
+.case-application-detail.is-solution {
   background: var(--project-accent);
 }
 
@@ -876,11 +877,27 @@
   background: var(--project-accent);
 }
 
-.case-metric-card strong {
+.case-metric-value {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.case-metric-value strong {
   font-family: 'Gilda Display', 'Gilda-Fallback', serif;
   font-size: clamp(3rem, 6vw, 6rem);
   font-weight: 400;
   line-height: 0.9;
+}
+
+.case-metric-value span {
+  max-width: 11ch;
+  padding-bottom: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .case-metric-card h3 {
@@ -1038,6 +1055,11 @@
     padding-top: 80px;
   }
 
+  .project-title-main,
+  .project-title-sub {
+    font-size: clamp(3.1rem, 7.5vw, 3.6rem);
+  }
+
   .project-header-wrapper,
   .project-case-study {
     padding-right: 20px;
@@ -1046,23 +1068,36 @@
 
   .project-title-row {
     grid-template-columns: 1fr;
-    gap: 16px;
+    row-gap: 12px;
   }
 
-  .project-title-right {
-    align-items: flex-start;
+  .project-title-heading {
+    display: flex;
+    grid-column: 1;
+    gap: 0.22em;
+    order: 2;
+    white-space: nowrap;
   }
 
   .project-title-sub {
+    width: auto;
     min-height: 0;
     text-align: left;
   }
 
-  .project-title-sub:empty {
-    display: none;
+  .project-title-main {
+    width: auto;
+  }
+
+  .project-date {
+    grid-column: 1;
+    order: 1;
   }
 
   .project-description {
+    grid-column: 1;
+    justify-self: start;
+    order: 3;
     width: 100%;
   }
 
@@ -1108,11 +1143,11 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  .case-iteration-row {
+  .case-application-row {
     grid-template-columns: 1fr 1fr;
   }
 
-  .case-iteration-heading {
+  .case-application-heading {
     grid-column: 1 / -1;
     min-height: 8rem;
     border-right: 0;
@@ -1142,7 +1177,7 @@
 
   .project-title-main,
   .project-title-sub {
-    font-size: clamp(2.7rem, 13vw, 4rem);
+    font-size: clamp(2rem, 9.6vw, 3.1rem);
   }
 
   .project-hero-media {
@@ -1213,25 +1248,25 @@
     min-height: 9.5rem;
   }
 
-  .case-iteration-row,
+  .case-application-row,
   .case-finding-row {
     grid-template-columns: 1fr;
   }
 
-  .case-iteration-heading,
+  .case-application-heading,
   .case-finding-row > div:last-child {
     grid-column: auto;
   }
 
-  .case-iteration-heading,
-  .case-iteration-state.is-before,
+  .case-application-heading,
+  .case-application-detail.is-objective,
   .case-finding-row > span,
   .case-finding-row > div:not(:last-child) {
     border-right: 0;
     border-bottom: 1px solid var(--global-text-1);
   }
 
-  .case-iteration-state {
+  .case-application-detail {
     min-height: 9rem;
   }
 

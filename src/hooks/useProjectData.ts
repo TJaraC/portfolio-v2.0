@@ -48,10 +48,10 @@ interface ProjectDecision {
   description: string;
 }
 
-interface ProjectIteration {
+interface ProjectDesignApplication {
   component: string;
-  before: string;
-  after: string;
+  objective: string;
+  solution: string;
   outcome: string;
 }
 
@@ -68,6 +68,7 @@ interface ProjectHighlight {
 
 interface ProjectMetric {
   value: string;
+  unit: string;
   label: string;
   description: string;
 }
@@ -102,7 +103,7 @@ interface ProjectCaseStudy {
   design: {
     description: string;
     decisions: ProjectDecision[];
-    iterations: ProjectIteration[];
+    applications: ProjectDesignApplication[];
   };
   testing: {
     description: string;
