@@ -1,9 +1,10 @@
 # Sistema de proyectos dinámicos
 
-Las páginas de proyecto se generan desde archivos JSON y comparten un único componente React. Los cuatro proyectos publicados usan una narrativa de diez capítulos; `project-template.json` es la fuente de verdad para crear casos nuevos.
+Las páginas de proyecto se generan desde archivos JSON y comparten un único componente React. Los cinco proyectos publicados usan una narrativa base de diez capítulos; `project-template.json` es la fuente de verdad para crear casos nuevos y permite añadir un capítulo de delivery cuando el contexto lo requiere.
 
 ## Proyectos publicados
 
+- `areta.json`
 - `ultracamp.json`
 - `festgo-app.json`
 - `portfolio-25.json`
@@ -106,4 +107,4 @@ pnpm build
 pnpm test:e2e
 ```
 
-Las pruebas de Playwright recorren los cuatro casos en viewport de escritorio y móvil, comprueban overflow, imágenes rotas y errores de consola, y pueden guardar evidencia si se define `PORTFOLIO_EVIDENCE_DIR`.
+Las pruebas de Playwright recorren los cinco casos en viewport de escritorio y móvil, comprueban overflow, imágenes rotas y errores de consola, y pueden guardar evidencia si se define `PORTFOLIO_EVIDENCE_DIR`.

@@ -26,7 +26,7 @@ export const useProjectsList = (): {
         setError(null);
 
         // Lista de proyectos disponibles (se puede expandir dinámicamente)
-        const projectIds = ['ultracamp', 'festgo-app', 'portfolio-25', 'howell-gallery'];
+        const projectIds = ['areta', 'ultracamp', 'festgo-app', 'portfolio-25', 'howell-gallery'];
 
         const results = await Promise.allSettled(
           projectIds.map((projectId) => import(`../data/projects/${projectId}.json`))

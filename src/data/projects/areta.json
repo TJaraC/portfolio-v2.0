@@ -1,0 +1,423 @@
+{
+  "id": "areta",
+  "project": "ARETA",
+  "name": "",
+  "date": "July 2026",
+  "cardNumber": "05",
+  "featured": true,
+  "cardTitle": "Areta",
+  "cardTags": ["PRODUCT DESIGN", "SAAS", "AI WORKFLOW"],
+  "heroDescription": "A connected coaching ecosystem designed and built from zero across three coordinated products: a public landing, a complete Trainer Web workspace and an evolving mobile Client App. Areta turns product strategy, interface design and AI-assisted implementation into one coherent service.",
+  "heroImage": "/images/projects/areta/Areta01.webp",
+  "heroInsetImage": "/images/projects/areta/Areta02.webp",
+  "overview": {
+    "description": "Areta brings product discovery, professional coaching operations and day-to-day client follow-through into a single ecosystem. The landing explains the value and establishes trust; Trainer Web gives coaches a structured workspace for clients, routines, exercises, forms and nutrition; Client App carries assigned work into a focused mobile experience. The first two surfaces are complete, while the client product is presented honestly as an active beta."
+  },
+  "projectGoal": {
+    "description": "Create a credible coaching platform whose three products feel intentionally connected, give trainers enough operational depth to run real work and provide clients with a clear mobile path through their programme—while establishing a repeatable, AI-native delivery system for continued product growth."
+  },
+  "fontAndColours": {
+    "description": "Areta uses near-black and warm white as a calm operational base, reserving vivid green for identity, progress and moments that require attention. Sora gives product headings a precise geometric voice; Plus Jakarta Sans keeps dense tables, guidance and mobile content readable across all three surfaces.",
+    "colors": ["#4CF9A2", "#217A4D", "#141414", "#F7F8F5"],
+    "fonts": [
+      { "name": "Sora Regular" },
+      { "name": "Sora Semibold" },
+      { "name": "Plus Jakarta Sans Regular" },
+      { "name": "Plus Jakarta Sans Medium" }
+    ]
+  },
+  "caseStudy": {
+    "meta": [
+      { "label": "Role", "value": "Product designer · AI product builder" },
+      { "label": "Scope", "value": "Research · UX/UI · Full-stack delivery" },
+      { "label": "Ecosystem", "value": "Landing · Trainer Web · Client App" },
+      { "label": "Status", "value": "Landing + Trainer complete · Client beta" }
+    ],
+    "challenge": {
+      "description": "Areta was conceived as a product system rather than a single interface. It had to acquire and educate prospective coaches, support the high-context work of managing clients, and give each client a simple place to act on that coaching. The design challenge was to give every surface its own job without fragmenting the brand, data model or service journey.",
+      "question": "How might three role-specific products operate as one trustworthy coaching experience—from first visit to the next completed session?",
+      "priorities": [
+        {
+          "title": "One system, three jobs",
+          "description": "Give the landing, Trainer Web and Client App a distinct purpose while preserving shared language, identity and product logic."
+        },
+        {
+          "title": "Operational depth",
+          "description": "Support the real structure behind coaching—clients, routines, exercises, forms, nutrition, progress and follow-up—without turning daily work into admin noise."
+        },
+        {
+          "title": "Trust at every handoff",
+          "description": "Keep account access, workspace data, documentation and client assignments understandable as users move between public, professional and personal contexts."
+        }
+      ]
+    },
+    "research": {
+      "description": "Product framing combined a directional review of public coaching tools, the resolved issue history, recurring workflow requirements and audits of the implemented product. The synthesis treated acquisition, coach operations and client adherence as one service journey. The personas below are scenario-based archetypes used to test product decisions; they are not presented as moderated-interview participants.",
+      "benchmark": {
+        "criteria": ["Acquisition path", "Coach operations", "Client continuity", "Guidance"],
+        "rows": [
+          {
+            "name": "Broad coaching suites",
+            "values": ["Feature-led", "Extensive admin", "Companion app", "Help centre"]
+          },
+          {
+            "name": "Point-solution stacks",
+            "values": ["Separate sites", "Fragmented tools", "Mixed channels", "Vendor-specific"]
+          },
+          {
+            "name": "Sheets + messaging",
+            "values": ["Referral-led", "Manual upkeep", "Chat reminders", "Self-documented"]
+          },
+          {
+            "name": "Areta direction",
+            "values": [
+              "Guided story",
+              "Focused workspace",
+              "Connected mobile beta",
+              "Spanish product docs"
+            ],
+            "featured": true
+          }
+        ],
+        "note": "This scan captures recurring product patterns that informed positioning and architecture. It is not a feature-completeness or superiority claim about named competitors."
+      },
+      "personas": [
+        {
+          "name": "Daniel Ortega",
+          "archetype": "Independent strength and conditioning coach",
+          "context": "Daniel runs a growing remote roster and moves repeatedly between programme design, client context and follow-up. He needs the system to surface what deserves attention without losing the detail behind each decision.",
+          "quote": "Show me what needs my judgement today, then let me reach the full context without hunting for it.",
+          "goals": [
+            "See priority clients and tasks at a glance",
+            "Build reusable routines without flattening individual needs",
+            "Keep notes, progress and communication context connected"
+          ],
+          "frustrations": [
+            "Operational signals spread across unrelated tools",
+            "Repetitive programme setup",
+            "Dashboards that show volume without explaining urgency"
+          ]
+        },
+        {
+          "name": "Marta Soler",
+          "archetype": "Studio lead coordinating a coaching team",
+          "context": "Marta balances service quality with team consistency. She needs a shared workspace where roles, client ownership and reusable coaching resources are clear enough to scale beyond one trainer's personal system.",
+          "quote": "The team should work from the same structure without every coach losing their own way of coaching.",
+          "goals": [
+            "Create a consistent operating model across the studio",
+            "Understand ownership and workload",
+            "Reuse high-quality coaching resources safely"
+          ],
+          "frustrations": [
+            "Knowledge trapped in individual accounts",
+            "Ambiguous permissions and handoffs",
+            "Inconsistent client records across the team"
+          ]
+        },
+        {
+          "name": "Sergio Martín",
+          "archetype": "Mobile-first coached client",
+          "context": "Sergio interacts with Areta between work and training. He does not need the trainer's operational complexity; he needs to understand today's plan, complete it confidently and see that his coach has the information required to adapt it.",
+          "quote": "I want to open the app and know what to do now, not learn how the coaching system works.",
+          "goals": [
+            "Find the current programme quickly",
+            "Record a session with minimal interruption",
+            "Understand what progress information is shared"
+          ],
+          "frustrations": [
+            "Dense desktop patterns compressed onto mobile",
+            "Unclear session status",
+            "Too many actions competing during training"
+          ]
+        }
+      ],
+      "insights": [
+        {
+          "label": "01 · Product framing",
+          "title": "The ecosystem is the product",
+          "description": "Acquisition, coaching and client execution only become credible when each surface makes the next handoff visible and uses the same underlying language."
+        },
+        {
+          "label": "02 · Coach workflow",
+          "title": "Context must precede action",
+          "description": "A trainer does not only need more data. They need priority, recent activity and the relevant client history close to the decision they are about to make."
+        },
+        {
+          "label": "03 · Client experience",
+          "title": "Simplicity comes from role boundaries",
+          "description": "The mobile product becomes calmer when trainer-only controls stay out of the client journey and the interface centres the next meaningful action."
+        }
+      ]
+    },
+    "ideation": {
+      "description": "The service was mapped as a continuous loop rather than three separate site maps. That made it possible to define what each product owns, which information crosses the boundary and where users need orientation ahead of an action.",
+      "flow": [
+        {
+          "title": "Understand the offer",
+          "description": "The landing explains the coaching model, tools and expected relationship prior to account entry."
+        },
+        {
+          "title": "Start a workspace",
+          "description": "Trainer onboarding establishes identity, organisation and the operational home for coaching data."
+        },
+        {
+          "title": "Organise coaching",
+          "description": "Clients, routines, exercises, forms and nutrition become reusable but connected working objects."
+        },
+        {
+          "title": "Deliver the programme",
+          "description": "Assigned work moves into the client beta as a focused mobile plan and session journey."
+        },
+        {
+          "title": "Review and adapt",
+          "description": "Activity, adherence, check-ins and private context return to the trainer's decision surface."
+        }
+      ],
+      "decisions": [
+        {
+          "label": "Product boundary",
+          "title": "Three shells, one service model",
+          "description": "Each app owns a clear audience and navigation model while sharing brand rules, domain language and backend contracts."
+        },
+        {
+          "label": "Information architecture",
+          "title": "Separate monitoring from creation",
+          "description": "The trainer home prioritises attention and activity; dedicated libraries handle the deeper work of building reusable coaching resources."
+        },
+        {
+          "label": "Data model",
+          "title": "Design around durable coaching objects",
+          "description": "Clients, routines, exercises, forms and programmes are treated as connected entities instead of isolated screens."
+        },
+        {
+          "label": "Content system",
+          "title": "Guidance is part of the journey",
+          "description": "Spanish product documentation and policy routes extend the experience beyond contextual interface copy."
+        }
+      ]
+    },
+    "design": {
+      "description": "The visual system balances editorial confidence on the landing with the restraint required by an operational SaaS product. Shared type, colour and interaction principles create continuity, while density, navigation and component behaviour change according to role and device.",
+      "decisions": [
+        {
+          "label": "Hierarchy",
+          "title": "Green carries meaning",
+          "description": "The vivid brand green is used selectively for identity, positive state and attention so it remains informative across light and dark contexts."
+        },
+        {
+          "label": "Density",
+          "title": "Operational, not crowded",
+          "description": "Trainer screens combine compact navigation, bordered modules and generous internal whitespace to keep high-context work scannable."
+        },
+        {
+          "label": "System",
+          "title": "Shared rules, role-specific components",
+          "description": "Tokens and foundations travel across apps, while tables, routine builders, editorial sections and mobile session cards remain purpose-built."
+        },
+        {
+          "label": "Responsive behaviour",
+          "title": "Recompose around the job",
+          "description": "Layouts change hierarchy and interaction density instead of simply shrinking a desktop composition onto smaller screens."
+        }
+      ],
+      "applications": [
+        {
+          "component": "Landing narrative",
+          "objective": "Explain a multi-surface product without overwhelming a coach who is still evaluating the service.",
+          "solution": "A sequenced story connects benefits, process, tools, proof and account entry through clear editorial sections and restrained motion.",
+          "outcome": "A complete public product surface with a direct path from discovery to informed action."
+        },
+        {
+          "component": "Trainer command centre",
+          "objective": "Help a coach decide where attention is needed without opening individual records first.",
+          "solution": "The dashboard combines roster state, adherence, alerts, recent activity and personal tasks in one prioritised working view.",
+          "outcome": "A decision surface grounded in real Supabase workspace data rather than decorative analytics."
+        },
+        {
+          "component": "Routine library",
+          "objective": "Make programming reusable without hiding the structure of a split or mesocycle.",
+          "solution": "Folders, status, active-day summaries and clear creation paths keep reusable plans visible and composable.",
+          "outcome": "A structured authoring system that supports repeat work and individual delivery."
+        },
+        {
+          "component": "Client mobile beta",
+          "objective": "Give clients a focused place to understand and complete assigned work on a phone.",
+          "solution": "Role-specific navigation prioritises home, training, nutrition, progress and profile while keeping coach-only complexity out of view.",
+          "outcome": "A coherent beta foundation for the client side of the service, presented only through audited complete states."
+        }
+      ]
+    },
+    "delivery": {
+      "title": "AI-native product delivery",
+      "description": "Areta was designed and implemented through a governed AI workflow. Figma held research, flows and visual iteration; each coherent increment became an Obsidian issue and a small implementation slice. Repository rules, skills and AGENTS.md gave the AI agent durable context, while pnpm, TypeScript and Playwright made completion depend on evidence rather than generated output alone.",
+      "workflow": [
+        {
+          "title": "Frame in Figma",
+          "description": "Research, journeys, interface direction and system decisions establish the product intent."
+        },
+        {
+          "title": "Slice the outcome",
+          "description": "Obsidian tickets turn that intent into reviewable vertical increments with explicit acceptance criteria."
+        },
+        {
+          "title": "Plan with context",
+          "description": "Skills, AGENTS.md and repository rules constrain the approach ahead of implementation."
+        },
+        {
+          "title": "Build with AI",
+          "description": "The agent implements the approved slice across UI, contracts, tests and documentation."
+        },
+        {
+          "title": "Validate the slice",
+          "description": "Type checks, builds, Playwright and visual evidence expose gaps as a condition for issue closure."
+        },
+        {
+          "title": "Release by surface",
+          "description": "Vercel serves the Next.js products while Mintlify owns the independently versioned help and policy centre."
+        }
+      ],
+      "stack": [
+        {
+          "label": "Product design",
+          "title": "Figma",
+          "description": "Research synthesis, flows, interface exploration, responsive states and design-system iteration."
+        },
+        {
+          "label": "Application",
+          "title": "Next.js + TypeScript",
+          "description": "A pnpm monorepo keeps the marketing, trainer and client applications independently deployable but structurally aligned."
+        },
+        {
+          "label": "Data and identity",
+          "title": "Supabase",
+          "description": "Authentication, workspace data, storage and permission-aware service contracts provide the shared product backbone."
+        },
+        {
+          "label": "AI implementation",
+          "title": "Agent skills",
+          "description": "Specialised workflows turn exploration, planning, execution and issue closure into repeatable agent behaviours."
+        },
+        {
+          "label": "Delivery memory",
+          "title": "AGENTS.md + Obsidian",
+          "description": "Repository guidance and resolved tickets preserve decisions, constraints and evidence between implementation slices."
+        },
+        {
+          "label": "Quality",
+          "title": "Playwright + pnpm",
+          "description": "Responsive browser checks, visual inspection and deterministic package commands make validation part of delivery."
+        },
+        {
+          "label": "Application hosting",
+          "title": "Vercel",
+          "description": "Separate deployment targets preserve app boundaries while keeping the public product journey connected."
+        },
+        {
+          "label": "Documentation",
+          "title": "Mintlify",
+          "description": "A versioned Spanish help and policy centre extends the product system with searchable, independently deployable guidance."
+        }
+      ]
+    },
+    "testing": {
+      "description": "Validation centred on the implemented products rather than a presentation prototype. Each slice was checked against its acceptance criteria, and the portfolio capture audit revisited all three surfaces to distinguish complete product states from the evolving areas of Client App.",
+      "method": "Scenario-based product QA, responsive Playwright runs, TypeScript and build checks, and manual inspection of stored visual evidence. This was implementation validation, not a moderated usability study, so findings are framed as product risks and design responses rather than participant outcomes.",
+      "findings": [
+        {
+          "task": "Understand the three-product model",
+          "observation": "A first-time visitor needs to distinguish public discovery, coach operations and client execution without reading them as disconnected brands.",
+          "decision": "Name each surface by role, repeat the connected journey and use the same product language at every handoff."
+        },
+        {
+          "task": "Scan a trainer's working day",
+          "observation": "Priority signals, recent activity and self-managed tasks carry different urgency even when they share one dashboard.",
+          "decision": "Use separate modules, explicit state and direct routes into the underlying client context."
+        },
+        {
+          "task": "Complete a mobile training loop",
+          "observation": "The client beta needs a narrow action hierarchy and complete data states; broader progress features can only be represented once they meet the same standard.",
+          "decision": "Keep Home and Training as the portfolio proof points and exclude unfinished or variable progress, check-in and photo states."
+        }
+      ]
+    },
+    "finalDesign": {
+      "description": "The final system establishes a complete public and trainer experience plus a credible client beta, all grounded in one visual language and one product model. The landing earns understanding, Trainer Web organises professional complexity and Client App brings the assigned programme into an intentionally smaller mobile frame.",
+      "highlights": [
+        {
+          "title": "A landing that teaches the product",
+          "description": "Process, tools, proof and action are arranged as one guided explanation rather than a collection of disconnected feature claims."
+        },
+        {
+          "title": "A trainer workspace built for judgement",
+          "description": "Dashboard, client profiles and activity make operational context visible at the moment a coach acts."
+        },
+        {
+          "title": "Structured coaching libraries",
+          "description": "Routines, exercises, forms and nutrition provide reusable foundations for individual programmes."
+        },
+        {
+          "title": "A focused client beta",
+          "description": "Home and training views translate assignments into a clear, mobile-first execution path without exposing trainer complexity."
+        },
+        {
+          "title": "Documentation as product infrastructure",
+          "description": "Mintlify guidance, issue history and deployment boundaries make the ecosystem easier to use, maintain and extend."
+        }
+      ]
+    },
+    "impact": {
+      "description": "Areta's current impact is reported as delivered and validated product scope—not as unmeasured commercial growth. The evidence comes from the implemented monorepo, the completed Obsidian register and the Mintlify export record.",
+      "metrics": [
+        {
+          "value": "3",
+          "unit": "PRODUCTS",
+          "label": "One connected ecosystem",
+          "description": "Landing, Trainer Web and Client App each serve a distinct role while sharing brand and backend foundations."
+        },
+        {
+          "value": "29",
+          "unit": "SLICES",
+          "label": "Traceable delivery history",
+          "description": "Twenty-nine resolved Obsidian issues document product increments, decisions, validation and completion evidence."
+        },
+        {
+          "value": "44",
+          "unit": "DOC ROUTES",
+          "label": "Versioned guidance coverage",
+          "description": "The validated Mintlify static export generates forty-four help and policy routes for the Spanish documentation centre."
+        }
+      ]
+    },
+    "learnings": {
+      "description": "Areta reinforced that AI can accelerate a complex product only when product boundaries, evidence and memory are designed as deliberately as the interface itself.",
+      "items": [
+        {
+          "title": "Product boundaries create clarity",
+          "description": "One shared platform does not require one universal interface. Clear ownership by audience made each product simpler and the ecosystem more coherent."
+        },
+        {
+          "title": "Context is operational UX",
+          "description": "For trainers, speed comes from seeing why something needs attention and reaching the underlying client history—not from compressing more widgets into a dashboard."
+        },
+        {
+          "title": "AI speed needs governance",
+          "description": "Small slices, explicit rules, specialised skills and objective validation turned an AI agent into a reliable delivery partner rather than an uncontrolled code generator."
+        },
+        {
+          "title": "Documentation belongs to the product",
+          "description": "Help, policy and repository decision records reduce ambiguity for users and future implementation work alike."
+        }
+      ]
+    }
+  },
+  "gallery": {
+    "description": "The gallery moves from the public product story into trainer operations, then shows the complete three-device ecosystem and the audited mobile beta. Every device scene is based on a fresh capture of the implemented interface.",
+    "images": [
+      "/images/projects/areta/Areta03.webp",
+      "/images/projects/areta/Areta04.webp",
+      "/images/projects/areta/Areta05.webp",
+      "/images/projects/areta/Areta06.webp",
+      "/images/projects/areta/Areta07.webp"
+    ]
+  }
+}

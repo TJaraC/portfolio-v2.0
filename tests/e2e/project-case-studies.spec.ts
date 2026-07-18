@@ -4,28 +4,49 @@ import path from 'node:path';
 
 const projects = [
   {
+    id: 'areta',
+    title: 'Areta',
+    personas: ['Daniel Ortega', 'Marta Soler', 'Sergio Martín'],
+    metricUnits: ['products', 'slices', 'doc routes'],
+    applicationCount: 4,
+    chapterCount: 10,
+    hasDelivery: true,
+  },
+  {
     id: 'ultracamp',
     title: 'Ultracamp',
-    persona: 'Javier Morales',
+    personas: ['Javier Morales'],
     metricUnits: ['page templates', 'entry paths', 'design language'],
+    applicationCount: 3,
+    chapterCount: 9,
+    hasDelivery: false,
   },
   {
     id: 'festgo-app',
     title: 'FestGo App',
-    persona: 'Lucía Navarro',
+    personas: ['Lucía Navarro'],
     metricUnits: ['product journey', 'trust layers', 'destinations'],
+    applicationCount: 3,
+    chapterCount: 9,
+    hasDelivery: false,
   },
   {
     id: 'portfolio-25',
     title: "Portfolio '25",
-    persona: 'Marta Ríos',
+    personas: ['Marta Ríos'],
     metricUnits: ['case studies', 'type families', 'content model'],
+    applicationCount: 3,
+    chapterCount: 9,
+    hasDelivery: false,
   },
   {
     id: 'howell-gallery',
     title: 'Howell Gallery',
-    persona: 'Carmen Vidal',
+    personas: ['Carmen Vidal'],
     metricUnits: ['content types', 'reading levels', 'responsive system'],
+    applicationCount: 3,
+    chapterCount: 9,
+    hasDelivery: false,
   },
 ];
 
@@ -53,21 +74,19 @@ for (const project of projects) {
       const projectHeading = page.locator('.project-title-heading');
       const headingText = (await projectHeading.innerText()).replace(/\s+/g, ' ').trim();
       expect(headingText.toLocaleLowerCase()).toBe(project.title.toLocaleLowerCase());
-      await expect(page.locator('.case-persona-intro h3')).toHaveText(project.persona);
+      await expect(page.locator('.case-persona-intro h3')).toHaveText(project.personas);
       await expect(page.getByText('Before', { exact: true })).toHaveCount(0);
       await expect(page.getByText('After', { exact: true })).toHaveCount(0);
 
       const applicationLabels = await page
         .locator('.case-application-detail > span')
         .allTextContents();
-      expect(applicationLabels).toEqual([
-        'Design objective',
-        'Built solution',
-        'Design objective',
-        'Built solution',
-        'Design objective',
-        'Built solution',
-      ]);
+      expect(applicationLabels).toEqual(
+        Array.from({ length: project.applicationCount }).flatMap(() => [
+          'Design objective',
+          'Built solution',
+        ])
+      );
 
       const metricUnits = await page.locator('.case-metric-value > span').allTextContents();
       expect(metricUnits.map((unit) => unit.toLocaleLowerCase())).toEqual(project.metricUnits);
@@ -105,7 +124,20 @@ for (const project of projects) {
       }
 
       const chapters = page.locator('.case-chapter');
-      await expect(chapters).toHaveCount(9);
+      await expect(chapters).toHaveCount(project.chapterCount);
+
+      if (project.hasDelivery) {
+        await expect(page.locator('.case-delivery')).toBeVisible();
+        await expect(page.locator('.case-delivery-stack .case-decision-card')).toHaveCount(8);
+        await expect(page.locator('.case-testing .case-chapter-number')).toHaveText('08');
+        await expect(page.locator('.case-final .case-chapter-number')).toHaveText('09');
+        await expect(page.locator('.case-impact .case-chapter-number')).toHaveText('10');
+        await expect(page.locator('.case-learnings .case-chapter-number')).toHaveText('11');
+        await expect(page.locator('.project-case-study img')).toHaveCount(7);
+      } else {
+        await expect(page.locator('.case-delivery')).toHaveCount(0);
+        await expect(page.locator('.case-testing .case-chapter-number')).toHaveText('07');
+      }
 
       for (let index = 0; index < (await chapters.count()); index += 1) {
         await chapters.nth(index).scrollIntoViewIfNeeded();
@@ -160,6 +192,12 @@ for (const project of projects) {
             path: path.join(evidenceDirectory, `${project.id}-desktop-rationale.png`),
             animations: 'disabled',
           });
+          if (project.hasDelivery) {
+            await page.locator('.case-delivery').screenshot({
+              path: path.join(evidenceDirectory, `${project.id}-desktop-delivery.png`),
+              animations: 'disabled',
+            });
+          }
         }
         await page.locator('.header').evaluate((header) => {
           header.style.visibility = header.getAttribute('data-evidence-visibility') ?? '';
@@ -219,10 +257,14 @@ test('project template and legacy fallback remain renderable', async ({ page }) 
   await page.setViewportSize({ width: 1280, height: 900 });
 
   await page.goto('/projects/project-template', { waitUntil: 'networkidle' });
-  await expect(page.locator('.case-chapter')).toHaveCount(9);
+  await expect(page.locator('.case-chapter')).toHaveCount(10);
   await expect(page.locator('.case-application-detail')).toHaveCount(6);
   await expect(page.locator('.case-metric-value > span')).toHaveCount(3);
-  await expect(page.locator('.case-persona-intro h3')).toHaveText('Spanish persona name');
+  await expect(page.locator('.case-persona-intro h3')).toHaveText([
+    'Lucía Moreno',
+    'Javier Martín',
+  ]);
+  await expect(page.locator('.case-delivery')).toBeVisible();
   await expect(page.getByText('Before', { exact: true })).toHaveCount(0);
   await expect(page.getByText('After', { exact: true })).toHaveCount(0);
 
@@ -234,13 +276,97 @@ test('project template and legacy fallback remain renderable', async ({ page }) 
 
 test('next-project interaction keeps the project sequence working', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
-  await page.goto('/projects/ultracamp', { waitUntil: 'networkidle' });
+  const sequence = ['areta', 'ultracamp', 'festgo-app', 'portfolio-25', 'howell-gallery'];
 
-  const nextProject = page.locator('.next-project-button');
-  await nextProject.scrollIntoViewIfNeeded();
-  await expect(nextProject).toBeVisible();
-  await nextProject.click();
+  for (let index = 0; index < sequence.length; index += 1) {
+    const current = sequence[index];
+    const next = sequence[(index + 1) % sequence.length];
 
-  await expect(page).toHaveURL(/\/projects\/festgo-app$/);
-  await expect(page.locator('.project-case[data-project="festgo-app"]')).toBeVisible();
+    await page.goto(`/projects/${current}`, { waitUntil: 'networkidle' });
+    const nextProject = page.locator('.next-project-button');
+    await nextProject.scrollIntoViewIfNeeded();
+    await expect(nextProject).toBeVisible();
+    await nextProject.click();
+
+    await expect(page).toHaveURL(new RegExp(`/projects/${next}$`));
+    await expect(page.locator(`.project-case[data-project="${next}"]`)).toBeVisible();
+  }
+});
+
+test('Areta leads the project grid as stable card 05', async ({ page }) => {
+  const runtimeErrors: string[] = [];
+  page.on('console', (message) => {
+    if (message.type() === 'error') runtimeErrors.push(message.text());
+  });
+  page.on('pageerror', (error) => runtimeErrors.push(error.message));
+
+  for (const viewport of viewports) {
+    await page.setViewportSize(viewport);
+    await page.goto('/', { waitUntil: 'networkidle' });
+
+    const cards = page.locator('.portfolio-card');
+    await expect(cards).toHaveCount(5);
+    await expect(cards.locator('.portfolio-card-number')).toHaveText([
+      '05',
+      '01',
+      '02',
+      '03',
+      '04',
+    ]);
+    await expect(cards.locator('.portfolio-card-title')).toHaveText([
+      'Areta',
+      'Ultracamp',
+      'FestGo App',
+      'Personal Portfolio',
+      'Howell Gallery',
+    ]);
+    await expect(cards.first()).toHaveClass(/is-featured/);
+    await expect(page.locator('.portfolio-card.is-featured')).toHaveCount(1);
+
+    const boxes = await cards.evaluateAll((elements) =>
+      elements.map((element) => {
+        const box = element.getBoundingClientRect();
+        return { x: box.x, y: box.y, width: box.width, height: box.height };
+      })
+    );
+    const gridBox = await page.locator('.portfolio-grid').boundingBox();
+    expect(gridBox).not.toBeNull();
+    expect(Math.abs(boxes[0].width - gridBox!.width)).toBeLessThanOrEqual(1);
+    expect(boxes[1].y).toBeGreaterThan(boxes[0].y + boxes[0].height - 1);
+
+    if (viewport.name === 'desktop') {
+      expect(Math.abs(boxes[1].y - boxes[2].y)).toBeLessThanOrEqual(1);
+      expect(boxes[2].x).toBeGreaterThan(boxes[1].x);
+      expect(Math.abs(boxes[3].y - boxes[4].y)).toBeLessThanOrEqual(1);
+      expect(boxes[3].y).toBeGreaterThan(boxes[1].y + boxes[1].height - 1);
+    } else {
+      expect(boxes.every((box) => Math.abs(box.width - gridBox!.width) <= 1)).toBe(true);
+      expect(boxes.slice(1).every((box, index) => box.y > boxes[index].y)).toBe(true);
+    }
+
+    const overflow = await page.evaluate(() => ({
+      viewport: document.documentElement.clientWidth,
+      content: document.documentElement.scrollWidth,
+    }));
+    expect(overflow.content).toBeLessThanOrEqual(overflow.viewport + 1);
+
+    const brokenImages = await page
+      .locator('.portfolio-card img')
+      .evaluateAll((images) =>
+        images
+          .filter((image) => !image.complete || image.naturalWidth === 0)
+          .map((image) => image.getAttribute('src') ?? 'unknown image')
+      );
+    expect(brokenImages).toEqual([]);
+
+    if (evidenceDirectory) {
+      await mkdir(evidenceDirectory, { recursive: true });
+      await page.locator('.portfolio-section').screenshot({
+        path: path.join(evidenceDirectory, `home-${viewport.name}-projects.png`),
+        animations: 'disabled',
+      });
+    }
+  }
+
+  expect(runtimeErrors).toEqual([]);
 });
