@@ -2,6 +2,7 @@ import React from 'react';
 import { useTransition } from '../../context/TransitionContext';
 import { ProjectCard as ProjectType } from '../../hooks/useProjectsList';
 import ImageWithCurtain from './ImageWithCurtain';
+import ProjectSiteLink from './ProjectSiteLink';
 
 interface ProjectCardProps {
   project: ProjectType;
@@ -33,7 +34,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         />
       </div>
       <div className="portfolio-card-info">
-        <h3 className="portfolio-card-title">{project.cardTitle}</h3>
+        <div className="portfolio-card-title-group">
+          <h3 className="portfolio-card-title">{project.cardTitle}</h3>
+          {project.siteUrl ? (
+            <ProjectSiteLink
+              href={project.siteUrl}
+              projectName={project.cardTitle}
+              variant="icon"
+            />
+          ) : null}
+        </div>
         <div className="portfolio-card-tags">
           {project.cardTags.map((tag) => (
             <span key={tag} className="portfolio-card-tag">

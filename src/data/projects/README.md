@@ -1,6 +1,6 @@
 # Sistema de proyectos dinámicos
 
-Las páginas de proyecto se generan desde archivos JSON y comparten un único componente React. Los cinco proyectos publicados usan una narrativa base de diez capítulos; `project-template.json` es la fuente de verdad para crear casos nuevos y permite añadir un capítulo de delivery cuando el contexto lo requiere.
+Las páginas de proyecto se generan desde archivos JSON y comparten un único componente React. Hay cinco casos disponibles y cuatro visibles en el grid; `project-template.json` es la fuente de verdad para crear casos nuevos y permite añadir un capítulo de delivery cuando el contexto lo requiere.
 
 ## Proyectos publicados
 
@@ -20,9 +20,10 @@ Las páginas de proyecto se generan desde archivos JSON y comparten un único co
 4. Completa todo el contenido en inglés.
 5. Asigna un `cardNumber` estable; no derives la numeración de la posición en el grid.
 6. Activa `featured` solo si la tarjeta debe ocupar todo el ancho del grid en escritorio.
-7. Usa nombres y apellidos españoles, naturales y acordes al contexto, para todas las user personas.
-8. Registra el `id` en `projectIds`, dentro de `src/hooks/useProjectsList.ts`.
-9. Comprueba `/projects/<slug>` en escritorio y móvil.
+7. Añade `siteUrl` solo si existe una web pública real; habilita los enlaces de la tarjeta y la cabecera.
+8. Usa nombres y apellidos españoles, naturales y acordes al contexto, para todas las user personas.
+9. Registra el `id` en `projectIds`, dentro de `src/hooks/useProjectsList.ts`.
+10. Comprueba `/projects/<slug>` en escritorio y móvil.
 
 ## Estructura narrativa
 
@@ -52,6 +53,7 @@ Si `delivery` no existe, la página conserva la numeración original de diez cap
   "date": "Month YYYY",
   "cardNumber": "00",
   "featured": false,
+  "siteUrl": "https://example.com/",
   "cardTitle": "Project name",
   "cardTags": ["DISCIPLINE", "PLATFORM", "CONTEXT"],
   "heroDescription": "Short introduction",
@@ -93,6 +95,7 @@ Consulta `project-template.json` para ver todos los objetos y arrays obligatorio
 - `research.personas` admite varias personas. `research.persona` sigue disponible para los casos existentes con una sola persona.
 - `delivery` es opcional. Cuando se incluye, debe explicar decisiones y responsabilidades, no limitarse a enumerar herramientas.
 - `cardNumber` es obligatorio y permanece asociado al proyecto aunque cambie el orden. `featured` es opcional y por defecto es `false`.
+- `siteUrl` es opcional. Inclúyelo únicamente para productos publicados; los proyectos ficticios o privados no muestran CTA externo.
 - `heroInsetImage` es opcional. Si se usa, debe complementar el hero con otra escala o dispositivo.
 - La galería acepta cualquier número de imágenes, aunque cuatro mantiene el layout editorial previsto.
 - Usa textos alternativos contextuales en el componente; no incrustes información esencial únicamente dentro de una imagen.
@@ -107,4 +110,4 @@ pnpm build
 pnpm test:e2e
 ```
 
-Las pruebas de Playwright recorren los cinco casos en viewport de escritorio y móvil, comprueban overflow, imágenes rotas y errores de consola, y pueden guardar evidencia si se define `PORTFOLIO_EVIDENCE_DIR`.
+Las pruebas de Playwright recorren los cinco casos disponibles y los cuatro proyectos visibles en viewport de escritorio y móvil, comprueban enlaces, overflow, imágenes rotas y errores de consola, y pueden guardar evidencia si se define `PORTFOLIO_EVIDENCE_DIR`.

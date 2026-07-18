@@ -138,6 +138,7 @@ interface ProjectData {
   date: string;
   cardNumber: string;
   featured?: boolean;
+  siteUrl?: string;
   cardTitle: string;
   cardTags: string[];
   heroDescription: string;

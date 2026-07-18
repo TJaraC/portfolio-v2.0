@@ -249,9 +249,17 @@ align-self: stretch;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 16px;
   width: 100%;
   margin: 0;
   padding: 0;
+}
+
+.portfolio-card-title-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
 }
 
 .portfolio-card-title {
@@ -858,12 +866,15 @@ body {
     gap: 8px;
   }
   
+  .portfolio-card-title-group {
+    flex: 1;
+    margin-right: 8px;
+  }
+
   .portfolio-card-title {
     word-wrap: break-word;
     overflow-wrap: break-word;
     hyphens: auto;
-    flex: 1;
-    margin-right: 8px;
   }
   
   .portfolio-card-tags {
@@ -1246,5 +1257,4 @@ body {
     display: block !important;
   }
 }
-
 

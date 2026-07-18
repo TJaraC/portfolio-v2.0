@@ -5,6 +5,7 @@ interface ProjectCard {
   id: string;
   cardNumber: string;
   featured: boolean;
+  siteUrl?: string;
   cardTitle: string;
   cardTags: string[];
   heroImage: string;
@@ -26,14 +27,14 @@ export const useProjectsList = (): {
         setError(null);
 
         // Lista de proyectos disponibles (se puede expandir dinámicamente)
-        const projectIds = ['areta', 'ultracamp', 'festgo-app', 'portfolio-25', 'howell-gallery'];
+        const projectIds = ['areta', 'ultracamp', 'festgo-app', 'portfolio-25'];
 
         const results = await Promise.allSettled(
           projectIds.map((projectId) => import(`../data/projects/${projectId}.json`))
         );
 
         const projectsData: ProjectCard[] = results
-          .map((result, index) => {
+          .map((result, index): ProjectCard | null => {
             if (result.status === 'rejected') {
               console.warn(`Could not load project ${projectIds[index]}:`, result.reason);
               return null;
@@ -43,6 +44,7 @@ export const useProjectsList = (): {
               id: data.id,
               cardNumber: data.cardNumber,
               featured: Boolean(data.featured),
+              siteUrl: data.siteUrl,
               cardTitle: data.cardTitle,
               cardTags: data.cardTags,
               heroImage: data.heroImage,

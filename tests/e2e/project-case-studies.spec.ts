@@ -11,6 +11,7 @@ const projects = [
     applicationCount: 4,
     chapterCount: 10,
     hasDelivery: true,
+    siteUrl: 'https://areta-landing.vercel.app/',
   },
   {
     id: 'ultracamp',
@@ -20,6 +21,7 @@ const projects = [
     applicationCount: 3,
     chapterCount: 9,
     hasDelivery: false,
+    siteUrl: 'https://ultracamp.es/',
   },
   {
     id: 'festgo-app',
@@ -38,6 +40,7 @@ const projects = [
     applicationCount: 3,
     chapterCount: 9,
     hasDelivery: false,
+    siteUrl: 'https://www.hellotjc.com/',
   },
   {
     id: 'howell-gallery',
@@ -74,6 +77,15 @@ for (const project of projects) {
       const projectHeading = page.locator('.project-title-heading');
       const headingText = (await projectHeading.innerText()).replace(/\s+/g, ' ').trim();
       expect(headingText.toLocaleLowerCase()).toBe(project.title.toLocaleLowerCase());
+      const headerSiteLink = page.locator('.project-header .project-site-link--orbit');
+      if (project.siteUrl) {
+        await expect(headerSiteLink).toHaveCount(1);
+        await expect(headerSiteLink).toHaveAttribute('href', project.siteUrl);
+        await expect(headerSiteLink).toHaveAttribute('target', '_blank');
+        await expect(headerSiteLink).toHaveAttribute('rel', 'noopener noreferrer');
+      } else {
+        await expect(headerSiteLink).toHaveCount(0);
+      }
       await expect(page.locator('.case-persona-intro h3')).toHaveText(project.personas);
       await expect(page.getByText('Before', { exact: true })).toHaveCount(0);
       await expect(page.getByText('After', { exact: true })).toHaveCount(0);
@@ -284,7 +296,7 @@ test('project template and legacy fallback remain renderable', async ({ page }) 
 
 test('next-project interaction keeps the project sequence working', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
-  const sequence = ['areta', 'ultracamp', 'festgo-app', 'portfolio-25', 'howell-gallery'];
+  const sequence = ['areta', 'ultracamp', 'festgo-app', 'portfolio-25'];
 
   for (let index = 0; index < sequence.length; index += 1) {
     const current = sequence[index];
@@ -301,8 +313,15 @@ test('next-project interaction keeps the project sequence working', async ({ pag
   }
 });
 
-test('Areta leads the project grid as stable card 05', async ({ page }) => {
+test('the visible portfolio is a stable four-project grid', async ({ page }) => {
   const runtimeErrors: string[] = [];
+  const expectedCards = [
+    { number: '01', title: 'Areta', siteUrl: 'https://areta-landing.vercel.app/' },
+    { number: '02', title: 'Ultracamp', siteUrl: 'https://ultracamp.es/' },
+    { number: '03', title: 'FestGo App' },
+    { number: '04', title: 'Personal Portfolio', siteUrl: 'https://www.hellotjc.com/' },
+  ];
+
   page.on('console', (message) => {
     if (message.type() === 'error') runtimeErrors.push(message.text());
   });
@@ -314,23 +333,29 @@ test('Areta leads the project grid as stable card 05', async ({ page }) => {
     await expect(page.locator('.preloader')).toBeHidden({ timeout: 10_000 });
 
     const cards = page.locator('.portfolio-card');
-    await expect(cards).toHaveCount(5);
-    await expect(cards.locator('.portfolio-card-number')).toHaveText([
-      '05',
-      '01',
-      '02',
-      '03',
-      '04',
-    ]);
-    await expect(cards.locator('.portfolio-card-title')).toHaveText([
-      'Areta',
-      'Ultracamp',
-      'FestGo App',
-      'Personal Portfolio',
-      'Howell Gallery',
-    ]);
-    await expect(cards.first()).toHaveClass(/is-featured/);
-    await expect(page.locator('.portfolio-card.is-featured')).toHaveCount(1);
+    await expect(cards).toHaveCount(4);
+    await expect(cards.locator('.portfolio-card-number')).toHaveText(
+      expectedCards.map((project) => project.number)
+    );
+    await expect(cards.locator('.portfolio-card-title')).toHaveText(
+      expectedCards.map((project) => project.title)
+    );
+    await expect(page.locator('.portfolio-card.is-featured')).toHaveCount(0);
+    await expect(page.getByText('Howell Gallery', { exact: true })).toHaveCount(0);
+    await expect(cards.locator('.portfolio-card-title + .project-site-link--icon')).toHaveCount(3);
+
+    for (let index = 0; index < expectedCards.length; index += 1) {
+      const siteLink = cards.nth(index).locator('.project-site-link--icon');
+      const expected = expectedCards[index];
+      if (expected.siteUrl) {
+        await expect(siteLink).toHaveCount(1);
+        await expect(siteLink).toHaveAttribute('href', expected.siteUrl);
+        await expect(siteLink).toHaveAttribute('target', '_blank');
+        await expect(siteLink).toHaveAttribute('rel', 'noopener noreferrer');
+      } else {
+        await expect(siteLink).toHaveCount(0);
+      }
+    }
 
     const boxes = await cards.evaluateAll((elements) =>
       elements.map((element) => {
@@ -340,14 +365,13 @@ test('Areta leads the project grid as stable card 05', async ({ page }) => {
     );
     const gridBox = await page.locator('.portfolio-grid').boundingBox();
     expect(gridBox).not.toBeNull();
-    expect(Math.abs(boxes[0].width - gridBox!.width)).toBeLessThanOrEqual(1);
-    expect(boxes[1].y).toBeGreaterThan(boxes[0].y + boxes[0].height - 1);
 
     if (viewport.name === 'desktop') {
-      expect(Math.abs(boxes[1].y - boxes[2].y)).toBeLessThanOrEqual(1);
-      expect(boxes[2].x).toBeGreaterThan(boxes[1].x);
-      expect(Math.abs(boxes[3].y - boxes[4].y)).toBeLessThanOrEqual(1);
-      expect(boxes[3].y).toBeGreaterThan(boxes[1].y + boxes[1].height - 1);
+      expect(Math.abs(boxes[0].y - boxes[1].y)).toBeLessThanOrEqual(1);
+      expect(boxes[1].x).toBeGreaterThan(boxes[0].x);
+      expect(Math.abs(boxes[2].y - boxes[3].y)).toBeLessThanOrEqual(1);
+      expect(boxes[2].y).toBeGreaterThan(boxes[0].y + boxes[0].height - 1);
+      expect(boxes.every((box) => box.width < gridBox!.width)).toBe(true);
     } else {
       expect(boxes.every((box) => Math.abs(box.width - gridBox!.width) <= 1)).toBe(true);
       expect(boxes.slice(1).every((box, index) => box.y > boxes[index].y)).toBe(true);
@@ -376,17 +400,18 @@ test('Areta leads the project grid as stable card 05', async ({ page }) => {
         await page.waitForTimeout(1_400);
       }
       await page.waitForTimeout(400);
+      await page.locator('.portfolio-card img').evaluateAll(async (images) => {
+        await Promise.all(images.map((image) => image.decode()));
+      });
       await page.addStyleTag({
         content:
-          '.portfolio-card-img { transform: none !important; will-change: auto !important; backface-visibility: visible !important; } .custom-cursor { display: none !important; }',
+          '.portfolio-card-img, .portfolio-card-img img { transform: none !important; will-change: auto !important; backface-visibility: visible !important; } .portfolio-card .image-curtain { display: none !important; } .custom-cursor { display: none !important; }',
       });
       await page.locator('.header').evaluate((header) => {
         header.setAttribute('data-evidence-visibility', header.style.visibility);
         header.style.visibility = 'hidden';
       });
-      const evidenceTarget =
-        viewport.name === 'desktop' ? page.locator('.portfolio-section') : cards.first();
-      await evidenceTarget.screenshot({
+      await page.locator('.portfolio-section').screenshot({
         path: path.join(evidenceDirectory, `home-${viewport.name}-projects.png`),
         animations: 'disabled',
       });
@@ -398,4 +423,97 @@ test('Areta leads the project grid as stable card 05', async ({ page }) => {
   }
 
   expect(runtimeErrors).toEqual([]);
+});
+
+test('live-site controls animate and isolate external navigation', async ({ page }) => {
+  const runtimeErrors: string[] = [];
+  page.on('console', (message) => {
+    if (message.type() === 'error') runtimeErrors.push(message.text());
+  });
+  page.on('pageerror', (error) => runtimeErrors.push(error.message));
+
+  await page.context().route('https://areta-landing.vercel.app/**', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'text/html',
+      body: '<!doctype html><title>Areta live site</title>',
+    });
+  });
+
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/', { waitUntil: 'networkidle' });
+  await expect(page.locator('.preloader')).toBeHidden({ timeout: 10_000 });
+
+  const cardLink = page
+    .locator('.portfolio-card')
+    .filter({ has: page.getByRole('heading', { name: 'Areta' }) })
+    .getByRole('link', { name: /Visit Areta live site/ });
+  const homeUrl = page.url();
+  const popupPromise = page.waitForEvent('popup');
+  await cardLink.click();
+  const popup = await popupPromise;
+  await popup.waitForLoadState('domcontentloaded');
+
+  expect(page.url()).toBe(homeUrl);
+  expect(popup.url()).toBe('https://areta-landing.vercel.app/');
+  await popup.close();
+
+  await page.goto('/projects/areta', { waitUntil: 'networkidle' });
+  const orbitLink = page.getByRole('link', { name: /Visit Areta live site/ });
+  const orbitText = orbitLink.locator('.project-site-link-orbit-text');
+  const centreArrow = orbitLink.locator('.project-site-link-arrow');
+  const readTransform = (locator: typeof orbitText) =>
+    locator.evaluate((element) => window.getComputedStyle(element).transform);
+
+  const beforeHover = await readTransform(orbitText);
+  const arrowBefore = await readTransform(centreArrow);
+  await orbitLink.hover();
+  await page.waitForTimeout(300);
+  const duringHover = await readTransform(orbitText);
+  const arrowDuring = await readTransform(centreArrow);
+  expect(duringHover).not.toBe(beforeHover);
+  expect(arrowDuring).toBe(arrowBefore);
+
+  await page.locator('.project-description').hover();
+  await orbitLink.focus();
+  const beforeFocus = await readTransform(orbitText);
+  await page.waitForTimeout(250);
+  const duringFocus = await readTransform(orbitText);
+  expect(duringFocus).not.toBe(beforeFocus);
+
+  if (evidenceDirectory) {
+    await mkdir(evidenceDirectory, { recursive: true });
+    await page.addStyleTag({ content: '.custom-cursor { display: none !important; }' });
+    await orbitLink.hover();
+    await page.waitForTimeout(300);
+    await page.locator('.project-header').screenshot({
+      path: path.join(evidenceDirectory, 'live-site-orbit-hover-desktop.png'),
+    });
+  }
+
+  const overflow = await page.evaluate(() => ({
+    viewport: document.documentElement.clientWidth,
+    content: document.documentElement.scrollWidth,
+  }));
+  expect(overflow.content).toBeLessThanOrEqual(overflow.viewport + 1);
+  expect(runtimeErrors).toEqual([]);
+});
+
+test('the circular live-site link respects reduced motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/projects/areta', { waitUntil: 'networkidle' });
+
+  const orbitLink = page.getByRole('link', { name: /Visit Areta live site/ });
+  const orbitText = orbitLink.locator('.project-site-link-orbit-text');
+  const beforeHover = await orbitText.evaluate(
+    (element) => window.getComputedStyle(element).transform
+  );
+  await orbitLink.hover();
+  await page.waitForTimeout(350);
+  const afterHover = await orbitText.evaluate(
+    (element) => window.getComputedStyle(element).transform
+  );
+
+  expect(afterHover).toBe(beforeHover);
 });
