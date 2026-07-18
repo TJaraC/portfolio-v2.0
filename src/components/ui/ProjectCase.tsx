@@ -71,7 +71,7 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
           <div className="project-header-container">
             <AnimatedElement animation="fadeIn" duration={1.2}>
               <div className="project-title">
-                <div className={`project-title-row${data.siteUrl ? ' has-site-link' : ''}`}>
+                <div className="project-title-row">
                   <h1
                     id="project-title"
                     className={`project-title-heading${data.name ? ' has-subtitle' : ''}`}
@@ -82,14 +82,6 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                     </span>
                     {data.name && <span className="project-title-sub">{data.name}</span>}
                   </h1>
-                  {data.siteUrl ? (
-                    <ProjectSiteLink
-                      href={data.siteUrl}
-                      projectName={data.cardTitle}
-                      variant="orbit"
-                      className="project-header-site-link"
-                    />
-                  ) : null}
                   <p className="project-date">{data.date}</p>
                   <p className="project-description">{data.heroDescription}</p>
                 </div>
@@ -123,6 +115,14 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                     threshold={0.1}
                   />
                 </div>
+              ) : null}
+              {data.siteUrl ? (
+                <ProjectSiteLink
+                  href={data.siteUrl}
+                  projectName={data.cardTitle}
+                  variant="orbit"
+                  className="project-hero-site-link"
+                />
               ) : null}
               <div className="project-hero-index" aria-hidden="true">
                 <span>01</span>

@@ -78,13 +78,40 @@ for (const project of projects) {
       const headingText = (await projectHeading.innerText()).replace(/\s+/g, ' ').trim();
       expect(headingText.toLocaleLowerCase()).toBe(project.title.toLocaleLowerCase());
       const headerSiteLink = page.locator('.project-header .project-site-link--orbit');
+      const heroMedia = page.locator('.project-hero-media');
+      const heroSiteLink = heroMedia.locator('.project-site-link--orbit');
+      await expect(headerSiteLink).toHaveCount(0);
       if (project.siteUrl) {
-        await expect(headerSiteLink).toHaveCount(1);
-        await expect(headerSiteLink).toHaveAttribute('href', project.siteUrl);
-        await expect(headerSiteLink).toHaveAttribute('target', '_blank');
-        await expect(headerSiteLink).toHaveAttribute('rel', 'noopener noreferrer');
+        await expect(heroSiteLink).toHaveCount(1);
+        await expect(heroSiteLink).toHaveAttribute('href', project.siteUrl);
+        await expect(heroSiteLink).toHaveAttribute('target', '_blank');
+        await expect(heroSiteLink).toHaveAttribute('rel', 'noopener noreferrer');
+
+        const heroPresentation = await heroSiteLink.evaluate((link) => {
+          const hero = link.closest<HTMLElement>('.project-hero-media');
+          const heroRect = hero!.getBoundingClientRect();
+          const linkRect = link.getBoundingClientRect();
+          const styles = window.getComputedStyle(link);
+
+          return {
+            position: styles.position,
+            color: styles.color,
+            backgroundColor: styles.backgroundColor,
+            blendMode: styles.mixBlendMode,
+            topInset: linkRect.top - heroRect.top,
+            rightInset: heroRect.right - linkRect.right,
+          };
+        });
+        expect(heroPresentation.position).toBe('absolute');
+        expect(heroPresentation.color).toBe('rgb(255, 255, 255)');
+        expect(heroPresentation.backgroundColor).toBe('rgba(0, 0, 0, 0)');
+        expect(heroPresentation.blendMode).toBe('difference');
+        expect(heroPresentation.topInset).toBeGreaterThanOrEqual(14);
+        expect(heroPresentation.topInset).toBeLessThanOrEqual(34);
+        expect(heroPresentation.rightInset).toBeGreaterThanOrEqual(14);
+        expect(heroPresentation.rightInset).toBeLessThanOrEqual(34);
       } else {
-        await expect(headerSiteLink).toHaveCount(0);
+        await expect(heroSiteLink).toHaveCount(0);
       }
       await expect(page.locator('.case-persona-intro h3')).toHaveText(project.personas);
       await expect(page.getByText('Before', { exact: true })).toHaveCount(0);
@@ -197,6 +224,12 @@ for (const project of projects) {
           path: path.join(evidenceDirectory, `${project.id}-${viewport.name}-header.png`),
           animations: 'disabled',
         });
+        if (project.siteUrl) {
+          await heroMedia.screenshot({
+            path: path.join(evidenceDirectory, `${project.id}-${viewport.name}-hero-site-link.png`),
+            animations: 'disabled',
+          });
+        }
         await page.locator('.case-impact').screenshot({
           path: path.join(evidenceDirectory, `${project.id}-${viewport.name}-impact.png`),
           animations: 'disabled',
@@ -352,6 +385,31 @@ test('the visible portfolio is a stable four-project grid', async ({ page }) => 
         await expect(siteLink).toHaveAttribute('href', expected.siteUrl);
         await expect(siteLink).toHaveAttribute('target', '_blank');
         await expect(siteLink).toHaveAttribute('rel', 'noopener noreferrer');
+
+        const iconPresentation = await siteLink.evaluate((link) => {
+          const styles = window.getComputedStyle(link);
+          const linkRect = link.getBoundingClientRect();
+          const iconRect = link.querySelector('svg')!.getBoundingClientRect();
+
+          return {
+            backgroundColor: styles.backgroundColor,
+            borderTopWidth: styles.borderTopWidth,
+            borderTopStyle: styles.borderTopStyle,
+            borderRadius: styles.borderRadius,
+            boxShadow: styles.boxShadow,
+            width: linkRect.width,
+            height: linkRect.height,
+            iconWidth: iconRect.width,
+          };
+        });
+        expect(iconPresentation.backgroundColor).toBe('rgba(0, 0, 0, 0)');
+        expect(iconPresentation.borderTopWidth).toBe('0px');
+        expect(iconPresentation.borderTopStyle).toBe('none');
+        expect(iconPresentation.borderRadius).toBe('0px');
+        expect(iconPresentation.boxShadow).toBe('none');
+        expect(iconPresentation.width).toBeGreaterThanOrEqual(31);
+        expect(iconPresentation.height).toBeGreaterThanOrEqual(31);
+        expect(iconPresentation.iconWidth).toBeLessThan(iconPresentation.width);
       } else {
         await expect(siteLink).toHaveCount(0);
       }
@@ -425,7 +483,9 @@ test('the visible portfolio is a stable four-project grid', async ({ page }) => 
   expect(runtimeErrors).toEqual([]);
 });
 
-test('live-site controls animate and isolate external navigation', async ({ page }) => {
+test('live-site controls rotate continuously around a fixed centre and isolate navigation', async ({
+  page,
+}) => {
   const runtimeErrors: string[] = [];
   page.on('console', (message) => {
     if (message.type() === 'error') runtimeErrors.push(message.text());
@@ -465,29 +525,63 @@ test('live-site controls animate and isolate external navigation', async ({ page
   const readTransform = (locator: typeof orbitText) =>
     locator.evaluate((element) => window.getComputedStyle(element).transform);
 
-  const beforeHover = await readTransform(orbitText);
-  const arrowBefore = await readTransform(centreArrow);
-  await orbitLink.hover();
-  await page.waitForTimeout(300);
-  const duringHover = await readTransform(orbitText);
-  const arrowDuring = await readTransform(centreArrow);
-  expect(duringHover).not.toBe(beforeHover);
-  expect(arrowDuring).toBe(arrowBefore);
+  await orbitLink.scrollIntoViewIfNeeded();
+  await page.mouse.move(4, 4);
+  await expect(orbitLink).not.toBeFocused();
+  expect(await orbitLink.evaluate((link) => link.matches(':hover'))).toBe(false);
 
-  await page.locator('.project-description').hover();
-  await orbitLink.focus();
-  const beforeFocus = await readTransform(orbitText);
-  await page.waitForTimeout(250);
-  const duringFocus = await readTransform(orbitText);
-  expect(duringFocus).not.toBe(beforeFocus);
+  const beforeWait = await readTransform(orbitText);
+  const arrowBefore = await readTransform(centreArrow);
+  await page.waitForTimeout(400);
+  const afterWait = await readTransform(orbitText);
+  const arrowAfter = await readTransform(centreArrow);
+  expect(afterWait).not.toBe(beforeWait);
+  expect(arrowAfter).toBe(arrowBefore);
+
+  const centreGeometry = await orbitText.evaluate((element) => {
+    const group = element as SVGGElement;
+    const svg = group.ownerSVGElement;
+    const groupMatrix = group.getScreenCTM();
+    const svgMatrix = svg?.getScreenCTM();
+    if (!svg || !groupMatrix || !svgMatrix) return null;
+
+    const origin = svg.createSVGPoint();
+    origin.x = 60;
+    origin.y = 60;
+    const animatedCentre = origin.matrixTransform(groupMatrix);
+    const fixedCentre = origin.matrixTransform(svgMatrix);
+    const styles = window.getComputedStyle(group);
+    const bounds = group.getBBox();
+    return {
+      distance: Math.hypot(animatedCentre.x - fixedCentre.x, animatedCentre.y - fixedCentre.y),
+      transform: styles.transform,
+      transformOrigin: styles.transformOrigin,
+      inlineStyle: group.getAttribute('style'),
+      svgOrigin: group.getAttribute('data-svg-origin'),
+      bounds: { x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height },
+    };
+  });
+  expect(centreGeometry).not.toBeNull();
+  expect(
+    centreGeometry!.distance,
+    `Unexpected orbit geometry: ${JSON.stringify(centreGeometry)}`
+  ).toBeLessThan(0.75);
+
+  const caseUrl = page.url();
+  const casePopupPromise = page.waitForEvent('popup');
+  await orbitLink.click();
+  const casePopup = await casePopupPromise;
+  await casePopup.waitForLoadState('domcontentloaded');
+  expect(page.url()).toBe(caseUrl);
+  expect(casePopup.url()).toBe('https://areta-landing.vercel.app/');
+  await casePopup.close();
 
   if (evidenceDirectory) {
     await mkdir(evidenceDirectory, { recursive: true });
     await page.addStyleTag({ content: '.custom-cursor { display: none !important; }' });
-    await orbitLink.hover();
-    await page.waitForTimeout(300);
-    await page.locator('.project-header').screenshot({
-      path: path.join(evidenceDirectory, 'live-site-orbit-hover-desktop.png'),
+    await page.waitForTimeout(400);
+    await page.locator('.project-hero-media').screenshot({
+      path: path.join(evidenceDirectory, 'live-site-orbit-active-desktop.png'),
     });
   }
 
@@ -499,21 +593,21 @@ test('live-site controls animate and isolate external navigation', async ({ page
   expect(runtimeErrors).toEqual([]);
 });
 
-test('the circular live-site link respects reduced motion', async ({ page }) => {
+test('the continuous circular live-site link respects reduced motion', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/projects/areta', { waitUntil: 'networkidle' });
 
   const orbitLink = page.getByRole('link', { name: /Visit Areta live site/ });
   const orbitText = orbitLink.locator('.project-site-link-orbit-text');
-  const beforeHover = await orbitText.evaluate(
+  await orbitLink.scrollIntoViewIfNeeded();
+  const beforeWait = await orbitText.evaluate(
     (element) => window.getComputedStyle(element).transform
   );
-  await orbitLink.hover();
-  await page.waitForTimeout(350);
-  const afterHover = await orbitText.evaluate(
+  await page.waitForTimeout(450);
+  const afterWait = await orbitText.evaluate(
     (element) => window.getComputedStyle(element).transform
   );
 
-  expect(afterHover).toBe(beforeHover);
+  expect(afterWait).toBe(beforeWait);
 });

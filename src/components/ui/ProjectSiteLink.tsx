@@ -17,7 +17,6 @@ const ProjectSiteLink: React.FC<ProjectSiteLinkProps> = ({
 }) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
   const orbitRef = useRef<SVGGElement>(null);
-  const rotationTween = useRef<gsap.core.Tween | null>(null);
   const orbitPathId = `site-link-${useId().replace(/:/g, '')}`;
 
   useGSAP(
@@ -27,35 +26,19 @@ const ProjectSiteLink: React.FC<ProjectSiteLinkProps> = ({
       const motionPreference = gsap.matchMedia();
 
       motionPreference.add('(prefers-reduced-motion: no-preference)', () => {
-        rotationTween.current = gsap.to(orbitRef.current, {
-          rotation: '+=360',
-          duration: 6,
+        gsap.to(orbitRef.current, {
+          rotation: 360,
+          duration: 10,
           ease: 'none',
           repeat: -1,
-          paused: true,
-          transformOrigin: '50% 50%',
+          svgOrigin: '60 60',
         });
-
-        return () => {
-          rotationTween.current = null;
-        };
       });
 
-      return () => {
-        rotationTween.current = null;
-        motionPreference.revert();
-      };
+      return () => motionPreference.revert();
     },
     { scope: linkRef, dependencies: [variant], revertOnUpdate: true }
   );
-
-  const startRotation = () => rotationTween.current?.play();
-  const pauseRotationWhenInactive = () => {
-    const link = linkRef.current;
-    if (link && !link.matches(':hover') && document.activeElement !== link) {
-      rotationTween.current?.pause();
-    }
-  };
 
   const classes = ['project-site-link', `project-site-link--${variant}`, className]
     .filter(Boolean)
@@ -71,10 +54,6 @@ const ProjectSiteLink: React.FC<ProjectSiteLinkProps> = ({
       aria-label={`Visit ${projectName} live site (opens in a new tab)`}
       data-site-link={variant}
       onClick={(event) => event.stopPropagation()}
-      onMouseEnter={startRotation}
-      onMouseLeave={pauseRotationWhenInactive}
-      onFocus={startRotation}
-      onBlur={pauseRotationWhenInactive}
     >
       {variant === 'orbit' ? (
         <svg viewBox="0 0 120 120" aria-hidden="true">
