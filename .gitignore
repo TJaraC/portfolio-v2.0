@@ -7,6 +7,11 @@ dist/
 
 # Logs
 pnpm-debug.log*
+*.log
+
+# Local command and capture artifacts
+/NUL
+/.tmp-*/
 
 .DS_Store
 Thumbs.db
