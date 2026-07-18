@@ -619,8 +619,12 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.case-delivery-stack {
+.case-delivery .case-flow {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.case-delivery-stack {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .case-decision-card {
@@ -1047,6 +1051,10 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .case-delivery .case-flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .case-priority-card:last-child,
   .case-insight-card:last-child,
   .case-metric-card:last-child {
@@ -1255,6 +1263,10 @@
   }
 
   .case-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .case-delivery .case-flow {
     grid-template-columns: 1fr;
   }
 

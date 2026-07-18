@@ -169,11 +169,13 @@ for (const project of projects) {
 
       if (evidenceDirectory) {
         await mkdir(evidenceDirectory, { recursive: true });
-        await page.screenshot({
-          path: path.join(evidenceDirectory, `${project.id}-${viewport.name}.png`),
-          fullPage: true,
-          animations: 'disabled',
-        });
+        if (viewport.name === 'desktop') {
+          await page.screenshot({
+            path: path.join(evidenceDirectory, `${project.id}-desktop.png`),
+            fullPage: true,
+            animations: 'disabled',
+          });
+        }
 
         await page.locator('.header').evaluate((header) => {
           header.setAttribute('data-evidence-visibility', header.style.visibility);
@@ -187,6 +189,12 @@ for (const project of projects) {
           path: path.join(evidenceDirectory, `${project.id}-${viewport.name}-impact.png`),
           animations: 'disabled',
         });
+        if (project.hasDelivery) {
+          await page.locator('.case-final').screenshot({
+            path: path.join(evidenceDirectory, `${project.id}-${viewport.name}-final.png`),
+            animations: 'disabled',
+          });
+        }
         if (viewport.name === 'desktop') {
           await page.locator('.case-design').screenshot({
             path: path.join(evidenceDirectory, `${project.id}-desktop-rationale.png`),
@@ -303,6 +311,7 @@ test('Areta leads the project grid as stable card 05', async ({ page }) => {
   for (const viewport of viewports) {
     await page.setViewportSize(viewport);
     await page.goto('/', { waitUntil: 'networkidle' });
+    await expect(page.locator('.preloader')).toBeHidden({ timeout: 10_000 });
 
     const cards = page.locator('.portfolio-card');
     await expect(cards).toHaveCount(5);
@@ -361,9 +370,29 @@ test('Areta leads the project grid as stable card 05', async ({ page }) => {
 
     if (evidenceDirectory) {
       await mkdir(evidenceDirectory, { recursive: true });
-      await page.locator('.portfolio-section').screenshot({
+      const cardReveals = page.locator('.portfolio-card .image-curtain-container');
+      for (let index = 0; index < (await cardReveals.count()); index += 1) {
+        await cardReveals.nth(index).scrollIntoViewIfNeeded();
+        await page.waitForTimeout(1_400);
+      }
+      await page.waitForTimeout(400);
+      await page.addStyleTag({
+        content:
+          '.portfolio-card-img { transform: none !important; will-change: auto !important; backface-visibility: visible !important; } .custom-cursor { display: none !important; }',
+      });
+      await page.locator('.header').evaluate((header) => {
+        header.setAttribute('data-evidence-visibility', header.style.visibility);
+        header.style.visibility = 'hidden';
+      });
+      const evidenceTarget =
+        viewport.name === 'desktop' ? page.locator('.portfolio-section') : cards.first();
+      await evidenceTarget.screenshot({
         path: path.join(evidenceDirectory, `home-${viewport.name}-projects.png`),
         animations: 'disabled',
+      });
+      await page.locator('.header').evaluate((header) => {
+        header.style.visibility = header.getAttribute('data-evidence-visibility') ?? '';
+        header.removeAttribute('data-evidence-visibility');
       });
     }
   }
