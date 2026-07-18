@@ -479,6 +479,11 @@
   font-weight: 650;
 }
 
+.case-persona-grid {
+  display: grid;
+  gap: 18px;
+}
+
 .case-persona-card {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -612,6 +617,10 @@
 
 .case-decision-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.case-delivery-stack {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .case-decision-card {
@@ -1034,6 +1043,10 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .case-delivery-stack {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .case-priority-card:last-child,
   .case-insight-card:last-child,
   .case-metric-card:last-child {
@@ -1210,6 +1223,7 @@
   .case-priority-grid,
   .case-insight-grid,
   .case-decision-grid,
+  .case-delivery-stack,
   .case-highlight-grid,
   .case-metric-grid,
   .case-design-system-ui,

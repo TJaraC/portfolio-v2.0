@@ -3,6 +3,8 @@
   "project": "PROJECT",
   "name": "NAME",
   "date": "Month YYYY",
+  "cardNumber": "00",
+  "featured": false,
   "cardTitle": "Project name",
   "cardTags": ["DISCIPLINE", "PLATFORM", "CONTEXT"],
   "heroDescription": "A concise introduction that explains the product, the design contribution and why the project matters.",
@@ -56,14 +58,24 @@
         ],
         "note": "Clarify what the benchmark does and does not claim."
       },
-      "persona": {
-        "name": "Spanish persona name",
-        "archetype": "Primary behavioural archetype",
-        "context": "Describe the situation, behaviour and motivation that make this persona relevant.",
-        "quote": "Use a concise quote that captures the core need.",
-        "goals": ["Primary goal", "Secondary goal", "Supporting goal"],
-        "frustrations": ["Primary friction", "Secondary friction", "Supporting friction"]
-      },
+      "personas": [
+        {
+          "name": "Lucía Moreno",
+          "archetype": "Primary behavioural archetype",
+          "context": "Describe the situation, behaviour and motivation that make this persona relevant.",
+          "quote": "Use a concise quote that captures the core need.",
+          "goals": ["Primary goal", "Secondary goal", "Supporting goal"],
+          "frustrations": ["Primary friction", "Secondary friction", "Supporting friction"]
+        },
+        {
+          "name": "Javier Martín",
+          "archetype": "Supporting behavioural archetype",
+          "context": "Describe the distinct situation that makes this supporting persona relevant.",
+          "quote": "Use a concise quote that captures the supporting need.",
+          "goals": ["Primary goal", "Secondary goal", "Supporting goal"],
+          "frustrations": ["Primary friction", "Secondary friction", "Supporting friction"]
+        }
+      ],
       "insights": [
         {
           "label": "01 · Theme",
@@ -144,6 +156,36 @@
           "objective": "Describe the behavior or experience this component needs to support.",
           "solution": "Describe the solution built for that objective.",
           "outcome": "Describe the value created by the decision."
+        }
+      ]
+    },
+    "delivery": {
+      "title": "Product delivery",
+      "description": "Use this optional chapter when the delivery system is material to the case study.",
+      "workflow": [
+        { "title": "Frame", "description": "Define the product slice and its evidence." },
+        {
+          "title": "Plan",
+          "description": "Turn the slice into an executable implementation plan."
+        },
+        { "title": "Build", "description": "Implement the smallest coherent product increment." },
+        { "title": "Validate", "description": "Check behaviour, visuals and delivery constraints." }
+      ],
+      "stack": [
+        {
+          "label": "Design",
+          "title": "Design tool",
+          "description": "Explain how the tool supported research, iteration or system design."
+        },
+        {
+          "label": "Implementation",
+          "title": "Core technology",
+          "description": "Explain the implementation role without turning the chapter into a dependency list."
+        },
+        {
+          "label": "Delivery",
+          "title": "Workflow system",
+          "description": "Explain how work moved from decision to validated release."
         }
       ]
     },

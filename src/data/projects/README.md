@@ -17,9 +17,11 @@ Las páginas de proyecto se generan desde archivos JSON y comparten un único co
 2. Cambia `id` para que coincida exactamente con el nombre del archivo.
 3. Guarda las imágenes en `public/images/projects/<slug>/` y usa rutas públicas que empiecen por `/images/`.
 4. Completa todo el contenido en inglés.
-5. Usa un nombre y apellido españoles, naturales y acordes al contexto, para la user persona.
-6. Registra el `id` en `projectIds`, dentro de `src/hooks/useProjectsList.ts`.
-7. Comprueba `/projects/<slug>` en escritorio y móvil.
+5. Asigna un `cardNumber` estable; no derives la numeración de la posición en el grid.
+6. Activa `featured` solo si la tarjeta debe ocupar todo el ancho del grid en escritorio.
+7. Usa nombres y apellidos españoles, naturales y acordes al contexto, para todas las user personas.
+8. Registra el `id` en `projectIds`, dentro de `src/hooks/useProjectsList.ts`.
+9. Comprueba `/projects/<slug>` en escritorio y móvil.
 
 ## Estructura narrativa
 
@@ -28,13 +30,16 @@ La página siempre conserva este orden:
 1. Introduction: título, resumen, hero y detalle responsive opcional.
 2. Overview: contexto, objetivo y metadatos.
 3. The challenge: problema, pregunta de diseño y tres prioridades.
-4. Research & insights: insights, benchmark y persona.
+4. Research & insights: insights, benchmark y una o varias personas.
 5. Ideation: user flow y decisiones de arquitectura.
 6. Design system & rationale: sistema visual, reglas, objetivos y soluciones construidas desde cero.
-7. User testing: método, observaciones y respuestas de diseño.
-8. Final design: highlights y galería de mockups.
-9. Impact: outcomes o métricas con unidad explícita y contexto verificable.
-10. Learnings: conclusión y aprendizajes transferibles.
+7. Product delivery, opcional: workflow y stack cuando el sistema de entrega sea parte relevante del caso.
+8. User testing: método, observaciones y respuestas de diseño.
+9. Final design: highlights y galería de mockups.
+10. Impact: outcomes o métricas con unidad explícita y contexto verificable.
+11. Learnings: conclusión y aprendizajes transferibles.
+
+Si `delivery` no existe, la página conserva la numeración original de diez capítulos.
 
 ## Campos principales
 
@@ -44,6 +49,8 @@ La página siempre conserva este orden:
   "project": "PROJECT",
   "name": "NAME",
   "date": "Month YYYY",
+  "cardNumber": "00",
+  "featured": false,
   "cardTitle": "Project name",
   "cardTags": ["DISCIPLINE", "PLATFORM", "CONTEXT"],
   "heroDescription": "Short introduction",
@@ -59,9 +66,10 @@ La página siempre conserva este orden:
   "caseStudy": {
     "meta": [],
     "challenge": {},
-    "research": {},
+    "research": { "personas": [] },
     "ideation": {},
     "design": {},
+    "delivery": {},
     "testing": {},
     "finalDesign": {},
     "impact": {},
@@ -81,6 +89,9 @@ Consulta `project-template.json` para ver todos los objetos y arrays obligatorio
 - Escribe outcomes verificables. Si el proyecto no está en producción, presenta hallazgos como validación de prototipo y evita inventar impacto comercial.
 - Mantén tres prioridades, tres insights, tres hallazgos y tres aprendizajes para conservar el ritmo visual.
 - El benchmark describe patrones de producto; no debe afirmar superioridad sin evidencia.
+- `research.personas` admite varias personas. `research.persona` sigue disponible para los casos existentes con una sola persona.
+- `delivery` es opcional. Cuando se incluye, debe explicar decisiones y responsabilidades, no limitarse a enumerar herramientas.
+- `cardNumber` es obligatorio y permanece asociado al proyecto aunque cambie el orden. `featured` es opcional y por defecto es `false`.
 - `heroInsetImage` es opcional. Si se usa, debe complementar el hero con otra escala o dispositivo.
 - La galería acepta cualquier número de imágenes, aunque cuatro mantiene el layout editorial previsto.
 - Usa textos alternativos contextuales en el componente; no incrustes información esencial únicamente dentro de una imagen.

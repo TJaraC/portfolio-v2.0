@@ -285,13 +285,7 @@ const Home: React.FC = () => {
               {error}
             </div>
           ) : (
-            projects.map((project, index) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                number={String(index + 1).padStart(2, '0')}
-              />
-            ))
+            projects.map((project) => <ProjectCard key={project.id} project={project} />)
           )}
         </div>
       </section>

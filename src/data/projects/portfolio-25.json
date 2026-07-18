@@ -3,6 +3,7 @@
   "project": "Portfolio",
   "name": "'25",
   "date": "July 2025",
+  "cardNumber": "03",
   "cardTitle": "Personal Portfolio",
   "cardTags": ["PRODUCT DESIGN", "WEB DESIGN", "REACT"],
   "heroDescription": "A personal portfolio designed and developed as a product in its own right. It combines an expressive editorial identity with a reusable React case-study system, responsive interactions and a direct route from first impression to meaningful project evidence.",

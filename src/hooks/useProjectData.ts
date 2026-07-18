@@ -92,7 +92,8 @@ interface ProjectCaseStudy {
       rows: ProjectBenchmarkRow[];
       note: string;
     };
-    persona: ProjectPersona;
+    persona?: ProjectPersona;
+    personas?: ProjectPersona[];
     insights: ProjectInsight[];
   };
   ideation: {
@@ -104,6 +105,12 @@ interface ProjectCaseStudy {
     description: string;
     decisions: ProjectDecision[];
     applications: ProjectDesignApplication[];
+  };
+  delivery?: {
+    title: string;
+    description: string;
+    workflow: ProjectFlowStep[];
+    stack: ProjectDecision[];
   };
   testing: {
     description: string;
@@ -129,6 +136,8 @@ interface ProjectData {
   project: string;
   name: string;
   date: string;
+  cardNumber: string;
+  featured?: boolean;
   cardTitle: string;
   cardTags: string[];
   heroDescription: string;
@@ -220,5 +229,6 @@ export type {
   ProjectInsight,
   ProjectLearning,
   ProjectMetric,
+  ProjectPersona,
   ProjectTestFinding,
 };

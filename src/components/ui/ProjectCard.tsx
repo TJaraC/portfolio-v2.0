@@ -5,10 +5,9 @@ import ImageWithCurtain from './ImageWithCurtain';
 
 interface ProjectCardProps {
   project: ProjectType;
-  number: string;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, number }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const { transitionTo } = useTransition();
 
   const handleClick = () => {
@@ -16,8 +15,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, number }) => {
   };
 
   return (
-    <article className="portfolio-card" onClick={handleClick} style={{ cursor: 'pointer' }}>
-      <div className="portfolio-card-number">{number}</div>
+    <article
+      className={`portfolio-card${project.featured ? ' is-featured' : ''}`}
+      onClick={handleClick}
+      style={{ cursor: 'pointer' }}
+      data-project-number={project.cardNumber}
+    >
+      <div className="portfolio-card-number">{project.cardNumber}</div>
       <div className="portfolio-card-img-wrapper">
         <ImageWithCurtain
           src={project.heroImage}

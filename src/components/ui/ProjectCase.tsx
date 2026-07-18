@@ -49,6 +49,15 @@ const CaseChapter: React.FC<CaseChapterProps> = ({ number, title, children, clas
 
 const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
   const caseStudy = data.caseStudy;
+  const personas = caseStudy
+    ? (caseStudy.research.personas ??
+      (caseStudy.research.persona ? [caseStudy.research.persona] : []))
+    : [];
+  const hasDeliveryChapter = Boolean(caseStudy?.delivery);
+  const testingChapterNumber = hasDeliveryChapter ? '08' : '07';
+  const finalChapterNumber = hasDeliveryChapter ? '09' : '08';
+  const impactChapterNumber = hasDeliveryChapter ? '10' : '09';
+  const learningsChapterNumber = hasDeliveryChapter ? '11' : '10';
   const theme = {
     '--project-accent': data.fontAndColours.colors[0],
     '--project-accent-strong': data.fontAndColours.colors[1] ?? data.fontAndColours.colors[0],
@@ -201,42 +210,55 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                       </table>
                     </div>
                   </div>
-                  <article className="case-persona-card">
-                    <div className="case-persona-intro">
-                      <div className="case-persona-monogram" aria-hidden="true">
-                        {caseStudy.research.persona.name
-                          .split(' ')
-                          .map((part) => part[0])
-                          .join('')
-                          .slice(0, 2)}
-                      </div>
-                      <div>
-                        <span className="case-kicker">Primary persona</span>
-                        <h3>{caseStudy.research.persona.name}</h3>
-                        <p>{caseStudy.research.persona.archetype}</p>
-                      </div>
+                  {personas.length ? (
+                    <div className="case-persona-grid">
+                      {personas.map((persona, personaIndex) => (
+                        <article
+                          className="case-persona-card"
+                          key={`${persona.name}-${personaIndex}`}
+                        >
+                          <div className="case-persona-intro">
+                            <div className="case-persona-monogram" aria-hidden="true">
+                              {persona.name
+                                .split(' ')
+                                .map((part) => part[0])
+                                .join('')
+                                .slice(0, 2)}
+                            </div>
+                            <div>
+                              <span className="case-kicker">
+                                {personaIndex === 0
+                                  ? 'Primary persona'
+                                  : `Supporting persona ${String(personaIndex + 1).padStart(2, '0')}`}
+                              </span>
+                              <h3>{persona.name}</h3>
+                              <p>{persona.archetype}</p>
+                            </div>
+                          </div>
+                          <p className="case-persona-context">{persona.context}</p>
+                          <blockquote>{persona.quote}</blockquote>
+                          <div className="case-persona-lists">
+                            <div>
+                              <h4>Goals</h4>
+                              <ul>
+                                {persona.goals.map((goal, index) => (
+                                  <li key={`${goal}-${index}`}>{goal}</li>
+                                ))}
+                              </ul>
+                            </div>
+                            <div>
+                              <h4>Frictions</h4>
+                              <ul>
+                                {persona.frustrations.map((frustration, index) => (
+                                  <li key={`${frustration}-${index}`}>{frustration}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
+                        </article>
+                      ))}
                     </div>
-                    <p className="case-persona-context">{caseStudy.research.persona.context}</p>
-                    <blockquote>{caseStudy.research.persona.quote}</blockquote>
-                    <div className="case-persona-lists">
-                      <div>
-                        <h4>Goals</h4>
-                        <ul>
-                          {caseStudy.research.persona.goals.map((goal, index) => (
-                            <li key={`${goal}-${index}`}>{goal}</li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div>
-                        <h4>Frictions</h4>
-                        <ul>
-                          {caseStudy.research.persona.frustrations.map((frustration, index) => (
-                            <li key={`${frustration}-${index}`}>{frustration}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </article>
+                  ) : null}
                 </CaseChapter>
 
                 <CaseChapter number="05" title="Ideation" className="case-ideation">
@@ -308,7 +330,39 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                   </div>
                 </CaseChapter>
 
-                <CaseChapter number="07" title="User testing" className="case-testing">
+                {caseStudy.delivery ? (
+                  <CaseChapter
+                    number="07"
+                    title={caseStudy.delivery.title}
+                    className="case-delivery"
+                  >
+                    <p className="case-lead">{caseStudy.delivery.description}</p>
+                    <ol className="case-flow" aria-label="Product delivery workflow">
+                      {caseStudy.delivery.workflow.map((step, index) => (
+                        <li key={`${step.title}-${index}`}>
+                          <span>{String(index + 1).padStart(2, '0')}</span>
+                          <h3>{step.title}</h3>
+                          <p>{step.description}</p>
+                        </li>
+                      ))}
+                    </ol>
+                    <div className="case-decision-grid case-delivery-stack">
+                      {caseStudy.delivery.stack.map((item, index) => (
+                        <article className="case-decision-card" key={`${item.label}-${index}`}>
+                          <span>{item.label}</span>
+                          <h3>{item.title}</h3>
+                          <p>{item.description}</p>
+                        </article>
+                      ))}
+                    </div>
+                  </CaseChapter>
+                ) : null}
+
+                <CaseChapter
+                  number={testingChapterNumber}
+                  title="User testing"
+                  className="case-testing"
+                >
                   <p className="case-lead">{caseStudy.testing.description}</p>
                   <div className="case-method-note">
                     <span className="case-kicker">Validation approach</span>
@@ -337,7 +391,11 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                   </div>
                 </CaseChapter>
 
-                <CaseChapter number="08" title="Final design" className="case-final">
+                <CaseChapter
+                  number={finalChapterNumber}
+                  title="Final design"
+                  className="case-final"
+                >
                   <p className="case-lead">{caseStudy.finalDesign.description}</p>
                   <div className="case-highlight-grid">
                     {caseStudy.finalDesign.highlights.map((highlight, index) => (
@@ -364,7 +422,7 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                   <p className="case-gallery-caption">{data.gallery.description}</p>
                 </CaseChapter>
 
-                <CaseChapter number="09" title="Impact" className="case-impact">
+                <CaseChapter number={impactChapterNumber} title="Impact" className="case-impact">
                   <p className="case-lead">{caseStudy.impact.description}</p>
                   <div className="case-metric-grid">
                     {caseStudy.impact.metrics.map((metric, index) => (
@@ -383,7 +441,11 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                   </div>
                 </CaseChapter>
 
-                <CaseChapter number="10" title="Learnings" className="case-learnings">
+                <CaseChapter
+                  number={learningsChapterNumber}
+                  title="Learnings"
+                  className="case-learnings"
+                >
                   <p className="case-learnings-summary">{caseStudy.learnings.description}</p>
                   <div className="case-learning-list">
                     {caseStudy.learnings.items.map((learning, index) => (

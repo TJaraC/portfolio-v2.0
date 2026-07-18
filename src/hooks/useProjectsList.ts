@@ -3,12 +3,18 @@ import { ProjectData } from './useProjectData';
 
 interface ProjectCard {
   id: string;
+  cardNumber: string;
+  featured: boolean;
   cardTitle: string;
   cardTags: string[];
   heroImage: string;
 }
 
-export const useProjectsList = (): { projects: ProjectCard[]; loading: boolean; error: string | null } => {
+export const useProjectsList = (): {
+  projects: ProjectCard[];
+  loading: boolean;
+  error: string | null;
+} => {
   const [projects, setProjects] = useState<ProjectCard[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -18,12 +24,12 @@ export const useProjectsList = (): { projects: ProjectCard[]; loading: boolean; 
       try {
         setLoading(true);
         setError(null);
-        
+
         // Lista de proyectos disponibles (se puede expandir dinámicamente)
         const projectIds = ['ultracamp', 'festgo-app', 'portfolio-25', 'howell-gallery'];
 
         const results = await Promise.allSettled(
-          projectIds.map(projectId => import(`../data/projects/${projectId}.json`))
+          projectIds.map((projectId) => import(`../data/projects/${projectId}.json`))
         );
 
         const projectsData: ProjectCard[] = results
@@ -35,6 +41,8 @@ export const useProjectsList = (): { projects: ProjectCard[]; loading: boolean; 
             const data: ProjectData = result.value.default;
             return {
               id: data.id,
+              cardNumber: data.cardNumber,
+              featured: Boolean(data.featured),
               cardTitle: data.cardTitle,
               cardTags: data.cardTags,
               heroImage: data.heroImage,
