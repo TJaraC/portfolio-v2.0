@@ -392,6 +392,7 @@ test('the visible portfolio is a stable four-project grid', async ({ page }) => 
           const iconRect = link.querySelector('svg')!.getBoundingClientRect();
 
           return {
+            color: styles.color,
             backgroundColor: styles.backgroundColor,
             borderTopWidth: styles.borderTopWidth,
             borderTopStyle: styles.borderTopStyle,
@@ -402,6 +403,7 @@ test('the visible portfolio is a stable four-project grid', async ({ page }) => 
             iconWidth: iconRect.width,
           };
         });
+        expect(iconPresentation.color).toBe('rgb(236, 236, 236)');
         expect(iconPresentation.backgroundColor).toBe('rgba(0, 0, 0, 0)');
         expect(iconPresentation.borderTopWidth).toBe('0px');
         expect(iconPresentation.borderTopStyle).toBe('none');
