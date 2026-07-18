@@ -7,3 +7,14 @@ Live at [hellotjc.com](https://hellotjc.com)
 ## Stack
 
 React 18, TypeScript, Vite, GSAP, Lenis
+
+## Development
+
+This repository uses pnpm exclusively.
+
+```bash
+pnpm install
+pnpm start
+```
+
+Create a production build with `pnpm build` and run the TypeScript checks with `pnpm type-check`.

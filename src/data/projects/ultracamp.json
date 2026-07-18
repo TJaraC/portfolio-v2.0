@@ -4,67 +4,286 @@
   "name": "",
   "date": "June 2025",
   "cardTitle": "Ultracamp",
-  "cardTags": ["WEB DESIGN", "LANDING", "RESPONSIVE"],
-  "heroDescription": "Ultracamp is an adaptive online coding bootcamp platform offering flexible, AI-tutored programming education available 24/7. I designed the landing page to communicate its practical, modern and accessible learning model.",
+  "cardTags": ["PRODUCT DESIGN", "EDTECH", "RESPONSIVE"],
+  "heroDescription": "A conversion-led learning ecosystem for an AI-supported coding bootcamp. I shaped the product story, information architecture and responsive interface across the landing page, learning paths, courses and an SEO tutorial hub.",
   "heroImage": "/images/projects/ultracamp/Ultracamp01.webp",
+  "heroInsetImage": "/images/projects/ultracamp/Ultracamp02.webp",
   "overview": {
-    "description": "The Ultracamp landing page presents the key benefits of learning to code through their full‑stack bootcamp. It highlights features like AI-enabled instant feedback, real‑world coding challenges, flexible pacing, and mentorship—encouraging visitors to enroll with clarity and confidence."
+    "description": "Ultracamp helps people learn web development from the ground up through guided practice and always-available AI feedback. The work grew from a single landing page into a five-template ecosystem that moves users from discovery to a confident subscription decision."
   },
   "projectGoal": {
-    "description": "The objective was to craft a high‑conversion landing page that clearly communicates Ultracamp’s unique value proposition: a practical, self‑paced coding education supported by AI feedback and real‑world projects, in an engaging and trustworthy visual design."
+    "description": "Create a scalable, mobile-first journey that makes a technical curriculum feel approachable, demonstrates the learning experience before purchase and keeps the €19 offer visible without interrupting exploration."
   },
   "fontAndColours": {
-    "description": "The visual style focuses on clarity and energy. Bright accent colors highlight key messages, while a clean neutral base supports readability. Typography is modern and legible across devices.",
-    "colors": [
-      "#3DAA89",
-      "#286D58",
-      "#0BF082",
-      "#0F1110"
-    ],
+    "description": "A near-black interface borrows the focus of a code editor, while vivid green is reserved for progress, price and primary actions. Inter keeps dense technical content calm and legible from large displays down to compact mobile cards.",
+    "colors": ["#0BF082", "#3DAA89", "#0F1110", "#F5F7F6"],
     "fonts": [
-      {
-        "name": "Inter Light"
-      },
-      {
-        "name": "Inter Regular"
-      },
-      {
-        "name": "Inter Medium"
-      },
-      {
-        "name": "Inter Bold"
-      }
+      { "name": "Inter Light" },
+      { "name": "Inter Regular" },
+      { "name": "Inter Medium" },
+      { "name": "Inter Bold" }
     ]
   },
-  "designProcess": {
-    "description": "The design process followed the Design Thinking approach. It began with a thorough benchmarking of competitor landing pages in the online education and tech bootcamp space. From there, I structured the UX to prioritise clarity, trust and conversion. This was followed by wireframing, creation of a visual UI kit, and the final high-fidelity design and interaction prototypes.",
-    "roadmap": {
-      "description": "Initial project planning and timeline definition, establishing key milestones and deliverables for the Ultracamp landing page design process.",
-      "image": ""
+  "caseStudy": {
+    "meta": [
+      { "label": "Role", "value": "Product Designer · UX/UI" },
+      { "label": "Scope", "value": "Strategy, architecture and interface design" },
+      { "label": "Platforms", "value": "Responsive web · Mobile-first" },
+      { "label": "Deliverables", "value": "5 page templates · Interactive prototype" }
+    ],
+    "challenge": {
+      "description": "Coding education is crowded with broad promises, hidden pricing and intimidating course outlines. Ultracamp needed to explain a substantial technical programme in seconds, then provide enough depth to earn trust—especially for visitors researching from a phone.",
+      "question": "How might we remove technical uncertainty and make a learner feel ready to subscribe from the device already in their hand?",
+      "priorities": [
+        {
+          "title": "Clarify the offer",
+          "description": "Place the outcome, audience and price in the opening journey instead of asking visitors to decode the proposition."
+        },
+        {
+          "title": "Prove the product",
+          "description": "Show the AI-assisted editor, feedback and progress experience rather than relying on generic education imagery."
+        },
+        {
+          "title": "Control density",
+          "description": "Break a complex curriculum into progressive layers that remain readable and actionable on mobile."
+        }
+      ]
     },
-    "definition": {
-      "description": "",
-      "image": ""
-    },
-    "inspiration": {
-      "description": "",
-      "image": ""
+    "research": {
+      "description": "A focused EdTech scan mapped where prospective learners lose confidence: vague outcomes, curricula designed only for desktop and no tangible preview of the learning environment. The strongest opportunity was not more information, but better sequencing.",
+      "benchmark": {
+        "criteria": ["Value proposition", "Mobile curriculum", "Price clarity", "Content path"],
+        "rows": [
+          {
+            "name": "Self-serve platforms",
+            "values": ["Broad catalogue", "Compact but generic", "Plan comparison", "Library-led"]
+          },
+          {
+            "name": "Intensive bootcamps",
+            "values": ["Career transformation", "Long-form pages", "Often delayed", "Sales-led"]
+          },
+          {
+            "name": "Free learning hubs",
+            "values": ["Low barrier", "Content-first", "Free", "Search-led"]
+          },
+          {
+            "name": "Ultracamp direction",
+            "values": [
+              "Practice with AI",
+              "Progressive modules",
+              "€19 in context",
+              "SEO to course"
+            ],
+            "featured": true
+          }
+        ],
+        "note": "The benchmark compares recurring interface patterns and positioning choices; it is a design-direction tool, not a commercial performance ranking."
+      },
+      "persona": {
+        "name": "Alex Morgan",
+        "archetype": "The stalled self-learner",
+        "context": "Alex is changing careers and learns in short sessions between work and commuting. Free tutorials have built curiosity, but fragmented resources make progress difficult to judge.",
+        "quote": "I do not need another list of videos. I need to know what to practise next and whether I am getting it right.",
+        "goals": [
+          "Follow a visible path from fundamentals to employable projects",
+          "Practise on a phone or laptop without losing progress",
+          "Understand the total commitment before paying"
+        ],
+        "frustrations": [
+          "Course outlines that feel endless on mobile",
+          "Marketing claims without a product preview",
+          "Feedback that arrives after motivation has faded"
+        ]
+      },
+      "insights": [
+        {
+          "label": "01 · Confidence",
+          "title": "Proof beats promise",
+          "description": "A realistic editor and progress model communicates the value of AI tutoring faster than feature copy alone."
+        },
+        {
+          "label": "02 · Structure",
+          "title": "Depth should be earned",
+          "description": "Lead with the benefit, then reveal learning paths, modules and lesson detail as intent increases."
+        },
+        {
+          "label": "03 · Mobile",
+          "title": "Conversion must travel",
+          "description": "Price and next actions need to remain available without becoming a persistent obstruction to reading."
+        }
+      ]
     },
     "ideation": {
-      "description": "",
-      "image": ""
+      "description": "The concept became an intent-based ecosystem. Search visitors can enter through useful tutorial content while direct visitors begin with the product promise; both paths converge on a learning path, course detail and a clear plan decision.",
+      "flow": [
+        {
+          "title": "Discover",
+          "description": "Arrive through a tutorial or the main landing page."
+        },
+        {
+          "title": "Validate",
+          "description": "See the learning model, editor and AI feedback in context."
+        },
+        {
+          "title": "Explore",
+          "description": "Open a role-based learning path and scan its milestones."
+        },
+        {
+          "title": "Commit",
+          "description": "Review course detail, workload and practical outcomes."
+        },
+        { "title": "Subscribe", "description": "Choose a transparent monthly or annual plan." }
+      ],
+      "decisions": [
+        {
+          "label": "Entry strategy",
+          "title": "Two paths, one decision",
+          "description": "SEO content and direct campaign traffic use different openings but share the same proof and subscription architecture."
+        },
+        {
+          "label": "Information model",
+          "title": "Progressive disclosure",
+          "description": "Benefits, paths, courses and lessons each hold the amount of detail appropriate to that level of intent."
+        },
+        {
+          "label": "Conversion",
+          "title": "Contextual CTAs",
+          "description": "Calls to action sit beside proof, curriculum and pricing instead of repeating as disconnected banners."
+        },
+        {
+          "label": "Content",
+          "title": "Learning before selling",
+          "description": "Tutorial pages deliver genuine value first, then connect the topic to a structured course route."
+        }
+      ]
     },
-    "visualUi": {
-      "description": "",
-      "image": ""
+    "design": {
+      "description": "The visual system combines the precision of a development environment with the pace of a modern product landing page. Components were designed mobile-first, then expanded into a modular desktop grid without changing their hierarchy or purpose.",
+      "decisions": [
+        {
+          "label": "Hierarchy",
+          "title": "Green means action",
+          "description": "The accent is limited to primary actions, progress, feedback and price so every use carries meaning."
+        },
+        {
+          "label": "Components",
+          "title": "One card, many contexts",
+          "description": "A shared card grammar adapts to courses, tutorials, modules and pricing while preserving scanning behaviour."
+        },
+        {
+          "label": "Accessibility",
+          "title": "Comfortable density",
+          "description": "Contrast, tap targets and restrained line lengths keep technical material legible on compact screens."
+        },
+        {
+          "label": "Responsive",
+          "title": "Reflow, do not shrink",
+          "description": "Tables become summaries, grids become carousels or stacks and side panels become in-flow decisions on mobile."
+        }
+      ],
+      "iterations": [
+        {
+          "component": "Course curriculum",
+          "before": "A complete module list appeared as one long desktop column with little sense of progression.",
+          "after": "Milestones lead into collapsible modules with duration, status and a visible next step.",
+          "outcome": "A complex syllabus becomes scannable at every breakpoint."
+        },
+        {
+          "component": "Pricing",
+          "before": "Plans were separated from the product proof and required a late-page comparison.",
+          "after": "Monthly and annual choices share one compact card, reinforced beside relevant course content.",
+          "outcome": "Price remains clear without dominating the learning story."
+        },
+        {
+          "component": "Tutorial article",
+          "before": "The article ended without a meaningful route into structured learning.",
+          "after": "Reading progress, topic context and a related course prompt create a natural continuation.",
+          "outcome": "Organic discovery connects to the paid ecosystem."
+        }
+      ]
     },
-    "implementation": {
-      "description": "",
-      "image": ""
+    "testing": {
+      "description": "The high-fidelity prototype was reviewed through realistic tasks that covered first impression, curriculum scanning, tutorial reading and plan selection. The aim was to expose confidence gaps before handoff, not to manufacture launch metrics.",
+      "method": "Five task-based review scenarios were run across desktop and mobile prototypes, with emphasis on comprehension, navigation confidence and whether the next action remained discoverable.",
+      "findings": [
+        {
+          "task": "Explain the offer after the first screen",
+          "observation": "AI support was understood, but the practical nature of the programme needed stronger visual proof.",
+          "decision": "Move the interactive editor preview directly after the core proposition and name the feedback loop."
+        },
+        {
+          "task": "Find what to learn after JavaScript basics",
+          "observation": "A flat course list made progression feel like catalogue browsing.",
+          "decision": "Introduce role-based learning paths with milestones before individual course pages."
+        },
+        {
+          "task": "Compare plans from a phone",
+          "observation": "A wide comparison table interrupted reading and hid the annual advantage.",
+          "decision": "Use stacked plan states with one visible recommendation and a compact mobile CTA."
+        }
+      ]
+    },
+    "finalDesign": {
+      "description": "The final experience balances immersion with control. Desktop layouts use generous space and modular grids; mobile layouts preserve the same hierarchy through concise cards, collapsible detail and conversion prompts that support rather than cover the content.",
+      "highlights": [
+        {
+          "title": "Product-led landing",
+          "description": "The opening journey pairs a clear €19 proposition with evidence of practice, feedback and real project work."
+        },
+        {
+          "title": "Role-based paths",
+          "description": "Learning paths translate a large catalogue into a sequence with milestones, skills and visible commitment."
+        },
+        {
+          "title": "SEO tutorial hub",
+          "description": "Search-friendly cards and articles create low-friction entry points that remain connected to the product."
+        },
+        {
+          "title": "Responsive conversion",
+          "description": "Navigation, pricing, FAQs and course summaries recompose around thumb reach and small-screen reading."
+        }
+      ]
+    },
+    "impact": {
+      "description": "The design delivers a coherent acquisition and learning story rather than a collection of isolated marketing pages. Its impact is expressed through the scalable product system created and the friction removed from the decision journey.",
+      "metrics": [
+        {
+          "value": "5",
+          "label": "Scalable templates",
+          "description": "Landing, learning path, course detail, tutorial hub and article share one visual and conversion system."
+        },
+        {
+          "value": "2",
+          "label": "Acquisition paths",
+          "description": "Direct and organic visitors can enter differently while converging on one clear learning decision."
+        },
+        {
+          "value": "1",
+          "label": "Responsive language",
+          "description": "Components preserve meaning from wide curriculum grids to compact mobile reading flows."
+        }
+      ]
+    },
+    "learnings": {
+      "description": "A persuasive education product does not simplify the subject; it makes the route through that complexity feel deliberate, visible and achievable.",
+      "items": [
+        {
+          "title": "Sequence creates confidence",
+          "description": "The same information feels easier when each page answers the next question instead of trying to answer every question at once."
+        },
+        {
+          "title": "Real interfaces are the strongest proof",
+          "description": "Showing practice, feedback and progress makes an abstract AI-learning promise tangible without exaggerated claims."
+        },
+        {
+          "title": "Mobile is an information test",
+          "description": "Designing for a narrow screen exposed which content was essential, which could wait and where conversion genuinely belonged."
+        }
+      ]
     }
   },
   "gallery": {
-    "description": "Final mockups of the landing page showcasing key sections such as the hero banner, program introduction, platform benefits, calls to action, and visual identity elements—focused on clarity, user engagement, and conversion.",
+    "description": "Final device mockups showing the responsive learning experience, practice environment, pricing model and progress feedback across desktop and mobile.",
     "images": [
       "/images/projects/ultracamp/Ultracamp02.webp",
       "/images/projects/ultracamp/Ultracamp03.webp",

@@ -4,67 +4,284 @@
   "name": "GALLERY",
   "date": "September 2024",
   "cardTitle": "Howell Gallery",
-  "cardTags": ["UX/UI", "WEB DESIGN", "DIGITAL ART"],
-  "heroDescription": "Howell is an innovative digital platform designed to immerse users in the captivating world of contemporary art. With a curated collection of artworks and artist profiles, it offers a seamless experience for exploring and connecting with modern creators.",
+  "cardTags": ["PRODUCT DESIGN", "RESPONSIVE WEB", "ART & CULTURE"],
+  "heroDescription": "A responsive digital gallery that gives contemporary art room to lead while making artists, exhibitions and public programming easier to discover. Howell translates the confidence of a physical institution into an accessible cross-device experience.",
   "heroImage": "/images/projects/howell/Howell01.webp",
+  "heroInsetImage": "/images/projects/howell/Howell03.webp",
   "overview": {
-    "description": "Introducing Howell, an innovative digital platform designed to immerse you in the captivating world of contemporary art. Accessible from any device, this virtual gallery invites you to explore a vast catalog of works by renowned and emerging artists."
+    "description": "Howell Gallery is a concept platform for exploring contemporary exhibitions beyond a physical visit. It brings together artwork, artist context, current and upcoming shows, activities and editorial material in one coherent catalogue for desktop and mobile."
   },
   "projectGoal": {
-    "description": "The Howell website aims to provide art enthusiasts with a seamless and immersive digital experience. By offering a curated collection of artworks, artist profiles, and exhibition information, Howell seeks to connect art lovers with the pieces and artists that resonate with them."
+    "description": "Create an elegant, accessible gallery experience where artwork remains dominant, cultural context is easy to follow and visitors can move naturally from discovery to deeper reading or an in-person activity."
   },
   "fontAndColours": {
-    "description": "The visual identity of Howell combines a minimalist palette with strong contrast and elegance. The typography relies on the Stotzl font family in multiple weights, offering a balance between modernity and sophistication.",
-    "colors": [
-      "#F59E0B",
-      "#111827",
-      "#000000",
-      "#FFFFFF"
-    ],
+    "description": "A strict black-and-white foundation gives varied artworks a neutral exhibition wall. Warm amber acts as the institutional signal for navigation, status and important actions, while the Stotzl family keeps titles and long-form cultural content direct.",
+    "colors": ["#F59E0B", "#B86F00", "#111827", "#FFFFFF"],
     "fonts": [
-      {
-        "name": "Stotzl Light"
-      },
-      {
-        "name": "Stotzl Regular"
-      },
-      {
-        "name": "Stotzl Medium"
-      },
-      {
-        "name": "Stotzl Bold"
-      }
+      { "name": "Stotzl Light" },
+      { "name": "Stotzl Regular" },
+      { "name": "Stotzl Medium" },
+      { "name": "Stotzl Bold" }
     ]
   },
-  "designProcess": {
-    "description": "The design process began with defining the needs of art enthusiasts and identifying how digital tools could enhance their engagement with contemporary art. Through wireframing, visual exploration, and UI refinement, the final design was built to evoke elegance and accessibility.",
-    "roadmap": {
-      "description": "",
-      "image": ""
+  "caseStudy": {
+    "meta": [
+      { "label": "Role", "value": "UX/UI Designer" },
+      { "label": "Scope", "value": "Research, architecture and responsive interface" },
+      { "label": "Platform", "value": "Desktop and mobile web" },
+      { "label": "Deliverables", "value": "Catalogue, exhibition and artist-page prototype" }
+    ],
+    "challenge": {
+      "description": "Cultural websites often split practical information, artwork and scholarly context into separate experiences. Howell needed to support quick exhibition discovery and deep reading without making the interface feel like either a ticketing portal or a dense institutional archive.",
+      "question": "How might a digital gallery preserve the presence of the artwork while giving every visitor enough context to feel invited into the conversation?",
+      "priorities": [
+        {
+          "title": "Let art lead",
+          "description": "Use typography and controls as a frame, allowing each exhibition's visual language to remain distinct."
+        },
+        {
+          "title": "Connect the context",
+          "description": "Link works, artists, exhibitions and activities so curiosity never reaches a dead end."
+        },
+        {
+          "title": "Design for access",
+          "description": "Make long-form reading, image detail and practical visit information comfortable on any device."
+        }
+      ]
     },
-    "definition": {
-      "description": "",
-      "image": ""
-    },
-    "inspiration": {
-      "description": "",
-      "image": ""
+    "research": {
+      "description": "Research compared gallery websites, public collection archives and arts publications. The scan revealed a recurring trade-off: visually confident sites often hid practical detail, while information-rich archives treated every visitor like a specialist.",
+      "benchmark": {
+        "criteria": ["Visual immersion", "Exhibition scan", "Artist context", "Mobile reading"],
+        "rows": [
+          {
+            "name": "Institutional galleries",
+            "values": ["Brand-led", "Programme-heavy", "Authoritative", "Dense"]
+          },
+          {
+            "name": "Collection archives",
+            "values": ["Object-led", "Filter-first", "Deep metadata", "Functional"]
+          },
+          {
+            "name": "Arts publications",
+            "values": ["Editorial", "Story-led", "Strong narrative", "Readable"]
+          },
+          {
+            "name": "Howell direction",
+            "values": ["Artwork-led", "Status + filters", "Connected profiles", "Editorial rhythm"],
+            "featured": true
+          }
+        ],
+        "note": "The comparison identifies interface and content patterns across cultural platforms; it supports a product direction without evaluating curatorial quality."
+      },
+      "persona": {
+        "name": "Elena Foster",
+        "archetype": "The curious cultural explorer",
+        "context": "Elena enjoys exhibitions but does not have a formal art background. She discovers shows through social posts, reads on her phone and wants enough context to decide whether an unfamiliar artist is worth exploring in person.",
+        "quote": "I want the story behind the work, but I do not want to feel that I need an art-history degree before I can start.",
+        "goals": [
+          "See what is on now and what is coming next",
+          "Understand an artist and exhibition in approachable language",
+          "Save or share an activity for a future visit"
+        ],
+        "frustrations": [
+          "Artwork presented without scale or context",
+          "Biography pages that become walls of text on mobile",
+          "Programme details separated from relevant exhibitions"
+        ]
+      },
+      "insights": [
+        {
+          "label": "01 · Invitation",
+          "title": "Context should open a door",
+          "description": "Plain-language summaries can lead into deeper material without flattening the subject."
+        },
+        {
+          "label": "02 · Discovery",
+          "title": "Status matters before filters",
+          "description": "Current, upcoming and archived states answer the first visitor question faster than a complex taxonomy."
+        },
+        {
+          "label": "03 · Continuity",
+          "title": "Every object belongs to a story",
+          "description": "Works become more meaningful when artist, exhibition and related programming remain one step away."
+        }
+      ]
     },
     "ideation": {
-      "description": "",
-      "image": ""
+      "description": "The concept uses an exhibition as the central narrative object. Visitors can enter through a featured show, an artist, a work or an activity, then move between those contexts without returning to a generic catalogue.",
+      "flow": [
+        {
+          "title": "Discover",
+          "description": "Meet a featured exhibition or browse what is currently active."
+        },
+        {
+          "title": "Observe",
+          "description": "Explore key works with scale, media and focused visual detail."
+        },
+        {
+          "title": "Understand",
+          "description": "Open an approachable curatorial story and artist profile."
+        },
+        {
+          "title": "Participate",
+          "description": "Connect talks, workshops or visits to the exhibition context."
+        },
+        {
+          "title": "Return",
+          "description": "Save, share or continue through related artists and themes."
+        }
+      ],
+      "decisions": [
+        {
+          "label": "Core object",
+          "title": "Exhibition-led architecture",
+          "description": "Shows bring artwork, artists, dates and activities into a narrative visitors already understand."
+        },
+        {
+          "label": "Catalogue",
+          "title": "Status before taxonomy",
+          "description": "Active and upcoming labels help casual visitors orient before search and filters add precision."
+        },
+        {
+          "label": "Reading",
+          "title": "Layered interpretation",
+          "description": "Short introductions lead to biography, curatorial context and related material at the reader's pace."
+        },
+        {
+          "label": "Responsive",
+          "title": "Editorial reflow",
+          "description": "Artwork, captions and text stack deliberately on mobile instead of shrinking a desktop gallery grid."
+        }
+      ]
     },
-    "visualUi": {
-      "description": "",
-      "image": ""
+    "design": {
+      "description": "The design system behaves like a flexible exhibition frame. Neutral surfaces, confident type and thin rules create order; amber marks institutional wayfinding while artwork introduces the colour, texture and emotion of each page.",
+      "decisions": [
+        {
+          "label": "Canvas",
+          "title": "Neutral by default",
+          "description": "White and ink provide consistency across exhibitions with radically different visual identities."
+        },
+        {
+          "label": "Wayfinding",
+          "title": "Amber carries intent",
+          "description": "Navigation, status and calls to action share one warm signal without competing with the art."
+        },
+        {
+          "label": "Typography",
+          "title": "Direct, not academic",
+          "description": "A sturdy grotesk hierarchy keeps labels, titles and long-form interpretation readable."
+        },
+        {
+          "label": "Imagery",
+          "title": "Space communicates scale",
+          "description": "Full-width works alternate with detail crops and contextual installation views."
+        }
+      ],
+      "iterations": [
+        {
+          "component": "Exhibition index",
+          "before": "A uniform image grid gave active, upcoming and archived shows the same visual weight.",
+          "after": "Status labels, a featured lead and concise filters establish time and relevance before taxonomy.",
+          "outcome": "Visitors can orient quickly without losing visual discovery."
+        },
+        {
+          "component": "Artist profile",
+          "before": "Biography and exhibition history formed one uninterrupted text page.",
+          "after": "An identity summary, narrative sections and linked works create multiple reading depths.",
+          "outcome": "Casual and committed readers share one page comfortably."
+        },
+        {
+          "component": "Mobile artwork view",
+          "before": "Desktop captions and controls reduced the image to a narrow strip.",
+          "after": "The work leads, with caption, metadata and related actions placed in a clear sequence below.",
+          "outcome": "Small-screen viewing preserves visual presence and context."
+        }
+      ]
     },
-    "implementation": {
-      "description": "",
-      "image": ""
+    "testing": {
+      "description": "Prototype review concentrated on comprehension and orientation: finding an active exhibition, explaining its central idea, moving to an artist profile and locating a related activity from both desktop and mobile entry points.",
+      "method": "Scenario walkthroughs combined first-impression interpretation, catalogue navigation and long-form mobile reading. The resulting observations guided the information hierarchy and responsive behaviour.",
+      "findings": [
+        {
+          "task": "Find an exhibition available now",
+          "observation": "Image-led browsing was engaging, but date ranges alone required too much interpretation.",
+          "decision": "Add plain active and upcoming status labels before exposing deeper filter controls."
+        },
+        {
+          "task": "Understand an unfamiliar artist",
+          "observation": "The complete biography felt authoritative but difficult to enter on mobile.",
+          "decision": "Introduce a short profile summary, thematic anchors and links to works before the full narrative."
+        },
+        {
+          "task": "Move from a show to a related activity",
+          "observation": "A separate programme menu broke the exhibition story.",
+          "decision": "Surface talks and workshops within the exhibition page while retaining the global activities index."
+        }
+      ]
+    },
+    "finalDesign": {
+      "description": "The final experience supports both a quick cultural plan and a deeper encounter. Desktop pages use generous image scale and editorial pacing; mobile views turn the same content into a deliberate sequence of artwork, interpretation and practical action.",
+      "highlights": [
+        {
+          "title": "Featured exhibition",
+          "description": "A focused opening image, statement and date make the current programme immediately legible."
+        },
+        {
+          "title": "Connected artist profiles",
+          "description": "Biography, works and exhibition history form a layered route rather than an isolated archive record."
+        },
+        {
+          "title": "Accessible catalogue",
+          "description": "Status, search and filters balance casual browsing with precise discovery."
+        },
+        {
+          "title": "Responsive cultural reading",
+          "description": "Artwork remains prominent while captions, context and programming reflow into a calm mobile sequence."
+        }
+      ]
+    },
+    "impact": {
+      "description": "Howell turns a fragmented set of gallery content into one connected visitor journey. The design outcome is a flexible cultural publishing model that supports browsing, interpretation and participation without compromising the presence of the art.",
+      "metrics": [
+        {
+          "value": "4",
+          "label": "Connected content types",
+          "description": "Exhibitions, artists, artworks and activities link through shared context instead of separate silos."
+        },
+        {
+          "value": "2",
+          "label": "Reading depths",
+          "description": "Concise orientation and extended interpretation coexist for casual and specialist visitors."
+        },
+        {
+          "value": "1",
+          "label": "Responsive catalogue",
+          "description": "A common system preserves discovery and image presence across desktop and mobile."
+        }
+      ]
+    },
+    "learnings": {
+      "description": "Digital access does not mean placing more information beside an artwork. It means designing a sequence in which image, interpretation and practical context each arrive when they can deepen the encounter.",
+      "items": [
+        {
+          "title": "Neutral interfaces still make choices",
+          "description": "Restraint works only when hierarchy, scale and timing actively support the artwork."
+        },
+        {
+          "title": "Accessibility includes cultural confidence",
+          "description": "Plain orientation and layered context help more visitors begin without reducing intellectual depth."
+        },
+        {
+          "title": "Responsive design can improve curation",
+          "description": "Mobile sequencing clarified which image, idea and action mattered most at every stage of the story."
+        }
+      ]
     }
   },
   "gallery": {
-    "description": "Visual highlights of the Howell Gallery platform, showcasing the homepage, artwork detail pages, artist profiles, and responsive layouts across desktop and mobile views.",
+    "description": "Responsive mockups showing the mobile artist profile, desktop featured exhibition, editorial article and searchable exhibition catalogue.",
     "images": [
       "/images/projects/howell/Howell02.webp",
       "/images/projects/howell/Howell03.webp",

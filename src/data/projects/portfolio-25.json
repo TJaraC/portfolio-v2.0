@@ -4,67 +4,289 @@
   "name": "'25",
   "date": "July 2025",
   "cardTitle": "Personal Portfolio",
-  "cardTags": ["UX/UI", "WEB DESIGN", "REACT"],
-  "heroDescription": "This portfolio website was designed and developed to present my work as a UX/UI Designer and Product Designer. The site reflects both my creative identity and technical abilities, offering a clean, modern interface to showcase projects, design processes, and visual thinking.",
+  "cardTags": ["PRODUCT DESIGN", "WEB DESIGN", "REACT"],
+  "heroDescription": "A personal portfolio designed and developed as a product in its own right. It combines an expressive editorial identity with a reusable React case-study system, responsive interactions and a direct route from first impression to meaningful project evidence.",
   "heroImage": "/images/projects/portfolio/portfolio01.webp",
+  "heroInsetImage": "/images/projects/portfolio/portfolio05.webp",
   "overview": {
-    "description": "The portfolio was created as a space to reflect my personality and design approach. Built with React, it allows for easy content management and an optimized experience across devices. The structure, typography, and animations were carefully planned to highlight both visuals and content."
+    "description": "Portfolio '25 is the digital home for my work as a Product and UX/UI Designer. The site had to communicate personality quickly, then step back and let each case study demonstrate how I frame problems, make decisions and carry a visual system into implementation."
   },
   "projectGoal": {
-    "description": "The objective was to design and develop a performant, flexible, and visually appealing portfolio that communicates who I am as a designer. It had to support smooth navigation, showcase case studies in detail, and allow content updates through a modern backend setup."
+    "description": "Build a distinctive, performant and maintainable portfolio that helps design leads understand my positioning, scan relevant work and move into detailed evidence without losing the energy of the opening experience."
   },
   "fontAndColours": {
-    "description": "The visual identity of the portfolio is defined by a vibrant and approachable palette inspired by creativity and digital clarity. The Gesit and Gilda typefaces were used in various weights to ensure visual consistency and modern elegance.",
-    "colors": [
-      "#FD601A",
-      "#131313",
-      "#DDDCDA",
-      "#99A1AF"
-    ],
+    "description": "Gilda Display introduces an editorial, human voice while Geist handles navigation, systems and long-form clarity. Warm orange acts as a signature rather than decoration, punctuating a restrained palette of ink, warm grey and muted slate.",
+    "colors": ["#FD601A", "#C34813", "#131313", "#DDDCDA"],
     "fonts": [
-      {
-        "name": "Gilda Display"
-      },
-      {
-        "name": "Geist Regular"
-      },
-      {
-        "name": "Geist Medium"
-      },
-      {
-        "name": "Geist Bold"
-      }
+      { "name": "Gilda Display" },
+      { "name": "Geist Regular" },
+      { "name": "Geist Medium" },
+      { "name": "Geist Bold" }
     ]
   },
-  "designProcess": {
-    "description": "The design process followed a user-centered methodology based on design thinking. It began with benchmarking and content strategy, followed by information architecture, wireframes, UI kit, and prototyping. The final result is a fully custom and scalable web portfolio.",
-    "roadmap": {
-      "description": "",
-      "image": ""
+  "caseStudy": {
+    "meta": [
+      { "label": "Role", "value": "Designer · Front-end developer" },
+      { "label": "Scope", "value": "Brand, UX, UI, motion and implementation" },
+      { "label": "Stack", "value": "React · TypeScript · GSAP · Vite" },
+      { "label": "Deliverables", "value": "Responsive website · Reusable case-study system" }
+    ],
+    "challenge": {
+      "description": "A portfolio has two audiences and very little time. Hiring teams need evidence they can scan; the designer needs enough expression to be remembered. The challenge was to make the interface feel authored without letting typography, motion or personal storytelling obscure the work.",
+      "question": "How might a portfolio feel unmistakably personal in seconds and still reward a careful, evidence-led review?",
+      "priorities": [
+        {
+          "title": "Position clearly",
+          "description": "State what I design, how I think and where craft meets product logic before asking visitors to explore."
+        },
+        {
+          "title": "Make work scannable",
+          "description": "Use consistent project cards and case-study chapters so depth never becomes disorientation."
+        },
+        {
+          "title": "Build for change",
+          "description": "Keep content data-driven and components reusable so the portfolio can evolve with the work."
+        }
+      ]
     },
-    "definition": {
-      "description": "",
-      "image": ""
-    },
-    "inspiration": {
-      "description": "",
-      "image": ""
+    "research": {
+      "description": "The research combined portfolio benchmarking with a content audit of my own projects. The most effective references paired one memorable idea with disciplined navigation; weaker examples either felt interchangeable or forced visual experimentation into every interaction.",
+      "benchmark": {
+        "criteria": ["Positioning", "Project scan", "Case-study depth", "Contact path"],
+        "rows": [
+          {
+            "name": "Template portfolios",
+            "values": ["Role-led", "Fast and familiar", "Variable", "Conventional"]
+          },
+          {
+            "name": "Studio-style portfolios",
+            "values": ["Aesthetic-led", "Immersive", "Often concise", "Brand-led"]
+          },
+          {
+            "name": "Process-heavy portfolios",
+            "values": ["Method-led", "Text-dense", "Detailed", "Late in journey"]
+          },
+          {
+            "name": "Portfolio '25 direction",
+            "values": [
+              "Product + craft",
+              "Curated four",
+              "Shared 10 chapters",
+              "Persistent and direct"
+            ],
+            "featured": true
+          }
+        ],
+        "note": "The benchmark evaluates communication patterns and review friction, helping define a portfolio direction rather than rank individual designers."
+      },
+      "persona": {
+        "name": "Sam Lee",
+        "archetype": "The time-poor design lead",
+        "context": "Sam reviews many portfolios between meetings. The first pass is fast and comparative; deeper reading happens only when role, craft level and project relevance are immediately legible.",
+        "quote": "Show me the judgement behind the polish. I want to know what changed because you were involved.",
+        "goals": [
+          "Understand the designer's positioning quickly",
+          "Identify relevant product and interface work",
+          "Find decisions, constraints and outcomes inside a case study"
+        ],
+        "frustrations": [
+          "Beautiful intros that delay access to the work",
+          "Case studies with no repeatable hierarchy",
+          "Contact details hidden behind an over-designed interaction"
+        ]
+      },
+      "insights": [
+        {
+          "label": "01 · Memory",
+          "title": "One visual tension is enough",
+          "description": "The serif/sans contrast creates a recognisable voice; the rest of the system can remain disciplined."
+        },
+        {
+          "label": "02 · Evidence",
+          "title": "Consistency makes depth usable",
+          "description": "A shared chapter rhythm lets readers compare projects without flattening their individual stories."
+        },
+        {
+          "label": "03 · Momentum",
+          "title": "Every page needs a next move",
+          "description": "Work, next project and contact routes should remain obvious even inside long-form content."
+        }
+      ]
     },
     "ideation": {
-      "description": "",
-      "image": ""
+      "description": "The concept was organised around a simple review loop: understand, scan, inspect and connect. Rather than inventing a different navigation model for each project, expression lives in typography, imagery and transitions while the information architecture remains predictable.",
+      "flow": [
+        {
+          "title": "Recognise",
+          "description": "Read the positioning and register the visual identity."
+        },
+        {
+          "title": "Scan",
+          "description": "Compare four projects through consistent cards and tags."
+        },
+        {
+          "title": "Inspect",
+          "description": "Enter a structured case study with clear chapter landmarks."
+        },
+        {
+          "title": "Continue",
+          "description": "Move directly to the next relevant project without returning home."
+        },
+        {
+          "title": "Connect",
+          "description": "Reach contact and professional profiles from any meaningful endpoint."
+        }
+      ],
+      "decisions": [
+        {
+          "label": "Content architecture",
+          "title": "Four curated projects",
+          "description": "A smaller, stronger set allows each case to receive depth and reduces the burden of comparison."
+        },
+        {
+          "label": "Page system",
+          "title": "Data over duplication",
+          "description": "One shared React template turns project JSON into a consistent long-form experience."
+        },
+        {
+          "label": "Identity",
+          "title": "Editorial meets systematic",
+          "description": "Gilda carries personality and Geist carries interface logic, mirroring the balance in the work."
+        },
+        {
+          "label": "Motion",
+          "title": "Transitions carry continuity",
+          "description": "Curtains, restrained reveals and the next-project interaction connect pages without slowing reading."
+        }
+      ]
     },
-    "visualUi": {
-      "description": "",
-      "image": ""
+    "design": {
+      "description": "The interface uses scale, contrast and generous negative space to create an editorial rhythm. Motion is applied at entry points and media reveals, while long-form content relies on a stable two-column grid and modular evidence blocks.",
+      "decisions": [
+        {
+          "label": "Typography",
+          "title": "Two voices, distinct jobs",
+          "description": "Gilda communicates authorship; Geist provides precision across labels, navigation and case-study content."
+        },
+        {
+          "label": "Colour",
+          "title": "Orange signs the work",
+          "description": "The accent marks focus and identity while warm neutrals keep large pages comfortable to read."
+        },
+        {
+          "label": "Grid",
+          "title": "Asymmetry with anchors",
+          "description": "Large headings and offset imagery feel expressive because dates, dividers and content columns stay aligned."
+        },
+        {
+          "label": "Performance",
+          "title": "Motion respects the page",
+          "description": "Transforms and image curtains avoid layout shifts, and reduced-motion preferences keep the experience usable."
+        }
+      ],
+      "iterations": [
+        {
+          "component": "Home introduction",
+          "before": "A descriptive paragraph explained the full profile before visitors saw any work.",
+          "after": "A concise positioning statement, visual signature and immediate project transition share the opening screen.",
+          "outcome": "Personality and purpose arrive together."
+        },
+        {
+          "component": "Project pages",
+          "before": "Overview, colour and a gallery created attractive but shallow summaries.",
+          "after": "Ten reusable chapters connect problem, research, decisions, validation, final design and learning.",
+          "outcome": "The portfolio now shows judgement as clearly as output."
+        },
+        {
+          "component": "Mobile hierarchy",
+          "before": "Desktop-scale headings and two-column content created abrupt wraps and long blank transitions.",
+          "after": "Responsive type, stacked evidence and in-flow media preserve the same narrative at narrow widths.",
+          "outcome": "The mobile version feels composed rather than reduced."
+        }
+      ]
     },
-    "implementation": {
-      "description": "",
-      "image": ""
+    "testing": {
+      "description": "Validation treated the portfolio as a review tool. Tasks focused on whether a first-time visitor could identify my role, choose a relevant project, understand a design decision and reach contact details across desktop and mobile.",
+      "method": "Scenario-based reviews combined content comprehension, keyboard/navigation checks and responsive browser walkthroughs. Findings describe prototype and implementation decisions, not recruitment outcomes.",
+      "findings": [
+        {
+          "task": "Describe the designer after the opening view",
+          "observation": "The visual identity was memorable, but role language needed to be as direct as the typography was expressive.",
+          "decision": "Pair the creative headline with a concise Product Designer statement and concrete areas of practice."
+        },
+        {
+          "task": "Compare projects before opening one",
+          "observation": "Project names alone did not reveal enough difference during a fast scan.",
+          "decision": "Add consistent discipline, platform and context tags to every card."
+        },
+        {
+          "task": "Find evidence of process on mobile",
+          "observation": "A wide process layout made readers hunt through one continuous text column.",
+          "decision": "Use numbered chapters, compact visual modules and clear section dividers at every breakpoint."
+        }
+      ]
+    },
+    "finalDesign": {
+      "description": "The final portfolio is intentionally dual in character: expressive at first contact, systematic once the work begins. Project data, reusable modules and a shared responsive grid allow every case to feel complete without rebuilding the page around it.",
+      "highlights": [
+        {
+          "title": "Authored introduction",
+          "description": "An oversized typographic identity establishes personality while preserving immediate access to featured work."
+        },
+        {
+          "title": "Curated work index",
+          "description": "Four projects use common tags and image behaviour to support quick, meaningful comparison."
+        },
+        {
+          "title": "Reusable case studies",
+          "description": "A single component system renders deep project narratives from maintainable, project-specific data."
+        },
+        {
+          "title": "Continuous contact path",
+          "description": "Next-project and contact moments create a natural route through the work without navigation dead ends."
+        }
+      ]
+    },
+    "impact": {
+      "description": "The portfolio now functions as both a personal brand and a scalable publishing system. Its impact can be measured in the design infrastructure delivered: four coherent cases, one maintainable template and a responsive language shared across the experience.",
+      "metrics": [
+        {
+          "value": "4",
+          "label": "Curated case studies",
+          "description": "Each project carries its own context and visual identity inside a consistent review structure."
+        },
+        {
+          "value": "2",
+          "label": "Typographic voices",
+          "description": "Editorial expression and interface clarity work as a deliberate, reusable identity system."
+        },
+        {
+          "value": "1",
+          "label": "Shared data model",
+          "description": "Content can evolve without duplicating page components or fragmenting responsive behaviour."
+        }
+      ]
+    },
+    "learnings": {
+      "description": "Designing for yourself still requires product discipline. The strongest personal expression came from choosing a few repeatable rules, then letting the quality and context of the work provide the variation.",
+      "items": [
+        {
+          "title": "A portfolio is an interface for evidence",
+          "description": "Visual identity earns attention, but hierarchy and consistency determine whether the work can be understood."
+        },
+        {
+          "title": "Constraints make personality clearer",
+          "description": "A defined type pairing, accent and motion grammar produce more recognition than constant visual reinvention."
+        },
+        {
+          "title": "Content architecture is part of the design",
+          "description": "A reusable case-study model improved not only maintenance, but the quality of the story each project could tell."
+        }
+      ]
     }
   },
   "gallery": {
-    "description": "High-fidelity mockups and screen captures showcasing the final website—homepage, project page and mobile views",
+    "description": "Desktop and mobile mockups showing the editorial home experience, project-page continuity, next-project transition and responsive featured-work system.",
     "images": [
       "/images/projects/portfolio/portfolio02.webp",
       "/images/projects/portfolio/portfolio03.webp",

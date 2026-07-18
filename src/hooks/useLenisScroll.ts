@@ -49,7 +49,7 @@ export const useScrollAnimation = (
   animationCallback: () => void,
   options: ScrollAnimationOptions = {}
 ) => {
-  const elementRef = useRef<HTMLElement>(null);
+  const elementRef = useRef<HTMLDivElement>(null);
   const { threshold = 0.1, rootMargin = '0px', once = true } = options;
   const callbackRef = useRef(animationCallback);
 

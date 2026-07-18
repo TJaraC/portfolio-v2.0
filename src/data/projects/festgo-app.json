@@ -4,67 +4,286 @@
   "name": "APP",
   "date": "12 November 2024",
   "cardTitle": "FestGo App",
-  "cardTags": ["UX/UI", "APP DESIGN", "MUSIC"],
-  "heroDescription": "FestGo is a fictional app created as part of a Master's project. It allows users to buy tickets for music festivals and events, while also connecting with others attending the same event. The app promotes community-building, helping people make friends and enjoy the experience together.",
+  "cardTags": ["PRODUCT DESIGN", "MOBILE APP", "MUSIC"],
+  "heroDescription": "A mobile festival companion that brings discovery, ticketing and event-based community into one considered journey. FestGo was created as a Master's project to explore how digital products can help people arrive informed and feel less alone.",
   "heroImage": "/images/projects/festgo/FestGo01.webp",
+  "heroInsetImage": "/images/projects/festgo/FestGo02.webp",
   "overview": {
-    "description": "FestGo App was designed to enhance the experience of attending music festivals and events. Beyond ticket purchasing, it focuses on social interaction—allowing users to form groups, join communities, and connect with like-minded attendees to foster real-life connections."
+    "description": "FestGo reframes a ticketing app as a complete before-and-during festival companion. Users can discover events around their music taste, purchase and organise tickets, then opt into temporary communities anchored to the event they are attending."
   },
   "projectGoal": {
-    "description": "The goal was to create a seamless and engaging user experience that combines ticket purchasing with social networking. The app needed to reflect the vibrant, youthful, and communal spirit of music festivals through its visual language and interaction design."
+    "description": "Design a trustworthy mobile experience that makes event discovery and checkout effortless while offering a safe, purposeful way to coordinate with other attendees—without turning the product into an open-ended social network."
   },
   "fontAndColours": {
-    "description": "The color palette was inspired by the inclusive and energetic nature of music festivals—fresh, expressive, and friendly tones that promote a sense of community. The typography was unified under the Poppins typeface family in different weights, combining clarity, modernity, and accessibility.",
-    "colors": [
-      "#B0D18B",
-      "#BFCBAD",
-      "#A0CFCC",
-      "#000000"
-    ],
+    "description": "A dark interface echoes the atmosphere of a live venue while soft greens signal availability, confirmation and connection. Poppins provides a friendly geometric voice with enough range for expressive campaign moments and compact transactional detail.",
+    "colors": ["#B0D18B", "#6F8F5C", "#11150F", "#F4F7EE"],
     "fonts": [
-      {
-        "name": "Poppins Light"
-      },
-      {
-        "name": "Poppins Regular"
-      },
-      {
-        "name": "Poppins Medium"
-      },
-      {
-        "name": "Poppins Bold"
-      }
+      { "name": "Poppins Light" },
+      { "name": "Poppins Regular" },
+      { "name": "Poppins Medium" },
+      { "name": "Poppins Bold" }
     ]
   },
-  "designProcess": {
-    "description": "The design process began with research into the festival and event landscape, identifying key user behaviors and pain points. From there, personas were developed and user journeys mapped out, leading into wireframes, UI design, prototyping, and usability testing.",
-    "roadmap": {
-      "description": "",
-      "image": ""
+  "caseStudy": {
+    "meta": [
+      { "label": "Role", "value": "Product Designer · UX/UI" },
+      { "label": "Context", "value": "Master's degree concept project" },
+      { "label": "Platform", "value": "iOS-first mobile experience" },
+      { "label": "Deliverables", "value": "Research · User flows · High-fidelity prototype" }
+    ],
+    "challenge": {
+      "description": "Ticket apps usually stop at the transaction, while broad social platforms lack the shared context and safeguards an event requires. FestGo needed to connect these behaviours without making meeting new people feel compulsory, exposed or distracting at checkout.",
+      "question": "How might a ticket become the beginning of a shared experience while keeping every social interaction optional, relevant and safe?",
+      "priorities": [
+        {
+          "title": "Protect the purchase",
+          "description": "Keep event information, ticket confidence and checkout clarity at the centre of the product."
+        },
+        {
+          "title": "Give connection context",
+          "description": "Anchor groups and conversations to a real event, shared interest and limited time window."
+        },
+        {
+          "title": "Design consent in",
+          "description": "Let people control visibility, invitations and when they move from browsing to participation."
+        }
+      ]
     },
-    "definition": {
-      "description": "",
-      "image": ""
-    },
-    "inspiration": {
-      "description": "",
-      "image": ""
+    "research": {
+      "description": "The research phase compared ticket marketplaces, festival companion apps and interest-based communities. A consistent gap emerged between logistical confidence and social confidence: users could buy access, but still lacked a low-pressure way to plan the experience with others.",
+      "benchmark": {
+        "criteria": ["Discovery", "Ticket journey", "Event utility", "Community model"],
+        "rows": [
+          {
+            "name": "Ticket marketplaces",
+            "values": ["Inventory-led", "Highly optimised", "Basic wallet", "Not core"]
+          },
+          {
+            "name": "Festival apps",
+            "values": ["Single-event", "External purchase", "Strong schedules", "Announcements"]
+          },
+          {
+            "name": "Social event platforms",
+            "values": ["Interest-led", "Varies", "Conversation-first", "Open groups"]
+          },
+          {
+            "name": "FestGo direction",
+            "values": [
+              "Taste + location",
+              "Native and clear",
+              "Ticket to timetable",
+              "Event-bound circles"
+            ],
+            "featured": true
+          }
+        ],
+        "note": "The scan focuses on product patterns and trust signals across adjacent categories; it informs the concept rather than claiming comparative business performance."
+      },
+      "persona": {
+        "name": "Maya Collins",
+        "archetype": "The independent festival-goer",
+        "context": "Maya follows artists closely and is comfortable buying tickets alone when friends cannot commit. The uncertainty begins later: travel, set choices and whether she will know anyone when she arrives.",
+        "quote": "I will go for the music either way. It would just be easier if meeting people felt connected to the event, not like joining a dating app.",
+        "goals": [
+          "Find events that match her taste and location",
+          "Keep tickets, dates and line-ups in one place",
+          "Coordinate with people attending the same festival"
+        ],
+        "frustrations": [
+          "Hidden fees late in the purchase journey",
+          "Unstructured public chats with no trust cues",
+          "Switching between ticket, map, schedule and messaging apps"
+        ]
+      },
+      "insights": [
+        {
+          "label": "01 · Relevance",
+          "title": "Taste is the best opening filter",
+          "description": "Music preference creates immediate discovery value before the product asks for social participation."
+        },
+        {
+          "label": "02 · Trust",
+          "title": "Shared attendance is context",
+          "description": "A verified ticket and a specific festival make a community feel more purposeful than an open local group."
+        },
+        {
+          "label": "03 · Timing",
+          "title": "Community is a phase, not a destination",
+          "description": "Social tools become useful after intent exists and should recede once the event has passed."
+        }
+      ]
     },
     "ideation": {
-      "description": "",
-      "image": ""
+      "description": "Early concepts separated the journey into five moments: preference, discovery, decision, preparation and attendance. This prevented community features from competing with checkout and gave each interaction a clear reason to exist.",
+      "flow": [
+        { "title": "Tune", "description": "Choose genres, artists and a useful travel radius." },
+        {
+          "title": "Discover",
+          "description": "Browse relevant events with date, venue and availability upfront."
+        },
+        {
+          "title": "Secure",
+          "description": "Review the line-up and purchase a ticket with transparent totals."
+        },
+        {
+          "title": "Join",
+          "description": "Opt into the verified attendee circle after the ticket is stored."
+        },
+        {
+          "title": "Coordinate",
+          "description": "Build a plan, share meeting points and keep the ticket close."
+        }
+      ],
+      "decisions": [
+        {
+          "label": "Product boundary",
+          "title": "Event-bound communities",
+          "description": "Groups belong to one event and a defined time frame, keeping conversation useful and reducing social noise."
+        },
+        {
+          "label": "Trust model",
+          "title": "Participation after proof",
+          "description": "Ticket ownership can unlock attendee spaces while privacy controls still determine individual visibility."
+        },
+        {
+          "label": "Navigation",
+          "title": "Utility before novelty",
+          "description": "Home, search and tickets precede community in the navigation, reinforcing the app's practical value."
+        },
+        {
+          "label": "Personalisation",
+          "title": "Ask only what helps",
+          "description": "Onboarding requests music preferences and location context, not an extensive social profile."
+        }
+      ]
     },
-    "visualUi": {
-      "description": "",
-      "image": ""
+    "design": {
+      "description": "The UI balances an atmospheric, image-rich festival aesthetic with the restraint required for tickets and safety decisions. A consistent card system carries discovery, line-ups, groups and passes while state changes stay recognisable through colour and labels.",
+      "decisions": [
+        {
+          "label": "Atmosphere",
+          "title": "The venue stays present",
+          "description": "Dark surfaces and full-bleed photography build anticipation without reducing transactional clarity."
+        },
+        {
+          "label": "Status",
+          "title": "Green confirms progress",
+          "description": "The accent marks selection, availability, successful purchase and trusted participation."
+        },
+        {
+          "label": "Content",
+          "title": "Decision detail in layers",
+          "description": "Cards expose date, place and genre first; line-up, policies and community context follow on demand."
+        },
+        {
+          "label": "Safety",
+          "title": "Controls use plain language",
+          "description": "Join, leave, report and visibility actions avoid playful ambiguity when trust is involved."
+        }
+      ],
+      "iterations": [
+        {
+          "component": "Preference onboarding",
+          "before": "A long profile form asked for personal and social information before the app showed value.",
+          "after": "A visual genre picker creates useful recommendations in a few taps; deeper profile choices remain optional.",
+          "outcome": "The first interaction feels like curation rather than registration."
+        },
+        {
+          "component": "Event detail",
+          "before": "Ticket, line-up and social activity competed in one continuous screen.",
+          "after": "A stable event summary leads into distinct ticket, schedule and attendee actions.",
+          "outcome": "Users can decide what to do next without decoding the page."
+        },
+        {
+          "component": "Community entry",
+          "before": "An open group prompt appeared before purchase and felt promotional.",
+          "after": "The attendee circle becomes a considered post-purchase step with visibility choices.",
+          "outcome": "Connection feels earned, optional and relevant."
+        }
+      ]
     },
-    "implementation": {
-      "description": "",
-      "image": ""
+    "testing": {
+      "description": "Prototype validation focused on the points where trust could break: understanding the total ticket cost, distinguishing public event information from attendee-only spaces and changing social visibility without losing access to practical tools.",
+      "method": "Task-based walkthroughs covered event discovery, checkout, ticket retrieval, joining a circle and leaving or reporting a conversation. Findings were used as design inputs rather than presented as launch analytics.",
+      "findings": [
+        {
+          "task": "Choose an event from recommendations",
+          "observation": "Genre relevance was clear, but users needed date and travel context before opening a card.",
+          "decision": "Promote date, distance and availability into the discovery card's first information layer."
+        },
+        {
+          "task": "Join people attending the same event",
+          "observation": "The word community felt broad until ticket verification and event scope were explained.",
+          "decision": "Rename the entry point as the attendee circle and show its duration, size and access rule."
+        },
+        {
+          "task": "Find a ticket at the venue gate",
+          "observation": "Social notifications could distract from the time-critical pass.",
+          "decision": "Give the ticket wallet a dedicated destination and surface the active pass before messages."
+        }
+      ]
+    },
+    "finalDesign": {
+      "description": "The final concept moves from expressive discovery to dependable utility without changing visual language. Each core screen has one dominant decision, while the attendee circle extends the festival experience only when the user chooses it.",
+      "highlights": [
+        {
+          "title": "Taste-led onboarding",
+          "description": "A fast visual selector turns music preference into relevant recommendations with minimal personal data."
+        },
+        {
+          "title": "Confident event detail",
+          "description": "Line-up, date, venue, ticket state and total cost create a complete decision surface."
+        },
+        {
+          "title": "Event-bound circles",
+          "description": "Verified attendee spaces support planning while clear controls keep participation voluntary."
+        },
+        {
+          "title": "Festival-day utility",
+          "description": "Tickets, saved events and essential coordination remain reachable when time and attention are limited."
+        }
+      ]
+    },
+    "impact": {
+      "description": "FestGo demonstrates how a transactional product can introduce community without sacrificing clarity or consent. The outcome is a coherent concept system whose value starts before the event and remains useful through arrival.",
+      "metrics": [
+        {
+          "value": "1",
+          "label": "Unified journey",
+          "description": "Discovery, purchase, ticket access and attendee coordination share one mobile product model."
+        },
+        {
+          "value": "3",
+          "label": "Trust layers",
+          "description": "Event context, verified attendance and personal visibility controls shape community access."
+        },
+        {
+          "value": "5",
+          "label": "Core destinations",
+          "description": "Home, search, tickets, community and profile keep the app's information architecture compact."
+        }
+      ]
+    },
+    "learnings": {
+      "description": "Community features work best when they grow from a shared purpose. In FestGo, the event is not content around the social layer—it is the reason that layer can feel relevant and trustworthy.",
+      "items": [
+        {
+          "title": "Connection needs a boundary",
+          "description": "A specific event and time frame make participation easier to understand and simpler to leave."
+        },
+        {
+          "title": "Safety belongs in the main flow",
+          "description": "Visibility, reporting and consent cannot be settings discovered after a user has already joined."
+        },
+        {
+          "title": "Utility earns the right to socialise",
+          "description": "A dependable ticket and planning experience builds the confidence required for optional community features."
+        }
+      ]
     }
   },
   "gallery": {
-    "description": "Final UI mockups showcasing different screens of the app, including onboarding, event discovery, ticketing, group creation, and community interaction—illustrating a cohesive and user-friendly experience across the entire platform.",
+    "description": "High-fidelity mobile mockups covering the home feed, low-friction registration, preference onboarding and a ticket-ready event detail experience.",
     "images": [
       "/images/projects/festgo/FestGo01.webp",
       "/images/projects/festgo/FestGo02.webp",

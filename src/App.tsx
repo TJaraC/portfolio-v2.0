@@ -39,8 +39,7 @@ const App: React.FC = () => {
         smoothWheel: true,
         wheelMultiplier: 1,
         touchMultiplier: 2,
-        normalizeWheel: true,
-        easing: lenisEasing
+        easing: lenisEasing,
       });
 
       // Establecer la instancia global
@@ -96,28 +95,28 @@ const App: React.FC = () => {
         if (lenisInstance) {
           // Reinicializar Lenis completamente
           lenisInstance.stop();
-          
+
           // Asegurar scroll al top
           window.scrollTo(0, 0);
-          
+
           setTimeout(() => {
             lenisInstance.start();
             lenisInstance.resize();
-            
+
             // Forzar reactivación del smooth wheel
             const wheelEvent = new WheelEvent('wheel', {
               deltaY: 0,
               bubbles: true,
-              cancelable: true
+              cancelable: true,
             });
             document.dispatchEvent(wheelEvent);
           }, 50);
         }
       }, 100);
     };
-    
+
     window.addEventListener('popstate', handlePopState);
-    
+
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
@@ -129,7 +128,6 @@ const App: React.FC = () => {
       <Routes />
     </>
   );
-
 };
 
 export default App;

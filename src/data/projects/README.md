@@ -1,122 +1,97 @@
-# Sistema de Proyectos Dinámicos
+# Sistema de proyectos dinámicos
 
-Este sistema permite crear nuevos proyectos de manera dinámica utilizando archivos JSON como fuente de datos.
+Las páginas de proyecto se generan desde archivos JSON y comparten un único componente React. Los cuatro proyectos publicados usan una narrativa de diez capítulos; `project-template.json` es la fuente de verdad para crear casos nuevos.
 
-## Estructura de Archivos
+## Proyectos publicados
 
-```
-src/data/projects/
-├── README.md
-├── project-template.json
-└── ejemplo-proyecto.json
-```
+- `ultracamp.json`
+- `festgo-app.json`
+- `portfolio-25.json`
+- `howell-gallery.json`
 
-## Cómo Agregar un Nuevo Proyecto
+`ejemplo-proyecto.json` conserva el formato antiguo para comprobar la compatibilidad del fallback, pero no debe usarse como plantilla nueva.
 
-1. **Crear el archivo JSON**: Crea un nuevo archivo en `src/data/projects/` con el nombre del proyecto (ej: `mi-nuevo-proyecto.json`)
+## Crear un proyecto
 
-2. **Estructura del JSON**: Usa la siguiente estructura:
+1. Duplica `project-template.json` y renombra el archivo con un slug en minúsculas.
+2. Cambia `id` para que coincida exactamente con el nombre del archivo.
+3. Guarda las imágenes en `public/images/projects/<slug>/` y usa rutas públicas que empiecen por `/images/`.
+4. Completa todo el contenido en inglés.
+5. Registra el `id` en `projectIds`, dentro de `src/hooks/useProjectsList.ts`.
+6. Comprueba `/projects/<slug>` en escritorio y móvil.
+
+## Estructura narrativa
+
+La página siempre conserva este orden:
+
+1. Introduction: título, resumen, hero y detalle responsive opcional.
+2. Overview: contexto, objetivo y metadatos.
+3. The challenge: problema, pregunta de diseño y tres prioridades.
+4. Research & insights: insights, benchmark y persona.
+5. Ideation: user flow y decisiones de arquitectura.
+6. Design & iterations: sistema visual, reglas e iteraciones before/after.
+7. User testing: método, observaciones y respuestas de diseño.
+8. Final design: highlights y galería de mockups.
+9. Impact: outcomes o métricas con contexto verificable.
+10. Learnings: conclusión y aprendizajes transferibles.
+
+## Campos principales
 
 ```json
 {
-  "id": "mi-nuevo-proyecto",
-  "project": "TIPO DE PROYECTO",
-  "name": "NOMBRE DEL PROYECTO",
-  "date": "DD Month YYYY",
-  "heroDescription": "Descripción que aparece debajo del nombre del proyecto",
-  "heroImage": "/images/imagen-principal.jpg",
-  "overview": {
-    "description": "Descripción general del proyecto"
-  },
-  "projectGoal": {
-    "description": "Descripción del objetivo del proyecto"
-  },
+  "id": "project-slug",
+  "project": "PROJECT",
+  "name": "NAME",
+  "date": "Month YYYY",
+  "cardTitle": "Project name",
+  "cardTags": ["DISCIPLINE", "PLATFORM", "CONTEXT"],
+  "heroDescription": "Short introduction",
+  "heroImage": "/images/projects/project-slug/hero.webp",
+  "heroInsetImage": "/images/projects/project-slug/mobile.webp",
+  "overview": { "description": "Project overview" },
+  "projectGoal": { "description": "Project goal" },
   "fontAndColours": {
-    "description": "Descripción de las decisiones de fuentes y colores",
-    "colors": [
-      "#color1",
-      "#color2",
-      "#color3",
-      "#color4"
-    ],
-    "fonts": [
-      {
-        "name": "Nombre de la Fuente",
-        "description": "Descripción del uso",
-        "sample": "Aa"
-      }
-    ]
+    "description": "Visual-system rationale",
+    "colors": ["#000000", "#555555", "#CCCCCC", "#FFFFFF"],
+    "fonts": [{ "name": "Typeface Regular" }]
   },
-  "designProcess": {
-    "description": "Descripción del proceso de diseño",
-    "research": {
-      "description": "Descripción de la investigación",
-      "image": "/images/research-image.jpg"
-    }
+  "caseStudy": {
+    "meta": [],
+    "challenge": {},
+    "research": {},
+    "ideation": {},
+    "design": {},
+    "testing": {},
+    "finalDesign": {},
+    "impact": {},
+    "learnings": {}
   },
   "gallery": {
-    "description": "Descripción de la galería",
-    "images": [
-      "/images/gallery1.jpg",
-      "/images/gallery2.jpg",
-      "/images/gallery3.jpg",
-      "/images/gallery4.jpg"
-    ]
+    "description": "Final-image context",
+    "images": []
   }
 }
 ```
 
-3. **Registrar el proyecto en el sistema**: Una vez creado el archivo JSON, debes añadir su ID al array de proyectos en `src/hooks/useProjectsList.ts`:
+Consulta `project-template.json` para ver todos los objetos y arrays obligatorios.
 
-   - Abre el archivo `src/hooks/useProjectsList.ts`
-   - Busca la línea 22 donde está definido el array `projectIds`:
-     ```javascript
-     const projectIds = ['festgo-app', 'howell-gallery'];
-     ```
-   - Añade el ID de tu nuevo proyecto al array:
-     ```javascript
-     const projectIds = ['festgo-app', 'howell-gallery', 'mi-nuevo-proyecto'];
-     ```
+## Reglas de contenido
 
-4. **Verificar el resultado**: El proyecto será accesible automáticamente en `/projects/mi-nuevo-proyecto` y aparecerá en la lista de proyectos del home
+- Escribe outcomes verificables. Si el proyecto no está en producción, presenta hallazgos como validación de prototipo y evita inventar impacto comercial.
+- Mantén tres prioridades, tres insights, tres hallazgos y tres aprendizajes para conservar el ritmo visual.
+- El benchmark describe patrones de producto; no debe afirmar superioridad sin evidencia.
+- `heroInsetImage` es opcional. Si se usa, debe complementar el hero con otra escala o dispositivo.
+- La galería acepta cualquier número de imágenes, aunque cuatro mantiene el layout editorial previsto.
+- Usa textos alternativos contextuales en el componente; no incrustes información esencial únicamente dentro de una imagen.
 
-## Campos Configurables
+## Validación
 
-- **project**: Nombre del tipo de proyecto (ej: "BRANDING", "WEB DESIGN", "UI/UX")
-- **name**: Nombre específico del proyecto
-- **date**: Fecha del proyecto
-- **cardTitle**: Título que aparece en la card de la página home
-- **cardTags**: Array de 3 palabras clave que aparecen en la card de la home
-- **heroDescription**: Descripción principal que aparece en el hero
-- **heroImage**: Imagen principal (misma que aparecerá en la home)
-- **overview.description**: Descripción general en la sección Overview
-- **projectGoal.description**: Descripción del objetivo del proyecto
-- **fontAndColours.description**: Descripción de las decisiones de diseño
-- **fontAndColours.colors**: Array de 4 colores en formato hexadecimal
-- **fontAndColours.fonts**: Array de fuentes con nombre, descripción y muestra
-- **designProcess.description**: Descripción del proceso de diseño
-- **designProcess.roadmap.description**: Descripción de la planificación del proyecto
-- **designProcess.roadmap.image**: Imagen de la sección roadmap
-- **designProcess.definition.description**: Descripción de la definición del problema
-- **designProcess.definition.image**: Imagen de la sección definition
-- **designProcess.inspiration.description**: Descripción de la fase de inspiración
-- **designProcess.inspiration.image**: Imagen de la sección inspiration
-- **designProcess.ideation.description**: Descripción de la fase de ideación
-- **designProcess.ideation.image**: Imagen de la sección ideation
-- **designProcess.visualUi.description**: Descripción del diseño visual UI
-- **designProcess.visualUi.image**: Imagen de la sección visual UI
-- **designProcess.implementation.description**: Descripción de la implementación
-- **designProcess.implementation.image**: Imagen de la sección implementation
-- **gallery.description**: Descripción de la galería
-- **gallery.images**: Array de 4 imágenes para la galería
+Usa exclusivamente pnpm:
 
-## Ejemplos Disponibles
+```bash
+pnpm type-check
+pnpm build
+pnpm test:e2e
+```
 
-- `project-template.json`: Plantilla base con datos de ejemplo
-- `ejemplo-proyecto.json`: Ejemplo de un proyecto de branding para una cafetería
-
-## URLs de Acceso
-
-- Plantilla base: `/projects/project-template`
-- Proyecto de ejemplo: `/projects/ejemplo-proyecto`
-- Nuevo proyecto: `/projects/[nombre-del-archivo-sin-extension]`
+Las pruebas de Playwright recorren los cuatro casos en viewport de escritorio y móvil, comprueban overflow, imágenes rotas y errores de consola, y pueden guardar evidencia si se define `PORTFOLIO_EVIDENCE_DIR`.

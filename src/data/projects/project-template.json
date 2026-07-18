@@ -1,70 +1,201 @@
 {
   "id": "project-template",
-  "project": "Project",
-  "name": "Name",
-  "date": "27 July 2025",
-  "cardTitle": "Project Template",
-  "cardTags": ["MODERN", "CLEAN", "ELEGANT"],
-  "heroDescription": "This is the hero description that appears below the project name. It provides a brief overview of what the project is about and its main objectives.",
-  "heroImage": "/images/general/img_img.png",
+  "project": "PROJECT",
+  "name": "NAME",
+  "date": "Month YYYY",
+  "cardTitle": "Project name",
+  "cardTags": ["DISCIPLINE", "PLATFORM", "CONTEXT"],
+  "heroDescription": "A concise introduction that explains the product, the design contribution and why the project matters.",
+  "heroImage": "/images/general/img_img_750x920.png",
+  "heroInsetImage": "/images/general/img_img.png",
   "overview": {
-    "description": "This is the overview description that explains the project in more detail. It covers the main aspects, challenges, and solutions implemented in this project."
+    "description": "Summarise the project, audience and scope in enough detail to orient a first-time reader."
   },
   "projectGoal": {
-    "description": "This section describes the main goal and objectives of the project. It explains what we aimed to achieve and the problems we solved."
+    "description": "State the outcome the project was designed to create without presenting unverified metrics as fact."
   },
   "fontAndColours": {
-    "description": "This section explains the font and color choices made for the project, including the reasoning behind the design decisions.",
-    "colors": [
-      "#FF6B6B",
-      "#4ECDC4",
-      "#45B7D1",
-      "#96CEB4"
-    ],
+    "description": "Explain how the visual system supports the product strategy, content and accessibility needs.",
+    "colors": ["#FF6B6B", "#4ECDC4", "#161616", "#F5F5F2"],
     "fonts": [
-      {
-        "name": "Gilda Display"
-      },
-      {
-        "name": "Geist"
-      },
-      {
-        "name": "Inter"
-      },
-      {
-        "name": "Roboto"
-      }
+      { "name": "Display Light" },
+      { "name": "Text Regular" },
+      { "name": "Text Medium" },
+      { "name": "Text Bold" }
     ]
   },
-  "designProcess": {
-    "description": "This section describes the design process followed for this project, including methodologies, tools, and approaches used.",
-    "roadmap": {
-      "description": "This describes the project roadmap and planning phase, including timeline and key milestones.",
-      "image": "/images/general/img_img.png"
+  "caseStudy": {
+    "meta": [
+      { "label": "Role", "value": "Your role" },
+      { "label": "Scope", "value": "Research, UX and UI" },
+      { "label": "Platform", "value": "Responsive web or app" },
+      { "label": "Deliverables", "value": "Key project outputs" }
+    ],
+    "challenge": {
+      "description": "Describe the product problem, audience tension and constraints that made the work necessary.",
+      "question": "How might we frame the central design question in a clear, human way?",
+      "priorities": [
+        { "title": "Priority one", "description": "Explain the first non-negotiable outcome." },
+        { "title": "Priority two", "description": "Explain the second non-negotiable outcome." },
+        { "title": "Priority three", "description": "Explain the third non-negotiable outcome." }
+      ]
     },
-    "definition": {
-      "description": "This describes the problem definition phase, including identifying core challenges and objectives.",
-      "image": "/images/img_img.png"
-    },
-    "inspiration": {
-      "description": "This describes the inspiration gathering phase, including research of trends, competitors, and visual references.",
-      "image": "/images/img_img.png"
+    "research": {
+      "description": "Summarise the research method, recurring patterns and opportunity that shaped the direction.",
+      "benchmark": {
+        "criteria": ["Criterion one", "Criterion two", "Criterion three", "Criterion four"],
+        "rows": [
+          { "name": "Reference A", "values": ["Finding", "Finding", "Finding", "Finding"] },
+          { "name": "Reference B", "values": ["Finding", "Finding", "Finding", "Finding"] },
+          { "name": "Reference C", "values": ["Finding", "Finding", "Finding", "Finding"] },
+          {
+            "name": "Project direction",
+            "values": ["Choice", "Choice", "Choice", "Choice"],
+            "featured": true
+          }
+        ],
+        "note": "Clarify what the benchmark does and does not claim."
+      },
+      "persona": {
+        "name": "Persona name",
+        "archetype": "Primary behavioural archetype",
+        "context": "Describe the situation, behaviour and motivation that make this persona relevant.",
+        "quote": "Use a concise quote that captures the core need.",
+        "goals": ["Primary goal", "Secondary goal", "Supporting goal"],
+        "frustrations": ["Primary friction", "Secondary friction", "Supporting friction"]
+      },
+      "insights": [
+        {
+          "label": "01 · Theme",
+          "title": "Insight one",
+          "description": "Explain the implication."
+        },
+        {
+          "label": "02 · Theme",
+          "title": "Insight two",
+          "description": "Explain the implication."
+        },
+        {
+          "label": "03 · Theme",
+          "title": "Insight three",
+          "description": "Explain the implication."
+        }
+      ]
     },
     "ideation": {
-      "description": "This describes the ideation phase, including brainstorming, sketching, and concept development.",
-      "image": "/images/img_img.png"
+      "description": "Explain how research became an information architecture, journey or product concept.",
+      "flow": [
+        { "title": "Discover", "description": "First meaningful step." },
+        { "title": "Understand", "description": "Second meaningful step." },
+        { "title": "Explore", "description": "Third meaningful step." },
+        { "title": "Decide", "description": "Fourth meaningful step." },
+        { "title": "Complete", "description": "Final meaningful step." }
+      ],
+      "decisions": [
+        {
+          "label": "Decision area",
+          "title": "Decision one",
+          "description": "Explain the choice and rationale."
+        },
+        {
+          "label": "Decision area",
+          "title": "Decision two",
+          "description": "Explain the choice and rationale."
+        },
+        {
+          "label": "Decision area",
+          "title": "Decision three",
+          "description": "Explain the choice and rationale."
+        },
+        {
+          "label": "Decision area",
+          "title": "Decision four",
+          "description": "Explain the choice and rationale."
+        }
+      ]
     },
-    "visualUi": {
-      "description": "This describes the visual UI design phase, including creation of the visual identity and interface elements.",
-      "image": "/images/img_img.png"
+    "design": {
+      "description": "Describe how interaction, visual identity and responsive behaviour express the product direction.",
+      "decisions": [
+        { "label": "System area", "title": "Design rule one", "description": "Explain the rule." },
+        { "label": "System area", "title": "Design rule two", "description": "Explain the rule." },
+        {
+          "label": "System area",
+          "title": "Design rule three",
+          "description": "Explain the rule."
+        },
+        { "label": "System area", "title": "Design rule four", "description": "Explain the rule." }
+      ],
+      "iterations": [
+        {
+          "component": "Component one",
+          "before": "Describe the initial limitation.",
+          "after": "Describe the implemented response.",
+          "outcome": "Describe the resulting product improvement."
+        },
+        {
+          "component": "Component two",
+          "before": "Describe the initial limitation.",
+          "after": "Describe the implemented response.",
+          "outcome": "Describe the resulting product improvement."
+        },
+        {
+          "component": "Component three",
+          "before": "Describe the initial limitation.",
+          "after": "Describe the implemented response.",
+          "outcome": "Describe the resulting product improvement."
+        }
+      ]
     },
-    "implementation": {
-      "description": "This describes the implementation phase, including final design execution and development handoff.",
-      "image": "/images/img_img.png"
+    "testing": {
+      "description": "Explain what was validated, why those tasks mattered and how findings influenced the design.",
+      "method": "Describe the prototype or implementation validation without overstating evidence.",
+      "findings": [
+        {
+          "task": "Task one",
+          "observation": "What happened.",
+          "decision": "What changed as a result."
+        },
+        {
+          "task": "Task two",
+          "observation": "What happened.",
+          "decision": "What changed as a result."
+        },
+        {
+          "task": "Task three",
+          "observation": "What happened.",
+          "decision": "What changed as a result."
+        }
+      ]
+    },
+    "finalDesign": {
+      "description": "Summarise the final experience across devices and connect it back to the original challenge.",
+      "highlights": [
+        { "title": "Highlight one", "description": "Explain the key final-design outcome." },
+        { "title": "Highlight two", "description": "Explain the key final-design outcome." },
+        { "title": "Highlight three", "description": "Explain the key final-design outcome." },
+        { "title": "Highlight four", "description": "Explain the key final-design outcome." }
+      ]
+    },
+    "impact": {
+      "description": "Describe the delivered value and frame metrics as measured results, prototype evidence or verifiable design outputs.",
+      "metrics": [
+        { "value": "01", "label": "Outcome one", "description": "Provide context for the value." },
+        { "value": "02", "label": "Outcome two", "description": "Provide context for the value." },
+        { "value": "03", "label": "Outcome three", "description": "Provide context for the value." }
+      ]
+    },
+    "learnings": {
+      "description": "Close with the most important product or craft lesson from the project.",
+      "items": [
+        { "title": "Learning one", "description": "Explain why it matters." },
+        { "title": "Learning two", "description": "Explain why it matters." },
+        { "title": "Learning three", "description": "Explain why it matters." }
+      ]
     }
   },
   "gallery": {
-    "description": "This section showcases the final results and key visuals from the project.",
+    "description": "Describe what the selected final images demonstrate.",
     "images": [
       "/images/general/img_img.png",
       "/images/general/img_img_750x920.png",

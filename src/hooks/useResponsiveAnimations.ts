@@ -12,7 +12,7 @@ interface ResponsiveAnimationOptions {
 export const useResponsiveAnimations = ({
   duration = 0.4,
   ease = 'power2.out',
-  onBreakpointChange
+  onBreakpointChange,
 }: ResponsiveAnimationOptions = {}) => {
   const currentBreakpoint = useRef<string>('');
   const animationContext = useRef<gsap.Context>();
@@ -22,17 +22,17 @@ export const useResponsiveAnimations = ({
   useEffect(() => {
     // Crear contexto de GSAP para las animaciones
     animationContext.current = gsap.context(() => {});
-    
+
     // Inicializar el manager de animaciones responsivas
     animationManager.current = new ResponsiveAnimationManager({
       lenis: lenis || undefined,
       duration,
-      ease
+      ease,
     });
 
     const checkBreakpoint = () => {
       let newBreakpoint = '';
-      
+
       if (window.matchMedia('(max-width: 580px)').matches) {
         newBreakpoint = 'mobile';
       } else if (window.matchMedia('(max-width: 768px)').matches) {
@@ -46,7 +46,7 @@ export const useResponsiveAnimations = ({
       if (newBreakpoint !== currentBreakpoint.current) {
         const previousBreakpoint = currentBreakpoint.current;
         currentBreakpoint.current = newBreakpoint;
-        
+
         // Callback para cambios de breakpoint
         if (onBreakpointChange) {
           onBreakpointChange(newBreakpoint);
@@ -95,7 +95,7 @@ function debounce<T extends (...args: any[]) => any>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
-  let timeout: NodeJS.Timeout;
+  let timeout: ReturnType<typeof setTimeout>;
   return (...args: Parameters<T>) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);

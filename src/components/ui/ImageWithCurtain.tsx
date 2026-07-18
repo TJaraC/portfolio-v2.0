@@ -10,6 +10,7 @@ interface ImageWithCurtainProps {
   duration?: number;
   threshold?: number;
   once?: boolean;
+  loading?: 'eager' | 'lazy';
 }
 
 const ImageWithCurtain: React.FC<ImageWithCurtainProps> = ({
@@ -20,6 +21,7 @@ const ImageWithCurtain: React.FC<ImageWithCurtainProps> = ({
   duration = 1.2,
   threshold = 0.1,
   once = true,
+  loading = 'lazy',
 }) => {
   const curtainRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -29,17 +31,18 @@ const ImageWithCurtain: React.FC<ImageWithCurtainProps> = ({
       setTimeout(() => {
         if (curtainRef.current) {
           // Animar la cortina desde arriba hacia abajo (saliendo)
-          gsap.fromTo(curtainRef.current, 
+          gsap.fromTo(
+            curtainRef.current,
             {
               y: '0%',
-              scaleY: 1
+              scaleY: 1,
             },
             {
               y: '100%',
               scaleY: 1,
               duration: duration,
               ease: 'power2.inOut',
-              transformOrigin: 'top center'
+              transformOrigin: 'top center',
             }
           );
         }
@@ -56,7 +59,7 @@ const ImageWithCurtain: React.FC<ImageWithCurtainProps> = ({
         position: 'relative',
         overflow: 'hidden',
         width: '100%',
-        height: '100%'
+        height: '100%',
       }}
     >
       <img
@@ -64,15 +67,16 @@ const ImageWithCurtain: React.FC<ImageWithCurtainProps> = ({
         src={src}
         alt={alt}
         decoding="async"
+        loading={loading}
         style={{
           width: '100%',
           height: '100%',
           objectFit: 'cover',
           display: 'block',
-          opacity: '1'
+          opacity: '1',
         }}
       />
-      
+
       {/* Cortina blanca */}
       <div
         ref={curtainRef}
@@ -85,7 +89,7 @@ const ImageWithCurtain: React.FC<ImageWithCurtainProps> = ({
           height: '100%',
           backgroundColor: 'var(--global-bg-3, #f5f5f5)',
           zIndex: 1,
-          transformOrigin: 'top center'
+          transformOrigin: 'top center',
         }}
       />
     </div>
