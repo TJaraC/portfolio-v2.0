@@ -12,6 +12,7 @@ const projects = [
     chapterCount: 10,
     hasDelivery: true,
     siteUrl: 'https://areta-landing.vercel.app/',
+    heroImage: '/images/projects/areta/AretaHero.webp',
   },
   {
     id: 'ultracamp',
@@ -22,6 +23,7 @@ const projects = [
     chapterCount: 9,
     hasDelivery: false,
     siteUrl: 'https://ultracamp.es/',
+    heroImage: undefined,
   },
   {
     id: 'festgo-app',
@@ -31,6 +33,7 @@ const projects = [
     applicationCount: 3,
     chapterCount: 9,
     hasDelivery: false,
+    heroImage: undefined,
   },
   {
     id: 'portfolio-25',
@@ -41,6 +44,7 @@ const projects = [
     chapterCount: 9,
     hasDelivery: false,
     siteUrl: 'https://www.hellotjc.com/',
+    heroImage: undefined,
   },
   {
     id: 'howell-gallery',
@@ -50,6 +54,7 @@ const projects = [
     applicationCount: 3,
     chapterCount: 9,
     hasDelivery: false,
+    heroImage: undefined,
   },
 ];
 
@@ -112,6 +117,12 @@ for (const project of projects) {
         expect(heroPresentation.rightInset).toBeLessThanOrEqual(34);
       } else {
         await expect(heroSiteLink).toHaveCount(0);
+      }
+      if (project.heroImage) {
+        await expect(page.locator('.project-hero-main img')).toHaveAttribute(
+          'src',
+          project.heroImage
+        );
       }
       await expect(page.locator('.case-persona-intro h3')).toHaveText(project.personas);
       await expect(page.getByText('Before', { exact: true })).toHaveCount(0);
@@ -224,6 +235,12 @@ for (const project of projects) {
           path: path.join(evidenceDirectory, `${project.id}-${viewport.name}-header.png`),
           animations: 'disabled',
         });
+        if (project.heroImage) {
+          await page.locator('.project-hero-media').screenshot({
+            path: path.join(evidenceDirectory, `${project.id}-${viewport.name}-hero-primary.png`),
+            animations: 'disabled',
+          });
+        }
         if (project.siteUrl) {
           await heroMedia.screenshot({
             path: path.join(evidenceDirectory, `${project.id}-${viewport.name}-hero-site-link.png`),
@@ -349,10 +366,20 @@ test('next-project interaction keeps the project sequence working', async ({ pag
 test('the visible portfolio is a stable four-project grid', async ({ page }) => {
   const runtimeErrors: string[] = [];
   const expectedCards = [
-    { number: '01', title: 'Areta', siteUrl: 'https://areta-landing.vercel.app/' },
-    { number: '02', title: 'Ultracamp', siteUrl: 'https://ultracamp.es/' },
-    { number: '03', title: 'FestGo App' },
-    { number: '04', title: 'Personal Portfolio', siteUrl: 'https://www.hellotjc.com/' },
+    {
+      number: '01',
+      title: 'Areta',
+      siteUrl: 'https://areta-landing.vercel.app/',
+      heroImage: '/images/projects/areta/AretaHero.webp',
+    },
+    { number: '02', title: 'Ultracamp', siteUrl: 'https://ultracamp.es/', heroImage: undefined },
+    { number: '03', title: 'FestGo App', heroImage: undefined },
+    {
+      number: '04',
+      title: 'Personal Portfolio',
+      siteUrl: 'https://www.hellotjc.com/',
+      heroImage: undefined,
+    },
   ];
 
   page.on('console', (message) => {
@@ -414,6 +441,12 @@ test('the visible portfolio is a stable four-project grid', async ({ page }) => 
         expect(iconPresentation.iconWidth).toBeLessThan(iconPresentation.width);
       } else {
         await expect(siteLink).toHaveCount(0);
+      }
+      if (expected.heroImage) {
+        await expect(cards.nth(index).locator('.portfolio-card-img img')).toHaveAttribute(
+          'src',
+          expected.heroImage
+        );
       }
     }
 
