@@ -10,6 +10,7 @@ import {
 import { gsap } from './utils/gsap';
 import { useLenisScroll } from './hooks/useLenisScroll';
 import { TransitionContext } from './context/TransitionContext';
+import { applyPageMetadata, getPageMetadata } from './utils/pageMetadata';
 import './styles/pageTransition.css';
 
 // Import page components
@@ -50,6 +51,10 @@ const AppContent = () => {
     } else {
       setIsLoading(false);
     }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    applyPageMetadata(getPageMetadata(location.pathname));
   }, [location.pathname]);
 
   // --- Page transition overlay ---
