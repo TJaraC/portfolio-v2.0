@@ -13,6 +13,7 @@
     "build": "tsc --noEmit && vite build",
     "verify:opengraph": "node scripts/verify-project-opengraph-pages.mjs",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css,md,json}\"",
     "preview": "vite preview",
     "serve": "vite preview",
     "type-check": "tsc --noEmit && tsc -p tsconfig.node.json",

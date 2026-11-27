@@ -12,6 +12,8 @@ Las páginas de proyecto se generan desde archivos JSON y comparten un único co
 
 `ejemplo-proyecto.json` conserva el formato antiguo para comprobar la compatibilidad del fallback, pero no debe usarse como plantilla nueva.
 
+`project-template.json` y `ejemplo-proyecto.json` son fixtures de desarrollo: solo se cargan con `pnpm start` (y por tanto en los tests e2e). `src/hooks/useProjectData.ts` los excluye del build de producción, donde `/projects/project-template` y `/projects/ejemplo-proyecto` redirigen a `/404`.
+
 ## Crear un proyecto
 
 1. Duplica `project-template.json` y renombra el archivo con un slug en minúsculas.
@@ -22,7 +24,12 @@ Las páginas de proyecto se generan desde archivos JSON y comparten un único co
 6. Activa `featured` solo si la tarjeta debe ocupar todo el ancho del grid en escritorio.
 7. Añade `siteUrl` solo si existe una web pública real; habilita los enlaces de la tarjeta y la cabecera.
 8. Usa nombres y apellidos españoles, naturales y acordes al contexto, para todas las user personas.
-9. Registra el `id` en `projectIds`, dentro de `src/hooks/useProjectsList.ts`.
+9. Registra el `id` en todos los listados de proyectos (hoy están duplicados):
+   - `projectIds` en `src/hooks/useProjectsList.ts` (solo si debe aparecer en el grid de la home).
+   - `publishedProjects` en `src/utils/pageMetadata.ts` (metadatos y HTML estático por proyecto).
+   - Las dos reglas `rewrites` de `vercel.json` (`/projects/<slug>` y `/projects/<slug>/`).
+   - `projectIds` en `scripts/verify-project-opengraph-pages.mjs` y en `tests/e2e/project-open-graph.spec.ts`, y el array `projects` de `tests/e2e/project-case-studies.spec.ts`.
+   - `public/sitemap.xml`.
 10. Comprueba `/projects/<slug>` en escritorio y móvil.
 
 ## Estructura narrativa
