@@ -56,8 +56,6 @@
 
 /* Reset inherited link styles for links that replaced buttons/clickable divs */
 a.nav-button,
-a.button,
-a.footer-backtop,
 .portfolio-card-link,
 .contact-heading-link,
 .next-project-link {
@@ -65,10 +63,16 @@ a.footer-backtop,
   text-decoration: none;
 }
 
+/* Nav links keep the box the former <button> had (UA padding 1px 6px) */
+a.nav-button {
+  padding: 1px 6px;
+}
+
 a.button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
 }
 
 button.footer-backtop {
@@ -114,6 +118,16 @@ button.footer-backtop {
   justify-content: inherit;
   gap: inherit;
   width: 100%;
+}
+
+/* Switch is now a native <button role="switch">: neutralise UA button styles */
+button.switch {
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  line-height: inherit;
 }
 
 /* Switch focus ring follows the rounded track instead of the bounding box */
