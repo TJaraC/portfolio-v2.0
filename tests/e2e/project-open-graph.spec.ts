@@ -76,11 +76,11 @@ const expectPageMetadata = async (page: Page, metadata: PageMetadata) => {
     'content',
     metadata.imageType
   );
-  await expect(page.locator('meta[property="twitter:url"]')).toHaveAttribute(
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
     'content',
-    metadata.canonicalUrl
+    'index, follow, max-image-preview:large'
   );
-  await expect(page.locator('meta[property="twitter:image"]')).toHaveAttribute(
+  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute(
     'content',
     metadata.imageUrl
   );
@@ -90,14 +90,20 @@ const expectPageMetadata = async (page: Page, metadata: PageMetadata) => {
       'content',
       metadata.imageAlt
     );
-    await expect(page.locator('meta[property="twitter:image:alt"]')).toHaveAttribute(
+    await expect(page.locator('meta[name="twitter:image:alt"]')).toHaveAttribute(
       'content',
       metadata.imageAlt
     );
   } else {
     await expect(page.locator('meta[property="og:image:alt"]')).toHaveCount(0);
-    await expect(page.locator('meta[property="twitter:image:alt"]')).toHaveCount(0);
+    await expect(page.locator('meta[name="twitter:image:alt"]')).toHaveCount(0);
   }
+
+  const structuredData = JSON.parse(
+    (await page.locator('script#structured-data').textContent()) ?? '{}'
+  );
+  const nodeUrls = (structuredData['@graph'] ?? []).map((node: { url?: string }) => node.url);
+  expect(nodeUrls).toContain(metadata.canonicalUrl);
 };
 
 for (const project of PROJECT_PAGE_METADATA) {
@@ -167,4 +173,16 @@ test('project Open Graph metadata remains stable on a mobile direct route', asyn
   }));
   expect(overflow.content).toBeLessThanOrEqual(overflow.viewport + 1);
   expect(runtimeErrors).toEqual([]);
+});
+
+test('unknown routes and unpublished project files are never indexable', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+
+  for (const path of ['/this-route-does-not-exist', '/projects/project-template']) {
+    await page.goto(path, { waitUntil: 'networkidle' });
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
+    await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+    await expect(page.locator('meta[property="og:url"]')).toHaveCount(0);
+    await expect(page.locator('script#structured-data')).toHaveCount(0);
+  }
 });

@@ -228,7 +228,7 @@ const Home: React.FC = () => {
           <div className="hero-bottom">
             <AnimatedProfileImage
               src="/images/general/img_img.png"
-              alt="Profile"
+              alt=""
               className="hero-profile-img"
               delay={0.8}
               rotations={1.5}
@@ -339,7 +339,7 @@ const Home: React.FC = () => {
               <div className="about-img about-img-flexible">
                 <ImageWithCurtain
                   src="/images/general/profile01.webp"
-                  alt="About"
+                  alt="Patricio Jaramillo Castrillo, product designer, reviewing a design on a phone in a studio"
                   delay={0.2}
                   duration={1.0}
                   threshold={0.15}
@@ -348,7 +348,7 @@ const Home: React.FC = () => {
               <div className="about-img about-img-fixed">
                 <ImageWithCurtain
                   src="/images/general/profile02.webp"
-                  alt="Profile"
+                  alt="Portrait of Patricio Jaramillo Castrillo"
                   delay={0.4}
                   duration={1.0}
                   threshold={0.15}

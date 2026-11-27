@@ -490,7 +490,7 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                   <div className="project-gallery-grid">
                     {data.gallery.images.map((image, index) => (
                       <div key={`${image}-${index}`} className="project-gallery-item">
-                        <ImageWithCurtain src={image} alt={`Gallery image ${index + 1}`} />
+                        <ImageWithCurtain src={image} alt={`${data.cardTitle} gallery image ${index + 1}`} />
                       </div>
                     ))}
                   </div>
