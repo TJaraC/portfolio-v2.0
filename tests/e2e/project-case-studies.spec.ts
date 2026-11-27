@@ -209,7 +209,7 @@ for (const project of projects) {
 
       const brokenImages = await page
         .locator('img')
-        .evaluateAll((images) =>
+        .evaluateAll((images: HTMLImageElement[]) =>
           images
             .filter((image) => !image.complete || image.naturalWidth === 0)
             .map((image) => image.getAttribute('src') ?? 'unknown image')
@@ -478,7 +478,7 @@ test('the visible portfolio is a stable four-project grid', async ({ page }) => 
 
     const brokenImages = await page
       .locator('.portfolio-card img')
-      .evaluateAll((images) =>
+      .evaluateAll((images: HTMLImageElement[]) =>
         images
           .filter((image) => !image.complete || image.naturalWidth === 0)
           .map((image) => image.getAttribute('src') ?? 'unknown image')
@@ -493,7 +493,7 @@ test('the visible portfolio is a stable four-project grid', async ({ page }) => 
         await page.waitForTimeout(1_400);
       }
       await page.waitForTimeout(400);
-      await page.locator('.portfolio-card img').evaluateAll(async (images) => {
+      await page.locator('.portfolio-card img').evaluateAll(async (images: HTMLImageElement[]) => {
         await Promise.all(images.map((image) => image.decode()));
       });
       await page.addStyleTag({

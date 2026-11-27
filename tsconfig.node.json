@@ -1,13 +1,15 @@
 {
   "compilerOptions": {
-    "composite": true,
-    "skipLibCheck": true,
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "types": ["node"],
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": [
-    "vite.config.ts",
-    "eslint.config.js"
-  ]
+  "include": ["vite.config.ts", "playwright.config.ts", "tests"]
 }

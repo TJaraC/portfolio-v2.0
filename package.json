@@ -10,12 +10,12 @@
   "scripts": {
     "preinstall": "node scripts/require-pnpm.cjs",
     "start": "vite",
-    "build": "tsc --noCheck && vite build",
+    "build": "tsc --noEmit && vite build",
     "verify:opengraph": "node scripts/verify-project-opengraph-pages.mjs",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md,json}\"",
     "preview": "vite preview",
     "serve": "vite preview",
-    "type-check": "tsc --noEmit",
+    "type-check": "tsc --noEmit && tsc -p tsconfig.node.json",
     "test:e2e": "playwright test",
     "playwright:install": "playwright install chromium"
   },
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.61.1",
+    "@types/node": "^22.20.7",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",
