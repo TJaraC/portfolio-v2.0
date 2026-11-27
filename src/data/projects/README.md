@@ -1,6 +1,6 @@
 # Sistema de proyectos dinámicos
 
-Las páginas de proyecto se generan desde archivos JSON y comparten un único componente React. Hay cinco casos disponibles y cuatro visibles en el grid; `project-template.json` es la fuente de verdad para crear casos nuevos y permite añadir un capítulo de delivery cuando el contexto lo requiere.
+Las páginas de proyecto se generan desde archivos JSON y comparten un único componente React. Hay cuatro casos publicados, todos visibles en el grid; `project-template.json` es la fuente de verdad para crear casos nuevos y permite añadir un capítulo de delivery cuando el contexto lo requiere.
 
 ## Proyectos publicados
 
@@ -8,7 +8,6 @@ Las páginas de proyecto se generan desde archivos JSON y comparten un único co
 - `ultracamp.json`
 - `festgo-app.json`
 - `portfolio-25.json`
-- `howell-gallery.json`
 
 `ejemplo-proyecto.json` conserva el formato antiguo para comprobar la compatibilidad del fallback, pero no debe usarse como plantilla nueva.
 
@@ -117,4 +116,4 @@ pnpm build
 pnpm test:e2e
 ```
 
-Las pruebas de Playwright recorren los cinco casos disponibles y los cuatro proyectos visibles en viewport de escritorio y móvil, comprueban enlaces, overflow, imágenes rotas y errores de consola, y pueden guardar evidencia si se define `PORTFOLIO_EVIDENCE_DIR`.
+Las pruebas de Playwright recorren los cuatro casos publicados en viewport de escritorio y móvil, comprueban enlaces, overflow, imágenes rotas y errores de consola, y pueden guardar evidencia si se define `PORTFOLIO_EVIDENCE_DIR`.

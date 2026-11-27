@@ -18,10 +18,6 @@
       "destination": "/projects/portfolio-25/index.html"
     },
     {
-      "source": "/projects/howell-gallery",
-      "destination": "/projects/howell-gallery/index.html"
-    },
-    {
       "source": "/projects",
       "destination": "/index.html"
     },

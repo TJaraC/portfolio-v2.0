@@ -228,11 +228,6 @@ body:has(.projects-page) {
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.44);
 }
 
-.project-case[data-project='howell-gallery'] .project-hero-inset {
-  width: clamp(12.5rem, 22vw, 24rem);
-  aspect-ratio: 4 / 3;
-}
-
 .project-hero-site-link {
   position: absolute;
   top: clamp(1rem, 2vw, 2rem);
@@ -1599,10 +1594,6 @@ body:has(.projects-page) {
     width: min(30vw, 13rem);
   }
 
-  .project-case[data-project='howell-gallery'] .project-hero-inset {
-    width: min(38vw, 16rem);
-  }
-
   .case-index-list {
     flex-wrap: wrap;
     gap: 6px 16px;
@@ -1712,8 +1703,7 @@ body:has(.projects-page) {
     object-position: center;
   }
 
-  .project-hero-inset,
-  .project-case[data-project='howell-gallery'] .project-hero-inset {
+  .project-hero-inset {
     position: relative;
     right: auto;
     bottom: auto;
@@ -1726,10 +1716,6 @@ body:has(.projects-page) {
 
   .project-case[data-project='areta'] .project-hero-inset {
     aspect-ratio: 3 / 4;
-  }
-
-  .project-case[data-project='howell-gallery'] .project-hero-inset {
-    aspect-ratio: 4 / 3;
   }
 
   .project-hero-index {

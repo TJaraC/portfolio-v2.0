@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const distDirectory = join(repositoryRoot, 'dist');
 const siteOrigin = 'https://www.hellotjc.com';
-const projectIds = ['areta', 'ultracamp', 'festgo-app', 'portfolio-25', 'howell-gallery'];
+const projectIds = ['areta', 'ultracamp', 'festgo-app', 'portfolio-25'];
 const indexableRobots = 'index, follow, max-image-preview:large';
 
 const decodeHtml = (value) =>

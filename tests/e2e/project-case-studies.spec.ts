@@ -46,16 +46,6 @@ const projects = [
     siteUrl: 'https://www.hellotjc.com/',
     heroImage: undefined,
   },
-  {
-    id: 'howell-gallery',
-    title: 'Howell Gallery',
-    personas: ['Carmen Vidal'],
-    metricUnits: ['content types', 'reading levels', 'responsive system'],
-    applicationCount: 3,
-    chapterCount: 9,
-    hasDelivery: false,
-    heroImage: undefined,
-  },
 ];
 
 const viewports = [
@@ -401,7 +391,6 @@ test('the visible portfolio is a stable four-project grid', async ({ page }) => 
       expectedCards.map((project) => project.title)
     );
     await expect(page.locator('.portfolio-card.is-featured')).toHaveCount(0);
-    await expect(page.getByText('Howell Gallery', { exact: true })).toHaveCount(0);
     await expect(cards.locator('.portfolio-card-title + .project-site-link--icon')).toHaveCount(3);
 
     for (let index = 0; index < expectedCards.length; index += 1) {

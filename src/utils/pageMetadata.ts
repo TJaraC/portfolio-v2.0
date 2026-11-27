@@ -1,6 +1,5 @@
 import aretaProject from '../data/projects/areta.json';
 import festgoProject from '../data/projects/festgo-app.json';
-import howellProject from '../data/projects/howell-gallery.json';
 import portfolioProject from '../data/projects/portfolio-25.json';
 import ultracampProject from '../data/projects/ultracamp.json';
 
@@ -70,7 +69,6 @@ const publishedProjects: ProjectMetadataSource[] = [
   ultracampProject,
   festgoProject,
   portfolioProject,
-  howellProject,
 ];
 
 const HOME_PAGE_METADATA: PageMetadata = {
