@@ -59,20 +59,6 @@ const seoDocuments = (): Plugin => {
 export default defineConfig({
   build: {
     outDir: 'dist',
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          lenis: ['lenis'],
-        },
-      },
-    },
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: false,
-        drop_debugger: true,
-      },
-    },
   },
   plugins: [react(), seoDocuments()],
   server: {
