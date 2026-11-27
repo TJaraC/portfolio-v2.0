@@ -30,12 +30,6 @@ interface BrowserDetection {
   isChrome: () => boolean;
 }
 
-interface PerformanceOptimization {
-  optimizeForAnimation: (element: HTMLElement | null) => void;
-  cleanupAfterAnimation: (element: HTMLElement | null) => void;
-  enableHardwareAcceleration: (element: HTMLElement | null) => void;
-}
-
 interface AccessibilityUtils {
   prefersReducedMotion: () => boolean;
   prefersHighContrast: () => boolean;
@@ -178,31 +172,6 @@ export const browserDetection: BrowserDetection = {
   }
 };
 
-// Performance optimization utilities
-export const performanceOptimization: PerformanceOptimization = {
-  // Add will-change property for animations
-  optimizeForAnimation: (element: HTMLElement | null) => {
-    if (element) {
-      element.style.willChange = 'transform, opacity';
-    }
-  },
-
-  // Remove will-change property after animation
-  cleanupAfterAnimation: (element: HTMLElement | null) => {
-    if (element) {
-      element.style.willChange = 'auto';
-    }
-  },
-
-  // Enable hardware acceleration
-  enableHardwareAcceleration: (element: HTMLElement | null) => {
-    if (element) {
-      element.style.transform = 'translateZ(0)';
-      element.style.backfaceVisibility = 'hidden';
-    }
-  }
-};
-
 // Accessibility utilities
 export const accessibilityUtils: AccessibilityUtils = {
   // Check if user prefers reduced motion
@@ -269,8 +238,6 @@ export const initBrowserCompatibility = (): void => {
   if (!featureDetection.supportsCustomProperties()) {
     html.classList.add('no-custom-properties');
   }
-
-  console.log('Browser compatibility utilities initialized');
 };
 
 // Export default initialization

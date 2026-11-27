@@ -3,7 +3,6 @@ import Lenis from 'lenis';
 import { setLenisInstance, useLenisScroll } from './hooks/useLenisScroll';
 import { ScrollTrigger } from './utils/gsap';
 import { lenisEasing } from './utils/easing';
-import { fontLoading } from './utils/browserCompatibility';
 import Routes from './Routes';
 import CustomCursor from './components/ui/CustomCursor';
 
@@ -14,17 +13,8 @@ const App: React.FC = () => {
     // Verificar que estamos en el navegador
     if (typeof window === 'undefined') return;
 
-    // Manejar errores de fuentes
-    const handleFontErrors = () => {
-      // Agregar fallbacks si las fuentes fallan
-      fontLoading.addFontFallbacks();
-
-      // Esperar a que las fuentes se carguen
-      fontLoading.waitForFonts(['Geist', 'Gilda Display']).catch(() => {
-        console.warn('Font loading failed, using fallbacks');
-        document.documentElement.classList.add('font-fallback-active');
-      });
-    };
+    // La comprobación de fuentes (fallbacks incluidos) ya la hace
+    // initBrowserCompatibility() en main.tsx.
 
     let rafId: number;
 
@@ -67,9 +57,6 @@ const App: React.FC = () => {
     };
 
     let lenis: Lenis | null = null;
-
-    // Inicializar manejo de fuentes
-    handleFontErrors();
 
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
