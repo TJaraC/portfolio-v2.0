@@ -77,7 +77,8 @@ export const useResponsiveAnimations = ({
     window.addEventListener('resize', debouncedCheck);
 
     return () => {
-      window.removeEventListener('resize', checkBreakpoint);
+      window.removeEventListener('resize', debouncedCheck);
+      debouncedCheck.cancel();
       if (animationContext.current) {
         animationContext.current.kill();
       }
@@ -94,12 +95,14 @@ export const useResponsiveAnimations = ({
 function debounce<T extends (...args: any[]) => any>(
   func: T,
   wait: number
-): (...args: Parameters<T>) => void {
+): ((...args: Parameters<T>) => void) & { cancel: () => void } {
   let timeout: ReturnType<typeof setTimeout>;
-  return (...args: Parameters<T>) => {
+  const debounced = (...args: Parameters<T>) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
   };
+  debounced.cancel = () => clearTimeout(timeout);
+  return debounced;
 }
 
 export default useResponsiveAnimations;
