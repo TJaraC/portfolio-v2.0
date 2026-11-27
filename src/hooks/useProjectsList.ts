@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ProjectData } from './useProjectData';
+import { loadProjectData } from './useProjectData';
 
 interface ProjectCard {
   id: string;
@@ -30,7 +30,7 @@ export const useProjectsList = (): {
         const projectIds = ['areta', 'ultracamp', 'festgo-app', 'portfolio-25'];
 
         const results = await Promise.allSettled(
-          projectIds.map((projectId) => import(`../data/projects/${projectId}.json`))
+          projectIds.map((projectId) => loadProjectData(projectId))
         );
 
         const projectsData: ProjectCard[] = results
@@ -39,7 +39,7 @@ export const useProjectsList = (): {
               console.warn(`Could not load project ${projectIds[index]}:`, result.reason);
               return null;
             }
-            const data: ProjectData = result.value.default;
+            const data = result.value;
             return {
               id: data.id,
               cardNumber: data.cardNumber,
