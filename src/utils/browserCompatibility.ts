@@ -39,17 +39,30 @@ interface AccessibilityUtils {
 
 // Fix for mobile viewport height issues
 export const fixMobileViewportHeight = (): void => {
+  let lastValue = '';
+  let frame = 0;
+
+  // Writing a custom property on <html> invalidates style for the whole
+  // document, so only write when the value actually changes.
   const setVH = () => {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    frame = 0;
+    const value = `${window.innerHeight * 0.01}px`;
+    if (value === lastValue) return;
+    lastValue = value;
+    document.documentElement.style.setProperty('--vh', value);
+  };
+
+  // Coalesce bursts of resize events (e.g. mobile URL bar) into one write per frame
+  const scheduleVH = () => {
+    if (!frame) frame = requestAnimationFrame(setVH);
   };
 
   // Set initial value
   setVH();
 
   // Update on resize and orientation change
-  window.addEventListener('resize', setVH);
-  window.addEventListener('orientationchange', setVH);
+  window.addEventListener('resize', scheduleVH);
+  window.addEventListener('orientationchange', scheduleVH);
 };
 
 // Feature detection utilities

@@ -20,11 +20,14 @@ const projectMetadataPages = (): Plugin => {
         PROJECT_PAGE_METADATA.map(async (metadata) => {
           const destination = join(outputDirectory, 'projects', metadata.id, 'index.html');
           await mkdir(dirname(destination), { recursive: true });
-          await writeFile(
-            destination,
-            renderProjectMetadataDocument(homeDocument, metadata),
-            'utf8'
+          // Preload the case-study hero (LCP candidate) so it starts downloading
+          // while the JS bundle loads, instead of after the route + JSON chunks.
+          const heroPath = new URL(metadata.imageUrl).pathname;
+          const html = renderProjectMetadataDocument(homeDocument, metadata).replace(
+            '</head>',
+            `  <link rel="preload" as="image" href="${heroPath}" />\n  </head>`
           );
+          await writeFile(destination, html, 'utf8');
         })
       );
     },

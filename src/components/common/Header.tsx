@@ -26,7 +26,6 @@ const Header: React.FC = () => {
   const headerRef = useRef<HTMLElement>(null);
   const lastScrollY = useRef(0);
   const logoRotation = useRef(0);
-  const lastThrottleTime = useRef(0);
 
   // Función para hacer scroll suave a una sección
   const scrollToSection = (sectionId: string) => {
@@ -127,50 +126,52 @@ const Header: React.FC = () => {
       }
     });
 
-    // Determinar el tema basándose en qué tipo de sección domina
-    const newTheme = lightPixels >= darkPixels ? 'light' : 'dark';
-
-    if (newTheme !== headerTheme) {
-      setHeaderTheme(newTheme);
-    }
+    // Determinar el tema basándose en qué tipo de sección domina.
+    // React descarta el update si el valor no cambia, así que no hace falta
+    // comparar con el estado (y evitamos closures obsoletos).
+    setHeaderTheme(lightPixels >= darkPixels ? 'light' : 'dark');
   };
 
-  // useEffect para detectar scroll y cambiar tema del header
+  // useEffect para detectar scroll y cambiar tema del header.
+  // Se suscribe una sola vez y agrupa las lecturas de layout en un rAF por frame
+  // (el throttle anterior podía descartar el último evento de scroll).
   useEffect(() => {
+    let frame = 0;
     const handleScroll = () => {
-      const now = Date.now();
-      if (now - lastThrottleTime.current < 16) return;
-      lastThrottleTime.current = now;
-      detectHeaderTheme();
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        detectHeaderTheme();
+      });
     };
 
-    // Detectar tema inicial (sin throttle — solo una vez al montar)
+    // Detectar tema inicial
     detectHeaderTheme();
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(frame);
     };
-  }, [headerTheme]);
+  }, []);
 
-  // Animación del logo con scroll
+  // Animación del logo con scroll (quickTo reutiliza un único tween en vez de
+  // crear uno nuevo en cada evento de scroll)
   useEffect(() => {
+    if (!logoRef.current) return;
+    const rotateLogo = gsap.quickTo(logoRef.current, 'rotation', {
+      duration: 0.3,
+      ease: 'power2.out',
+    });
+
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const scrollDelta = currentScrollY - lastScrollY.current;
 
       // Calcular la rotación basada en la dirección del scroll
       logoRotation.current += scrollDelta * 0.5; // Factor de velocidad de rotación
-
-      if (logoRef.current) {
-        gsap.to(logoRef.current, {
-          rotation: logoRotation.current,
-          duration: 0.3,
-          ease: 'power2.out',
-          overwrite: true,
-        });
-      }
+      rotateLogo(logoRotation.current);
 
       lastScrollY.current = currentScrollY;
     };

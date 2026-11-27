@@ -9,18 +9,21 @@ const CustomCursor: React.FC = () => {
 
     let mouseX = 0;
     let mouseY = 0;
-    let rafId: number;
+    let rafId = 0;
 
-    // Acumula posición en mousemove, aplica al DOM en rAF — desacopla eventos del paint
+    // Acumula posición en mousemove y aplica al DOM en un único rAF por frame.
+    // Solo se programa un frame cuando el ratón se mueve: sin movimiento no hay
+    // bucle rAF ni escrituras de estilo/layout.
+    const updatePosition = () => {
+      rafId = 0;
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top = mouseY + 'px';
+    };
+
     const moveCursor = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-    };
-
-    const updatePosition = () => {
-      cursor.style.left = mouseX + 'px';
-      cursor.style.top = mouseY + 'px';
-      rafId = requestAnimationFrame(updatePosition);
+      if (!rafId) rafId = requestAnimationFrame(updatePosition);
     };
 
     // Event delegation: 2 listeners en document en vez de N por elemento interactivo

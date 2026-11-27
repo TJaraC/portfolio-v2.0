@@ -103,6 +103,7 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                   duration={1.2}
                   threshold={0.1}
                   loading="eager"
+                  fetchPriority="high"
                 />
               </div>
               {data.heroInsetImage ? (

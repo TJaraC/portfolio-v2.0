@@ -10,13 +10,12 @@ import {
 import { gsap } from './utils/gsap';
 import { useLenisScroll } from './hooks/useLenisScroll';
 import { TransitionContext } from './context/TransitionContext';
-import { applyPageMetadata, getPageMetadata } from './utils/pageMetadata';
 import './styles/pageTransition.css';
 
 // Import page components
 const HomePage = React.lazy(() => import('./pages/Home'));
 const ProjectsPage = React.lazy(() => import('./pages/Projects/ProjectsPage'));
-import Error404 from './pages/Error404';
+const Error404 = React.lazy(() => import('./pages/Error404'));
 import Preloader from './components/ui/Preloader';
 
 const AppContent = () => {
@@ -53,8 +52,18 @@ const AppContent = () => {
     }
   }, [location.pathname]);
 
+  // pageMetadata importa los JSON completos de todos los proyectos; cargarlo bajo
+  // demanda los saca del chunk inicial. El HTML servido ya trae los metadatos
+  // correctos de cada ruta (plugin project-metadata-pages), así que esto solo
+  // los sincroniza en la navegación SPA.
   useEffect(() => {
-    applyPageMetadata(getPageMetadata(location.pathname));
+    let cancelled = false;
+    import('./utils/pageMetadata').then(({ applyPageMetadata, getPageMetadata }) => {
+      if (!cancelled) applyPageMetadata(getPageMetadata(location.pathname));
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [location.pathname]);
 
   // --- Page transition overlay ---
