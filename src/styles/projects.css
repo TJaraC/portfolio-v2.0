@@ -5,6 +5,24 @@
   color: var(--global-text-1);
 }
 
+.project-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 120px 24px 80px;
+}
+
+.project-loading-label {
+  color: var(--global-text-1);
+  font-family: 'Geist', 'Geist-Fallback', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
 .project-case {
   --project-ink-accent: var(--project-accent-strong);
   --project-tint: rgba(3, 3, 9, 0.06);
@@ -1328,22 +1346,78 @@
 .next-project-section {
   position: relative;
   z-index: 15;
+  width: 100%;
+  padding: clamp(2rem, 4vw, 3.5rem) clamp(24px, 3vw, 44px) clamp(5rem, 9vw, 8.5rem);
+}
+
+.next-project-inner {
+  width: 100%;
+  max-width: 1760px;
+  margin-inline: auto;
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+  border-top: 1px solid rgba(3, 3, 9, 0.28);
+}
+
+.next-project-trigger {
   display: flex;
   flex-direction: column;
-  width: 100%;
   align-items: center;
-  justify-content: center;
-  padding: 40px 24px 160px;
+  gap: clamp(1.25rem, 2.5vw, 2.25rem);
+  width: 100%;
+  cursor: pointer;
+}
+
+.next-project-meta {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: baseline;
+  gap: 12px 24px;
+  width: 100%;
+  font-family: 'Geist', 'Geist-Fallback', sans-serif;
+}
+
+.next-project-meta-kicker {
+  justify-self: start;
+  color: var(--project-ink-accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.next-project-meta-title {
+  justify-self: center;
+  color: var(--global-text-1);
+  font-size: clamp(1rem, 1.4vw, 1.35rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: color 180ms ease;
+}
+
+.next-project-trigger:hover .next-project-meta-title {
+  color: var(--global-text-3);
+}
+
+.next-project-meta-tags {
+  justify-self: end;
+  color: rgba(3, 3, 9, 0.64);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: right;
 }
 
 .next-project-button {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0;
   margin: 0;
   color: var(--global-text-1);
-  font-size: clamp(1.5rem, 12vw, 8rem);
+  font-size: clamp(1.85rem, 8.2vw, 7.25rem);
   text-align: center;
   white-space: nowrap;
 }
@@ -1353,13 +1427,17 @@
   display: inline-block;
   color: inherit;
   line-height: 1;
-  letter-spacing: 4px;
+  letter-spacing: 0.03em;
   vertical-align: middle;
 }
 
 .next-project-heading-gilda {
   font-family: 'Gilda Display', 'Gilda-Fallback', 'Times New Roman', serif;
   font-weight: 400;
+}
+
+.next-project-button > .next-project-heading-gilda {
+  margin-right: 0.16em;
 }
 
 .next-project-heading-geist {
@@ -1372,21 +1450,16 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-left: 10px;
+  margin-left: 0.14em;
   color: inherit;
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-  font-size: clamp(1.5rem, 12vw, 8rem);
-  font-weight: 100;
+  font-size: inherit;
+  font-weight: 200;
   line-height: 1;
   vertical-align: middle;
 }
 
 @media (max-width: 1140px) {
-  .next-project-button {
-    flex-wrap: wrap;
-    white-space: normal;
-  }
-
   .case-delivery-stack {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1584,12 +1657,21 @@
   }
 
   .next-project-section {
-    padding: 30px 16px 120px;
+    padding: 24px 20px 88px;
   }
 
-  .next-project-heading-gilda,
-  .next-project-heading-geist {
-    font-size: clamp(3rem, 12vw, 8rem);
+  .next-project-meta {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .next-project-meta-kicker,
+  .next-project-meta-title,
+  .next-project-meta-tags {
+    justify-self: center;
+    text-align: center;
   }
 }
 
@@ -1769,13 +1851,11 @@
   }
 
   .next-project-section {
-    padding: 20px 12px 100px;
+    padding: 20px 16px 76px;
   }
 
-  .next-project-heading-gilda,
-  .next-project-heading-geist {
-    font-size: clamp(2.5rem, 10vw, 6rem);
-    letter-spacing: 1px;
+  .next-project-button {
+    font-size: clamp(1.7rem, 8.2vw, 3.2rem);
   }
 }
 
@@ -1785,11 +1865,14 @@
   }
 
   .project-gallery-item img,
-  .case-index-link {
+  .case-index-link,
+  .color-palette-swatch,
+  .next-project-meta-title {
     transition: none;
   }
 
-  .project-gallery-item:hover img {
+  .project-gallery-item:hover img,
+  .color-palette-swatch:hover {
     transform: none;
   }
 

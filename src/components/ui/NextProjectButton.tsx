@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { gsap } from '../../utils/gsap';
 import { useNextProject } from '../../hooks/useNextProject';
@@ -14,6 +14,7 @@ const NextProjectButton: React.FC<NextProjectButtonProps> = ({
   className = '',
 }) => {
   const location = useLocation();
+  const triggerRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLHeadingElement>(null);
   const hoverTl = useRef<gsap.core.Timeline>();
   const isNavigating = useRef(false);
@@ -26,25 +27,37 @@ const NextProjectButton: React.FC<NextProjectButtonProps> = ({
     isNavigating.current = false;
   }, [location.pathname]);
 
-  useEffect(() => {
-    if (!buttonRef.current || loading || !nextProject) return;
+  const navigateToNext = useCallback(() => {
+    if (nextProject && !loading && !isNavigating.current) {
+      isNavigating.current = true;
+      hoverTl.current?.kill();
+      transitionTo(`/projects/${nextProject.id}`);
 
-    // Dividir el texto en letras individuales con efecto slot machine
+      window.setTimeout(() => {
+        isNavigating.current = false;
+      }, 1500);
+    }
+  }, [nextProject, loading, transitionTo]);
+
+  useEffect(() => {
+    const headingEl = buttonRef.current;
+    const triggerEl = triggerRef.current;
+    if (!headingEl || !triggerEl || loading || !nextProject) return;
+
     const nextText = 'NEXT';
     const projectText = 'PROJECT';
     const arrowText = '→';
 
-    const createLetterElements = (text: string, className: string) => {
-      return text.split('').map((letter, index) => {
+    const createLetterElements = (text: string, letterClassName: string) => {
+      return text.split('').map((letter) => {
         const letterContainer = document.createElement('span');
         letterContainer.style.display = 'inline-block';
         letterContainer.style.overflow = 'hidden';
         letterContainer.style.position = 'relative';
         letterContainer.style.height = '1em';
         letterContainer.style.verticalAlign = 'middle';
-        letterContainer.className = className;
+        letterContainer.className = letterClassName;
 
-        // Letra original
         const originalLetter = document.createElement('span');
         originalLetter.textContent = letter === ' ' ? '\u00A0' : letter;
         originalLetter.style.display = 'block';
@@ -53,7 +66,6 @@ const NextProjectButton: React.FC<NextProjectButtonProps> = ({
         originalLetter.style.textAlign = 'center';
         originalLetter.style.width = '100%';
 
-        // Letra naranja (inicialmente oculta arriba)
         const orangeLetter = document.createElement('span');
         orangeLetter.textContent = letter === ' ' ? '\u00A0' : letter;
         orangeLetter.style.display = 'block';
@@ -77,12 +89,8 @@ const NextProjectButton: React.FC<NextProjectButtonProps> = ({
     const projectLetters = createLetterElements(projectText, 'next-project-heading-geist');
     const arrowLetters = createLetterElements(arrowText, 'next-project-arrow');
 
-    const allLetters = [...nextLetters, ...projectLetters, ...arrowLetters];
+    headingEl.innerHTML = '';
 
-    // Limpiar contenido anterior y agregar las letras
-    buttonRef.current.innerHTML = '';
-
-    // Crear contenedores para cada palabra
     const nextSpan = document.createElement('span');
     nextSpan.className = 'next-project-heading-gilda';
     nextLetters.forEach((letterObj) => nextSpan.appendChild(letterObj.container));
@@ -95,14 +103,15 @@ const NextProjectButton: React.FC<NextProjectButtonProps> = ({
     arrowSpan.className = 'next-project-arrow';
     arrowLetters.forEach((letterObj) => arrowSpan.appendChild(letterObj.container));
 
-    buttonRef.current.appendChild(nextSpan);
-    buttonRef.current.appendChild(projectSpan);
-    buttonRef.current.appendChild(arrowSpan);
+    headingEl.appendChild(nextSpan);
+    headingEl.appendChild(projectSpan);
+    headingEl.appendChild(arrowSpan);
 
-    // Event listeners para hover
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     const handleMouseEnter = () => {
+      if (prefersReducedMotion) return;
       hoverTl.current?.kill();
-      // Crear timeline para el efecto slot machine solo en PROJECT y flecha
       hoverTl.current = gsap.timeline();
 
       const projectAndArrowLetters = [...projectLetters, ...arrowLetters];
@@ -131,8 +140,8 @@ const NextProjectButton: React.FC<NextProjectButtonProps> = ({
     };
 
     const handleMouseLeave = () => {
+      if (prefersReducedMotion) return;
       hoverTl.current?.kill();
-      // Crear timeline para volver al estado original solo en PROJECT y flecha
       hoverTl.current = gsap.timeline();
 
       const projectAndArrowLetters = [...projectLetters, ...arrowLetters];
@@ -160,63 +169,68 @@ const NextProjectButton: React.FC<NextProjectButtonProps> = ({
       });
     };
 
-    const handleClick = (e: Event) => {
-      e.preventDefault();
-      e.stopPropagation();
+    triggerEl.addEventListener('mouseenter', handleMouseEnter);
+    triggerEl.addEventListener('mouseleave', handleMouseLeave);
 
-      if (nextProject && !loading && !isNavigating.current) {
-        isNavigating.current = true;
-        // Detener cualquier animación en curso
-        hoverTl.current?.kill();
-
-        // Usar la transición de página global (idéntica a la usada desde la home)
-        transitionTo(`/projects/${nextProject.id}`);
-
-        // Reset después de un tiempo (la transición dura ~1s en total)
-        setTimeout(() => {
-          isNavigating.current = false;
-        }, 1500);
-      }
-    };
-
-    buttonRef.current.addEventListener('mouseenter', handleMouseEnter);
-    buttonRef.current.addEventListener('mouseleave', handleMouseLeave);
-    buttonRef.current.addEventListener('click', handleClick);
-
-    // Cleanup
     return () => {
-      if (buttonRef.current) {
-        buttonRef.current.removeEventListener('mouseenter', handleMouseEnter);
-        buttonRef.current.removeEventListener('mouseleave', handleMouseLeave);
-        buttonRef.current.removeEventListener('click', handleClick);
-      }
+      triggerEl.removeEventListener('mouseenter', handleMouseEnter);
+      triggerEl.removeEventListener('mouseleave', handleMouseLeave);
       hoverTl.current?.kill();
     };
-  }, [nextProject, loading, transitionTo]);
+  }, [nextProject, loading]);
 
   if (loading || !nextProject) {
     return (
       <section className="next-project-section">
-        <h2 className={`next-project-button ${className}`}>
-          <span className="next-project-heading-gilda">NEXT</span>
-          <span className="next-project-heading-geist">PROJECT</span>
-          <span className="next-project-arrow">→</span>
-        </h2>
+        <div className="next-project-inner">
+          <h2 className={`next-project-button ${className}`}>
+            <span className="next-project-heading-gilda">NEXT</span>
+            <span className="next-project-heading-geist">PROJECT</span>
+            <span className="next-project-arrow">→</span>
+          </h2>
+        </div>
       </section>
     );
   }
 
   return (
-    <section className="next-project-section">
-      <h2
-        ref={buttonRef}
-        className={`next-project-button ${className}`}
-        style={{
-          cursor: 'pointer',
-        }}
-      >
-        {/* El contenido se genera dinámicamente */}
-      </h2>
+    <section className="next-project-section" aria-label={`Next project: ${nextProject.cardTitle}`}>
+      <div className="next-project-inner">
+        <div
+          ref={triggerRef}
+          className="next-project-trigger"
+          role="link"
+          tabIndex={0}
+          aria-label={`Next project: ${nextProject.cardTitle}`}
+          onClick={(event) => {
+            event.preventDefault();
+            navigateToNext();
+          }}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              navigateToNext();
+            }
+          }}
+        >
+          <div className="next-project-meta">
+            <span className="next-project-meta-kicker">
+              Up next · {nextProject.cardNumber}
+            </span>
+            <span className="next-project-meta-title">{nextProject.cardTitle}</span>
+            {nextProject.cardTags?.length ? (
+              <span className="next-project-meta-tags">
+                {nextProject.cardTags.join(' · ')}
+              </span>
+            ) : null}
+          </div>
+          <h2 ref={buttonRef} className={`next-project-button ${className}`}>
+            <span className="next-project-heading-gilda">NEXT</span>
+            <span className="next-project-heading-geist">PROJECT</span>
+            <span className="next-project-arrow">→</span>
+          </h2>
+        </div>
+      </div>
     </section>
   );
 };
