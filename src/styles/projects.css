@@ -1,4 +1,9 @@
 /* Project case-study layout */
+html:has(.projects-page),
+body:has(.projects-page) {
+  overflow-x: clip;
+}
+
 .projects-page {
   min-height: 100vh;
   background-color: var(--global-bg-3);
