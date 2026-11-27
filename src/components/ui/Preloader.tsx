@@ -1,10 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import '../../styles/Preloader.css';
 
 interface PreloaderProps {
   onComplete: () => void;
 }
+
+const PRELOADER_WORDS = [
+  'LEARN', 'EXPERIMENT', 'FUNCTIONAL', 'TECHNOLOGY', 'UX', 'UI',
+  'DESIGN', 'DEVELOP', 'CREATE', 'INNOVATE', 'DIGITAL', 'VISUAL',
+  'MODERN', 'CLEAN', 'MINIMAL', 'BOLD', 'CREATIVE', 'SMART',
+];
 
 const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   const preloaderRef = useRef<HTMLDivElement>(null);
@@ -13,27 +19,21 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   const rightWordRef = useRef<HTMLSpanElement>(null);
 
 
-  const words = [
-    'LEARN', 'EXPERIMENT', 'FUNCTIONAL', 'TECHNOLOGY', 'UX', 'UI', 
-    'DESIGN', 'DEVELOP', 'CREATE', 'INNOVATE', 'DIGITAL', 'VISUAL',
-    'MODERN', 'CLEAN', 'MINIMAL', 'BOLD', 'CREATIVE', 'SMART'
-  ];
-  
-  const [usedWords, setUsedWords] = useState<string[]>([]);
-  const [currentWords, setCurrentWords] = useState({ left: '', right: '' });
-
   useEffect(() => {
     // Add preloader-active class to body to prevent scrolling
     document.body.classList.add('preloader-active');
-    
-    const tl = gsap.timeline();
-    
+
+    // Palabras ya mostradas en esta ejecución (variable local: un estado de React
+    // quedaría capturado con su valor inicial dentro de este efecto)
+    const usedWords: string[] = [];
+    const pendingTimeouts: ReturnType<typeof setTimeout>[] = [];
+
     // Inicializar columnas
     gsap.set(columnsRef.current, { scaleY: 1, transformOrigin: 'bottom' });
     gsap.set([leftWordRef.current, rightWordRef.current], { opacity: 0, y: 20 });
 
     const getRandomWord = () => {
-      const availableWords = words.filter(word => !usedWords.includes(word));
+      const availableWords = PRELOADER_WORDS.filter((word) => !usedWords.includes(word));
       if (availableWords.length === 0) {
         return null; // No hay más palabras disponibles
       }
@@ -64,8 +64,11 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
     const animateWords = () => {
       if (!leftWordRef.current || !rightWordRef.current) return;
 
+      // Cada palabra se marca como usada al elegirla para que izquierda y derecha no coincidan
       const leftWord = getRandomWord();
+      if (leftWord) usedWords.push(leftWord);
       const rightWord = getRandomWord();
+      if (rightWord) usedWords.push(rightWord);
       
       // Si no hay palabras disponibles, detener la animación
       if (!leftWord || !rightWord) {
@@ -74,10 +77,7 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       
       const leftStyle = getRandomStyle();
       const rightStyle = getRandomStyle();
-      
-      setUsedWords(prev => [...prev, leftWord, rightWord]);
-      setCurrentWords({ left: leftWord, right: rightWord });
-      
+
       if (leftWordRef.current) {
         leftWordRef.current.textContent = leftWord;
         leftWordRef.current.style.color = leftStyle.color;
@@ -103,10 +103,10 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
         { opacity: 1, y: 0, rotationX: 0, duration: 0.6, ease: "power2.inOut", delay: 0.05 }
       );
 
-      setTimeout(() => {
+      pendingTimeouts.push(setTimeout(() => {
         gsap.to(leftWordRef.current, { opacity: 0, y: 30, rotationX: 90, duration: 0.6, ease: "power2.inOut" });
         gsap.to(rightWordRef.current, { opacity: 0, y: -30, rotationX: -90, duration: 0.6, ease: "power2.inOut", delay: 0.05 });
-      }, 600);
+      }, 600));
     };
 
     const exitAnimation = () => {
@@ -124,7 +124,7 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       });
 
       // Luego animar columnas subiendo para revelar la página web
-      setTimeout(() => {
+      pendingTimeouts.push(setTimeout(() => {
         gsap.to(columnsRef.current, {
           y: '-100%',
           duration: 1.2,
@@ -140,7 +140,7 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
             onComplete();
           }
         });
-      }, 800);
+      }, 800));
     };
 
     // Iniciar animación de palabras con timing más suave
@@ -156,7 +156,7 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
     return () => {
       clearInterval(wordInterval);
       clearTimeout(exitTimeoutId);
-      tl.kill();
+      pendingTimeouts.forEach(clearTimeout);
       // Remove preloader-active class from body on cleanup
       document.body.classList.remove('preloader-active');
     };
