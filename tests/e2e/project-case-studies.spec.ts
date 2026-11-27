@@ -1,6 +1,12 @@
 import { expect, test } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
+import { readFileSync } from 'node:fs';
+
+// Single project registry: grid order = next-project order
+const publishedProjectIds: string[] = JSON.parse(
+  readFileSync(path.join(process.cwd(), 'src', 'data', 'published-projects.json'), 'utf8')
+);
 
 const projects = [
   {
@@ -47,6 +53,10 @@ const projects = [
     heroImage: undefined,
   },
 ];
+
+test('every published project has case-study expectations', () => {
+  expect(projects.map((project) => project.id)).toEqual(publishedProjectIds);
+});
 
 const viewports = [
   { name: 'desktop', width: 1440, height: 1000 },
@@ -336,7 +346,7 @@ test('project template and legacy fallback remain renderable', async ({ page }) 
 
 test('next-project interaction keeps the project sequence working', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
-  const sequence = ['areta', 'ultracamp', 'festgo-app', 'portfolio-25'];
+  const sequence = publishedProjectIds;
 
   for (let index = 0; index < sequence.length; index += 1) {
     const current = sequence[index];

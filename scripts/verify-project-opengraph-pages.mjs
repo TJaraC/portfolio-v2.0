@@ -6,13 +6,17 @@ import { fileURLToPath } from 'node:url';
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const distDirectory = join(repositoryRoot, 'dist');
 const siteOrigin = 'https://www.hellotjc.com';
-const projectIds = ['areta', 'ultracamp', 'festgo-app', 'portfolio-25'];
+// Single project registry (same list the app, the build and the tests use)
+const projectIds = JSON.parse(
+  await readFile(join(repositoryRoot, 'src', 'data', 'published-projects.json'), 'utf8')
+);
 const indexableRobots = 'index, follow, max-image-preview:large';
 
 const decodeHtml = (value) =>
   value
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
+    .replace(/&#x27;/g, "'")
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
     .replace(/&amp;/g, '&');
@@ -211,20 +215,53 @@ assert.equal(
   false,
   'No catch-all rewrite: unknown URLs must fall through to the 404 shell with a 404 status'
 );
+// One pattern rewrite serves every generated case-study document; ids without a generated
+// document (unpublished, removed or mistyped) have no destination file and get the 404.
+const projectRewrite = vercelConfig.rewrites.find(
+  (candidate) => candidate.source === '/projects/:projectId'
+);
+assert.equal(
+  projectRewrite?.destination,
+  '/projects/:projectId/index.html',
+  'Case-study routes rewrite to their generated document'
+);
 for (const projectId of projectIds) {
-  const rewrite = vercelConfig.rewrites.find(
-    (candidate) => candidate.source === `/projects/${projectId}`
-  );
-  assert.equal(
-    rewrite?.destination,
-    `/projects/${projectId}/index.html`,
-    `${projectId} has a crawler-facing Vercel rewrite`
-  );
+  await access(join(distDirectory, 'projects', projectId, 'index.html'));
 }
-for (const rewrite of vercelConfig.rewrites) {
+for (const rewrite of vercelConfig.rewrites.filter((candidate) => candidate !== projectRewrite)) {
   await access(join(distDirectory, rewrite.destination));
 }
 
+// Prerendered content: crawlers that do not run JavaScript get the real text and links.
+const readPrerenderedText = (documentHtml) =>
+  decodeHtml(
+    (documentHtml.match(/<div class="prerendered">([\s\S]*)<\/div><\/div>\s*<\/body>/)?.[1] ?? '')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+  );
+
+const homeText = readPrerenderedText(indexHtml);
+assert.ok(homeText.includes('Creative Product Designer') || homeText.includes('Engineer Designer'), 'Home prerenders the hero heading');
+for (const projectId of projectIds) {
+  const project = JSON.parse(
+    await readFile(join(repositoryRoot, 'src', 'data', 'projects', `${projectId}.json`), 'utf8')
+  );
+  assert.ok(
+    indexHtml.includes(`href="/projects/${projectId}"`),
+    `Home prerenders a crawlable link to ${projectId}`
+  );
+  assert.ok(homeText.includes(project.cardTitle), `Home prerenders the ${projectId} card`);
+
+  const projectHtml = await readFile(join(distDirectory, 'projects', projectId, 'index.html'), 'utf8');
+  const projectText = readPrerenderedText(projectHtml);
+  assert.ok(projectText.includes(project.heroDescription), `${projectId} prerenders its description`);
+  assert.ok(
+    projectText.includes(project.gallery.description),
+    `${projectId} prerenders the full case study`
+  );
+}
+assert.equal(notFoundHtml.includes('class="prerendered"'), false, '404 shell has no prerendered content');
+
 console.log(
-  `Verified SEO output: home, ${projectIds.length} project routes, 404 shell, sitemap and Vercel routing.`
+  `Verified SEO output: home, ${projectIds.length} project routes (with prerendered content), 404 shell, sitemap and Vercel routing.`
 );

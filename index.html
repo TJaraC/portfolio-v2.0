@@ -13,6 +13,24 @@
     <!-- Generated from src/utils/pageMetadata.ts by the seo-documents Vite plugin. -->
     <title>TJC | Creative Product Designer</title>
     <!-- portfolio-metadata:end -->
+
+    <!-- Build-time prerendered content (see src/prerender/entry.tsx): readable by crawlers
+         that do not run JavaScript. It stays out of view while the app boots (React replaces
+         it on first render) and only appears if JavaScript never runs. -->
+    <style>
+      .prerendered {
+        visibility: hidden;
+        max-height: 0;
+        overflow: hidden;
+        animation: prerendered-reveal 0s 5s forwards;
+      }
+      @keyframes prerendered-reveal {
+        to {
+          visibility: visible;
+          max-height: none;
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

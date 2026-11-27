@@ -53,15 +53,15 @@ const AppContent = () => {
     }
   }, [location.pathname]);
 
-  // pageMetadata importa los JSON completos de todos los proyectos; cargarlo bajo
-  // demanda los saca del chunk inicial. El HTML servido ya trae los metadatos
-  // correctos de cada ruta (plugin project-metadata-pages), así que esto solo
-  // los sincroniza en la navegación SPA.
+  // Los metadatos se cargan bajo demanda para no inflar el chunk inicial. El HTML
+  // servido ya trae los metadatos correctos de cada ruta (plugin seo-documents),
+  // así que esto solo los sincroniza en la navegación SPA.
   useEffect(() => {
     let cancelled = false;
-    import('./utils/pageMetadata').then(({ applyPageMetadata, getPageMetadata }) => {
-      if (!cancelled) applyPageMetadata(getPageMetadata(location.pathname));
-    });
+    import('./utils/routeMetadata')
+      .then(({ applyPageMetadata, resolvePageMetadata }) => resolvePageMetadata(location.pathname).then((metadata) => {
+        if (!cancelled) applyPageMetadata(metadata);
+      }));
     return () => {
       cancelled = true;
     };
@@ -93,9 +93,11 @@ const AppContent = () => {
       focusElement(heading ?? main ?? document.body);
       // pageMetadata se carga bajo demanda: anunciar el título de la ruta nueva
       // aunque document.title todavía no se haya actualizado.
-      import('./utils/pageMetadata').then(({ getPageMetadata }) => {
-        if (!cancelled) setRouteAnnouncement(getPageMetadata(pathname).title);
-      });
+      import('./utils/routeMetadata')
+        .then(({ resolvePageMetadata }) => resolvePageMetadata(pathname))
+        .then((metadata) => {
+          if (!cancelled) setRouteAnnouncement(metadata.title);
+        });
     };
 
     timer = window.setTimeout(focusNewPage, 0);

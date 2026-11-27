@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { PUBLISHED_PROJECT_IDS } from '../data/publishedProjects';
 
 interface ProjectFont {
   name: string;
@@ -191,15 +192,24 @@ interface ProjectData {
 
 type ProjectModule = { default: ProjectData };
 
-// Casos de estudio publicados. La plantilla y el ejemplo legacy son fixtures de
-// desarrollo: solo se incluyen en `pnpm start` (y en los tests e2e), nunca en
-// el build de producción.
+const projectPath = (projectId: string) => `../data/projects/${projectId}.json`;
+
+// Solo los casos registrados en `published-projects.json` se pueden cargar en producción.
+// La plantilla y el ejemplo legacy son fixtures de desarrollo: solo se incluyen en
+// `pnpm start` (y en los tests e2e), nunca en el build de producción.
+const allProjectLoaders = import.meta.glob<ProjectModule>([
+  '../data/projects/*.json',
+  '!../data/projects/project-template.json',
+  '!../data/projects/ejemplo-proyecto.json',
+]);
+
 const projectLoaders: Record<string, () => Promise<ProjectModule>> = {
-  ...import.meta.glob<ProjectModule>([
-    '../data/projects/*.json',
-    '!../data/projects/project-template.json',
-    '!../data/projects/ejemplo-proyecto.json',
-  ]),
+  ...Object.fromEntries(
+    PUBLISHED_PROJECT_IDS.map((projectId) => [
+      projectPath(projectId),
+      allProjectLoaders[projectPath(projectId)],
+    ])
+  ),
   ...(import.meta.env.DEV
     ? import.meta.glob<ProjectModule>([
         '../data/projects/project-template.json',
@@ -210,7 +220,7 @@ const projectLoaders: Record<string, () => Promise<ProjectModule>> = {
 
 /** Carga el JSON de un proyecto por su id. Rechaza si el id no existe. */
 export const loadProjectData = async (projectId: string): Promise<ProjectData> => {
-  const loader = projectLoaders[`../data/projects/${projectId}.json`];
+  const loader = projectLoaders[projectPath(projectId)];
   if (!loader) {
     throw new Error(`Unknown project "${projectId}"`);
   }

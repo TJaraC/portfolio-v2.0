@@ -2,20 +2,8 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/projects/areta",
-      "destination": "/projects/areta/index.html"
-    },
-    {
-      "source": "/projects/ultracamp",
-      "destination": "/projects/ultracamp/index.html"
-    },
-    {
-      "source": "/projects/festgo-app",
-      "destination": "/projects/festgo-app/index.html"
-    },
-    {
-      "source": "/projects/portfolio-25",
-      "destination": "/projects/portfolio-25/index.html"
+      "source": "/projects/:projectId",
+      "destination": "/projects/:projectId/index.html"
     },
     {
       "source": "/projects",

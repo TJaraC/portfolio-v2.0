@@ -1,27 +1,100 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
-import { defineConfig, type Plugin } from 'vite';
+import { createServer, defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import {
   HOME_PAGE_METADATA,
   NOT_FOUND_PAGE_METADATA,
-  PROJECT_PAGE_METADATA,
+  createProjectMetadata,
   renderMetadataDocument,
   renderSitemap,
 } from './src/utils/pageMetadata';
+import type { ProjectData } from './src/hooks/useProjectData';
+
+const ROOT_ELEMENT = '<div id="root"></div>';
+
+/** Published case studies, in grid order, read from the single project registry. */
+const loadPublishedProjects = async (root: string): Promise<ProjectData[]> => {
+  const projectIds: string[] = JSON.parse(
+    await readFile(join(root, 'src', 'data', 'published-projects.json'), 'utf8')
+  );
+  return Promise.all(
+    projectIds.map(async (projectId) => {
+      const project: ProjectData = JSON.parse(
+        await readFile(join(root, 'src', 'data', 'projects', `${projectId}.json`), 'utf8')
+      );
+      if (project.id !== projectId) {
+        throw new Error(`src/data/projects/${projectId}.json declares id "${project.id}".`);
+      }
+      return project;
+    })
+  );
+};
+
+type RenderRoute = (
+  url: string,
+  input: { projects: ProjectData[]; project?: ProjectData }
+) => string;
+
+/**
+ * Renders the real page components in Node (see src/prerender/entry.tsx). React warns that
+ * useLayoutEffect does nothing on the server; that is expected here (the markup is never
+ * hydrated), so those warnings are silenced.
+ */
+const withPrerenderer = async <T,>(
+  root: string,
+  task: (renderRoute: RenderRoute) => Promise<T>
+): Promise<T> => {
+  const server = await createServer({
+    root,
+    configFile: false,
+    logLevel: 'error',
+    appType: 'custom',
+    server: { middlewareMode: true, hmr: false, ws: false },
+  });
+  const originalConsoleError = console.error;
+  console.error = (...args: unknown[]) => {
+    if (typeof args[0] === 'string' && args[0].includes('useLayoutEffect does nothing on the server')) {
+      return;
+    }
+    originalConsoleError(...args);
+  };
+
+  try {
+    const { renderRoute } = (await server.ssrLoadModule('/src/prerender/entry.tsx')) as {
+      renderRoute: RenderRoute;
+    };
+    return await task(renderRoute);
+  } finally {
+    console.error = originalConsoleError;
+    await server.close();
+  }
+};
+
+const injectPrerenderedContent = (documentHtml: string, markup: string) => {
+  if (!documentHtml.includes(ROOT_ELEMENT)) {
+    throw new Error(`Could not find ${ROOT_ELEMENT} in index.html.`);
+  }
+  return documentHtml.replace(
+    ROOT_ELEMENT,
+    `<div id="root"><div class="prerendered">${markup}</div></div>`
+  );
+};
 
 /**
  * Crawler-facing HTML: every indexable route gets its own static document with the
- * right title, description, canonical, social tags and JSON-LD, plus a sitemap and a
- * noindex 404 shell that Vercel serves with a real 404 status.
+ * right title, description, canonical, social tags, JSON-LD and prerendered content,
+ * plus a sitemap and a noindex 404 shell that Vercel serves with a real 404 status.
  */
 const seoDocuments = (): Plugin => {
   let outputDirectory = '';
+  let projectRoot = '';
   let isBuild = false;
 
   return {
     name: 'seo-documents',
     configResolved(config) {
+      projectRoot = config.root;
       outputDirectory = resolve(config.root, config.build.outDir);
       isBuild = config.command === 'build';
     },
@@ -31,30 +104,49 @@ const seoDocuments = (): Plugin => {
     async closeBundle() {
       // Vite also calls closeBundle when the dev server shuts down.
       if (!isBuild) return;
-      const homeDocument = await readFile(join(outputDirectory, 'index.html'), 'utf8');
+
+      const shellDocument = await readFile(join(outputDirectory, 'index.html'), 'utf8');
+      const projects = await loadPublishedProjects(projectRoot);
+      const projectPages = projects.map(createProjectMetadata);
+
+      await withPrerenderer(projectRoot, async (renderRoute) => {
+        await writeFile(
+          join(outputDirectory, 'index.html'),
+          injectPrerenderedContent(shellDocument, renderRoute('/', { projects })),
+          'utf8'
+        );
+
+        await Promise.all(
+          projects.map(async (project, index) => {
+            const metadata = projectPages[index];
+            const destination = join(outputDirectory, 'projects', project.id, 'index.html');
+            await mkdir(dirname(destination), { recursive: true });
+            const html = injectPrerenderedContent(
+              renderMetadataDocument(shellDocument, metadata),
+              renderRoute(`/projects/${project.id}`, { projects, project })
+            ).replace(
+              // Preload the case-study hero (LCP candidate) so it starts downloading
+              // while the JS bundle loads, instead of after the route + JSON chunks.
+              '</head>',
+              `  <link rel="preload" as="image" href="${metadata.heroImagePath}" fetchpriority="high" />\n  </head>`
+            );
+            await writeFile(destination, html, 'utf8');
+          })
+        );
+      });
 
       await Promise.all([
-        ...PROJECT_PAGE_METADATA.map(async (metadata) => {
-          const destination = join(outputDirectory, 'projects', metadata.id, 'index.html');
-          await mkdir(dirname(destination), { recursive: true });
-          // Preload the case-study hero (LCP candidate) so it starts downloading
-          // while the JS bundle loads, instead of after the route + JSON chunks.
-          const html = renderMetadataDocument(homeDocument, metadata).replace(
-            '</head>',
-            `  <link rel="preload" as="image" href="${metadata.heroImagePath}" fetchpriority="high" />\n  </head>`
-          );
-          await writeFile(destination, html, 'utf8');
-        }),
         writeFile(
           join(outputDirectory, '404.html'),
-          renderMetadataDocument(homeDocument, NOT_FOUND_PAGE_METADATA),
+          renderMetadataDocument(shellDocument, NOT_FOUND_PAGE_METADATA),
           'utf8'
         ),
-        writeFile(join(outputDirectory, 'sitemap.xml'), renderSitemap(), 'utf8'),
+        writeFile(join(outputDirectory, 'sitemap.xml'), renderSitemap(projectPages), 'utf8'),
       ]);
     },
   };
 };
+
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {

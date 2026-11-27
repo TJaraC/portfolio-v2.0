@@ -1,7 +1,8 @@
-import aretaProject from '../data/projects/areta.json';
-import festgoProject from '../data/projects/festgo-app.json';
-import portfolioProject from '../data/projects/portfolio-25.json';
-import ultracampProject from '../data/projects/ultracamp.json';
+/**
+ * Page metadata (title, description, canonical, social tags, JSON-LD) shared by the build
+ * (static HTML per route, sitemap) and the browser (SPA navigation). This module has no
+ * data imports: project data is passed in, so it can run in Node (vite.config) and in the app.
+ */
 
 const SITE_ORIGIN = 'https://www.hellotjc.com';
 const SITE_NAME = 'TJC Portfolio';
@@ -63,13 +64,6 @@ interface ProjectPageMetadata extends PageMetadata {
 }
 
 const toAbsoluteUrl = (path: string) => new URL(path, SITE_ORIGIN).toString();
-
-const publishedProjects: ProjectMetadataSource[] = [
-  aretaProject,
-  ultracampProject,
-  festgoProject,
-  portfolioProject,
-];
 
 const HOME_PAGE_METADATA: PageMetadata = {
   title: 'TJC | Creative Product Designer',
@@ -156,11 +150,6 @@ const createProjectMetadata = (project: ProjectMetadataSource): ProjectPageMetad
     },
   };
 };
-
-const PROJECT_PAGE_METADATA = publishedProjects.map(createProjectMetadata);
-const projectMetadataById = new Map(
-  PROJECT_PAGE_METADATA.map((metadata) => [metadata.id, metadata])
-);
 
 const normalisePathname = (pathname: string) => {
   const withoutTrailingSlash = pathname.replace(/\/+$/, '');
@@ -296,7 +285,12 @@ const getProjectIdFromPathname = (pathname: string) => {
   return match?.[1];
 };
 
-const getPageMetadata = (pathname: string): PageMetadata => {
+/**
+ * Metadata for a pathname. `project` is the published case study the path points to,
+ * if any: unknown routes, `/404` and unpublished project files (templates, legacy
+ * examples) must never be indexed or canonicalised to the home page.
+ */
+const getPageMetadata = (pathname: string, project?: ProjectMetadataSource): PageMetadata => {
   const normalisedPathname = normalisePathname(pathname);
 
   // `/projects` only redirects to the home grid.
@@ -305,11 +299,11 @@ const getPageMetadata = (pathname: string): PageMetadata => {
   }
 
   const projectId = getProjectIdFromPathname(normalisedPathname);
-  const projectMetadata = projectId ? projectMetadataById.get(projectId) : undefined;
+  if (project && projectId === project.id) {
+    return createProjectMetadata(project);
+  }
 
-  // Unknown routes, `/404` and unpublished project files (templates, legacy examples)
-  // must never be indexed or canonicalised to the home page.
-  return projectMetadata ?? NOT_FOUND_PAGE_METADATA;
+  return NOT_FOUND_PAGE_METADATA;
 };
 
 const applyPageMetadata = (metadata: PageMetadata) => {
@@ -355,10 +349,10 @@ const renderMetadataDocument = (documentHtml: string, metadata: PageMetadata) =>
   )}`;
 };
 
-const renderSitemap = () => {
+const renderSitemap = (projectPages: ProjectPageMetadata[]) => {
   const entries = [
     { loc: HOME_PAGE_METADATA.canonicalUrl!, image: HOME_PAGE_METADATA.imageUrl },
-    ...PROJECT_PAGE_METADATA.map((metadata) => ({
+    ...projectPages.map((metadata) => ({
       loc: metadata.canonicalUrl,
       image: metadata.imageUrl,
     })),
@@ -385,11 +379,12 @@ const renderSitemap = () => {
 export {
   HOME_PAGE_METADATA,
   NOT_FOUND_PAGE_METADATA,
-  PROJECT_PAGE_METADATA,
   SITE_ORIGIN,
   applyPageMetadata,
+  createProjectMetadata,
   getPageMetadata,
+  getProjectIdFromPathname,
   renderMetadataDocument,
   renderSitemap,
 };
-export type { PageMetadata, ProjectPageMetadata };
+export type { PageMetadata, ProjectMetadataSource, ProjectPageMetadata };

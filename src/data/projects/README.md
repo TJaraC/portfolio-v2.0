@@ -23,13 +23,9 @@ Las páginas de proyecto se generan desde archivos JSON y comparten un único co
 6. Activa `featured` solo si la tarjeta debe ocupar todo el ancho del grid en escritorio.
 7. Añade `siteUrl` solo si existe una web pública real; habilita los enlaces de la tarjeta y la cabecera.
 8. Usa nombres y apellidos españoles, naturales y acordes al contexto, para todas las user personas.
-9. Registra el `id` en todos los listados de proyectos (hoy están duplicados):
-   - `projectIds` en `src/hooks/useProjectsList.ts` (solo si debe aparecer en el grid de la home).
-   - `publishedProjects` en `src/utils/pageMetadata.ts` (metadatos y HTML estático por proyecto).
-   - Las dos reglas `rewrites` de `vercel.json` (`/projects/<slug>` y `/projects/<slug>/`).
-   - `projectIds` en `scripts/verify-project-opengraph-pages.mjs` y en `tests/e2e/project-open-graph.spec.ts`, y el array `projects` de `tests/e2e/project-case-studies.spec.ts`.
-   - `public/sitemap.xml`.
-10. Comprueba `/projects/<slug>` en escritorio y móvil.
+9. Publícalo añadiendo su `id` a `src/data/published-projects.json`, el registro único. El orden de esa lista es el orden del grid y de "Next project". De ahí salen el grid de la home, la secuencia de siguiente proyecto, el HTML estático y prerenderizado de cada ruta, los metadatos, el sitemap, la verificación SEO y los tests. Vercel enruta `/projects/:projectId` al documento generado, así que no hay que tocar `vercel.json`.
+10. Añade sus expectativas al array `projects` de `tests/e2e/project-case-studies.spec.ts` (un test comprueba que cubre todo el registro).
+11. Comprueba `/projects/<slug>` en escritorio y móvil, y ejecuta `pnpm build && pnpm verify:opengraph`.
 
 ## Estructura narrativa
 
