@@ -11,6 +11,7 @@ interface ImageWithCurtainProps {
   threshold?: number;
   once?: boolean;
   loading?: 'eager' | 'lazy';
+  fetchPriority?: 'high' | 'low' | 'auto';
 }
 
 const ImageWithCurtain: React.FC<ImageWithCurtainProps> = ({
@@ -22,8 +23,12 @@ const ImageWithCurtain: React.FC<ImageWithCurtainProps> = ({
   threshold = 0.1,
   once = true,
   loading = 'lazy',
+  fetchPriority,
 }) => {
   const curtainRef = useRef<HTMLDivElement>(null);
+  // React 18 no reconoce la prop camelCase `fetchPriority`; el atributo HTML en
+  // minúsculas se pasa tal cual al DOM sin warnings.
+  const priorityAttributes = fetchPriority ? { fetchpriority: fetchPriority } : {};
   const imageRef = useRef<HTMLImageElement>(null);
 
   const elementRef = useScrollAnimation(
@@ -68,6 +73,7 @@ const ImageWithCurtain: React.FC<ImageWithCurtainProps> = ({
         alt={alt}
         decoding="async"
         loading={loading}
+        {...priorityAttributes}
         style={{
           width: '100%',
           height: '100%',
