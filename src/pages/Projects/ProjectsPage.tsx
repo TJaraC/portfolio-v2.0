@@ -36,17 +36,19 @@ const ProjectsPage: React.FC = () => {
     return (
       <div className="projects-page">
         <Header />
-        <div className="loading-container" style={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          alignItems: 'center', 
-          minHeight: '50vh',
-          fontSize: '1.2rem',
-          color: '#666'
-        }}>
+        <div
+          className="loading-container"
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: '100vh',
+            fontSize: '1.2rem',
+            color: '#666',
+          }}
+        >
           Loading project data...
         </div>
-        <Contact />
       </div>
     );
   }
