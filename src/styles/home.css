@@ -549,29 +549,6 @@ body {
 }
 
 
-/* ===== RESPONSIVE BREAKPOINT BASE 1920px ===== */
-@media (min-width: 1791px) {
-  /* GET IN TOUCH - Reducción progresiva desde 1920px base (260px) hacia abajo */
-  .contact-heading {
-    font-size: clamp(90px, calc(260px - (1920px - 100vw) * 0.15), 260px) !important;
-    white-space: nowrap;
-    flex-direction: row !important;
-    justify-content: space-between !important;
-    align-items: baseline !important;
-    text-align: center !important;
-  }
-  
-  .contact-heading-gilda {
-    font-size: clamp(90px, calc(260px - (1920px - 100vw) * 0.15), 260px) !important;
-    line-height: 1 !important;
-  }
-  
-  .contact-heading-geist {
-    font-size: clamp(90px, calc(260px - (1920px - 100vw) * 0.15), 260px) !important;
-    line-height: 1 !important;
-  }
-}
-
 /* ===== RESPONSIVE BREAKPOINT 1790px ===== */
 @media (max-width: 1790px) and (min-width: 769px) {
   /* Creative Product Designer - Reducir 20% */
@@ -616,26 +593,6 @@ body {
   
   .about-who-title-geist {
     font-size: 99.2px; /* 124px * 0.8 */
-  }
-  
-  /* GET IN TOUCH - Reducción progresiva desde 1920px base (260px) hacia abajo */
-  .contact-heading {
-    font-size: clamp(90px, calc(260px - (1920px - 100vw) * 0.15), 260px) !important;
-    white-space: nowrap;
-    flex-direction: row !important;
-    justify-content: space-between !important;
-    align-items: baseline !important;
-    text-align: center !important;
-  }
-  
-  .contact-heading-gilda {
-    font-size: clamp(90px, calc(260px - (1920px - 100vw) * 0.15), 260px) !important;
-    line-height: 1 !important;
-  }
-  
-  .contact-heading-geist {
-    font-size: clamp(90px, calc(260px - (1920px - 100vw) * 0.15), 260px) !important;
-    line-height: 1 !important;
   }
 }
 
@@ -825,25 +782,6 @@ body {
     font-size: 72px;
   }
   
-  /* Get in Touch - Cambiar a dos líneas con máximo tamaño posible */
-  .contact-heading {
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-    align-items: flex-start !important;
-    gap: 0;
-    font-size: clamp(120px, calc((100vw - 40px) * 0.32), 160px); /* Máximo tamaño posible respetando padding de 20px */
-    text-align: left;
-    white-space: normal !important; /* Permitir dos líneas */
-  }
-  
-  .contact-heading-gilda {
-    font-size: clamp(120px, calc((100vw - 40px) * 0.32), 160px);
-  }
-  
-  .contact-heading-geist {
-    font-size: clamp(120px, calc((100vw - 40px) * 0.32), 160px);
-  }
-  
   /* Portfolio Grid - Cambiar a una sola columna */
   .portfolio-grid {
     grid-template-columns: 1fr;
@@ -920,26 +858,6 @@ body {
   
   .philosophy-titles {
     gap: 0; /* Eliminar espacio entre filas */
-  }
-}
-/* ===== RESPONSIVE BREAKPOINT 748px ===== */
-@media (max-width: 748px) {
-  /* Get in Touch - Reducir progresivamente en dos líneas */
-  .contact-heading {
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-    align-items: flex-start !important;
-    gap: 0;
-    font-size: clamp(100px, calc((100vw - 40px) * 0.28), 140px); /* Reducir desde el breakpoint anterior */
-    text-align: left;
-  }
-  
-  .contact-heading-gilda {
-    font-size: clamp(100px, calc((100vw - 40px) * 0.28), 140px);
-  }
-  
-  .contact-heading-geist {
-    font-size: clamp(100px, calc((100vw - 40px) * 0.28), 140px);
   }
 }
 
@@ -1206,20 +1124,6 @@ body {
     line-height: 0.92em !important;
     margin-top: 0 !important;
     letter-spacing: 0 !important;
-  }
-  
-  /* Get in Touch - Tamaño mínimo para pantallas muy pequeñas */
-  .contact-heading {
-    font-size: clamp(60px, calc((100vw - 40px) * 0.22), 100px) !important; /* Tamaño mínimo progresivo */
-  }
-  
-  .contact-heading-gilda {
-    font-size: clamp(60px, calc((100vw - 40px) * 0.22), 100px) !important;
-  }
-  
-  .contact-heading-geist {
-    font-size: clamp(60px, calc((100vw - 40px) * 0.22), 100px) !important;
-    margin-bottom: -10px !important;
   }
   
   .hero-heading-product {
