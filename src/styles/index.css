@@ -75,7 +75,7 @@ a, button, [role="button"], input, textarea, select, .clickable {
   background-color: var(--global-text-2);
   border-radius: 50%;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 10000;
   mix-blend-mode: difference;
 }
 
@@ -92,11 +92,19 @@ a, button, [role="button"], input, textarea, select, .clickable {
 
 /* Hide cursor on touch devices */
 @media (hover: none) and (pointer: coarse) {
-  body {
-    cursor: auto;
+  body,
+  *,
+  a,
+  button,
+  [role="button"],
+  input,
+  textarea,
+  select,
+  .clickable {
+    cursor: auto !important;
   }
   
   .custom-cursor {
-    display: none;
+    display: none !important;
   }
 }
