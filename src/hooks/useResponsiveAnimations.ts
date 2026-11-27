@@ -34,7 +34,7 @@ export const useResponsiveAnimations = ({
     });
 
     const checkBreakpoint = () => {
-      let newBreakpoint = '';
+      let newBreakpoint: string;
 
       if (window.matchMedia('(max-width: 580px)').matches) {
         newBreakpoint = 'mobile';

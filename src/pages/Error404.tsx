@@ -92,7 +92,7 @@ const Error404: React.FC = () => {
             <span className="error-404-title-gilda">PAGE NOT </span>
             <span className="error-404-title-geist">FOUND</span>
           </h2>
-          <p className="error-404-subtitle">Lets get you back to the good stuff</p>
+          <p className="error-404-subtitle">Let's get you back to the good stuff</p>
 
           <nav className="error-404-links" aria-label="Back to the portfolio">
             <AnimatedNavButton href="/#work" className="nav-button error-404-link">

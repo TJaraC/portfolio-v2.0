@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import Header from '../../components/common/Header';
 import Contact from '../../components/common/Contact';
-import Button from '../../components/ui/Button';
 import AnimatedElement from '../../components/ui/AnimatedElement';
 import AnimatedProfileImage from '../../components/ui/AnimatedProfileImage';
 import ImageWithCurtain from '../../components/ui/ImageWithCurtain';

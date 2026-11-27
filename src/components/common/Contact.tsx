@@ -33,7 +33,7 @@ const Contact: React.FC = () => {
         <div className="footer">
           <div className="footer-left">
             <div className="footer-text-group">
-              <span className="footer-design">Design & Developed </span>
+              <span className="footer-design">Designed & developed </span>
               <span className="footer-author">by Patricio Jaramillo Castrillo</span>
             </div>
           </div>

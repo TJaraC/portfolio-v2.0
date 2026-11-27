@@ -22,6 +22,11 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
     // Add preloader-active class to body to prevent scrolling
     document.body.classList.add('preloader-active');
 
+    // Nodos animados, capturados para el cleanup
+    const leftWordEl = leftWordRef.current;
+    const rightWordEl = rightWordRef.current;
+    const columns = [...columnsRef.current];
+
     const usedWords = new Set<string>();
     const pendingTimeouts: ReturnType<typeof setTimeout>[] = [];
     let isExiting = false;
@@ -189,7 +194,7 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
     return () => {
       clearInterval(wordInterval);
       pendingTimeouts.forEach((id) => clearTimeout(id));
-      gsap.killTweensOf([leftWordRef.current, rightWordRef.current, ...columnsRef.current]);
+      gsap.killTweensOf([leftWordEl, rightWordEl, ...columns]);
       document.body.classList.remove('preloader-active');
     };
   }, [onComplete]);

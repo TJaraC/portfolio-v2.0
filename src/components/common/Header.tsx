@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import { useLenisScroll } from '../../hooks/useLenisScroll';
 import { focusElement, prefersReducedMotion, scrollToY } from '../../utils/motion';
@@ -15,7 +15,6 @@ const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [headerTheme, setHeaderTheme] = useState<'light' | 'dark'>('light');
   const location = useLocation();
-  const navigate = useNavigate();
   const lenis = useLenisScroll();
   const { transitionTo } = useTransition();
 
@@ -351,17 +350,14 @@ const Header: React.FC = () => {
 
   // Cleanup general al desmontar el componente
   useEffect(() => {
+    const timeline = tl;
+    const hamburger = hamburgerRef.current;
+    const logo = logoRef.current;
     return () => {
       // Limpiar todas las animaciones GSAP
-      if (tl.current) {
-        tl.current.kill();
-      }
-      if (hamburgerRef.current) {
-        gsap.killTweensOf(hamburgerRef.current);
-      }
-      if (logoRef.current) {
-        gsap.killTweensOf(logoRef.current);
-      }
+      timeline.current?.kill();
+      if (hamburger) gsap.killTweensOf(hamburger);
+      if (logo) gsap.killTweensOf(logo);
       // Limpiar clases del body
       document.body.classList.remove('menu-open');
     };
