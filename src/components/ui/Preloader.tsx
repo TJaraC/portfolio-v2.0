@@ -81,12 +81,12 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       leftWordRef.current.textContent = leftWord;
       leftWordRef.current.style.color = leftStyle.color;
       leftWordRef.current.style.fontFamily = leftStyle.fontFamily;
-      leftWordRef.current.style.fontWeight = leftStyle.weight;
+      leftWordRef.current.style.fontWeight = leftStyle.fontWeight;
 
       rightWordRef.current.textContent = rightWord;
       rightWordRef.current.style.color = rightStyle.color;
       rightWordRef.current.style.fontFamily = rightStyle.fontFamily;
-      rightWordRef.current.style.fontWeight = rightStyle.weight;
+      rightWordRef.current.style.fontWeight = rightStyle.fontWeight;
 
       gsap.killTweensOf([leftWordRef.current, rightWordRef.current]);
 
