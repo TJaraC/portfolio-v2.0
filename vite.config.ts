@@ -2,35 +2,53 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
-import { PROJECT_PAGE_METADATA, renderProjectMetadataDocument } from './src/utils/pageMetadata';
+import {
+  HOME_PAGE_METADATA,
+  NOT_FOUND_PAGE_METADATA,
+  PROJECT_PAGE_METADATA,
+  renderMetadataDocument,
+  renderSitemap,
+} from './src/utils/pageMetadata';
 
-const projectMetadataPages = (): Plugin => {
+/**
+ * Crawler-facing HTML: every indexable route gets its own static document with the
+ * right title, description, canonical, social tags and JSON-LD, plus a sitemap and a
+ * noindex 404 shell that Vercel serves with a real 404 status.
+ */
+const seoDocuments = (): Plugin => {
   let outputDirectory = '';
+  let isBuild = false;
 
   return {
-    name: 'project-metadata-pages',
-    apply: 'build',
+    name: 'seo-documents',
     configResolved(config) {
       outputDirectory = resolve(config.root, config.build.outDir);
+      isBuild = config.command === 'build';
+    },
+    transformIndexHtml(html) {
+      return renderMetadataDocument(html, HOME_PAGE_METADATA);
     },
     async closeBundle() {
+      // Vite also calls closeBundle when the dev server shuts down.
+      if (!isBuild) return;
       const homeDocument = await readFile(join(outputDirectory, 'index.html'), 'utf8');
 
-      await Promise.all(
-        PROJECT_PAGE_METADATA.map(async (metadata) => {
+      await Promise.all([
+        ...PROJECT_PAGE_METADATA.map(async (metadata) => {
           const destination = join(outputDirectory, 'projects', metadata.id, 'index.html');
           await mkdir(dirname(destination), { recursive: true });
-          await writeFile(
-            destination,
-            renderProjectMetadataDocument(homeDocument, metadata),
-            'utf8'
-          );
-        })
-      );
+          await writeFile(destination, renderMetadataDocument(homeDocument, metadata), 'utf8');
+        }),
+        writeFile(
+          join(outputDirectory, '404.html'),
+          renderMetadataDocument(homeDocument, NOT_FOUND_PAGE_METADATA),
+          'utf8'
+        ),
+        writeFile(join(outputDirectory, 'sitemap.xml'), renderSitemap(), 'utf8'),
+      ]);
     },
   };
 };
-
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
@@ -50,7 +68,7 @@ export default defineConfig({
       },
     },
   },
-  plugins: [react(), projectMetadataPages()],
+  plugins: [react(), seoDocuments()],
   resolve: {
     alias: {
       '@': '/src',
