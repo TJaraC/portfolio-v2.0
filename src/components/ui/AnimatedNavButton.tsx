@@ -77,6 +77,7 @@ const AnimatedNavButton: React.FC<AnimatedNavButtonProps> = ({
     host.replaceChildren(...letters.map((letterObj) => letterObj.container));
 
     const handleEnter = () => {
+      // Matar el timeline anterior para que no se pisen en hovers rápidos
       hoverTl.current?.kill();
       hoverTl.current = gsap.timeline();
 

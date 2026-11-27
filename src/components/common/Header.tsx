@@ -92,7 +92,8 @@ const Header: React.FC = () => {
       if (!element) return;
       scrollToY(lenis, element.offsetTop - HEADER_HEIGHT);
       focusElement(element);
-    }, 300);
+      // Esperar a que la cortina de la transición de página termine antes de desplazar
+    }, 750);
     return () => clearTimeout(timer);
   }, [location.pathname, location.state, lenis]);
 
@@ -101,21 +102,22 @@ const Header: React.FC = () => {
     if (!headerRef.current) return;
 
     const headerRect = headerRef.current.getBoundingClientRect();
-    const headerHeight = headerRect.height;
     const headerTop = headerRect.top;
     const headerBottom = headerRect.bottom;
 
     // Obtener todas las secciones
-    const heroSection = document.querySelector('.hero-section') as HTMLElement;
-    const featuredSection = document.querySelector('.featured-section') as HTMLElement;
-    const portfolioSection = document.querySelector('.portfolio-section') as HTMLElement;
-    const philosophySection = document.querySelector('.philosophy-section') as HTMLElement;
-    const aboutSection = document.querySelector('.about-section') as HTMLElement;
-    const contactSection = document.querySelector('.contact-section') as HTMLElement;
+    const heroSection = document.querySelector('.hero-section') as HTMLElement | null;
+    const featuredSection = document.querySelector('.featured-section') as HTMLElement | null;
+    const projectCase = document.querySelector('.project-case') as HTMLElement | null;
+    const portfolioSection = document.querySelector('.portfolio-section') as HTMLElement | null;
+    const philosophySection = document.querySelector('.philosophy-section') as HTMLElement | null;
+    const aboutSection = document.querySelector('.about-section') as HTMLElement | null;
+    const contactSection = document.querySelector('.contact-section') as HTMLElement | null;
 
-    // Definir qué secciones son claras u oscuras
-    const lightSections = [heroSection, featuredSection, contactSection];
-    const darkSections = [portfolioSection, philosophySection, aboutSection];
+    // Definir qué secciones son claras u oscuras (contact-section usa --global-bg-1 oscuro)
+    const lightSections = [heroSection, featuredSection, projectCase];
+    const darkSections = [portfolioSection, philosophySection, aboutSection, contactSection];
+    const portfolioTop = portfolioSection ? portfolioSection.getBoundingClientRect().top : Infinity;
 
     let lightPixels = 0;
     let darkPixels = 0;
@@ -126,7 +128,11 @@ const Header: React.FC = () => {
 
       const sectionRect = section.getBoundingClientRect();
       const sectionTop = sectionRect.top;
-      const sectionBottom = sectionRect.bottom;
+      // .portfolio-section (z-index: 5) cubre visualmente a .featured-section (z-index: 1 con parallax)
+      const sectionBottom =
+        section === featuredSection
+          ? Math.min(sectionRect.bottom, portfolioTop)
+          : sectionRect.bottom;
 
       // Calcular la intersección entre el header y la sección
       const intersectionTop = Math.max(headerTop, sectionTop);
@@ -159,16 +165,18 @@ const Header: React.FC = () => {
       });
     };
 
-    // Detectar tema inicial
+    // Detectar tema inicial y tras cambio de ruta
     detectHeaderTheme();
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
       cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [location.pathname]);
 
   // Animación del logo con scroll (desactivada con prefers-reduced-motion).
   // quickTo reutiliza un único tween en vez de crear uno nuevo en cada evento de scroll.
@@ -197,76 +205,75 @@ const Header: React.FC = () => {
     };
   }, []);
 
-  // Configurar animaciones del menú móvil
+  // Animar apertura y cierre del menú móvil
   useEffect(() => {
-    // Limpiar timeline anterior si existe
     if (tl.current) {
       tl.current.kill();
+      tl.current = null;
     }
 
-    // Solo crear timeline si tenemos las referencias necesarias
-    if (menuRef.current && overlayRef.current) {
-      // Crear timeline para las animaciones
-      tl.current = gsap.timeline({ paused: true });
+    if (menuOpen) {
+      if (menuRef.current && overlayRef.current) {
+        const menuItems = menuItemsRef.current.filter(
+          (item): item is HTMLAnchorElement => item !== null
+        );
+        const timeline = gsap.timeline();
+        timeline.fromTo(
+          overlayRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.15, ease: 'power2.out' },
+          0
+        );
+        timeline.fromTo(
+          menuRef.current,
+          { opacity: 0, scale: 0.94, y: -20 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.22, ease: 'back.out(1.5)' },
+          0.03
+        );
+        if (menuItems.length > 0) {
+          timeline.fromTo(
+            menuItems,
+            { opacity: 0, y: 20, x: -12 },
+            {
+              opacity: 1,
+              y: 0,
+              x: 0,
+              duration: 0.2,
+              ease: 'power2.out',
+              stagger: 0.04,
+            },
+            0.08
+          );
+        }
+        tl.current = timeline;
+      }
 
-      // Animación del overlay
-      tl.current.fromTo(
-        overlayRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.15, ease: 'power2.out' }
-      );
-
-      // Animación del menú
-      tl.current.fromTo(
-        menuRef.current,
-        {
-          opacity: 0,
-          scale: 0.9,
-          y: -30,
-        },
-        {
-          opacity: 1,
-          scale: 1,
-          y: 0,
+      if (hamburgerRef.current) {
+        gsap.killTweensOf(hamburgerRef.current);
+        gsap.to(hamburgerRef.current, {
+          rotation: 180,
+          scale: 1.1,
           duration: 0.2,
-          ease: 'back.out(1.7)',
-        },
-        '-=0.05'
-      );
-
-      // Animación de los elementos del menú
-      const menuItems = menuItemsRef.current.filter((item) => item !== null);
-      if (menuItems.length > 0) {
-        menuItems.forEach((item, index) => {
-          if (item && tl.current) {
-            tl.current.fromTo(
-              item,
-              {
-                opacity: 0,
-                y: 30,
-                x: -20,
-              },
-              {
-                opacity: 1,
-                y: 0,
-                x: 0,
-                duration: 0.15,
-                ease: 'back.out(1.7)',
-              },
-              index === 0 ? 0.05 : `+=${0.02}`
-            );
-          }
+          ease: 'elastic.out(1, 0.8)',
         });
       }
+    } else if (hamburgerRef.current) {
+      gsap.killTweensOf(hamburgerRef.current);
+      gsap.to(hamburgerRef.current, {
+        rotation: 0,
+        scale: 1,
+        duration: 0.2,
+        ease: 'elastic.out(1, 0.8)',
+      });
     }
 
-    // Cleanup function
     return () => {
       if (tl.current) {
         tl.current.kill();
+        tl.current = null;
       }
     };
-  }, [menuOpen]); // Recrear cuando menuOpen cambie
+  }, [menuOpen]);
 
   // Controlar apertura/cierre del menú
   useEffect(() => {
@@ -359,36 +366,6 @@ const Header: React.FC = () => {
       document.body.classList.remove('menu-open');
     };
   }, []);
-
-  useEffect(() => {
-    if (tl.current) {
-      if (menuOpen) {
-        tl.current.play();
-        // Animar el icono hamburguesa cuando se abre
-        if (hamburgerRef.current) {
-          gsap.killTweensOf(hamburgerRef.current); // Limpiar animaciones previas
-          gsap.to(hamburgerRef.current, {
-            rotation: 180,
-            scale: 1.1,
-            duration: 0.2,
-            ease: 'elastic.out(1, 0.8)',
-          });
-        }
-      } else {
-        tl.current.reverse();
-        // Animar el icono hamburguesa cuando se cierra
-        if (hamburgerRef.current) {
-          gsap.killTweensOf(hamburgerRef.current); // Limpiar animaciones previas
-          gsap.to(hamburgerRef.current, {
-            rotation: 0,
-            scale: 1,
-            duration: 0.2,
-            ease: 'elastic.out(1, 0.8)',
-          });
-        }
-      }
-    }
-  }, [menuOpen]);
 
   return (
     <header

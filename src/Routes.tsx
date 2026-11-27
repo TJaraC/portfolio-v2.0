@@ -141,26 +141,24 @@ const AppContent = () => {
       gsap.set(columns, { y: '100%' });
       if (overlay) overlay.style.pointerEvents = 'all';
 
-      // Navigate when col0 finishes entering — page mounts hidden behind columns
-      gsap.delayedCall(0.4, () => {
-        window.scrollTo(0, 0);
-        navigate(path);
-      });
-
-      // Timeline: exit starts 0.15s before enter completes → wave overlap effect
+      // Timeline: cubrir completamente la pantalla antes de navegar y luego revelar
       const tl = gsap.timeline();
       tl.to(columns, {
         y: '0%',
         duration: 0.4,
         ease: 'power2.inOut',
-        stagger: { amount: 0.25, from: 'start' },
+        stagger: { amount: 0.2, from: 'start' },
+        onComplete: () => {
+          window.scrollTo(0, 0);
+          navigate(path);
+        },
       }).to(
         columns,
         {
           y: '-100%',
-          duration: 0.5,
+          duration: 0.45,
           ease: 'power2.inOut',
-          stagger: { amount: 0.3, from: 'start' },
+          stagger: { amount: 0.25, from: 'start' },
           onComplete: () => {
             if (overlay) overlay.style.pointerEvents = 'none';
             gsap.set(columns, { y: '100%' });
@@ -169,7 +167,7 @@ const AppContent = () => {
             isTransitioning.current = false;
           },
         },
-        '-=0.15'
+        '+=0.05'
       );
     },
     [navigate, lenis]

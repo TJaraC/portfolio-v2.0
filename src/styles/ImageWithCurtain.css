@@ -12,10 +12,6 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  /* Optimizaciones de rendimiento */
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  will-change: auto;
 }
 
 .image-curtain {
@@ -48,11 +44,6 @@
 
 /* Optimizaciones para dispositivos móviles */
 @media (max-width: 768px) {
-  .image-curtain-container {
-    /* Reducir la complejidad en móviles si es necesario */
-    transform: translateZ(0);
-  }
-  
   .image-curtain {
     /* Asegurar que la animación sea suave en móviles */
     will-change: transform;

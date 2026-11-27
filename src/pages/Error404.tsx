@@ -53,10 +53,10 @@ const Error404: React.FC = () => {
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
+          duration: 0.7,
           ease: 'power2.out',
         },
-        '-=0.3'
+        '-=0.5'
       );
 
     return () => {
@@ -88,9 +88,8 @@ const Error404: React.FC = () => {
         </h1>
 
         <div ref={contentRef} className="error-404-text-content">
-          {/* Los spans no llevan espacio entre sí ("NOTFOUND"): nombre explícito */}
-          <h2 className="error-404-title" aria-label="Page not found">
-            <span className="error-404-title-gilda">PAGE NOT</span>
+          <h2 className="error-404-title">
+            <span className="error-404-title-gilda">PAGE NOT </span>
             <span className="error-404-title-geist">FOUND</span>
           </h2>
           <p className="error-404-subtitle">Lets get you back to the good stuff</p>

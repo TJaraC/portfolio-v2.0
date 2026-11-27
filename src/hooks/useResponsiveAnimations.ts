@@ -55,8 +55,10 @@ export const useResponsiveAnimations = ({
           onBreakpointChange(newBreakpoint);
         }
 
-        // Animaciones específicas por breakpoint
-        animateBreakpointChange(previousBreakpoint, newBreakpoint);
+        // Animaciones específicas solo en cambios reales de breakpoint (no en montaje inicial)
+        if (previousBreakpoint) {
+          animateBreakpointChange(previousBreakpoint, newBreakpoint);
+        }
       }
     };
 

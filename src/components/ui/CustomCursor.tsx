@@ -18,8 +18,8 @@ const CustomCursor: React.FC = () => {
     const forcedColors = window.matchMedia(FORCED_COLORS_QUERY);
     const root = document.documentElement;
 
-    let mouseX = 0;
-    let mouseY = 0;
+    let mouseX = -100;
+    let mouseY = -100;
     let rafId = 0;
     let hasPosition = false;
 
@@ -60,13 +60,17 @@ const CustomCursor: React.FC = () => {
       'a, button, [role="button"], [role="switch"], input, textarea, select, .clickable';
 
     const handleMouseOver = (e: MouseEvent) => {
-      if ((e.target as Element).closest?.(INTERACTIVE)) {
+      if ((e.target as Element | null)?.closest?.(INTERACTIVE)) {
         cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
       }
     };
 
+    // Solo encoger al salir de verdad del elemento interactivo (no al cruzar sus hijos)
     const handleMouseOut = (e: MouseEvent) => {
-      if ((e.target as Element).closest?.(INTERACTIVE)) {
+      if (
+        (e.target as Element | null)?.closest?.(INTERACTIVE) &&
+        !(e.relatedTarget as Element | null)?.closest?.(INTERACTIVE)
+      ) {
         cursor.style.transform = 'translate(-50%, -50%) scale(1)';
       }
     };
@@ -100,10 +104,12 @@ const CustomCursor: React.FC = () => {
         position: 'fixed',
         top: 0,
         left: 0,
-        pointerEvents: 'none',
-        zIndex: 9999,
         opacity: 0,
+        pointerEvents: 'none',
+        // Por encima del preloader (9999)
+        zIndex: 10000,
         transform: 'translate(-50%, -50%)',
+        transition: 'opacity 0.15s ease, transform 0.15s ease',
       }}
     />
   );

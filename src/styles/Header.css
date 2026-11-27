@@ -246,7 +246,7 @@ body.menu-open .header--dark .logo-text {
   transition: all 0.3s ease;
 }
 
-@supports (backdrop-filter: blur(20px)) {
+@supports ((backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px))) {
   .mobile-menu-overlay {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
     backdrop-filter: blur(20px);
@@ -270,7 +270,7 @@ body.menu-open .header--dark .logo-text {
   justify-content: center;
 }
 
-@supports (backdrop-filter: blur(25px)) {
+@supports ((backdrop-filter: blur(25px)) or (-webkit-backdrop-filter: blur(25px))) {
   .mobile-menu {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
     backdrop-filter: blur(25px);
@@ -345,11 +345,6 @@ body.menu-open {
 .mobile-menu-overlay {
   /* Initial state will be handled by GSAP */
   will-change: opacity;
-  background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.1), 
-    rgba(255, 255, 255, 0.05),
-    rgba(240, 240, 240, 0.08)
-  );
 }
 
 /* Mobile menu background - optimized for GSAP */

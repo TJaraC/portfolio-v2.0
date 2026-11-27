@@ -87,9 +87,9 @@
 
 /* iOS-specific fixes */
 .ios {
-  /* Fix for iOS viewport height issues */
-  height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
+  /* Fix for iOS viewport height issues without locking document scroll height */
+  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
 }
 
 .ios .mobile-menu,

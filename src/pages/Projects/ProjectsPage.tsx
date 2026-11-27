@@ -36,20 +36,21 @@ const ProjectsPage: React.FC = () => {
     return (
       <div className="projects-page">
         <Header />
-        <div className="loading-container" style={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          alignItems: 'center',
-          // Ocupa todo el viewport para que el footer quede fuera de pantalla
-          // mientras carga el JSON: con 50vh el footer era visible y al llegar el
-          // contenido saltaba hacia abajo (CLS ≈ 0.5 en carga directa).
-          minHeight: '100vh',
-          fontSize: '1.2rem',
-          color: '#666'
-        }}>
+        {/* Ocupa todo el viewport y no monta el footer mientras carga el JSON:
+            antes el footer quedaba visible y saltaba al llegar el contenido (CLS ≈ 0.5). */}
+        <div
+          className="loading-container"
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: '100vh',
+            fontSize: '1.2rem',
+            color: '#666',
+          }}
+        >
           Loading project data...
         </div>
-        <Contact />
       </div>
     );
   }

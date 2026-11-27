@@ -353,6 +353,7 @@ const Home: React.FC = () => {
               <span className="philosophy-title-gilda">technology</span>
               <img src="/images/logo-white.svg" alt="" className="philosophy-separator" />
               <span className="philosophy-title-geist">& creativity</span>
+              <img src="/images/logo-white.svg" alt="separator" className="philosophy-separator" />
             </GSAPCarousel>
           </div>
         </div>

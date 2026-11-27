@@ -62,7 +62,12 @@ const ProjectSiteLink: React.FC<ProjectSiteLinkProps> = ({
               <path id={orbitPathId} d="M 60,60 m -43,0 a 43,43 0 1,1 86,0 a 43,43 0 1,1 -86,0" />
             </defs>
             <text textLength="270" lengthAdjust="spacing">
-              <textPath href={`#${orbitPathId}`} startOffset="0%">
+              <textPath
+                href={`#${orbitPathId}`}
+                startOffset="0%"
+                textLength="270"
+                lengthAdjust="spacing"
+              >
                 VISIT LIVE SITE • VISIT LIVE SITE •
               </textPath>
             </text>

@@ -75,7 +75,7 @@ const NextProjectButton: React.FC<NextProjectButtonProps> = ({
 
     const nextLetters = createLetterElements(nextText, 'next-project-heading-gilda');
     const projectLetters = createLetterElements(projectText, 'next-project-heading-geist');
-    const arrowLetters = createLetterElements(arrowText, 'next-project-arrow');
+    const arrowLetters = createLetterElements(arrowText, '');
 
     const allLetters = [...nextLetters, ...projectLetters, ...arrowLetters];
 
