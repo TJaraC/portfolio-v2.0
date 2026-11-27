@@ -2,11 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { useLenisScroll } from '../../hooks/useLenisScroll';
-import { lenisEasing } from '../../utils/easing';
+import { focusElement, prefersReducedMotion, scrollToY } from '../../utils/motion';
 import { HEADER_HEIGHT } from '../../utils/constants';
 import AnimatedNavButton from '../ui/AnimatedNavButton';
 import { useTransition } from '../../context/TransitionContext';
 import '../../styles/Header.css';
+
+const BEHANCE_URL = 'https://www.behance.net/tjaradesign';
+const LINKEDIN_URL = 'https://www.linkedin.com/in/patricio-jaramillo-castrillo-557427200/';
 
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -21,7 +24,7 @@ const Header: React.FC = () => {
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
-  const menuItemsRef = useRef<(HTMLButtonElement | null)[]>([]);
+  const menuItemsRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const tl = useRef<gsap.core.Timeline | null>(null);
   const headerRef = useRef<HTMLElement>(null);
   const lastScrollY = useRef(0);
@@ -40,14 +43,29 @@ const Header: React.FC = () => {
     const element = document.getElementById(sectionId);
     if (!element) return;
 
-    const targetPosition = element.offsetTop - HEADER_HEIGHT;
-
-    if (lenis) {
-      lenis.scrollTo(targetPosition, { duration: 1.2, easing: lenisEasing });
-    } else {
-      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-    }
+    scrollToY(lenis, element.offsetTop - HEADER_HEIGHT);
+    // Keyboard/screen-reader users continue from the section they jumped to
+    focusElement(element);
   };
+
+  // Enlaces de sección: <a href="/#id"> reales (abrir en pestaña nueva sigue funcionando),
+  // interceptando solo el clic normal para mantener el scroll suave / transición.
+  const handleSectionLink =
+    (sectionId: string, closeMenuFirst = false) =>
+    (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
+      }
+      event.preventDefault();
+      if (closeMenuFirst) {
+        // Reactivar Lenis antes del scroll y cerrar el menú
+        if (lenis) lenis.start();
+        setMenuOpen(false);
+        setTimeout(() => scrollToSection(sectionId), 150);
+        return;
+      }
+      scrollToSection(sectionId);
+    };
 
   // Scroll a sección pendiente cuando llegamos a la home desde otra página
   useEffect(() => {
@@ -72,12 +90,8 @@ const Header: React.FC = () => {
     const timer = setTimeout(() => {
       const element = document.getElementById(targetSection);
       if (!element) return;
-      const targetPosition = element.offsetTop - HEADER_HEIGHT;
-      if (lenis) {
-        lenis.scrollTo(targetPosition, { duration: 1.2, easing: lenisEasing });
-      } else {
-        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-      }
+      scrollToY(lenis, element.offsetTop - HEADER_HEIGHT);
+      focusElement(element);
     }, 300);
     return () => clearTimeout(timer);
   }, [location.pathname, location.state, lenis]);
@@ -156,10 +170,10 @@ const Header: React.FC = () => {
     };
   }, []);
 
-  // Animación del logo con scroll (quickTo reutiliza un único tween en vez de
-  // crear uno nuevo en cada evento de scroll)
+  // Animación del logo con scroll (desactivada con prefers-reduced-motion).
+  // quickTo reutiliza un único tween en vez de crear uno nuevo en cada evento de scroll.
   useEffect(() => {
-    if (!logoRef.current) return;
+    if (prefersReducedMotion() || !logoRef.current) return;
     const rotateLogo = gsap.quickTo(logoRef.current, 'rotation', {
       duration: 0.3,
       ease: 'power2.out',
@@ -278,6 +292,56 @@ const Header: React.FC = () => {
     };
   }, [menuOpen, lenis]);
 
+  // Gestión de foco del menú móvil: foco al primer enlace al abrir, Escape para cerrar
+  // devolviendo el foco al botón, y Tab contenido entre el botón y los enlaces.
+  const wasMenuOpen = useRef(false);
+  useEffect(() => {
+    if (!menuOpen) {
+      if (wasMenuOpen.current && menuRef.current?.contains(document.activeElement)) {
+        hamburgerRef.current?.focus();
+      }
+      wasMenuOpen.current = false;
+      return;
+    }
+    wasMenuOpen.current = true;
+
+    const focusTimer = window.setTimeout(() => menuItemsRef.current[0]?.focus(), 0);
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setMenuOpen(false);
+        hamburgerRef.current?.focus();
+        return;
+      }
+      if (event.key !== 'Tab') return;
+
+      const focusable: HTMLElement[] = [];
+      if (hamburgerRef.current) focusable.push(hamburgerRef.current);
+      menuItemsRef.current.forEach((item) => item && focusable.push(item));
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      const inside = active ? focusable.includes(active) : false;
+
+      if (event.shiftKey && (active === first || !inside)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (active === last || !inside)) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.clearTimeout(focusTimer);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [menuOpen]);
+
   // Cleanup general al desmontar el componente
   useEffect(() => {
     return () => {
@@ -335,13 +399,14 @@ const Header: React.FC = () => {
         <div className="header-content">
           {/* Logo */}
           <button
+            type="button"
             className="logo"
             ref={logoRef}
-            aria-label="Go to home"
+            aria-label="TJC, go to home"
             onClick={() => {
               if (location.pathname === '/') {
                 // Si estamos en la home, hacer scroll to top
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                scrollToY(lenis, 0);
               } else {
                 // Si estamos en otra página, navegar a la home con transición
                 transitionTo('/');
@@ -354,11 +419,21 @@ const Header: React.FC = () => {
           {/* Hamburger Menu Icon (Mobile only) */}
           <button
             ref={hamburgerRef}
+            type="button"
             className="hamburger-menu"
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
             onClick={() => setMenuOpen(!menuOpen)}
           >
-            <svg className="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <svg
+              className="hamburger-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              aria-hidden="true"
+              focusable="false"
+            >
               {menuOpen ? (
                 <path
                   strokeLinecap="round"
@@ -378,25 +453,25 @@ const Header: React.FC = () => {
           </button>
 
           {/* Desktop Navigation */}
-          <nav className="desktop-nav">
+          <nav className="desktop-nav" aria-label="Main">
             <AnimatedNavButton
-              role="menuitem"
+              href="/#work"
               className="nav-button"
-              onClick={() => scrollToSection('work')}
+              onClick={handleSectionLink('work')}
             >
               WORK
             </AnimatedNavButton>
             <AnimatedNavButton
-              role="menuitem"
+              href="/#about"
               className="nav-button"
-              onClick={() => scrollToSection('about')}
+              onClick={handleSectionLink('about')}
             >
               ABOUT
             </AnimatedNavButton>
             <AnimatedNavButton
-              role="menuitem"
+              href="/#contact"
               className="nav-button"
-              onClick={() => scrollToSection('contact')}
+              onClick={handleSectionLink('contact')}
             >
               CONTACT
             </AnimatedNavButton>
@@ -404,23 +479,10 @@ const Header: React.FC = () => {
 
           {/* Desktop Social Links */}
           <div className="desktop-social">
-            <AnimatedNavButton
-              role="menuitem"
-              className="nav-button"
-              onClick={() => window.open('https://www.behance.net/tjaradesign', '_blank')}
-            >
+            <AnimatedNavButton href={BEHANCE_URL} external className="nav-button">
               BEHANCE
             </AnimatedNavButton>
-            <AnimatedNavButton
-              role="menuitem"
-              className="nav-button"
-              onClick={() =>
-                window.open(
-                  'https://www.linkedin.com/in/patricio-jaramillo-castrillo-557427200/',
-                  '_blank'
-                )
-              }
-            >
+            <AnimatedNavButton href={LINKEDIN_URL} external className="nav-button">
               LINKEDIN
             </AnimatedNavButton>
           </div>
@@ -431,90 +493,74 @@ const Header: React.FC = () => {
           <div
             ref={overlayRef}
             className="mobile-menu-overlay"
+            aria-hidden="true"
             onClick={() => setMenuOpen(false)}
           />
         )}
 
         {/* Mobile Menu */}
         <nav
+          id="mobile-menu"
+          aria-label="Mobile"
           ref={menuRef}
           className={`mobile-menu ${!menuOpen ? 'mobile-menu--hidden' : ''} ${headerTheme === 'dark' ? 'mobile-menu--dark' : 'mobile-menu--light'}`}
           onClick={() => setMenuOpen(false)}
         >
           <div className="mobile-menu-content" onClick={(e) => e.stopPropagation()}>
-            <button
-              ref={(el) => el && (menuItemsRef.current[0] = el)}
-              role="menuitem"
-              className="nav-button nav-button--left mobile-menu-item"
-              onClick={() => {
-                // Reactivar Lenis antes del scroll
-                if (lenis) {
-                  lenis.start();
-                }
-                setMenuOpen(false);
-                // Hacer scroll después de un pequeño delay
-                setTimeout(() => scrollToSection('about'), 150);
+            <a
+              ref={(el) => {
+                menuItemsRef.current[0] = el;
               }}
+              href="/#about"
+              className="nav-button nav-button--left mobile-menu-item"
+              onClick={handleSectionLink('about', true)}
             >
               ABOUT
-            </button>
-            <button
-              ref={(el) => el && (menuItemsRef.current[1] = el)}
-              role="menuitem"
-              className="nav-button nav-button--left mobile-menu-item"
-              onClick={() => {
-                // Reactivar Lenis antes del scroll
-                if (lenis) {
-                  lenis.start();
-                }
-                setMenuOpen(false);
-                // Hacer scroll después de un pequeño delay
-                setTimeout(() => scrollToSection('work'), 150);
+            </a>
+            <a
+              ref={(el) => {
+                menuItemsRef.current[1] = el;
               }}
+              href="/#work"
+              className="nav-button nav-button--left mobile-menu-item"
+              onClick={handleSectionLink('work', true)}
             >
               WORK
-            </button>
-            <button
-              ref={(el) => el && (menuItemsRef.current[2] = el)}
-              role="menuitem"
-              className="nav-button nav-button--left mobile-menu-item"
-              onClick={() => {
-                // Reactivar Lenis antes del scroll
-                if (lenis) {
-                  lenis.start();
-                }
-                setMenuOpen(false);
-                // Hacer scroll después de un pequeño delay
-                setTimeout(() => scrollToSection('contact'), 150);
+            </a>
+            <a
+              ref={(el) => {
+                menuItemsRef.current[2] = el;
               }}
+              href="/#contact"
+              className="nav-button nav-button--left mobile-menu-item"
+              onClick={handleSectionLink('contact', true)}
             >
               CONTACT
-            </button>
-            <button
-              ref={(el) => el && (menuItemsRef.current[3] = el)}
-              role="menuitem"
-              className="nav-button nav-button--left mobile-menu-item"
-              onClick={(e) => {
-                e.stopPropagation();
-                window.open('https://www.behance.net/tjaradesign', '_blank');
+            </a>
+            <a
+              ref={(el) => {
+                menuItemsRef.current[3] = el;
               }}
-            >
-              BEHANCE
-            </button>
-            <button
-              ref={(el) => el && (menuItemsRef.current[4] = el)}
-              role="menuitem"
+              href={BEHANCE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="nav-button nav-button--left mobile-menu-item"
-              onClick={(e) => {
-                e.stopPropagation();
-                window.open(
-                  'https://www.linkedin.com/in/patricio-jaramillo-castrillo-557427200/',
-                  '_blank'
-                );
-              }}
+              onClick={(e) => e.stopPropagation()}
             >
-              LINKEDIN
-            </button>
+              BEHANCE<span className="sr-only"> (opens in a new tab)</span>
+            </a>
+            <a
+              ref={(el) => {
+                menuItemsRef.current[4] = el;
+              }}
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-button nav-button--left mobile-menu-item"
+              onClick={(e) => e.stopPropagation()}
+            >
+              LINKEDIN<span className="sr-only"> (opens in a new tab)</span>
+            </a>
           </div>
         </nav>
       </div>

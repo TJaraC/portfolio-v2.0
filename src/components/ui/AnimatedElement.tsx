@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useScrollAnimation } from '../../hooks/useLenisScroll';
+import { prefersReducedMotion } from '../../utils/motion';
 
 interface AnimatedElementProps {
   children: React.ReactNode;
@@ -20,7 +21,8 @@ const AnimatedElement: React.FC<AnimatedElementProps> = ({
   className = '',
   once = true,
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  // Con prefers-reduced-motion el contenido aparece directamente, sin desplazamiento
+  const [isVisible, setIsVisible] = useState(prefersReducedMotion);
 
   const animationCallback = useCallback(() => {
     setTimeout(() => {
