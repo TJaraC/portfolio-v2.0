@@ -18,6 +18,9 @@ export const useResponsiveAnimations = ({
   const animationContext = useRef<gsap.Context>();
   const animationManager = useRef<ResponsiveAnimationManager>();
   const lenis = useLenisScroll();
+  // Ref para leer siempre la instancia actual de Lenis sin recrear el efecto
+  const lenisRef = useRef(lenis);
+  lenisRef.current = lenis;
 
   useEffect(() => {
     // Crear contexto de GSAP para las animaciones
@@ -25,7 +28,7 @@ export const useResponsiveAnimations = ({
 
     // Inicializar el manager de animaciones responsivas
     animationManager.current = new ResponsiveAnimationManager({
-      lenis: lenis || undefined,
+      lenis: lenisRef.current || undefined,
       duration,
       ease,
     });
@@ -61,8 +64,8 @@ export const useResponsiveAnimations = ({
       if (!animationManager.current) return;
 
       // Actualizar Lenis en el manager si está disponible
-      if (lenis) {
-        animationManager.current.setLenis(lenis);
+      if (lenisRef.current) {
+        animationManager.current.setLenis(lenisRef.current);
       }
 
       // Ejecutar animaciones sofisticadas del manager
@@ -77,7 +80,8 @@ export const useResponsiveAnimations = ({
     window.addEventListener('resize', debouncedCheck);
 
     return () => {
-      window.removeEventListener('resize', checkBreakpoint);
+      window.removeEventListener('resize', debouncedCheck);
+      debouncedCheck.cancel();
       if (animationContext.current) {
         animationContext.current.kill();
       }
@@ -91,15 +95,14 @@ export const useResponsiveAnimations = ({
 };
 
 // Función de debounce para optimizar el rendimiento
-function debounce<T extends (...args: any[]) => any>(
-  func: T,
-  wait: number
-): (...args: Parameters<T>) => void {
-  let timeout: ReturnType<typeof setTimeout>;
-  return (...args: Parameters<T>) => {
+function debounce<Args extends unknown[]>(func: (...args: Args) => void, wait: number) {
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  const debounced = (...args: Args) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
   };
+  debounced.cancel = () => clearTimeout(timeout);
+  return debounced;
 }
 
 export default useResponsiveAnimations;
