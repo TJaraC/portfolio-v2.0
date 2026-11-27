@@ -26,7 +26,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       <div className="portfolio-card-img-wrapper">
         <ImageWithCurtain
           src={project.heroImage}
-          alt={project.cardTitle}
+          alt={`${project.cardTitle} case study cover`}
           className="portfolio-card-img"
           delay={0.2}
           duration={1.0}
