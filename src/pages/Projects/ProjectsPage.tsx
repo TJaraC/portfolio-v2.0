@@ -16,7 +16,7 @@ const ProjectsPage: React.FC = () => {
   useEffect(() => {
     // Scroll al top cuando cambie el proyecto
     window.scrollTo(0, 0);
-    
+
     // Reactivar Lenis si existe
     if (lenis) {
       lenis.start();
@@ -38,18 +38,8 @@ const ProjectsPage: React.FC = () => {
         <Header />
         {/* Ocupa todo el viewport y no monta el footer mientras carga el JSON:
             antes el footer quedaba visible y saltaba al llegar el contenido (CLS ≈ 0.5). */}
-        <div
-          className="loading-container"
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: '100vh',
-            fontSize: '1.2rem',
-            color: '#666',
-          }}
-        >
-          Loading project data...
+        <div className="project-loading" role="status" aria-live="polite">
+          <span className="project-loading-label">Loading case study</span>
         </div>
       </div>
     );
@@ -63,10 +53,10 @@ const ProjectsPage: React.FC = () => {
     <div className="projects-page">
       {/* Header */}
       <Header />
-      
+
       {/* Project Case Study */}
       <ProjectCase data={projectData} />
-      
+
       {/* Footer */}
       <Contact />
     </div>

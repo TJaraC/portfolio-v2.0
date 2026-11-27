@@ -12,12 +12,9 @@ export const useNextProject = (currentProjectId: string) => {
   // Encontrar el índice del proyecto actual
   const currentIndex = projects.findIndex((project) => project.id === currentProjectId);
 
-  if (currentIndex === -1) {
-    return { nextProject: null, loading: false };
-  }
-
-  // Obtener el siguiente proyecto (circular: si es el último, volver al primero)
-  const nextIndex = (currentIndex + 1) % projects.length;
+  // Siguiente proyecto (circular). Si el proyecto no está en el grid principal
+  // (p. ej. plantillas en desarrollo), enlazar al primero para no dejar el CTA muerto.
+  const nextIndex = currentIndex === -1 ? 0 : (currentIndex + 1) % projects.length;
   const nextProject = projects[nextIndex];
 
   return { nextProject, loading: false };

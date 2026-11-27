@@ -8,6 +8,9 @@ import NextProjectButton from './NextProjectButton';
 import ImageWithCurtain from './ImageWithCurtain';
 import ProjectSiteLink from './ProjectSiteLink';
 import { ProjectData } from '../../hooks/useProjectData';
+import { useLenisScroll } from '../../hooks/useLenisScroll';
+import { HEADER_HEIGHT } from '../../utils/constants';
+import { lenisEasing } from '../../utils/easing';
 
 interface ProjectCaseProps {
   data: ProjectData;
@@ -17,7 +20,14 @@ interface CaseChapterProps {
   number: string;
   title: string;
   children: ReactNode;
+  fullWidth?: ReactNode;
   className?: string;
+}
+
+interface ChapterIndexItem {
+  number: string;
+  label: string;
+  href: string;
 }
 
 type ProjectTheme = CSSProperties & {
@@ -25,23 +35,37 @@ type ProjectTheme = CSSProperties & {
   '--project-accent-strong': string;
 };
 
-const CaseChapter: React.FC<CaseChapterProps> = ({ number, title, children, className = '' }) => {
+const CaseChapter: React.FC<CaseChapterProps> = ({
+  number,
+  title,
+  children,
+  fullWidth,
+  className = '',
+}) => {
   const headingId = `chapter-${number}`;
 
   return (
     <>
       <Divider animation={Number(number) % 2 === 0 ? 'slideRight' : 'slideLeft'} delay={0.1} />
-      <AnimatedElement animation="slideUp" threshold={0.08}>
-        <section className={`case-chapter ${className}`} aria-labelledby={headingId}>
+      <AnimatedElement animation="slideUp" threshold={0.04} className="case-chapter-reveal">
+        <section
+          id={`section-${number}`}
+          className={`case-chapter ${className}`}
+          aria-labelledby={headingId}
+        >
           <header className="case-chapter-header">
             <span className="case-chapter-number" aria-hidden="true">
               {number}
             </span>
-            <h2 id={headingId} className="case-chapter-title">
-              {title}
-            </h2>
+            <div className="case-chapter-title-wrap">
+              <h2 id={headingId} className="case-chapter-title">
+                {title}
+              </h2>
+              <span className="case-chapter-rule" aria-hidden="true" />
+            </div>
           </header>
           <div className="case-chapter-content">{children}</div>
+          {fullWidth ? <div className="case-chapter-showcase">{fullWidth}</div> : null}
         </section>
       </AnimatedElement>
     </>
@@ -49,6 +73,7 @@ const CaseChapter: React.FC<CaseChapterProps> = ({ number, title, children, clas
 };
 
 const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
+  const lenis = useLenisScroll();
   const caseStudy = data.caseStudy;
   const personas = caseStudy
     ? (caseStudy.research.personas ??
@@ -63,6 +88,43 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
     '--project-accent': data.fontAndColours.colors[0],
     '--project-accent-strong': data.fontAndColours.colors[1] ?? data.fontAndColours.colors[0],
   } as ProjectTheme;
+
+  const chapterIndex: ChapterIndexItem[] = caseStudy
+    ? [
+        { number: '02', label: 'Overview', href: '#section-02' },
+        { number: '03', label: 'Challenge', href: '#section-03' },
+        { number: '04', label: 'Research', href: '#section-04' },
+        { number: '05', label: 'Ideation', href: '#section-05' },
+        { number: '06', label: 'Design system', href: '#section-06' },
+        ...(caseStudy.delivery
+          ? [{ number: '07', label: 'Delivery', href: '#section-07' }]
+          : []),
+        { number: testingChapterNumber, label: 'Testing', href: `#section-${testingChapterNumber}` },
+        {
+          number: finalChapterNumber,
+          label: 'Final design',
+          href: `#section-${finalChapterNumber}`,
+        },
+        { number: impactChapterNumber, label: 'Impact', href: `#section-${impactChapterNumber}` },
+        {
+          number: learningsChapterNumber,
+          label: 'Learnings',
+          href: `#section-${learningsChapterNumber}`,
+        },
+      ]
+    : [];
+
+  const handleIndexJump = (event: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    const target = document.getElementById(href.replace(/^#/, ''));
+    if (!target) return;
+    event.preventDefault();
+    const targetTop = target.getBoundingClientRect().top + window.scrollY - (HEADER_HEIGHT + 24);
+    if (lenis) {
+      lenis.scrollTo(Math.max(0, targetTop), { duration: 1.0, easing: lenisEasing });
+    } else {
+      window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+    }
+  };
 
   return (
     <main id="main-content" className="project-case" style={theme} data-project={data.id}>
@@ -83,6 +145,13 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                     {data.name && <span className="project-title-sub">{data.name}</span>}
                   </h1>
                   <p className="project-date">{data.date}</p>
+                  {data.cardTags?.length ? (
+                    <ul className="project-tags" aria-label="Project disciplines">
+                      {data.cardTags.map((tag) => (
+                        <li key={tag}>{tag}</li>
+                      ))}
+                    </ul>
+                  ) : null}
                   <p className="project-description">{data.heroDescription}</p>
                 </div>
               </div>
@@ -130,6 +199,27 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                 <span>Introduction</span>
               </div>
             </div>
+
+            {chapterIndex.length ? (
+              <nav className="case-index" aria-label="Case study sections">
+                <ol className="case-index-list">
+                  {chapterIndex.map((item) => (
+                    <li key={item.number}>
+                      <a
+                        className="case-index-link"
+                        href={item.href}
+                        onClick={(event) => handleIndexJump(event, item.href)}
+                      >
+                        <span className="case-index-number" aria-hidden="true">
+                          {item.number}
+                        </span>
+                        <span>{item.label}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            ) : null}
 
             <CaseChapter number="02" title="Overview">
               <p className="case-lead">{data.overview.description}</p>
@@ -184,6 +274,9 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                       <span className="case-kicker">Competitive scan</span>
                       <p>{caseStudy.research.benchmark.note}</p>
                     </div>
+                    <p className="case-table-hint" aria-hidden="true">
+                      Scroll horizontally to compare →
+                    </p>
                     <div
                       className="case-table-scroll"
                       tabIndex={0}
@@ -405,6 +498,33 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                   number={finalChapterNumber}
                   title="Final design"
                   className="case-final"
+                  fullWidth={
+                    <>
+                      <div
+                        className="project-gallery-grid"
+                        data-count={data.gallery.images.length}
+                      >
+                        {data.gallery.images.map((image, index) => (
+                          <figure key={`${image}-${index}`} className="project-gallery-item">
+                            <ImageWithCurtain
+                              src={image}
+                              alt={`${data.cardTitle} final design view ${index + 1}`}
+                              delay={0.08 * (index + 1)}
+                              duration={1}
+                              threshold={0.08}
+                            />
+                            <figcaption className="project-gallery-index" aria-hidden="true">
+                              {String(index + 1).padStart(2, '0')}
+                            </figcaption>
+                          </figure>
+                        ))}
+                      </div>
+                      <div className="case-gallery-footer">
+                        <span className="case-kicker">Interface views</span>
+                        <p className="case-gallery-caption">{data.gallery.description}</p>
+                      </div>
+                    </>
+                  }
                 >
                   <p className="case-lead">{caseStudy.finalDesign.description}</p>
                   <div className="case-highlight-grid">
@@ -416,20 +536,6 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                       </article>
                     ))}
                   </div>
-                  <div className="project-gallery-grid">
-                    {data.gallery.images.map((image, index) => (
-                      <div key={`${image}-${index}`} className="project-gallery-item">
-                        <ImageWithCurtain
-                          src={image}
-                          alt={`${data.cardTitle} final design view ${index + 1}`}
-                          delay={0.08 * (index + 1)}
-                          duration={1}
-                          threshold={0.08}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                  <p className="case-gallery-caption">{data.gallery.description}</p>
                 </CaseChapter>
 
                 <CaseChapter number={impactChapterNumber} title="Impact" className="case-impact">
@@ -485,15 +591,26 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                     </div>
                   </div>
                 </CaseChapter>
-                <CaseChapter number="08" title="Gallery">
+                <CaseChapter
+                  number="08"
+                  title="Gallery"
+                  fullWidth={
+                    <div
+                      className="project-gallery-grid"
+                      data-count={data.gallery.images.length}
+                    >
+                      {data.gallery.images.map((image, index) => (
+                        <figure key={`${image}-${index}`} className="project-gallery-item">
+                          <ImageWithCurtain src={image} alt={`${data.cardTitle} gallery image ${index + 1}`} />
+                          <figcaption className="project-gallery-index" aria-hidden="true">
+                            {String(index + 1).padStart(2, '0')}
+                          </figcaption>
+                        </figure>
+                      ))}
+                    </div>
+                  }
+                >
                   <p className="case-lead">{data.gallery.description}</p>
-                  <div className="project-gallery-grid">
-                    {data.gallery.images.map((image, index) => (
-                      <div key={`${image}-${index}`} className="project-gallery-item">
-                        <ImageWithCurtain src={image} alt={`${data.cardTitle} gallery image ${index + 1}`} />
-                      </div>
-                    ))}
-                  </div>
                 </CaseChapter>
               </>
             )}
@@ -501,7 +618,7 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
         </div>
       </section>
 
-      <ParallaxSection speed={0.5} direction="down" className="project-featured-section" zIndex={1}>
+      <ParallaxSection speed={0.18} direction="down" className="project-featured-section" zIndex={1}>
         <AnimatedElement animation="slideUp" threshold={0.2}>
           <NextProjectButton currentProjectId={data.id} />
         </AnimatedElement>

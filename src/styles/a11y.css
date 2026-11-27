@@ -58,7 +58,8 @@
 a.nav-button,
 .portfolio-card-link,
 .contact-heading-link,
-.next-project-link {
+.next-project-link,
+a.next-project-trigger {
   color: inherit;
   text-decoration: none;
 }
