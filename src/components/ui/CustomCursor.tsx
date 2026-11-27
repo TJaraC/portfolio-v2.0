@@ -52,7 +52,8 @@ const CustomCursor: React.FC = () => {
     };
 
     // Event delegation: 2 listeners en document en vez de N por elemento interactivo
-    const INTERACTIVE = 'a, button, [role="button"], [role="switch"], input, textarea, select, .clickable';
+    const INTERACTIVE =
+      'a, button, [role="button"], [role="switch"], input, textarea, select, .clickable';
 
     const handleMouseOver = (e: MouseEvent) => {
       if ((e.target as Element).closest?.(INTERACTIVE)) {
