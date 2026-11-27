@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Lenis from 'lenis';
 import { setLenisInstance, useLenisScroll } from './hooks/useLenisScroll';
-import { ScrollTrigger } from './utils/gsap';
+import { gsap, ScrollTrigger } from './utils/gsap';
 import { lenisEasing } from './utils/easing';
 import { fontLoading } from './utils/browserCompatibility';
 import Routes from './Routes';
@@ -26,7 +26,7 @@ const App: React.FC = () => {
       });
     };
 
-    let rafId: number;
+    let tick: ((time: number) => void) | null = null;
 
     // Esperar a que el DOM esté completamente cargado
     const initializeLenis = () => {
@@ -51,11 +51,10 @@ const App: React.FC = () => {
       // Agregar clase al body para identificar que Lenis está activo
       document.body.classList.add('lenis');
 
-      function raf(time: number) {
-        lenis.raf(time);
-        rafId = requestAnimationFrame(raf);
-      }
-      rafId = requestAnimationFrame(raf);
+      // Conducir Lenis desde el ticker de GSAP: un único bucle rAF para
+      // scroll suave, tweens y ScrollTrigger, actualizados en el mismo frame.
+      tick = (time: number) => lenis.raf(time * 1000);
+      gsap.ticker.add(tick);
 
       // Forzar inicialización después de un breve delay
       setTimeout(() => {
@@ -80,7 +79,7 @@ const App: React.FC = () => {
     }
 
     return () => {
-      cancelAnimationFrame(rafId);
+      if (tick) gsap.ticker.remove(tick);
       if (lenis) {
         lenis.off('scroll', ScrollTrigger.update);
         lenis.destroy();
