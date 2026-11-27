@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import Lenis from 'lenis';
 import { setLenisInstance, useLenisScroll } from './hooks/useLenisScroll';
-import { ScrollTrigger } from './utils/gsap';
+import { gsap, ScrollTrigger } from './utils/gsap';
 import { lenisEasing } from './utils/easing';
-import { fontLoading } from './utils/browserCompatibility';
+import { prefersReducedMotion } from './utils/motion';
 import Routes from './Routes';
 import CustomCursor from './components/ui/CustomCursor';
 
@@ -14,19 +14,10 @@ const App: React.FC = () => {
     // Verificar que estamos en el navegador
     if (typeof window === 'undefined') return;
 
-    // Manejar errores de fuentes
-    const handleFontErrors = () => {
-      // Agregar fallbacks si las fuentes fallan
-      fontLoading.addFontFallbacks();
+    // La comprobación de fuentes (fallbacks incluidos) ya la hace
+    // initBrowserCompatibility() en main.tsx.
 
-      // Esperar a que las fuentes se carguen
-      fontLoading.waitForFonts(['Geist', 'Gilda Display']).catch(() => {
-        console.warn('Font loading failed, using fallbacks');
-        document.documentElement.classList.add('font-fallback-active');
-      });
-    };
-
-    let rafId: number;
+    let tick: ((time: number) => void) | null = null;
 
     // Esperar a que el DOM esté completamente cargado
     const initializeLenis = () => {
@@ -36,7 +27,8 @@ const App: React.FC = () => {
       const lenis = new Lenis({
         lerp: 0.1,
         duration: 1.2,
-        smoothWheel: true,
+        // prefers-reduced-motion: rueda nativa, sin inercia/suavizado
+        smoothWheel: !prefersReducedMotion(),
         wheelMultiplier: 1,
         touchMultiplier: 2,
         easing: lenisEasing,
@@ -51,11 +43,10 @@ const App: React.FC = () => {
       // Agregar clase al body para identificar que Lenis está activo
       document.body.classList.add('lenis');
 
-      function raf(time: number) {
-        lenis.raf(time);
-        rafId = requestAnimationFrame(raf);
-      }
-      rafId = requestAnimationFrame(raf);
+      // Conducir Lenis desde el ticker de GSAP: un único bucle rAF para
+      // scroll suave, tweens y ScrollTrigger, actualizados en el mismo frame.
+      tick = (time: number) => lenis.raf(time * 1000);
+      gsap.ticker.add(tick);
 
       // Forzar inicialización después de un breve delay
       setTimeout(() => {
@@ -68,9 +59,6 @@ const App: React.FC = () => {
 
     let lenis: Lenis | null = null;
 
-    // Inicializar manejo de fuentes
-    handleFontErrors();
-
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
         lenis = initializeLenis();
@@ -80,7 +68,7 @@ const App: React.FC = () => {
     }
 
     return () => {
-      cancelAnimationFrame(rafId);
+      if (tick) gsap.ticker.remove(tick);
       if (lenis) {
         lenis.off('scroll', ScrollTrigger.update);
         lenis.destroy();

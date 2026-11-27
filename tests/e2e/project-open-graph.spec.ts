@@ -14,12 +14,14 @@ interface PageMetadata {
   description: string;
   canonicalUrl: string;
   imageUrl: string;
-  imageType: 'image/png' | 'image/webp';
+  imageType: 'image/png' | 'image/jpeg';
   imageAlt?: string;
 }
 
-const siteOrigin = 'https://hellotjc.com';
-const projectIds = ['areta', 'ultracamp', 'festgo-app', 'portfolio-25', 'howell-gallery'];
+const siteOrigin = 'https://www.hellotjc.com';
+const projectIds: string[] = JSON.parse(
+  readFileSync(join(process.cwd(), 'src', 'data', 'published-projects.json'), 'utf8')
+);
 const projectSources: ProjectMetadataSource[] = projectIds.map((projectId) =>
   JSON.parse(
     readFileSync(join(process.cwd(), 'src', 'data', 'projects', `${projectId}.json`), 'utf8')
@@ -40,8 +42,8 @@ const PROJECT_PAGE_METADATA: (PageMetadata & { id: string })[] = projectSources.
   title: `${project.cardTitle} | TJC Portfolio`,
   description: project.heroDescription,
   canonicalUrl: `${siteOrigin}/projects/${project.id}`,
-  imageUrl: new URL(project.heroImage, siteOrigin).toString(),
-  imageType: 'image/webp',
+  imageUrl: `${siteOrigin}/images/og/${project.id}.jpg`,
+  imageType: 'image/jpeg',
   imageAlt: `${project.cardTitle} project case-study cover`,
 }));
 
@@ -76,11 +78,11 @@ const expectPageMetadata = async (page: Page, metadata: PageMetadata) => {
     'content',
     metadata.imageType
   );
-  await expect(page.locator('meta[property="twitter:url"]')).toHaveAttribute(
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
     'content',
-    metadata.canonicalUrl
+    'index, follow, max-image-preview:large'
   );
-  await expect(page.locator('meta[property="twitter:image"]')).toHaveAttribute(
+  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute(
     'content',
     metadata.imageUrl
   );
@@ -90,18 +92,24 @@ const expectPageMetadata = async (page: Page, metadata: PageMetadata) => {
       'content',
       metadata.imageAlt
     );
-    await expect(page.locator('meta[property="twitter:image:alt"]')).toHaveAttribute(
+    await expect(page.locator('meta[name="twitter:image:alt"]')).toHaveAttribute(
       'content',
       metadata.imageAlt
     );
   } else {
     await expect(page.locator('meta[property="og:image:alt"]')).toHaveCount(0);
-    await expect(page.locator('meta[property="twitter:image:alt"]')).toHaveCount(0);
+    await expect(page.locator('meta[name="twitter:image:alt"]')).toHaveCount(0);
   }
+
+  const structuredData = JSON.parse(
+    (await page.locator('script#structured-data').textContent()) ?? '{}'
+  );
+  const nodeUrls = (structuredData['@graph'] ?? []).map((node: { url?: string }) => node.url);
+  expect(nodeUrls).toContain(metadata.canonicalUrl);
 };
 
 for (const project of PROJECT_PAGE_METADATA) {
-  test(`${project.id} applies its primary project image as Open Graph metadata`, async ({
+  test(`${project.id} applies its 1200×630 social preview as Open Graph metadata`, async ({
     page,
   }) => {
     const runtimeErrors: string[] = [];
@@ -167,4 +175,16 @@ test('project Open Graph metadata remains stable on a mobile direct route', asyn
   }));
   expect(overflow.content).toBeLessThanOrEqual(overflow.viewport + 1);
   expect(runtimeErrors).toEqual([]);
+});
+
+test('unknown routes and unpublished project files are never indexable', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+
+  for (const path of ['/this-route-does-not-exist', '/projects/project-template']) {
+    await page.goto(path, { waitUntil: 'networkidle' });
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
+    await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+    await expect(page.locator('meta[property="og:url"]')).toHaveCount(0);
+    await expect(page.locator('script#structured-data')).toHaveCount(0);
+  }
 });

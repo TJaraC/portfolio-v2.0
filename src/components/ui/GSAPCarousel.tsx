@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import { gsap } from '../../utils/gsap';
+import { prefersReducedMotion } from '../../utils/motion';
 
 interface GSAPCarouselProps {
   children: React.ReactNode;
@@ -23,6 +24,12 @@ const GSAPCarousel: React.FC<GSAPCarouselProps> = ({
     if (!carouselRef.current) return;
 
     const carousel = carouselRef.current;
+
+    // Con prefers-reduced-motion el texto queda estático (WCAG 2.3.3 / 2.2.2)
+    if (prefersReducedMotion()) {
+      gsap.set(carousel, { x: direction === 'left' ? '0%' : '-50%' });
+      return;
+    }
 
     // Configurar animación según dirección
     if (direction === 'left') {
@@ -111,8 +118,8 @@ const GSAPCarousel: React.FC<GSAPCarouselProps> = ({
         <div style={{ display: 'inline-flex', alignItems: 'baseline' }}>
           {React.Children.map(children, (child, index) => cloneWithIndividualHover(child, index))}
         </div>
-        {/* Contenido duplicado para loop infinito */}
-        <div style={{ display: 'inline-flex', alignItems: 'baseline' }}>
+        {/* Contenido duplicado para loop infinito (oculto a lectores de pantalla) */}
+        <div style={{ display: 'inline-flex', alignItems: 'baseline' }} aria-hidden="true">
           {React.Children.map(children, (child, index) =>
             cloneWithIndividualHover(child, index + 1000)
           )}

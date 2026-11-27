@@ -5,9 +5,11 @@ interface SwitchProps {
   className?: string;
   size?: 'small' | 'medium' | 'large';
   onToggle?: (isOn: boolean) => void;
+  /** Accessible name announced by screen readers (WCAG 4.1.2). */
+  label: string;
 }
 
-const Switch: React.FC<SwitchProps> = ({ className = '', size = 'medium', onToggle }) => {
+const Switch: React.FC<SwitchProps> = ({ className = '', size = 'medium', onToggle, label }) => {
   const [isOn, setIsOn] = useState(false);
 
   const handleToggle = () => {
@@ -18,23 +20,21 @@ const Switch: React.FC<SwitchProps> = ({ className = '', size = 'medium', onTogg
     }
   };
 
+  // Native <button> gives focus, Enter and Space for free; role="switch" + aria-checked
+  // exposes the on/off state.
   return (
-    <div 
+    <button
+      type="button"
+      role="switch"
+      aria-checked={isOn}
+      aria-label={label}
       className={`switch ${className} switch--${size} ${isOn ? 'switch--on' : 'switch--off'}`}
       onClick={handleToggle}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          handleToggle();
-        }
-      }}
     >
-      <div className="switch__track">
-        <div className="switch__thumb"></div>
-      </div>
-    </div>
+      <span className="switch__track" aria-hidden="true">
+        <span className="switch__thumb"></span>
+      </span>
+    </button>
   );
 };
 

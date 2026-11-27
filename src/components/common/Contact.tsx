@@ -1,32 +1,26 @@
 import React from 'react';
-import Button from '../ui/Button';
-import AnimatedContactHeading from '../ui/AnimatedContactHeading';
+import AnimatedContactHeading, { CONTACT_EMAIL } from '../ui/AnimatedContactHeading';
 import { useLenisScroll } from '../../hooks/useLenisScroll';
-import { lenisEasing } from '../../utils/easing';
+import { focusElement, scrollToY } from '../../utils/motion';
+// Button.css antes que Contact.css: .footer-btn debe ganar a .button (radio, colores)
+import '../../styles/Button.css';
 import '../../styles/Contact.css';
+
+const LINKEDIN_URL = 'https://www.linkedin.com/in/patricio-jaramillo-castrillo-557427200/';
+const BEHANCE_URL = 'https://www.behance.net/tjaradesign';
 
 const Contact: React.FC = () => {
   const lenis = useLenisScroll();
 
-  // Función para hacer scroll al top de la página
+  // Scroll al top y devolver el foco al inicio del documento (skip link / primer control)
   const scrollToTop = () => {
-    if (lenis) {
-      // Usar Lenis si está disponible
-      lenis.scrollTo(0, {
-        duration: 1.2,
-        easing: lenisEasing
-      });
-    } else {
-      // Fallback a scroll nativo si Lenis no está disponible
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }
+    scrollToY(lenis, 0);
+    focusElement(document.querySelector<HTMLElement>('main') ?? document.body);
   };
 
   return (
-    <section className="contact-section">
+    // contentinfo landmark: CTA + site footer
+    <footer className="contact-section">
       <div className="contact-content">
         <div className="contact-title-wrapper">
           <AnimatedContactHeading className="contact-heading" />
@@ -36,57 +30,47 @@ const Contact: React.FC = () => {
           </div>
         </div>
         {/* Footer */}
-        <footer className="footer">
+        <div className="footer">
           <div className="footer-left">
             <div className="footer-text-group">
-              <span className="footer-design">Design & Developed </span>
+              <span className="footer-design">Designed & developed </span>
               <span className="footer-author">by Patricio Jaramillo Castrillo</span>
             </div>
           </div>
           <div className="footer-links">
-            <Button 
-              variant="outline" 
-              className="footer-btn"
-              onClick={() => window.open('https://www.linkedin.com/in/patricio-jaramillo-castrillo-557427200/', '_blank')}
+            <a
+              className="button button--outline button--medium footer-btn"
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              LINKEDIN
-            </Button>
-            <Button 
-              variant="outline" 
-              className="footer-btn"
-              onClick={() => window.open('https://www.behance.net/tjaradesign', '_blank')}
+              LINKEDIN<span className="sr-only"> (opens in a new tab)</span>
+            </a>
+            <a
+              className="button button--outline button--medium footer-btn"
+              href={BEHANCE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              BEHANCE
-            </Button>
-            <Button 
-              variant="outline" 
-              className="footer-btn"
-              onClick={() => window.open('mailto:triciojarac@gmail.com', '_self')}
+              BEHANCE<span className="sr-only"> (opens in a new tab)</span>
+            </a>
+            <a
+              className="button button--outline button--medium footer-btn"
+              href={`mailto:${CONTACT_EMAIL}`}
             >
               EMAIL
-            </Button>
+            </a>
           </div>
           <div className="footer-right">
             <span className="footer-copyright">© 2026 - All Rights Reserved</span>
-            <div
-              className="footer-backtop"
-              role="button"
-              tabIndex={0}
-              onClick={scrollToTop}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') scrollToTop(); }}
-              style={{ cursor: 'pointer' }}
-            >
+            <button type="button" className="footer-backtop" onClick={scrollToTop}>
               <span className="footer-backtop-text">Back to top </span>
-              <img 
-                src="/images/img_svg.svg" 
-                alt="Arrow up" 
-                className="footer-backtop-img"
-              />
-            </div>
+              <img src="/images/img_svg.svg" alt="" className="footer-backtop-img" />
+            </button>
           </div>
-        </footer>
+        </div>
       </div>
-    </section>
+    </footer>
   );
 };
 

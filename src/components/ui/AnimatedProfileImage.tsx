@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from '../../utils/gsap';
+import { prefersReducedMotion } from '../../utils/motion';
 
 interface AnimatedProfileImageProps {
   src: string;
@@ -23,6 +24,8 @@ const AnimatedProfileImage: React.FC<AnimatedProfileImageProps> = ({
 
   useEffect(() => {
     if (!imageRef.current) return;
+    // Sin giro de entrada con prefers-reduced-motion
+    if (prefersReducedMotion()) return;
 
     // Crear timeline de GSAP
     animationRef.current = gsap.timeline({ delay });

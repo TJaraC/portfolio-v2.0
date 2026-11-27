@@ -10,23 +10,31 @@ interface ProjectCardProps {
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const { transitionTo } = useTransition();
+  const projectPath = `/projects/${project.id}`;
 
-  const handleClick = () => {
-    transitionTo(`/projects/${project.id}`);
+  // The card is a real link (keyboard focusable, works with Enter, middle-click and
+  // "open in new tab"); only a plain left click is intercepted for the page transition.
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      return;
+    }
+    event.preventDefault();
+    transitionTo(projectPath);
   };
 
   return (
     <article
       className={`portfolio-card${project.featured ? ' is-featured' : ''}`}
-      onClick={handleClick}
-      style={{ cursor: 'pointer' }}
       data-project-number={project.cardNumber}
     >
-      <div className="portfolio-card-number">{project.cardNumber}</div>
+      <div className="portfolio-card-number" aria-hidden="true">
+        {project.cardNumber}
+      </div>
       <div className="portfolio-card-img-wrapper">
         <ImageWithCurtain
           src={project.heroImage}
-          alt={project.cardTitle}
+          sizes="(max-width: 768px) 100vw, 50vw"
+          alt=""
           className="portfolio-card-img"
           delay={0.2}
           duration={1.0}
@@ -35,7 +43,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       </div>
       <div className="portfolio-card-info">
         <div className="portfolio-card-title-group">
-          <h3 className="portfolio-card-title">{project.cardTitle}</h3>
+          <h3 className="portfolio-card-title">
+            {/* Stretched link: its ::after covers the whole card (see a11y.css) */}
+            <a className="portfolio-card-link" href={projectPath} onClick={handleClick}>
+              {project.cardTitle}
+            </a>
+          </h3>
           {project.siteUrl ? (
             <ProjectSiteLink
               href={project.siteUrl}

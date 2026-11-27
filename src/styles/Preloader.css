@@ -78,7 +78,6 @@ body.preloader-active {
   text-transform: uppercase;
   letter-spacing: 3px;
   opacity: 0;
-  transform: translateY(30px) scale(0.9) rotateX(-90deg);
   will-change: transform, opacity;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;

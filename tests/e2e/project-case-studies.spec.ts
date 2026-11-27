@@ -1,6 +1,12 @@
 import { expect, test } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
+import { readFileSync } from 'node:fs';
+
+// Single project registry: grid order = next-project order
+const publishedProjectIds: string[] = JSON.parse(
+  readFileSync(path.join(process.cwd(), 'src', 'data', 'published-projects.json'), 'utf8')
+);
 
 const projects = [
   {
@@ -46,17 +52,11 @@ const projects = [
     siteUrl: 'https://www.hellotjc.com/',
     heroImage: undefined,
   },
-  {
-    id: 'howell-gallery',
-    title: 'Howell Gallery',
-    personas: ['Carmen Vidal'],
-    metricUnits: ['content types', 'reading levels', 'responsive system'],
-    applicationCount: 3,
-    chapterCount: 9,
-    hasDelivery: false,
-    heroImage: undefined,
-  },
 ];
+
+test('every published project has case-study expectations', () => {
+  expect(projects.map((project) => project.id)).toEqual(publishedProjectIds);
+});
 
 const viewports = [
   { name: 'desktop', width: 1440, height: 1000 },
@@ -209,7 +209,7 @@ for (const project of projects) {
 
       const brokenImages = await page
         .locator('img')
-        .evaluateAll((images) =>
+        .evaluateAll((images: HTMLImageElement[]) =>
           images
             .filter((image) => !image.complete || image.naturalWidth === 0)
             .map((image) => image.getAttribute('src') ?? 'unknown image')
@@ -346,7 +346,7 @@ test('project template and legacy fallback remain renderable', async ({ page }) 
 
 test('next-project interaction keeps the project sequence working', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
-  const sequence = ['areta', 'ultracamp', 'festgo-app', 'portfolio-25'];
+  const sequence = publishedProjectIds;
 
   for (let index = 0; index < sequence.length; index += 1) {
     const current = sequence[index];
@@ -401,7 +401,6 @@ test('the visible portfolio is a stable four-project grid', async ({ page }) => 
       expectedCards.map((project) => project.title)
     );
     await expect(page.locator('.portfolio-card.is-featured')).toHaveCount(0);
-    await expect(page.getByText('Howell Gallery', { exact: true })).toHaveCount(0);
     await expect(cards.locator('.portfolio-card-title + .project-site-link--icon')).toHaveCount(3);
 
     for (let index = 0; index < expectedCards.length; index += 1) {
@@ -478,7 +477,7 @@ test('the visible portfolio is a stable four-project grid', async ({ page }) => 
 
     const brokenImages = await page
       .locator('.portfolio-card img')
-      .evaluateAll((images) =>
+      .evaluateAll((images: HTMLImageElement[]) =>
         images
           .filter((image) => !image.complete || image.naturalWidth === 0)
           .map((image) => image.getAttribute('src') ?? 'unknown image')
@@ -493,7 +492,7 @@ test('the visible portfolio is a stable four-project grid', async ({ page }) => 
         await page.waitForTimeout(1_400);
       }
       await page.waitForTimeout(400);
-      await page.locator('.portfolio-card img').evaluateAll(async (images) => {
+      await page.locator('.portfolio-card img').evaluateAll(async (images: HTMLImageElement[]) => {
         await Promise.all(images.map((image) => image.decode()));
       });
       await page.addStyleTag({

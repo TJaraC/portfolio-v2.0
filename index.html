@@ -4,50 +4,33 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Critical fonts (hero / preloader / project titles): fetch them alongside the
+         JS bundle instead of after React renders, avoiding a late font swap. -->
+    <link rel="preload" href="/fonts/gilda-display-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Geist-Bold.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- portfolio-metadata:start -->
-    <!-- Primary Meta Tags -->
+    <!-- Generated from src/utils/pageMetadata.ts by the seo-documents Vite plugin. -->
     <title>TJC | Creative Product Designer</title>
-    <meta name="title" content="TJC | Creative Product Designer" />
-    <meta
-      name="description"
-      content="Creative Product Designer specializing in innovative digital experiences and user-centered design solutions."
-    />
-    <meta
-      name="keywords"
-      content="product designer, creative designer, UX designer, UI designer, digital design, user experience"
-    />
-    <meta name="author" content="TJC" />
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://hellotjc.com/" />
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://hellotjc.com/" />
-    <meta property="og:title" content="TJC | Creative Product Designer" />
-    <meta
-      property="og:description"
-      content="Creative Product Designer specializing in innovative digital experiences and user-centered design solutions."
-    />
-    <meta property="og:image" content="https://hellotjc.com/images/OpenGraph.png" />
-    <meta property="og:site_name" content="TJC Portfolio" />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://hellotjc.com/" />
-    <meta property="twitter:title" content="TJC | Creative Product Designer" />
-    <meta
-      property="twitter:description"
-      content="Creative Product Designer specializing in innovative digital experiences and user-centered design solutions."
-    />
-    <meta property="twitter:image" content="https://hellotjc.com/images/OpenGraph.png" />
-
-    <!-- Additional Meta Tags -->
-    <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#fd601a" />
-    <meta name="msapplication-TileColor" content="#fd601a" />
     <!-- portfolio-metadata:end -->
+
+    <!-- Build-time prerendered content (see src/prerender/entry.tsx): readable by crawlers
+         that do not run JavaScript. It stays out of view while the app boots (React replaces
+         it on first render) and only appears if JavaScript never runs. -->
+    <style>
+      .prerendered {
+        visibility: hidden;
+        max-height: 0;
+        overflow: hidden;
+        animation: prerendered-reveal 0s 5s forwards;
+      }
+      @keyframes prerendered-reveal {
+        to {
+          visibility: visible;
+          max-height: none;
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

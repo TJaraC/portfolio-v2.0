@@ -1,0 +1,174 @@
+/* ===== Accessibility utilities (WCAG 2.2 AA) ===== */
+
+/* Text that is announced by assistive technology but not rendered visually */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Skip link: hidden until it receives keyboard focus (WCAG 2.4.1) */
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 10000;
+  padding: 10px 16px;
+  font-family: 'Geist', 'Geist-Fallback', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--global-text-4);
+  background: var(--global-bg-1);
+  border-radius: 999px;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/*
+ * Visible keyboard focus (WCAG 2.4.7 / 1.4.11).
+ * `currentColor` keeps the ring consistent with each control's own text colour,
+ * which already contrasts with its background in both the light and dark sections.
+ * Only keyboard focus (:focus-visible) shows it, so mouse users see no change.
+ */
+:focus-visible {
+  outline: 2px solid currentColor !important;
+  outline-offset: 4px !important;
+}
+
+/* Programmatic focus targets (main, sections, headings) do not need a ring */
+[tabindex='-1']:focus,
+[tabindex='-1']:focus-visible {
+  outline: none !important;
+}
+
+/* Reset inherited link styles for links that replaced buttons/clickable divs */
+a.nav-button,
+.portfolio-card-link,
+.contact-heading-link,
+.next-project-link,
+a.next-project-trigger {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Nav links keep the box the former <button> had (UA padding 1px 6px) */
+a.nav-button {
+  padding: 1px 6px;
+}
+
+a.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+button.footer-backtop {
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+}
+
+/* Whole project card clickable through its title link ("stretched link") */
+.portfolio-card {
+  position: relative;
+}
+
+.portfolio-card-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.portfolio-card-link:focus-visible {
+  outline: none !important;
+}
+
+.portfolio-card-link:focus-visible::after {
+  outline: 2px solid var(--global-text-2);
+  outline-offset: 6px;
+}
+
+/* Live-site icon must stay above the stretched link so it remains clickable */
+.portfolio-card .project-site-link {
+  position: relative;
+  z-index: 2;
+}
+
+.contact-heading-link,
+.next-project-link {
+  display: inherit;
+  flex-wrap: inherit;
+  align-items: inherit;
+  justify-content: inherit;
+  gap: inherit;
+  width: 100%;
+}
+
+/* Switch is now a native <button role="switch">: neutralise UA button styles */
+button.switch {
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  line-height: inherit;
+}
+
+/* Switch focus ring follows the rounded track instead of the bounding box */
+.switch:focus-visible {
+  outline: none !important;
+}
+
+.switch:focus-visible .switch__track {
+  outline: 3px solid var(--global-text-1);
+  outline-offset: 4px;
+}
+
+/* Hide the native cursor only when the custom cursor is actually running */
+html:not(.has-custom-cursor) .custom-cursor {
+  display: none;
+}
+
+/* Forced colours (Windows High Contrast): rely on system focus/cursor styles */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 2px solid CanvasText !important;
+  }
+
+  .custom-cursor {
+    display: none !important;
+  }
+}
+
+/* Reduced motion: neutralise CSS transitions/animations site-wide (WCAG 2.3.3 / 2.2.2) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .portfolio-card:hover .portfolio-card-img {
+    transform: none;
+  }
+}

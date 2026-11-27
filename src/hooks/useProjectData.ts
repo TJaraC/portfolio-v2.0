@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { PUBLISHED_PROJECT_IDS } from '../data/publishedProjects';
 
 interface ProjectFont {
   name: string;
@@ -189,6 +190,43 @@ interface ProjectData {
   };
 }
 
+type ProjectModule = { default: ProjectData };
+
+const projectPath = (projectId: string) => `../data/projects/${projectId}.json`;
+
+// Solo los casos registrados en `published-projects.json` se pueden cargar en producción.
+// La plantilla y el ejemplo legacy son fixtures de desarrollo: solo se incluyen en
+// `pnpm start` (y en los tests e2e), nunca en el build de producción.
+const allProjectLoaders = import.meta.glob<ProjectModule>([
+  '../data/projects/*.json',
+  '!../data/projects/project-template.json',
+  '!../data/projects/ejemplo-proyecto.json',
+]);
+
+const projectLoaders: Record<string, () => Promise<ProjectModule>> = {
+  ...Object.fromEntries(
+    PUBLISHED_PROJECT_IDS.map((projectId) => [
+      projectPath(projectId),
+      allProjectLoaders[projectPath(projectId)],
+    ])
+  ),
+  ...(import.meta.env.DEV
+    ? import.meta.glob<ProjectModule>([
+        '../data/projects/project-template.json',
+        '../data/projects/ejemplo-proyecto.json',
+      ])
+    : {}),
+};
+
+/** Carga el JSON de un proyecto por su id. Rechaza si el id no existe. */
+export const loadProjectData = async (projectId: string): Promise<ProjectData> => {
+  const loader = projectLoaders[projectPath(projectId)];
+  if (!loader) {
+    throw new Error(`Unknown project "${projectId}"`);
+  }
+  return (await loader()).default;
+};
+
 export const useProjectData = (
   projectId: string
 ): { data: ProjectData | null; loading: boolean; error: string | null } => {
@@ -197,25 +235,30 @@ export const useProjectData = (
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadProjectData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
+    if (!projectId) return;
 
-        // Importar el archivo JSON dinámicamente
-        const projectData = await import(`../data/projects/${projectId}.json`);
-        setData(projectData.default);
-      } catch (err) {
+    // Evita que una respuesta lenta de un proyecto anterior sobrescriba la actual
+    let cancelled = false;
+
+    setLoading(true);
+    setError(null);
+
+    loadProjectData(projectId)
+      .then((projectData) => {
+        if (!cancelled) setData(projectData);
+      })
+      .catch((err) => {
+        if (cancelled) return;
         console.error(`Error loading project data for ${projectId}:`, err);
         setError(`Could not load project data for ${projectId}`);
-      } finally {
-        setLoading(false);
-      }
-    };
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
 
-    if (projectId) {
-      loadProjectData();
-    }
+    return () => {
+      cancelled = true;
+    };
   }, [projectId]);
 
   return { data, loading, error };

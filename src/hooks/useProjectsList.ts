@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
-import { ProjectData } from './useProjectData';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { loadProjectData, type ProjectData } from './useProjectData';
+import { PUBLISHED_PROJECT_IDS } from '../data/publishedProjects';
 
 interface ProjectCard {
   id: string;
@@ -9,60 +10,71 @@ interface ProjectCard {
   cardTitle: string;
   cardTags: string[];
   heroImage: string;
+  heroDescription: string;
 }
+
+export const toProjectCard = (data: ProjectData): ProjectCard => ({
+  id: data.id,
+  cardNumber: data.cardNumber,
+  featured: Boolean(data.featured),
+  siteUrl: data.siteUrl,
+  cardTitle: data.cardTitle,
+  cardTags: data.cardTags,
+  heroImage: data.heroImage,
+  heroDescription: data.heroDescription,
+});
+
+/**
+ * Cards already known up front (the build-time prerender passes them in). In the browser
+ * it stays null and the list is loaded on mount.
+ */
+export const PreloadedProjectsContext = createContext<ProjectCard[] | null>(null);
 
 export const useProjectsList = (): {
   projects: ProjectCard[];
   loading: boolean;
   error: string | null;
 } => {
-  const [projects, setProjects] = useState<ProjectCard[]>([]);
-  const [loading, setLoading] = useState(true);
+  const preloaded = useContext(PreloadedProjectsContext);
+  const [projects, setProjects] = useState<ProjectCard[]>(preloaded ?? []);
+  const [loading, setLoading] = useState(!preloaded);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (preloaded) return;
+    let cancelled = false;
+
     const loadProjects = async () => {
       try {
         setLoading(true);
         setError(null);
 
-        // Lista de proyectos disponibles (se puede expandir dinámicamente)
-        const projectIds = ['areta', 'ultracamp', 'festgo-app', 'portfolio-25'];
+        const results = await Promise.allSettled(PUBLISHED_PROJECT_IDS.map(loadProjectData));
 
-        const results = await Promise.allSettled(
-          projectIds.map((projectId) => import(`../data/projects/${projectId}.json`))
-        );
-
-        const projectsData: ProjectCard[] = results
+        const projectsData = results
           .map((result, index): ProjectCard | null => {
             if (result.status === 'rejected') {
-              console.warn(`Could not load project ${projectIds[index]}:`, result.reason);
+              console.warn(`Could not load project ${PUBLISHED_PROJECT_IDS[index]}:`, result.reason);
               return null;
             }
-            const data: ProjectData = result.value.default;
-            return {
-              id: data.id,
-              cardNumber: data.cardNumber,
-              featured: Boolean(data.featured),
-              siteUrl: data.siteUrl,
-              cardTitle: data.cardTitle,
-              cardTags: data.cardTags,
-              heroImage: data.heroImage,
-            };
+            return toProjectCard(result.value);
           })
           .filter((p): p is ProjectCard => p !== null);
 
-        setProjects(projectsData);
+        if (!cancelled) setProjects(projectsData);
       } catch (err) {
         console.error('Error loading projects list:', err);
-        setError('Could not load projects list');
+        if (!cancelled) setError('Could not load projects list');
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     };
 
     loadProjects();
-  }, []);
+    return () => {
+      cancelled = true;
+    };
+  }, [preloaded]);
 
   return { projects, loading, error };
 };

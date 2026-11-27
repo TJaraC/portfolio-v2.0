@@ -1,29 +1,65 @@
 import React, { useRef } from 'react';
 import { gsap } from '../../utils/gsap';
 import { useScrollAnimation } from '../../hooks/useLenisScroll';
+import responsiveImages from '../../data/responsive-images.json';
+
+interface ResponsiveImageEntry {
+  width: number;
+  height: number;
+  widths: number[];
+}
+
+const RESPONSIVE_IMAGES: Record<string, ResponsiveImageEntry> = responsiveImages;
+
+/**
+ * srcset with the generated `-<w>w.webp` variants plus the original (see
+ * scripts/generate-images.mjs), and the intrinsic size for width/height.
+ */
+const getResponsiveAttributes = (src: string, sizes: string) => {
+  const entry = RESPONSIVE_IMAGES[src];
+  if (!entry) return {};
+  const candidates = [
+    ...entry.widths.map((width) => `${src.replace(/\.webp$/, `-${width}w.webp`)} ${width}w`),
+    `${src} ${entry.width}w`,
+  ];
+  return {
+    srcSet: candidates.join(', '),
+    sizes,
+    width: entry.width,
+    height: entry.height,
+  };
+};
 
 interface ImageWithCurtainProps {
   src: string;
   alt: string;
+  /** Rendered width of the image per breakpoint, for srcset selection. */
+  sizes?: string;
   className?: string;
   delay?: number;
   duration?: number;
   threshold?: number;
   once?: boolean;
   loading?: 'eager' | 'lazy';
+  fetchPriority?: 'high' | 'low' | 'auto';
 }
 
 const ImageWithCurtain: React.FC<ImageWithCurtainProps> = ({
   src,
   alt,
+  sizes = '100vw',
   className = '',
   delay = 0,
   duration = 1.2,
   threshold = 0.1,
   once = true,
   loading = 'lazy',
+  fetchPriority,
 }) => {
   const curtainRef = useRef<HTMLDivElement>(null);
+  // React 18 no reconoce la prop camelCase `fetchPriority`; el atributo HTML en
+  // minúsculas se pasa tal cual al DOM sin warnings.
+  const priorityAttributes = fetchPriority ? { fetchpriority: fetchPriority } : {};
   const imageRef = useRef<HTMLImageElement>(null);
 
   const elementRef = useScrollAnimation(
@@ -65,9 +101,11 @@ const ImageWithCurtain: React.FC<ImageWithCurtainProps> = ({
       <img
         ref={imageRef}
         src={src}
+        {...getResponsiveAttributes(src, sizes)}
         alt={alt}
         decoding="async"
         loading={loading}
+        {...priorityAttributes}
         style={{
           width: '100%',
           height: '100%',

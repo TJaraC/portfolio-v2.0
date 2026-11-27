@@ -10,13 +10,13 @@ import {
 import { gsap } from './utils/gsap';
 import { useLenisScroll } from './hooks/useLenisScroll';
 import { TransitionContext } from './context/TransitionContext';
-import { applyPageMetadata, getPageMetadata } from './utils/pageMetadata';
+import { focusElement, prefersReducedMotion } from './utils/motion';
 import './styles/pageTransition.css';
 
 // Import page components
 const HomePage = React.lazy(() => import('./pages/Home'));
 const ProjectsPage = React.lazy(() => import('./pages/Projects/ProjectsPage'));
-import Error404 from './pages/Error404';
+const Error404 = React.lazy(() => import('./pages/Error404'));
 import Preloader from './components/ui/Preloader';
 
 const AppContent = () => {
@@ -27,7 +27,7 @@ const AppContent = () => {
   const [isLoading, setIsLoading] = useState(() => {
     const hasVisited = sessionStorage.getItem('hasVisitedHome');
     const isHomePage = location.pathname === '/';
-    return !hasVisited && isHomePage;
+    return !hasVisited && isHomePage && !prefersReducedMotion();
   });
 
   // Precargar chunk de ProjectsPage en background tras la carga inicial
@@ -46,16 +46,74 @@ const AppContent = () => {
   useEffect(() => {
     const hasVisited = sessionStorage.getItem('hasVisitedHome');
     const isHomePage = location.pathname === '/';
-    if (!hasVisited && isHomePage) {
+    if (!hasVisited && isHomePage && !prefersReducedMotion()) {
       setIsLoading(true);
     } else {
       setIsLoading(false);
     }
   }, [location.pathname]);
 
+  // Los metadatos se cargan bajo demanda para no inflar el chunk inicial. El HTML
+  // servido ya trae los metadatos correctos de cada ruta (plugin seo-documents),
+  // así que esto solo los sincroniza en la navegación SPA.
   useEffect(() => {
-    applyPageMetadata(getPageMetadata(location.pathname));
+    let cancelled = false;
+    import('./utils/routeMetadata')
+      .then(({ applyPageMetadata, resolvePageMetadata }) => resolvePageMetadata(location.pathname).then((metadata) => {
+        if (!cancelled) applyPageMetadata(metadata);
+      }));
+    return () => {
+      cancelled = true;
+    };
   }, [location.pathname]);
+
+  // --- SPA route change: move focus to the new page and announce it (WCAG 2.4.3 / 4.1.3) ---
+  const [routeAnnouncement, setRouteAnnouncement] = useState('');
+  const lastPathname = useRef(location.pathname);
+
+  useEffect(() => {
+    // Carga inicial (o re-ejecución de StrictMode): el navegador ya anuncia el documento
+    if (lastPathname.current === location.pathname) return;
+    lastPathname.current = location.pathname;
+
+    let attempts = 0;
+    let timer = 0;
+    let cancelled = false;
+    const pathname = location.pathname;
+
+    // Las páginas son lazy y pueden pasar por un estado "loading": esperar a su <main>
+    const focusNewPage = () => {
+      const main = document.querySelector<HTMLElement>('main');
+      const heading = main?.querySelector<HTMLElement>('h1');
+      if (!main && attempts < 40) {
+        attempts += 1;
+        timer = window.setTimeout(focusNewPage, 50);
+        return;
+      }
+      focusElement(heading ?? main ?? document.body);
+      // pageMetadata se carga bajo demanda: anunciar el título de la ruta nueva
+      // aunque document.title todavía no se haya actualizado.
+      import('./utils/routeMetadata')
+        .then(({ resolvePageMetadata }) => resolvePageMetadata(pathname))
+        .then((metadata) => {
+          if (!cancelled) setRouteAnnouncement(metadata.title);
+        });
+    };
+
+    timer = window.setTimeout(focusNewPage, 0);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+    };
+  }, [location.pathname]);
+
+  const handleSkipLink = useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
+    const main = document.querySelector<HTMLElement>('main');
+    if (!main) return;
+    event.preventDefault();
+    focusElement(main);
+    main.scrollIntoView({ block: 'start' });
+  }, []);
 
   // --- Page transition overlay ---
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -65,6 +123,14 @@ const AppContent = () => {
   const transitionTo = useCallback(
     (path: string) => {
       if (isTransitioning.current) return;
+
+      // prefers-reduced-motion: navegación directa, sin cortina de columnas
+      if (prefersReducedMotion()) {
+        window.scrollTo(0, 0);
+        navigate(path);
+        return;
+      }
+
       isTransitioning.current = true;
 
       if (lenis) lenis.stop();
@@ -77,26 +143,24 @@ const AppContent = () => {
       gsap.set(columns, { y: '100%' });
       if (overlay) overlay.style.pointerEvents = 'all';
 
-      // Navigate when col0 finishes entering — page mounts hidden behind columns
-      gsap.delayedCall(0.4, () => {
-        window.scrollTo(0, 0);
-        navigate(path);
-      });
-
-      // Timeline: exit starts 0.15s before enter completes → wave overlap effect
+      // Timeline: cubrir completamente la pantalla antes de navegar y luego revelar
       const tl = gsap.timeline();
       tl.to(columns, {
         y: '0%',
         duration: 0.4,
         ease: 'power2.inOut',
-        stagger: { amount: 0.25, from: 'start' },
+        stagger: { amount: 0.2, from: 'start' },
+        onComplete: () => {
+          window.scrollTo(0, 0);
+          navigate(path);
+        },
       }).to(
         columns,
         {
           y: '-100%',
-          duration: 0.5,
+          duration: 0.45,
           ease: 'power2.inOut',
-          stagger: { amount: 0.3, from: 'start' },
+          stagger: { amount: 0.25, from: 'start' },
           onComplete: () => {
             if (overlay) overlay.style.pointerEvents = 'none';
             gsap.set(columns, { y: '100%' });
@@ -105,7 +169,7 @@ const AppContent = () => {
             isTransitioning.current = false;
           },
         },
-        '-=0.15'
+        '+=0.05'
       );
     },
     [navigate, lenis]
@@ -113,6 +177,16 @@ const AppContent = () => {
 
   return (
     <TransitionContext.Provider value={{ transitionTo }}>
+      {/* Skip link (WCAG 2.4.1): primer elemento enfocable de cada página */}
+      <a className="skip-link" href="#main-content" onClick={handleSkipLink}>
+        Skip to main content
+      </a>
+
+      {/* Anuncio del cambio de página para lectores de pantalla */}
+      <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+        {routeAnnouncement}
+      </div>
+
       <Suspense fallback={null}>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -125,7 +199,7 @@ const AppContent = () => {
       </Suspense>
 
       {/* Page transition overlay */}
-      <div ref={overlayRef} className="page-transition-overlay">
+      <div ref={overlayRef} className="page-transition-overlay" aria-hidden="true">
         <div ref={(el) => el && (columnsRef.current[0] = el)} className="page-transition-column" />
         <div
           ref={(el) => el && (columnsRef.current[1] = el)}

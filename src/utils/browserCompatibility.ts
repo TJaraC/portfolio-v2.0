@@ -30,12 +30,6 @@ interface BrowserDetection {
   isChrome: () => boolean;
 }
 
-interface PerformanceOptimization {
-  optimizeForAnimation: (element: HTMLElement | null) => void;
-  cleanupAfterAnimation: (element: HTMLElement | null) => void;
-  enableHardwareAcceleration: (element: HTMLElement | null) => void;
-}
-
 interface AccessibilityUtils {
   prefersReducedMotion: () => boolean;
   prefersHighContrast: () => boolean;
@@ -45,17 +39,30 @@ interface AccessibilityUtils {
 
 // Fix for mobile viewport height issues
 export const fixMobileViewportHeight = (): void => {
+  let lastValue = '';
+  let frame = 0;
+
+  // Writing a custom property on <html> invalidates style for the whole
+  // document, so only write when the value actually changes.
   const setVH = () => {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    frame = 0;
+    const value = `${window.innerHeight * 0.01}px`;
+    if (value === lastValue) return;
+    lastValue = value;
+    document.documentElement.style.setProperty('--vh', value);
+  };
+
+  // Coalesce bursts of resize events (e.g. mobile URL bar) into one write per frame
+  const scheduleVH = () => {
+    if (!frame) frame = requestAnimationFrame(setVH);
   };
 
   // Set initial value
   setVH();
 
   // Update on resize and orientation change
-  window.addEventListener('resize', setVH);
-  window.addEventListener('orientationchange', setVH);
+  window.addEventListener('resize', scheduleVH);
+  window.addEventListener('orientationchange', scheduleVH);
 };
 
 // Feature detection utilities
@@ -178,31 +185,6 @@ export const browserDetection: BrowserDetection = {
   }
 };
 
-// Performance optimization utilities
-export const performanceOptimization: PerformanceOptimization = {
-  // Add will-change property for animations
-  optimizeForAnimation: (element: HTMLElement | null) => {
-    if (element) {
-      element.style.willChange = 'transform, opacity';
-    }
-  },
-
-  // Remove will-change property after animation
-  cleanupAfterAnimation: (element: HTMLElement | null) => {
-    if (element) {
-      element.style.willChange = 'auto';
-    }
-  },
-
-  // Enable hardware acceleration
-  enableHardwareAcceleration: (element: HTMLElement | null) => {
-    if (element) {
-      element.style.transform = 'translateZ(0)';
-      element.style.backfaceVisibility = 'hidden';
-    }
-  }
-};
-
 // Accessibility utilities
 export const accessibilityUtils: AccessibilityUtils = {
   // Check if user prefers reduced motion
@@ -269,8 +251,6 @@ export const initBrowserCompatibility = (): void => {
   if (!featureDetection.supportsCustomProperties()) {
     html.classList.add('no-custom-properties');
   }
-
-  console.log('Browser compatibility utilities initialized');
 };
 
 // Export default initialization

@@ -10,37 +10,40 @@
   "scripts": {
     "preinstall": "node scripts/require-pnpm.cjs",
     "start": "vite",
-    "build": "tsc --noCheck && vite build",
+    "build": "tsc --noEmit && vite build",
     "verify:opengraph": "node scripts/verify-project-opengraph-pages.mjs",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css,md,json}\"",
     "preview": "vite preview",
     "serve": "vite preview",
-    "type-check": "tsc --noEmit",
+    "type-check": "tsc --noEmit && tsc -p tsconfig.node.json",
     "test:e2e": "playwright test",
-    "playwright:install": "playwright install chromium"
+    "playwright:install": "playwright install chromium",
+    "images": "node scripts/generate-images.mjs",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
     "gsap": "^3.13.0",
     "lenis": "^1.3.8",
-    "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.1.1",
-    "recharts": "^2.15.2"
+    "react-router-dom": "^7.18.7"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.61.1",
+    "@types/node": "^22.20.7",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
-    "@vitejs/plugin-react": "^4.3.4",
-    "globals": "^15.15.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "eslint": "^10.15.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.14.0",
     "prettier": "^3.5.3",
-    "terser": "^5.36.0",
+    "sharp": "^0.35.5",
     "typescript": "~5.7.2",
-    "vite": "^5.4.21"
-  },
-  "overrides": {
-    "esbuild": "^0.25.0"
+    "typescript-eslint": "^8.74.0",
+    "vite": "^8.4.0"
   }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import '../../styles/Preloader.css';
 
@@ -6,164 +6,202 @@ interface PreloaderProps {
   onComplete: () => void;
 }
 
+const PRELOADER_WORDS = [
+  'LEARN', 'EXPERIMENT', 'FUNCTIONAL', 'TECHNOLOGY', 'UX', 'UI',
+  'DESIGN', 'DEVELOP', 'CREATE', 'INNOVATE', 'DIGITAL', 'VISUAL',
+  'MODERN', 'CLEAN', 'MINIMAL', 'BOLD', 'CREATIVE', 'SMART',
+];
+
 const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   const preloaderRef = useRef<HTMLDivElement>(null);
   const columnsRef = useRef<HTMLDivElement[]>([]);
   const leftWordRef = useRef<HTMLSpanElement>(null);
   const rightWordRef = useRef<HTMLSpanElement>(null);
 
-
-  const words = [
-    'LEARN', 'EXPERIMENT', 'FUNCTIONAL', 'TECHNOLOGY', 'UX', 'UI', 
-    'DESIGN', 'DEVELOP', 'CREATE', 'INNOVATE', 'DIGITAL', 'VISUAL',
-    'MODERN', 'CLEAN', 'MINIMAL', 'BOLD', 'CREATIVE', 'SMART'
-  ];
-  
-  const [usedWords, setUsedWords] = useState<string[]>([]);
-  const [currentWords, setCurrentWords] = useState({ left: '', right: '' });
-
   useEffect(() => {
     // Add preloader-active class to body to prevent scrolling
     document.body.classList.add('preloader-active');
-    
-    const tl = gsap.timeline();
-    
-    // Inicializar columnas
-    gsap.set(columnsRef.current, { scaleY: 1, transformOrigin: 'bottom' });
-    gsap.set([leftWordRef.current, rightWordRef.current], { opacity: 0, y: 20 });
 
-    const getRandomWord = () => {
-      const availableWords = words.filter(word => !usedWords.includes(word));
+    // Nodos animados, capturados para el cleanup
+    const leftWordEl = leftWordRef.current;
+    const rightWordEl = rightWordRef.current;
+    const columns = [...columnsRef.current];
+
+    const usedWords = new Set<string>();
+    const pendingTimeouts: ReturnType<typeof setTimeout>[] = [];
+    let isExiting = false;
+
+    // Inicializar columnas y palabras preservando centrado vertical (yPercent: -50)
+    gsap.set(columnsRef.current, { scaleY: 1, transformOrigin: 'bottom' });
+    gsap.set([leftWordRef.current, rightWordRef.current], {
+      opacity: 0,
+      yPercent: -50,
+      y: 20,
+    });
+
+    const getRandomWord = (exclude?: string) => {
+      let availableWords = PRELOADER_WORDS.filter(
+        (word) => !usedWords.has(word) && word !== exclude
+      );
       if (availableWords.length === 0) {
-        return null; // No hay más palabras disponibles
+        usedWords.clear();
+        availableWords = PRELOADER_WORDS.filter((word) => word !== exclude);
       }
-      return availableWords[Math.floor(Math.random() * availableWords.length)];
+      const chosen = availableWords[Math.floor(Math.random() * availableWords.length)];
+      usedWords.add(chosen);
+      return chosen;
     };
 
     const getRandomStyle = () => {
       const colors = ['var(--global-text-2)', 'var(--global-text-3)'];
       const fontOptions = [
         {
-          family: "'Geist', 'Geist-Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif",
-          weight: '700'
+          family:
+            "'Geist', 'Geist-Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif",
+          weight: '700',
         },
         {
-          family: "'Gilda Display', 'Gilda-Fallback', 'Times New Roman', 'Georgia', 'Playfair Display', 'Crimson Text', serif",
-          weight: '400'
-        }
+          family:
+            "'Gilda Display', 'Gilda-Fallback', 'Times New Roman', 'Georgia', 'Playfair Display', 'Crimson Text', serif",
+          weight: '400',
+        },
       ];
       const selectedFont = fontOptions[Math.floor(Math.random() * fontOptions.length)];
       return {
         color: colors[Math.floor(Math.random() * colors.length)],
         fontFamily: selectedFont.family,
         fontWeight: selectedFont.weight,
-        fontSize: 'clamp(28px, 4.5vw, 56px)'
       };
     };
 
     const animateWords = () => {
-      if (!leftWordRef.current || !rightWordRef.current) return;
+      if (isExiting || !leftWordRef.current || !rightWordRef.current) return;
 
       const leftWord = getRandomWord();
-      const rightWord = getRandomWord();
-      
-      // Si no hay palabras disponibles, detener la animación
-      if (!leftWord || !rightWord) {
-        return;
-      }
-      
+      const rightWord = getRandomWord(leftWord);
+
       const leftStyle = getRandomStyle();
       const rightStyle = getRandomStyle();
-      
-      setUsedWords(prev => [...prev, leftWord, rightWord]);
-      setCurrentWords({ left: leftWord, right: rightWord });
-      
-      if (leftWordRef.current) {
-        leftWordRef.current.textContent = leftWord;
-        leftWordRef.current.style.color = leftStyle.color;
-        leftWordRef.current.style.fontFamily = leftStyle.fontFamily;
-        leftWordRef.current.style.fontWeight = leftStyle.fontWeight;
-        leftWordRef.current.style.fontSize = leftStyle.fontSize;
-      }
-      if (rightWordRef.current) {
-        rightWordRef.current.textContent = rightWord;
-        rightWordRef.current.style.color = rightStyle.color;
-        rightWordRef.current.style.fontFamily = rightStyle.fontFamily;
-        rightWordRef.current.style.fontWeight = rightStyle.fontWeight;
-        rightWordRef.current.style.fontSize = rightStyle.fontSize;
-      }
 
-      // Animate words in with smoother carousel effect
-      gsap.fromTo(leftWordRef.current, 
-        { opacity: 0, y: -30, rotationX: -90 },
-        { opacity: 1, y: 0, rotationX: 0, duration: 0.6, ease: "power2.inOut" }
+      leftWordRef.current.textContent = leftWord;
+      leftWordRef.current.style.color = leftStyle.color;
+      leftWordRef.current.style.fontFamily = leftStyle.fontFamily;
+      leftWordRef.current.style.fontWeight = leftStyle.fontWeight;
+
+      rightWordRef.current.textContent = rightWord;
+      rightWordRef.current.style.color = rightStyle.color;
+      rightWordRef.current.style.fontFamily = rightStyle.fontFamily;
+      rightWordRef.current.style.fontWeight = rightStyle.fontWeight;
+
+      gsap.killTweensOf([leftWordRef.current, rightWordRef.current]);
+
+      // Animate words in with smoother carousel effect, preserving yPercent: -50 centering
+      gsap.fromTo(
+        leftWordRef.current,
+        { opacity: 0, yPercent: -50, y: -30, rotationX: -90 },
+        { opacity: 1, yPercent: -50, y: 0, rotationX: 0, duration: 0.55, ease: 'power2.inOut' }
       );
-      gsap.fromTo(rightWordRef.current, 
-        { opacity: 0, y: 30, rotationX: 90 },
-        { opacity: 1, y: 0, rotationX: 0, duration: 0.6, ease: "power2.inOut", delay: 0.05 }
+      gsap.fromTo(
+        rightWordRef.current,
+        { opacity: 0, yPercent: -50, y: 30, rotationX: 90 },
+        {
+          opacity: 1,
+          yPercent: -50,
+          y: 0,
+          rotationX: 0,
+          duration: 0.55,
+          ease: 'power2.inOut',
+          delay: 0.05,
+        }
       );
 
-      setTimeout(() => {
-        gsap.to(leftWordRef.current, { opacity: 0, y: 30, rotationX: 90, duration: 0.6, ease: "power2.inOut" });
-        gsap.to(rightWordRef.current, { opacity: 0, y: -30, rotationX: -90, duration: 0.6, ease: "power2.inOut", delay: 0.05 });
-      }, 600);
+      const fadeOutId = setTimeout(() => {
+        if (isExiting || !leftWordRef.current || !rightWordRef.current) return;
+        gsap.to(leftWordRef.current, {
+          opacity: 0,
+          yPercent: -50,
+          y: 30,
+          rotationX: 90,
+          duration: 0.5,
+          ease: 'power2.inOut',
+        });
+        gsap.to(rightWordRef.current, {
+          opacity: 0,
+          yPercent: -50,
+          y: -30,
+          rotationX: -90,
+          duration: 0.5,
+          ease: 'power2.inOut',
+          delay: 0.05,
+        });
+      }, 550);
+      pendingTimeouts.push(fadeOutId);
     };
 
     const exitAnimation = () => {
-      // Detener el carrusel de palabras
+      isExiting = true;
       clearInterval(wordInterval);
-      
+
       // Primero ocultar las palabras con transición más suave
       gsap.to('.preloader-word', {
         opacity: 0,
-        y: (i, target) => target.classList.contains('preloader-word-left') ? 30 : -30,
-        rotationX: (i, target) => target.classList.contains('preloader-word-left') ? 90 : -90,
-        duration: 0.8,
-        ease: "power2.inOut",
-        stagger: 0.05
+        yPercent: -50,
+        y: (_i, target) => (target.classList.contains('preloader-word-left') ? 30 : -30),
+        rotationX: (_i, target) => (target.classList.contains('preloader-word-left') ? 90 : -90),
+        duration: 0.6,
+        ease: 'power2.inOut',
+        stagger: 0.05,
       });
 
       // Luego animar columnas subiendo para revelar la página web
-      setTimeout(() => {
+      const revealId = setTimeout(() => {
         gsap.to(columnsRef.current, {
           y: '-100%',
           duration: 1.2,
           ease: 'power2.inOut',
           stagger: {
             amount: 0.8,
-            from: 'start'
+            from: 'start',
           },
           onComplete: () => {
-            gsap.set(preloaderRef.current, { display: 'none' });
-            // Remove preloader-active class from body
+            if (preloaderRef.current) {
+              gsap.set(preloaderRef.current, { display: 'none' });
+            }
             document.body.classList.remove('preloader-active');
             onComplete();
-          }
+          },
         });
-      }, 800);
+      }, 650);
+      pendingTimeouts.push(revealId);
     };
 
-    // Iniciar animación de palabras con timing más suave
+    // Mostrar primer par de palabras sin esperar 1s en blanco
+    const initialId = setTimeout(() => {
+      animateWords();
+    }, 150);
+    pendingTimeouts.push(initialId);
+
     const wordInterval = setInterval(() => {
       animateWords();
-    }, 1000);
+    }, 1050);
 
     // Finalizar después de 4 segundos
     const exitTimeoutId = setTimeout(() => {
       exitAnimation();
     }, 4000);
+    pendingTimeouts.push(exitTimeoutId);
 
     return () => {
       clearInterval(wordInterval);
-      clearTimeout(exitTimeoutId);
-      tl.kill();
-      // Remove preloader-active class from body on cleanup
+      pendingTimeouts.forEach((id) => clearTimeout(id));
+      gsap.killTweensOf([leftWordEl, rightWordEl, ...columns]);
       document.body.classList.remove('preloader-active');
     };
   }, [onComplete]);
 
   return (
-    <div ref={preloaderRef} className="preloader">
+    // Decorativo: oculto a lectores de pantalla (se omite con prefers-reduced-motion)
+    <div ref={preloaderRef} className="preloader" aria-hidden="true">
       <div className="preloader-columns">
         <div 
           ref={(el) => el && (columnsRef.current[0] = el)} 
