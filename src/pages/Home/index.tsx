@@ -11,7 +11,7 @@ import ProjectCard from '../../components/ui/ProjectCard';
 import Switch from '../../components/ui/Switch';
 import { gsap } from '../../utils/gsap';
 import { useLenisScroll } from '../../hooks/useLenisScroll';
-import { lenisEasing } from '../../utils/easing';
+import { prefersReducedMotion, scrollToY } from '../../utils/motion';
 import { HEADER_HEIGHT } from '../../utils/constants';
 import { useResponsiveAnimations } from '../../hooks/useResponsiveAnimations';
 import { useProjectsList } from '../../hooks/useProjectsList';
@@ -41,9 +41,16 @@ const Home: React.FC = () => {
 
   // Texto inicial Estado A, rotación, float y línea garabato vía GSAP
   useLayoutEffect(() => {
+    const reduceMotion = prefersReducedMotion();
     if (creativeRef.current) {
       creativeRef.current.textContent = '¿Creative?';
       gsap.set(creativeRef.current, { rotation: -5 });
+    }
+    if (reduceMotion) {
+      // Sin float infinito ni trazo animado: estado final directamente
+      if (beforeSwitchRef.current) beforeSwitchRef.current.textContent = 'ENGIN';
+      if (afterSwitchRef.current) afterSwitchRef.current.textContent = 'R';
+      return;
     }
     if (creativeWrapperRef.current) {
       floatTween.current = gsap.to(creativeWrapperRef.current, {
@@ -82,6 +89,20 @@ const Home: React.FC = () => {
 
   const handleSwitchToggle = (isOn: boolean) => {
     setIsSwitchOn(isOn);
+
+    if (prefersReducedMotion()) {
+      // Cambio instantáneo de texto, sin scramble, rotación ni float
+      if (creativeRef.current) {
+        creativeRef.current.textContent = isOn ? 'Creative' : '¿Creative?';
+        gsap.set(creativeRef.current, { rotation: isOn ? 0 : -5 });
+      }
+      if (beforeSwitchRef.current) beforeSwitchRef.current.textContent = isOn ? 'PR' : 'ENGIN';
+      if (afterSwitchRef.current) afterSwitchRef.current.textContent = isOn ? 'UCT' : 'R';
+      if (strikeRef.current) {
+        gsap.set(strikeRef.current, { clipPath: isOn ? 'inset(0 100% 0 0)' : 'inset(0 0% 0 0)' });
+      }
+      return;
+    }
 
     const duration = 0.8;
 
@@ -164,11 +185,7 @@ const Home: React.FC = () => {
       setTimeout(() => {
         const element = document.getElementById(hash);
         if (element) {
-          const targetPosition = element.offsetTop - HEADER_HEIGHT;
-          lenis.scrollTo(targetPosition, {
-            duration: 1.2,
-            easing: lenisEasing,
-          });
+          scrollToY(lenis, element.offsetTop - HEADER_HEIGHT);
         }
       }, 500);
     }
@@ -185,11 +202,17 @@ const Home: React.FC = () => {
       {/* Header */}
       <Header />
 
+      <main id="main-content">
       {/* Hero Section */}
       <section className="hero-section">
         <AnimatedElement animation="fadeIn" duration={1.2}>
           <h1 className={`hero-heading${!isSwitchOn ? ' hero-heading--stateA' : ''}`}>
-            <div ref={creativeWrapperRef} className="hero-creative-wrapper">
+            {/* El texto visual se anima letra a letra (scramble); los lectores de pantalla
+                reciben esta versión estable y legible del título. */}
+            <span className="sr-only">
+              {isSwitchOn ? 'Creative Product Designer' : 'Creative? Engineer Designer'}
+            </span>
+            <div ref={creativeWrapperRef} className="hero-creative-wrapper" aria-hidden="true">
               <span ref={creativeRef} className="hero-heading-creative" />
               <svg
                 ref={strikeRef}
@@ -215,11 +238,15 @@ const Home: React.FC = () => {
                 color: isSwitchOn ? 'var(--global-text-1)' : 'var(--global-text-3)',
               }}
             >
-              <span ref={beforeSwitchRef} />
-              <Switch className="switch--hero" onToggle={handleSwitchToggle} />
-              <span ref={afterSwitchRef} />
+              <span ref={beforeSwitchRef} aria-hidden="true" />
+              <Switch
+                className="switch--hero"
+                label="Product designer"
+                onToggle={handleSwitchToggle}
+              />
+              <span ref={afterSwitchRef} aria-hidden="true" />
             </span>
-            <span className="hero-heading-designer">
+            <span className="hero-heading-designer" aria-hidden="true">
               Des<span className="hero-heading-designer-i">i</span>gner
             </span>
           </h1>
@@ -228,7 +255,7 @@ const Home: React.FC = () => {
           <div className="hero-bottom">
             <AnimatedProfileImage
               src="/images/general/img_img.png"
-              alt="Profile"
+              alt=""
               className="hero-profile-img"
               delay={0.8}
               rotations={1.5}
@@ -297,34 +324,34 @@ const Home: React.FC = () => {
             {/* Primera fila - se mueve hacia la izquierda */}
             <GSAPCarousel direction="left" baseSpeed={35}>
               <span className="philosophy-title-geist">functionality</span>
-              <img src="/images/logo-white.svg" alt="separator" className="philosophy-separator" />
+              <img src="/images/logo-white.svg" alt="" className="philosophy-separator" />
               <span className="philosophy-title-gilda philosophy-title-margin6">& aesthetics</span>
-              <img src="/images/logo-white.svg" alt="separator" className="philosophy-separator" />
+              <img src="/images/logo-white.svg" alt="" className="philosophy-separator" />
               <span className="philosophy-title-gilda philosophy-title-margin10">
                 learn;experiment{' '}
               </span>
-              <img src="/images/logo-white.svg" alt="separator" className="philosophy-separator" />
+              <img src="/images/logo-white.svg" alt="" className="philosophy-separator" />
               <span className="philosophy-title-geist">functionality</span>
-              <img src="/images/logo-white.svg" alt="separator" className="philosophy-separator" />
+              <img src="/images/logo-white.svg" alt="" className="philosophy-separator" />
               <span className="philosophy-title-gilda philosophy-title-margin6">& aesthetics</span>
-              <img src="/images/logo-white.svg" alt="separator" className="philosophy-separator" />
+              <img src="/images/logo-white.svg" alt="" className="philosophy-separator" />
               <span className="philosophy-title-gilda philosophy-title-margin10">
                 learn;experiment{' '}
               </span>
-              <img src="/images/logo-white.svg" alt="separator" className="philosophy-separator" />
+              <img src="/images/logo-white.svg" alt="" className="philosophy-separator" />
             </GSAPCarousel>
             {/* Segunda fila - se mueve hacia la derecha */}
             <GSAPCarousel direction="right" baseSpeed={35}>
               <span className="philosophy-title-gilda">experiences</span>
-              <img src="/images/logo-white.svg" alt="separator" className="philosophy-separator" />
+              <img src="/images/logo-white.svg" alt="" className="philosophy-separator" />
               <span className="philosophy-title-gilda">technology</span>
-              <img src="/images/logo-white.svg" alt="separator" className="philosophy-separator" />
+              <img src="/images/logo-white.svg" alt="" className="philosophy-separator" />
               <span className="philosophy-title-geist">& creativity</span>
-              <img src="/images/logo-white.svg" alt="separator" className="philosophy-separator" />
+              <img src="/images/logo-white.svg" alt="" className="philosophy-separator" />
               <span className="philosophy-title-gilda">experiences</span>
-              <img src="/images/logo-white.svg" alt="separator" className="philosophy-separator" />
+              <img src="/images/logo-white.svg" alt="" className="philosophy-separator" />
               <span className="philosophy-title-gilda">technology</span>
-              <img src="/images/logo-white.svg" alt="separator" className="philosophy-separator" />
+              <img src="/images/logo-white.svg" alt="" className="philosophy-separator" />
               <span className="philosophy-title-geist">& creativity</span>
             </GSAPCarousel>
           </div>
@@ -339,7 +366,7 @@ const Home: React.FC = () => {
               <div className="about-img about-img-flexible">
                 <ImageWithCurtain
                   src="/images/general/profile01.webp"
-                  alt="About"
+                  alt="Patricio sitting in a studio, looking at his phone"
                   delay={0.2}
                   duration={1.0}
                   threshold={0.15}
@@ -348,7 +375,7 @@ const Home: React.FC = () => {
               <div className="about-img about-img-fixed">
                 <ImageWithCurtain
                   src="/images/general/profile02.webp"
-                  alt="Profile"
+                  alt="Black-and-white portrait of Patricio with his arms crossed"
                   delay={0.4}
                   duration={1.0}
                   threshold={0.15}
@@ -376,6 +403,7 @@ const Home: React.FC = () => {
           </AnimatedElement>
         </div>
       </section>
+      </main>
 
       {/* Contact Section */}
       <div id="contact">

@@ -11,6 +11,7 @@ import { gsap } from './utils/gsap';
 import { useLenisScroll } from './hooks/useLenisScroll';
 import { TransitionContext } from './context/TransitionContext';
 import { applyPageMetadata, getPageMetadata } from './utils/pageMetadata';
+import { focusElement, prefersReducedMotion } from './utils/motion';
 import './styles/pageTransition.css';
 
 // Import page components
@@ -27,7 +28,7 @@ const AppContent = () => {
   const [isLoading, setIsLoading] = useState(() => {
     const hasVisited = sessionStorage.getItem('hasVisitedHome');
     const isHomePage = location.pathname === '/';
-    return !hasVisited && isHomePage;
+    return !hasVisited && isHomePage && !prefersReducedMotion();
   });
 
   // Precargar chunk de ProjectsPage en background tras la carga inicial
@@ -46,7 +47,7 @@ const AppContent = () => {
   useEffect(() => {
     const hasVisited = sessionStorage.getItem('hasVisitedHome');
     const isHomePage = location.pathname === '/';
-    if (!hasVisited && isHomePage) {
+    if (!hasVisited && isHomePage && !prefersReducedMotion()) {
       setIsLoading(true);
     } else {
       setIsLoading(false);
@@ -57,6 +58,43 @@ const AppContent = () => {
     applyPageMetadata(getPageMetadata(location.pathname));
   }, [location.pathname]);
 
+  // --- SPA route change: move focus to the new page and announce it (WCAG 2.4.3 / 4.1.3) ---
+  const [routeAnnouncement, setRouteAnnouncement] = useState('');
+  const lastPathname = useRef(location.pathname);
+
+  useEffect(() => {
+    // Carga inicial (o re-ejecución de StrictMode): el navegador ya anuncia el documento
+    if (lastPathname.current === location.pathname) return;
+    lastPathname.current = location.pathname;
+
+    let attempts = 0;
+    let timer = 0;
+
+    // Las páginas son lazy y pueden pasar por un estado "loading": esperar a su <main>
+    const focusNewPage = () => {
+      const main = document.querySelector<HTMLElement>('main');
+      const heading = main?.querySelector<HTMLElement>('h1');
+      if (!main && attempts < 40) {
+        attempts += 1;
+        timer = window.setTimeout(focusNewPage, 50);
+        return;
+      }
+      focusElement(heading ?? main ?? document.body);
+      setRouteAnnouncement(document.title);
+    };
+
+    timer = window.setTimeout(focusNewPage, 0);
+    return () => window.clearTimeout(timer);
+  }, [location.pathname]);
+
+  const handleSkipLink = useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
+    const main = document.querySelector<HTMLElement>('main');
+    if (!main) return;
+    event.preventDefault();
+    focusElement(main);
+    main.scrollIntoView({ block: 'start' });
+  }, []);
+
   // --- Page transition overlay ---
   const overlayRef = useRef<HTMLDivElement>(null);
   const columnsRef = useRef<HTMLDivElement[]>([]);
@@ -65,6 +103,14 @@ const AppContent = () => {
   const transitionTo = useCallback(
     (path: string) => {
       if (isTransitioning.current) return;
+
+      // prefers-reduced-motion: navegación directa, sin cortina de columnas
+      if (prefersReducedMotion()) {
+        window.scrollTo(0, 0);
+        navigate(path);
+        return;
+      }
+
       isTransitioning.current = true;
 
       if (lenis) lenis.stop();
@@ -113,6 +159,16 @@ const AppContent = () => {
 
   return (
     <TransitionContext.Provider value={{ transitionTo }}>
+      {/* Skip link (WCAG 2.4.1): primer elemento enfocable de cada página */}
+      <a className="skip-link" href="#main-content" onClick={handleSkipLink}>
+        Skip to main content
+      </a>
+
+      {/* Anuncio del cambio de página para lectores de pantalla */}
+      <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+        {routeAnnouncement}
+      </div>
+
       <Suspense fallback={null}>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -125,7 +181,7 @@ const AppContent = () => {
       </Suspense>
 
       {/* Page transition overlay */}
-      <div ref={overlayRef} className="page-transition-overlay">
+      <div ref={overlayRef} className="page-transition-overlay" aria-hidden="true">
         <div ref={(el) => el && (columnsRef.current[0] = el)} className="page-transition-column" />
         <div
           ref={(el) => el && (columnsRef.current[1] = el)}

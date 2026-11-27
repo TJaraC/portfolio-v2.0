@@ -65,7 +65,7 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
   } as ProjectTheme;
 
   return (
-    <main className="project-case" style={theme} data-project={data.id}>
+    <main id="main-content" className="project-case" style={theme} data-project={data.id}>
       <section className="project-header" aria-labelledby="project-title">
         <div className="project-header-wrapper">
           <div className="project-header-container">
