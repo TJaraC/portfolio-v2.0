@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
-import { gsap, ScrollTrigger } from '../../utils/gsap';
+import { gsap } from '../../utils/gsap';
+import { prefersReducedMotion } from '../../utils/motion';
 
 interface ParallaxSectionProps {
   children: React.ReactNode;
@@ -21,6 +22,8 @@ const ParallaxSection: React.FC<ParallaxSectionProps> = ({
 
   useGSAP(() => {
     if (!sectionRef.current) return;
+    // Sin parallax ligado al scroll con prefers-reduced-motion
+    if (prefersReducedMotion()) return;
 
     const element = sectionRef.current;
     const multiplier = direction === 'up' ? -1 : 1;

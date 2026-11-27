@@ -4,6 +4,7 @@ import { setLenisInstance, useLenisScroll } from './hooks/useLenisScroll';
 import { ScrollTrigger } from './utils/gsap';
 import { lenisEasing } from './utils/easing';
 import { fontLoading } from './utils/browserCompatibility';
+import { prefersReducedMotion } from './utils/motion';
 import Routes from './Routes';
 import CustomCursor from './components/ui/CustomCursor';
 
@@ -36,7 +37,8 @@ const App: React.FC = () => {
       const lenis = new Lenis({
         lerp: 0.1,
         duration: 1.2,
-        smoothWheel: true,
+        // prefers-reduced-motion: rueda nativa, sin inercia/suavizado
+        smoothWheel: !prefersReducedMotion(),
         wheelMultiplier: 1,
         touchMultiplier: 2,
         easing: lenisEasing,

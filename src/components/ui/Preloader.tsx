@@ -163,7 +163,8 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   }, [onComplete]);
 
   return (
-    <div ref={preloaderRef} className="preloader">
+    // Decorativo: oculto a lectores de pantalla (se omite con prefers-reduced-motion)
+    <div ref={preloaderRef} className="preloader" aria-hidden="true">
       <div className="preloader-columns">
         <div 
           ref={(el) => el && (columnsRef.current[0] = el)} 
