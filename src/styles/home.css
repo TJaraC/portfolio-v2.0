@@ -1,21 +1,6 @@
 .home-container {
-  padding-top: 59px; /* Ajusta según la altura real del header */
-   background: var(--global-bg-3);
-}
-
-/* ===== GLOBAL STYLES ===== */
-body {
-  padding-top: 80px; /* Compensar header fijo */
-}
-
-.home-container {
   padding-top: 67px; /* Ajustado para padding header de 16px (59px + 8px) */
-   background: var(--global-bg-3);
-}
-
-/* ===== GLOBAL STYLES ===== */
-body {
-  padding-top: 88px; /* Ajustado para padding header de 16px (80px + 8px) */
+  background: var(--global-bg-3);
 }
 
 /* ===== HERO SECTION ===== */
@@ -26,8 +11,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center; /* Centrar contenido */
-  /* Altura completa de la pantalla menos el header */
-  height: calc(100vh - 80px); /* 80px = header height aproximado */
+  /* Altura mínima de la pantalla menos el header (sin recortar contenido en pantallas bajas) */
+  min-height: calc(100vh - 80px);
   min-height: calc(100dvh - 80px); /* Para navegadores móviles con barras dinámicas */
   padding: 30px 24px;
   box-sizing: border-box;
@@ -140,9 +125,10 @@ align-self: stretch;
 }
 
 .featured-heading {
-display: flex;
-align-items: baseline;
-align-self: stretch;
+  display: flex;
+  align-items: baseline;
+  align-self: stretch;
+  column-gap: 0.22em;
 }
 
 .featured-heading-gilda {
@@ -236,9 +222,6 @@ align-self: stretch;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
 }
 
 .portfolio-card:hover .portfolio-card-img {
@@ -276,7 +259,8 @@ align-self: stretch;
 
 .portfolio-card-tags {
   display: flex;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 4px 8px;
   justify-content: flex-end;
   align-items: flex-start;
 }
@@ -289,6 +273,7 @@ align-self: stretch;
   line-height: 1.5;
   text-align: left;
   color: #ececec;
+  white-space: nowrap;
 }
 
 
@@ -409,6 +394,10 @@ align-self: stretch;
 .about-img-flexible {
   flex: 1;
   width: auto;
+  object-position: center 30%;
+}
+
+.about-img-flexible img {
   object-position: center 30%;
 }
 
@@ -714,9 +703,10 @@ body {
 
 /* ===== RESPONSIVE BREAKPOINT 768px ===== */
 @media (max-width: 768px) {
-  /* Mantener altura completa de pantalla y reducir padding lateral */
+  /* Mantener altura mínima de pantalla y reducir padding lateral */
   .hero-section {
-    height: calc(100vh - 80px);
+    height: auto;
+    min-height: calc(100vh - 80px);
     min-height: calc(100dvh - 80px);
     padding: 80px 20px 30px 20px; /* Más padding superior para centrar mejor */
     box-sizing: border-box;
@@ -913,36 +903,38 @@ body {
     justify-content: flex-start;
   }
   
-  /* Creative Product Designer - Alinear a la izquierda y mantener altura completa */
+  /* Creative Product Designer - Alinear a la izquierda y mantener altura mínima completa */
   .hero-section {
-    height: calc(100vh - 80px);
+    height: auto;
+    min-height: calc(100vh - 80px);
     min-height: calc(100dvh - 80px);
-    padding: 80px 20px 30px 20px !important; /* Mantener mismo padding que 768px */
+    padding: 60px 20px 30px 20px !important;
     box-sizing: border-box;
     align-items: flex-start !important; /* Alinear contenido a la izquierda */
     justify-content: space-between !important; /* Hero-bottom pegado al fondo */
+    gap: 24px;
   }
   
   .hero-heading {
     text-align: left !important;
     padding-top: 0; /* Eliminar padding superior */
     align-items: flex-start !important; /* Alinear elementos a la izquierda */
-    margin-top: 80px; /* Centrar texto desde 580px hacia abajo */
+    margin-top: 40px;
     margin-bottom: 0; /* Eliminar margen inferior */
   }
   
   .hero-heading-creative {
     font-size: 16.5vw; /* Aumentado para llegar hasta el borde derecho */
-    line-height: 0.75em; /* Reducir espacio entre líneas */
-    margin-bottom: -0.12em; /* Reducir espacio con la siguiente palabra */
+    line-height: 0.85em; /* Reducir espacio entre líneas */
+    margin-bottom: -0.06em;
     text-align: left; /* Alinear a la izquierda */
     letter-spacing: 0;
   }
   
   .hero-heading-product {
     font-size: 16.5vw; /* Aumentado para llegar hasta el borde derecho */
-    line-height: 0.75em; /* Reducir espacio entre líneas */
-    margin-bottom: -0.12em; /* Reducir espacio con la siguiente palabra */
+    line-height: 0.9em;
+    margin-bottom: 0.04em;
     text-align: left; /* Alinear a la izquierda */
     letter-spacing: 0;
   }
@@ -1000,11 +992,12 @@ body {
 
 /* ===== RESPONSIVE BREAKPOINT 470px ===== */
 @media (max-width: 470px) {
-  /* Creative Product Designer - Reducir a 72px y mantener altura completa */
+  /* Creative Product Designer - Mantener altura mínima completa sin recorte */
   .hero-section {
-    height: calc(100vh - 80px) !important;
+    height: auto !important;
+    min-height: calc(100vh - 80px) !important;
     min-height: calc(100dvh - 80px) !important;
-    padding: 80px 20px 30px 20px !important; /* Mantener mismo padding que 580px */
+    padding: 40px 20px 30px 20px !important;
     box-sizing: border-box !important;
     justify-content: space-between !important; /* Hero-bottom pegado al fondo */
   }
@@ -1103,39 +1096,40 @@ body {
 
 /* ===== RESPONSIVE BREAKPOINT 400px ===== */
 @media (max-width: 400px) {
-  /* Creative Product Designer - Reducir a 60px y mantener altura completa */
+  /* Creative Product Designer - Evitar solape del switch y recorte en pantallas pequeñas */
   .hero-section {
-    height: calc(100vh - 80px) !important;
+    height: auto !important;
+    min-height: calc(100vh - 80px) !important;
     min-height: calc(100dvh - 80px) !important;
-    padding: 50px 20px 30px 20px !important; /* Más padding superior para centrar mejor */
+    padding: 20px 20px 24px 20px !important;
     box-sizing: border-box !important;
     margin-top: 0 !important;
     justify-content: space-between !important; /* Hero-bottom pegado al fondo */
   }
   
   .hero-heading {
-    margin-top: 80px !important; /* Más espacio superior */
+    margin-top: 24px !important;
     padding-top: 0 !important;
     margin-bottom: 0 !important; /* Sin margen inferior */
   }
   
   .hero-heading-creative {
-    font-size: 16.5vw !important; /* Aumentado para llegar hasta el borde derecho */
+    font-size: 15vw !important;
     line-height: 0.92em !important;
     margin-top: 0 !important;
     letter-spacing: 0 !important;
   }
   
   .hero-heading-product {
-    font-size: 16.5vw !important; /* Aumentado para llegar hasta el borde derecho */
-    line-height: 0.92em !important;
+    font-size: 15vw !important;
+    line-height: 0.95em !important;
     margin-top: 0 !important;
-    margin-bottom: -0.17em !important;
+    margin-bottom: 0.04em !important;
     letter-spacing: 0 !important;
   }
   
   .hero-heading-designer {
-    font-size: 16.5vw !important; /* Aumentado para llegar hasta el borde derecho */
+    font-size: 15vw !important;
     line-height: 0.92em !important;
     margin-top: 0 !important;
     letter-spacing: 0 !important;
@@ -1143,10 +1137,10 @@ body {
   }
   
   .hero-heading-designer-i {
-    width: 4.1vw !important; /* Proporcional al font-size aumentado */
-    height: 12.2vw !important; /* Proporcional al font-size aumentado */
-    border-radius: 3.8vw !important; /* Proporcionalmente escalado */
-    margin: 0 0.23vw !important;
+    width: 3.7vw !important;
+    height: 11.1vw !important;
+    border-radius: 3.5vw !important;
+    margin: 0 0.2vw !important;
   }
   
   /* WHO IS TJC - Volver a formato vertical con separación */
