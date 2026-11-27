@@ -74,6 +74,7 @@ const AnimatedNavButton: React.FC<AnimatedNavButtonProps> = ({
 
     // Event listeners para hover
     const handleMouseEnter = () => {
+      hoverTl.current?.kill();
       // Crear timeline para el efecto slot machine
       hoverTl.current = gsap.timeline();
       
@@ -92,6 +93,7 @@ const AnimatedNavButton: React.FC<AnimatedNavButtonProps> = ({
     };
 
     const handleMouseLeave = () => {
+      hoverTl.current?.kill();
       // Crear timeline para volver al estado original
       hoverTl.current = gsap.timeline();
       
