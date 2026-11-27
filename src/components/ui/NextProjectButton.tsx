@@ -14,7 +14,7 @@ const NextProjectButton: React.FC<NextProjectButtonProps> = ({
   className = '',
 }) => {
   const location = useLocation();
-  const buttonRef = useRef<HTMLHeadingElement>(null);
+  const buttonRef = useRef<HTMLAnchorElement>(null);
   const hoverTl = useRef<gsap.core.Timeline>();
   const isNavigating = useRef(false);
   const { transitionTo } = useTransition();
@@ -160,7 +160,9 @@ const NextProjectButton: React.FC<NextProjectButtonProps> = ({
       });
     };
 
-    const handleClick = (e: Event) => {
+    const handleClick = (e: MouseEvent) => {
+      // Ctrl/Cmd/Shift/middle click: dejar que el navegador abra el enlace normalmente
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       e.preventDefault();
       e.stopPropagation();
 
@@ -208,14 +210,17 @@ const NextProjectButton: React.FC<NextProjectButtonProps> = ({
 
   return (
     <section className="next-project-section">
-      <h2
-        ref={buttonRef}
-        className={`next-project-button ${className}`}
-        style={{
-          cursor: 'pointer',
-        }}
-      >
-        {/* El contenido se genera dinámicamente */}
+      <h2 className={`next-project-button ${className}`}>
+        {/* Enlace real: alcanzable con teclado, Enter navega y funciona "abrir en pestaña".
+            aria-label evita que se lean las letras duplicadas del efecto slot machine. */}
+        <a
+          ref={buttonRef}
+          className="next-project-link"
+          href={`/projects/${nextProject.id}`}
+          aria-label={`Next project: ${nextProject.cardTitle}`}
+        >
+          {/* El contenido se genera dinámicamente */}
+        </a>
       </h2>
     </section>
   );
