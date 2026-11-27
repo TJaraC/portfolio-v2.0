@@ -55,9 +55,9 @@ const Error404: React.FC = () => {
     .to(content, {
       opacity: 1,
       y: 0,
-      duration: 0.8,
+      duration: 0.7,
       ease: "power2.out"
-    }, "-=0.3");
+    }, "-=0.5");
     
     return () => {
       tl.kill();
@@ -82,7 +82,7 @@ const Error404: React.FC = () => {
         
         <div ref={contentRef} className="error-404-text-content">
           <h2 className="error-404-title">
-            <span className="error-404-title-gilda">PAGE NOT</span>
+            <span className="error-404-title-gilda">PAGE NOT </span>
             <span className="error-404-title-geist">FOUND</span>
           </h2>
           <p className="error-404-subtitle">Lets get you back to the good stuff</p>
