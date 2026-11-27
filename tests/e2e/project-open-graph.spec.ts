@@ -18,7 +18,7 @@ interface PageMetadata {
   imageAlt?: string;
 }
 
-const siteOrigin = 'https://hellotjc.com';
+const siteOrigin = 'https://www.hellotjc.com';
 const projectIds = ['areta', 'ultracamp', 'festgo-app', 'portfolio-25', 'howell-gallery'];
 const projectSources: ProjectMetadataSource[] = projectIds.map((projectId) =>
   JSON.parse(

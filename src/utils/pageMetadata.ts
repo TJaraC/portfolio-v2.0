@@ -4,7 +4,7 @@ import howellProject from '../data/projects/howell-gallery.json';
 import portfolioProject from '../data/projects/portfolio-25.json';
 import ultracampProject from '../data/projects/ultracamp.json';
 
-const SITE_ORIGIN = 'https://hellotjc.com';
+const SITE_ORIGIN = 'https://www.hellotjc.com';
 const SITE_NAME = 'TJC Portfolio';
 const SITE_LOCALE = 'en_US';
 const METADATA_BLOCK_START = '<!-- portfolio-metadata:start -->';
