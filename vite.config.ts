@@ -71,6 +71,25 @@ const withPrerenderer = async <T,>(
   }
 };
 
+/**
+ * Preload for the case-study hero (LCP candidate). Mirrors the <img srcset> that
+ * ImageWithCurtain renders, so the browser fetches the same candidate only once.
+ */
+const createHeroPreload = async (root: string, heroPath: string) => {
+  const manifest: Record<string, { width: number; widths: number[] }> = JSON.parse(
+    await readFile(join(root, 'src', 'data', 'responsive-images.json'), 'utf8')
+  );
+  const entry = manifest[heroPath];
+  if (!entry) {
+    return `<link rel="preload" as="image" href="${heroPath}" fetchpriority="high" />`;
+  }
+  const srcset = [
+    ...entry.widths.map((width) => `${heroPath.replace(/\.webp$/, `-${width}w.webp`)} ${width}w`),
+    `${heroPath} ${entry.width}w`,
+  ].join(', ');
+  return `<link rel="preload" as="image" href="${heroPath}" imagesrcset="${srcset}" imagesizes="100vw" fetchpriority="high" />`;
+};
+
 const injectPrerenderedContent = (documentHtml: string, markup: string) => {
   if (!documentHtml.includes(ROOT_ELEMENT)) {
     throw new Error(`Could not find ${ROOT_ELEMENT} in index.html.`);
@@ -121,15 +140,13 @@ const seoDocuments = (): Plugin => {
             const metadata = projectPages[index];
             const destination = join(outputDirectory, 'projects', project.id, 'index.html');
             await mkdir(dirname(destination), { recursive: true });
+            // Preload the hero so it starts downloading while the JS bundle loads,
+            // instead of after the route + JSON chunks.
+            const heroPreload = await createHeroPreload(projectRoot, metadata.heroImagePath);
             const html = injectPrerenderedContent(
               renderMetadataDocument(shellDocument, metadata),
               renderRoute(`/projects/${project.id}`, { projects, project })
-            ).replace(
-              // Preload the case-study hero (LCP candidate) so it starts downloading
-              // while the JS bundle loads, instead of after the route + JSON chunks.
-              '</head>',
-              `  <link rel="preload" as="image" href="${metadata.heroImagePath}" fetchpriority="high" />\n  </head>`
-            );
+            ).replace('</head>', `  ${heroPreload}\n  </head>`);
             await writeFile(destination, html, 'utf8');
           })
         );

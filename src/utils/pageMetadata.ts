@@ -49,7 +49,7 @@ interface PageMetadata {
   robots: string;
   ogType: 'website' | 'article';
   imageUrl: string;
-  imageType: 'image/png' | 'image/webp';
+  imageType: 'image/png' | 'image/jpeg';
   imageWidth?: number;
   imageHeight?: number;
   imageAlt?: string;
@@ -61,6 +61,8 @@ interface ProjectPageMetadata extends PageMetadata {
   canonicalUrl: string;
   /** Site-relative path of the case-study hero (LCP candidate), preloaded in the static HTML. */
   heroImagePath: string;
+  /** Absolute URL of the full-resolution hero (structured data, image sitemap). */
+  heroImageUrl: string;
 }
 
 const toAbsoluteUrl = (path: string) => new URL(path, SITE_ORIGIN).toString();
@@ -109,19 +111,25 @@ const NOT_FOUND_PAGE_METADATA: PageMetadata = {
 
 const createProjectMetadata = (project: ProjectMetadataSource): ProjectPageMetadata => {
   const canonicalUrl = `${SITE_ORIGIN}/projects/${project.id}`;
+  // Full-resolution hero for structured data / image sitemap; a 1200×630 JPG (generated
+  // by scripts/generate-images.mjs) for social previews, which reject large WebP files.
   const imageUrl = toAbsoluteUrl(project.heroImage);
+  const socialImageUrl = toAbsoluteUrl(`/images/og/${project.id}.jpg`);
 
   return {
     id: project.id,
     heroImagePath: project.heroImage,
+    heroImageUrl: imageUrl,
     title: `${project.cardTitle} | ${SITE_NAME}`,
     description: project.heroDescription,
     keywords: `${project.cardTitle}, product design, UX/UI, case study, ${SITE_NAME}`,
     canonicalUrl,
     robots: INDEXABLE_ROBOTS,
     ogType: 'article',
-    imageUrl,
-    imageType: 'image/webp',
+    imageUrl: socialImageUrl,
+    imageType: 'image/jpeg',
+    imageWidth: 1200,
+    imageHeight: 630,
     imageAlt: `${project.cardTitle} project case-study cover`,
     structuredData: {
       '@context': 'https://schema.org',
@@ -354,7 +362,7 @@ const renderSitemap = (projectPages: ProjectPageMetadata[]) => {
     { loc: HOME_PAGE_METADATA.canonicalUrl!, image: HOME_PAGE_METADATA.imageUrl },
     ...projectPages.map((metadata) => ({
       loc: metadata.canonicalUrl,
-      image: metadata.imageUrl,
+      image: metadata.heroImageUrl,
     })),
   ];
 

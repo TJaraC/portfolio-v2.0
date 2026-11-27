@@ -35,6 +35,12 @@ type ProjectTheme = CSSProperties & {
   '--project-accent-strong': string;
 };
 
+/** Gallery grid: two columns (one below 768px); the 3rd of 3 or 5 images spans the row. */
+const gallerySizes = (count: number, index: number) =>
+  (count === 1 && index === 0) || ((count === 3 || count === 5) && index === 2)
+    ? '100vw'
+    : '(max-width: 768px) 100vw, 50vw';
+
 const CaseChapter: React.FC<CaseChapterProps> = ({
   number,
   title,
@@ -179,6 +185,7 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                 <div className="project-hero-inset">
                   <ImageWithCurtain
                     src={data.heroInsetImage}
+                    sizes="(max-width: 560px) 100vw, 24vw"
                     alt={`${data.cardTitle} responsive interface detail`}
                     delay={0.55}
                     duration={1}
@@ -508,6 +515,7 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                           <figure key={`${image}-${index}`} className="project-gallery-item">
                             <ImageWithCurtain
                               src={image}
+                              sizes={gallerySizes(data.gallery.images.length, index)}
                               alt={`${data.cardTitle} final design view ${index + 1}`}
                               delay={0.08 * (index + 1)}
                               duration={1}
@@ -601,7 +609,11 @@ const ProjectCase: React.FC<ProjectCaseProps> = ({ data }) => {
                     >
                       {data.gallery.images.map((image, index) => (
                         <figure key={`${image}-${index}`} className="project-gallery-item">
-                          <ImageWithCurtain src={image} alt={`${data.cardTitle} gallery image ${index + 1}`} />
+                          <ImageWithCurtain
+                            src={image}
+                            sizes={gallerySizes(data.gallery.images.length, index)}
+                            alt={`${data.cardTitle} gallery image ${index + 1}`}
+                          />
                           <figcaption className="project-gallery-index" aria-hidden="true">
                             {String(index + 1).padStart(2, '0')}
                           </figcaption>

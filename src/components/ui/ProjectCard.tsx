@@ -33,6 +33,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       <div className="portfolio-card-img-wrapper">
         <ImageWithCurtain
           src={project.heroImage}
+          sizes="(max-width: 768px) 100vw, 50vw"
           alt=""
           className="portfolio-card-img"
           delay={0.2}

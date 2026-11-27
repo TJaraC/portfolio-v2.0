@@ -14,7 +14,7 @@ interface PageMetadata {
   description: string;
   canonicalUrl: string;
   imageUrl: string;
-  imageType: 'image/png' | 'image/webp';
+  imageType: 'image/png' | 'image/jpeg';
   imageAlt?: string;
 }
 
@@ -42,8 +42,8 @@ const PROJECT_PAGE_METADATA: (PageMetadata & { id: string })[] = projectSources.
   title: `${project.cardTitle} | TJC Portfolio`,
   description: project.heroDescription,
   canonicalUrl: `${siteOrigin}/projects/${project.id}`,
-  imageUrl: new URL(project.heroImage, siteOrigin).toString(),
-  imageType: 'image/webp',
+  imageUrl: `${siteOrigin}/images/og/${project.id}.jpg`,
+  imageType: 'image/jpeg',
   imageAlt: `${project.cardTitle} project case-study cover`,
 }));
 
@@ -109,7 +109,7 @@ const expectPageMetadata = async (page: Page, metadata: PageMetadata) => {
 };
 
 for (const project of PROJECT_PAGE_METADATA) {
-  test(`${project.id} applies its primary project image as Open Graph metadata`, async ({
+  test(`${project.id} applies its 1200×630 social preview as Open Graph metadata`, async ({
     page,
   }) => {
     const runtimeErrors: string[] = [];

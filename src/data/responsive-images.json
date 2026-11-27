@@ -1,0 +1,182 @@
+{
+  "/images/general/profile01.webp": {
+    "width": 1200,
+    "height": 1600,
+    "widths": [
+      640
+    ]
+  },
+  "/images/general/profile02.webp": {
+    "width": 332,
+    "height": 400,
+    "widths": []
+  },
+  "/images/projects/areta/Areta02.webp": {
+    "width": 1536,
+    "height": 2048,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/areta/Areta03.webp": {
+    "width": 2048,
+    "height": 1536,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/areta/Areta04.webp": {
+    "width": 2048,
+    "height": 1536,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/areta/Areta05.webp": {
+    "width": 2048,
+    "height": 1152,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/areta/Areta06.webp": {
+    "width": 2048,
+    "height": 1536,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/areta/Areta07.webp": {
+    "width": 2048,
+    "height": 1536,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/areta/AretaHero.webp": {
+    "width": 2560,
+    "height": 1920,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/festgo/FestGo01.webp": {
+    "width": 2560,
+    "height": 1707,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/festgo/FestGo02.webp": {
+    "width": 2560,
+    "height": 1920,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/festgo/FestGo03.webp": {
+    "width": 2560,
+    "height": 1920,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/festgo/FestGo04.webp": {
+    "width": 2560,
+    "height": 1920,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/portfolio/portfolio01.webp": {
+    "width": 2560,
+    "height": 1920,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/portfolio/portfolio02.webp": {
+    "width": 2560,
+    "height": 1920,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/portfolio/portfolio03.webp": {
+    "width": 2560,
+    "height": 1920,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/portfolio/portfolio04.webp": {
+    "width": 2560,
+    "height": 1920,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/portfolio/portfolio05.webp": {
+    "width": 2560,
+    "height": 1920,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/ultracamp/Ultracamp01.webp": {
+    "width": 2560,
+    "height": 1920,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/ultracamp/Ultracamp02.webp": {
+    "width": 2560,
+    "height": 1920,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/ultracamp/Ultracamp03.webp": {
+    "width": 2560,
+    "height": 1920,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/ultracamp/Ultracamp04.webp": {
+    "width": 2560,
+    "height": 1920,
+    "widths": [
+      640,
+      1280
+    ]
+  },
+  "/images/projects/ultracamp/Ultracamp05.webp": {
+    "width": 2560,
+    "height": 1920,
+    "widths": [
+      640,
+      1280
+    ]
+  }
+}

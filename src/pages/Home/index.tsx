@@ -367,6 +367,7 @@ const Home: React.FC = () => {
               <div className="about-img about-img-flexible">
                 <ImageWithCurtain
                   src="/images/general/profile01.webp"
+                  sizes="(max-width: 768px) 100vw, 60vw"
                   alt="Patricio Jaramillo Castrillo sitting in a studio, looking at his phone"
                   delay={0.2}
                   duration={1.0}

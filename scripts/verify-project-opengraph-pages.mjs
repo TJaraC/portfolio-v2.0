@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { access, readFile } from 'node:fs/promises';
+import { access, readFile, stat } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -149,6 +149,7 @@ for (const projectId of projectIds) {
     'utf8'
   );
   const imageUrl = new URL(project.heroImage, siteOrigin).toString();
+  const socialImagePath = `/images/og/${projectId}.jpg`;
   const url = `${siteOrigin}/projects/${projectId}`;
 
   assertMetadata(
@@ -158,11 +159,20 @@ for (const projectId of projectIds) {
       description: project.heroDescription,
       url,
       ogType: 'article',
-      imageUrl,
+      imageUrl: `${siteOrigin}${socialImagePath}`,
       imageAlt: `${project.cardTitle} project case-study cover`,
     },
     `${project.cardTitle} project page`
   );
+  assert.equal(
+    readMetaContent(projectHtml, 'property', 'og:image:type'),
+    'image/jpeg',
+    `${project.cardTitle} social image is a JPG`
+  );
+  assert.equal(readMetaContent(projectHtml, 'property', 'og:image:width'), '1200');
+  assert.equal(readMetaContent(projectHtml, 'property', 'og:image:height'), '630');
+  const socialImage = await stat(join(distDirectory, socialImagePath));
+  assert.ok(socialImage.size < 300 * 1024, `${socialImagePath} is under 300 KB`);
   assert.equal(
     projectHtml.includes(`${siteOrigin}/images/OpenGraph.png`),
     false,
